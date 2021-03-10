@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1037026848593",
+    "project_id": "blokoding-db31c",
+    "storage_bucket": "blokoding-db31c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037026848593:android:03d900e72f34f8d2056d70",
+        "android_client_info": {
+          "package_name": "com.blokoding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037026848593-nk8lotoeltc252ksp8fvlsvqn3qgo1lk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGi0XsZetctn2OVyD38AAuNGpWFudVI-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037026848593-nk8lotoeltc252ksp8fvlsvqn3qgo1lk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
