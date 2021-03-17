@@ -1,0 +1,80 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.blokoding"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="29" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\debug\AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+13-->[com.facebook.flipper:flipper:0.75.1] C:\Users\Gazi\.gradle\caches\transforms-2\files-2.1\a8f6015f96666ab8d93bfe5b64998bc8\jetified-flipper-0.75.1\AndroidManifest.xml:16:5-76
+13-->[com.facebook.flipper:flipper:0.75.1] C:\Users\Gazi\.gradle\caches\transforms-2\files-2.1\a8f6015f96666ab8d93bfe5b64998bc8\jetified-flipper-0.75.1\AndroidManifest.xml:16:22-73
+14
+15    <application
+15-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:6:5-33:19
+16        android:name="com.blokoding.MainApplication"
+16-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:7:7-38
+17        android:allowBackup="false"
+17-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:11:7-34
+18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+18-->[androidx.core:core:1.1.0] C:\Users\Gazi\.gradle\caches\transforms-2\files-2.1\d67cd79abd1ca209502f51c69d23182b\core-1.1.0\AndroidManifest.xml:24:18-86
+19        android:debuggable="true"
+20        android:icon="@mipmap/ic_launcher"
+20-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:9:7-41
+21        android:label="@string/app_name"
+21-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:8:7-39
+22        android:roundIcon="@mipmap/ic_launcher_round"
+22-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:10:7-52
+23        android:theme="@style/AppTheme"
+23-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:12:7-38
+24        android:usesCleartextTraffic="true" >
+24-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\debug\AndroidManifest.xml:8:9-44
+25        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+25-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\debug\AndroidManifest.xml:11:9-86
+25-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\debug\AndroidManifest.xml:11:19-83
+26        <!-- Add this SplashActivity -->
+27        <activity
+27-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:15:9-23:20
+28            android:name="com.blokoding.SplashActivity"
+28-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:16:11-41
+29            android:label="@string/app_name"
+29-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:18:11-43
+30            android:theme="@style/SplashTheme" >
+30-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:17:11-45
+31            <intent-filter>
+31-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:19:11-22:27
+32                <action android:name="android.intent.action.MAIN" />
+32-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:20:15-67
+32-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:20:23-64
+33
+34                <category android:name="android.intent.category.LAUNCHER" />
+34-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:21:15-75
+34-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:21:25-72
+35            </intent-filter>
+36        </activity>
+37        <activity
+37-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:25:7-32:18
+38            android:name="com.blokoding.MainActivity"
+38-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:26:9-37
+39            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+39-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:28:9-86
+40            android:exported="true"
+40-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:31:9-32
+41            android:label="@string/app_name"
+41-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:27:9-41
+42            android:launchMode="singleTask"
+42-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:29:9-40
+43            android:windowSoftInputMode="adjustResize" >
+43-->C:\Users\Gazi\Documents\GitHub\blokoding\blokoding\android\app\src\main\AndroidManifest.xml:30:9-51
+44        </activity>
+45    </application>
+46
+47</manifest>
