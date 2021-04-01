@@ -21,7 +21,7 @@ class Camera extends Component {
         <View style={styles.container}>
           <RNCamera style={styles.preview} ref={ref => {this.camera = ref;}} type={RNCamera.Constants.Type.back} flashMode={RNCamera.Constants.FlashMode.off} captureAudio={false} />
           <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.detectText} style={styles.capture}>
+            <TouchableOpacity onPress={() => this.detectText(this.props.navigation)} style={styles.capture}>
               <Text style={{ fontSize: 14 }}>Process</Text>
             </TouchableOpacity>
           </View>
@@ -30,7 +30,7 @@ class Camera extends Component {
       )
     }
   
-    detectText = async () => {
+    detectText = async (navigation) => {
       try {
         const options = {
           quality: 0.8,
@@ -39,9 +39,10 @@ class Camera extends Component {
         };
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
-        visionResp.forEach(element => {
+        navigation.navigate('Result', {visionResp : visionResp});
+        /*visionResp.forEach(element => {
           console.log(element.text);
-        });
+        });*/
       } catch (e) {
         console.warn(e);
       }

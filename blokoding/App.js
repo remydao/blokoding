@@ -9,6 +9,7 @@ import Home from './screens/HomeScreen';
 import Camera from './screens/CameraScreen';
 import Help from './screens/HelpScreen';
 import Options from './screens/OptionsScreen';
+import Result from './screens/ScreenResult';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ function App() {
         <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
         <Stack.Screen name="Help" component={Help} options={{headerShown: false}}/>
         <Stack.Screen name="Options" component={Options} options={{headerShown: false}}/>
+        <Stack.Screen name="Result" component={Result} options={{headerTitle: () => <Header title="RESULTS"/>}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
