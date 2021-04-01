@@ -36,6 +36,8 @@ const Home = ({ navigation }) => {
               <Button
                   title="Options"
                   color={Colors.secondary}
+                  onPress={() =>
+                  navigation.navigate('Options')}
                   />
             </View>
           </Card>
