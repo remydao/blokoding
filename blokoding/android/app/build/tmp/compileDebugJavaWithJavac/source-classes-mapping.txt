@@ -5,12 +5,12 @@ com/blokoding/ReactNativeFlipper.java
  com.blokoding.ReactNativeFlipper$2$1
 com/blokoding/MainActivity.java
  com.blokoding.MainActivity
-com/blokoding/SplashActivity.java
- com.blokoding.SplashActivity
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
 com/blokoding/BuildConfig.java
  com.blokoding.BuildConfig
 com/blokoding/MainApplication.java
  com.blokoding.MainApplication
  com.blokoding.MainApplication$1
-com/facebook/react/PackageList.java
- com.facebook.react.PackageList
+com/blokoding/SplashActivity.java
+ com.blokoding.SplashActivity
