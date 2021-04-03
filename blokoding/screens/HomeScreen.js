@@ -19,6 +19,14 @@ const Home = ({ navigation }) => {
           <Card>
             <View style={{ marginVertical: 10 }}>
               <Button
+                  title="Level Select"
+                  color={Colors.secondary}
+                  onPress={() =>
+                  navigation.navigate('Level Select')}
+                  />
+            </View>
+            <View style={{ marginVertical: 10 }}>
+              <Button
                   title="Start"
                   color={Colors.secondary}
                   onPress={() =>
@@ -40,6 +48,7 @@ const Home = ({ navigation }) => {
                   navigation.navigate('Options')}
                   />
             </View>
+            
           </Card>
         <StatusBar backgroundColor={Colors.secondary}/>
       </View>

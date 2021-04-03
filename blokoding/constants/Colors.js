@@ -1,4 +1,4 @@
 export default {
-    primary: 'beige', 
+    primary: 'beige',
     secondary: '#96D536',
 }

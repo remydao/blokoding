@@ -10,6 +10,7 @@ import Camera from './screens/CameraScreen';
 import Help from './screens/HelpScreen';
 import Options from './screens/OptionsScreen';
 import Result from './screens/ScreenResult';
+import LevelSelect from './screens/LevelSelectScreen'
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ function App() {
         <Stack.Screen name="Help" component={Help} options={{headerShown: false}}/>
         <Stack.Screen name="Options" component={Options} options={{headerShown: false}}/>
         <Stack.Screen name="Result" component={Result} options={{headerTitle: () => <Header title="RESULTS"/>}}/>
+        <Stack.Screen name="Level Select" component={LevelSelect} options={{headerTitle: () => <Header title="LEVEL SELECT"/>}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
