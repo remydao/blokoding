@@ -11,20 +11,20 @@ const Home = ({ navigation }) => {
         flex:1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'beige' }}>
+        backgroundColor:'purple',
+        margin:-1,}}>
         <Image
           source={require("../assets/icon.png")}
           style={{ width: 200, height: 200}}
           resizeMode="stretch"/>
-          <Card>
-            <View style={{ marginVertical: 10 }}>
+            <View style={styles.button}>
               <Button
                   title="Start"
                   color={Colors.secondary}
                   onPress={() =>
                   navigation.navigate('Take Picture')}/>
               </View>
-            <View style={{ marginVertical: 10 }}>
+            <View style={styles.button}>
               <Button
                   title="Help"
                   color={Colors.secondary}
@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
                   navigation.navigate('Help')}
                   />
             </View>
-            <View style={{ marginVertical: 10 }}>
+            <View style={styles.button}>
               <Button
                   title="Options"
                   color={Colors.secondary}
@@ -40,10 +40,16 @@ const Home = ({ navigation }) => {
                   navigation.navigate('Options')}
                   />
             </View>
-          </Card>
-        <StatusBar backgroundColor={Colors.secondary}/>
+        <StatusBar backgroundColor={Colors.primary}/>
       </View>
     );
   };
+
+const styles = StyleSheet.create({
+  button:{
+    marginVertical: 3,
+    width:"100%",
+  }
+})
 
 export default Home;
