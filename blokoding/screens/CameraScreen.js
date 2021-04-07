@@ -1,16 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
-
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Button
-} from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, Button } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
 
@@ -35,14 +26,12 @@ class Camera extends Component {
         const options = {
           quality: 0.8,
           base64: true,
-          //skipProcessing: true,
+          orientation: RNCamera.Constants.Orientation.portrait,
+          fixOrientation: true
         };
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
         navigation.navigate('Result', {visionResp : visionResp});
-        /*visionResp.forEach(element => {
-          console.log(element.text);
-        });*/
       } catch (e) {
         console.warn(e);
       }
