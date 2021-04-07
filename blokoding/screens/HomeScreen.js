@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { BackHandler } from 'react';
 import {View, Image, Button, StatusBar} from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
@@ -8,33 +8,24 @@ import FlatButton from '../components/FlatButton';
 
 const Home = ({ navigation }) => {
     return (
-      <View style={{
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor:'purple',
-        marginTop:-1,}}>
+      <View style={styles.container}>
         <Image
           source={require("../assets/icon.png")}
           style={{ width: 200, height: 200}}
           resizeMode="stretch"
-          style={{
-            marginBottom:115,}}
+          style={{marginBottom:112,}}
           />
             <View style={styles.button}>
-              <FlatButton text="SELECT LEVEL" color={Colors.red} onPress={() => navigation.navigate('Level Select')}/>
+              <FlatButton text="Découverte" color={Colors.red} onPress={() => navigation.navigate('Level Select')}/>
             </View>
             <View style={styles.button}>
-              <FlatButton text="START" color={Colors.purpleBlue} onPress={() => navigation.navigate('Take Picture')}/>
+              <FlatButton text="Commencer" color={Colors.purpleBlue} onPress={() => navigation.navigate('Take Picture')}/>
             </View>
             <View style={styles.button}>
-              <FlatButton text="HELP" color={Colors.turquoise} onPress={() => navigation.navigate('Help')}/>
+              <FlatButton text="Aide" color={Colors.turquoise} onPress={() => navigation.navigate('Help')}/>
             </View>
             <View style={styles.button}>
-              <FlatButton text="OPTIONS" color={Colors.yellow} onPress={() => navigation.navigate('Options')}/>
-            </View>
-            <View style={styles.button}>
-              <FlatButton text="QUITTER" color={Colors.palePink} onPress={() => {}}/>
+              <FlatButton text="Options" color={Colors.yellow} onPress={() => navigation.navigate('Options')}/>
             </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
@@ -42,9 +33,15 @@ const Home = ({ navigation }) => {
   };
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'purple',
+    marginTop:-1,
+  },
   button:{
     width:"100%",
-    backgroundColor: Colors.red
   }
 })
 

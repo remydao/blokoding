@@ -10,7 +10,7 @@ const Result = ({ route, navigation }) => {
 
     let visionResp = route.params.visionResp; 
 
-    useEffect(() =>{
+    useEffect(() => {
         let listOfObject = []
         visionResp.forEach(elem => listOfObject.push({id: UUID.v4(), value: elem.text}))
         setTextList(listOfObject);
