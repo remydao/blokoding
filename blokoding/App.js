@@ -11,7 +11,7 @@ import Help from './screens/HelpScreen';
 import Options from './screens/OptionsScreen';
 import Result from './screens/ScreenResult';
 import LevelSelect from './screens/LevelSelectScreen';
-import SelectCharacter from "./screens/GameScreen";
+import Game from "./screens/GameScreen";
 
 const Stack = createStackNavigator();
 

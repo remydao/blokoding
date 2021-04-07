@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
 import { useEffect, useState } from 'react/cjs/react.development';
 import {characterImages} from "../constants/CharacterImages";
@@ -7,7 +7,6 @@ import { GameEngine } from "react-native-game-engine"
 
 class Game extends Component {
     render(){
-        
         let imageSource = "";
         function findCharacter(name){
             switch(name){
