@@ -13,19 +13,22 @@ const Home = ({ navigation }) => {
           source={require("../assets/icon.png")}
           style={{ width: 200, height: 200}}
           resizeMode="stretch"
-          style={{marginBottom:112,}}
+          style={{marginBottom:16,}}
           />
             <View style={styles.button}>
               <FlatButton text="Découverte" color={Colors.red} onPress={() => navigation.navigate('Level Select')}/>
             </View>
             <View style={styles.button}>
-              <FlatButton text="Commencer" color={Colors.purpleBlue} onPress={() => navigation.navigate('Take Picture')}/>
+              <FlatButton text="Commencer" color={Colors.purpleBlue} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:false})}/>
             </View>
             <View style={styles.button}>
               <FlatButton text="Aide" color={Colors.turquoise} onPress={() => navigation.navigate('Help')}/>
             </View>
             <View style={styles.button}>
               <FlatButton text="Options" color={Colors.yellow} onPress={() => navigation.navigate('Options')}/>
+            </View>
+            <View style={styles.button}>
+              <FlatButton text="Créer Personnage" color={Colors.palePink} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:true})}/>
             </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
