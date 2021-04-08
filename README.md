@@ -4,4 +4,4 @@ La plateforme qui permet aux enfants de s'initier à l'informatique de façon lu
 Remy DAO
 Xavier Facqueur
 David Ghiassi
-Alexandre Vermeulen
+Alexandre Vermeulen ~~
