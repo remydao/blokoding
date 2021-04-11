@@ -1,48 +1,68 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
-import { useEffect, useState } from 'react/cjs/react.development';
 import {characterImages} from "../constants/CharacterImages";
 
-const SelectCharacter = ({navigation, route}) => {
+export default class Character extends Component {
+    constructor(props){
+        super(props);
+        this.state= {
+            imageSource:""
+        }
+    }
 
-    let imageSource = "";
-    function findCharacter(name){
+    componentDidMount(){
+        this.findCharacter(this.props.characterName);
+    }
+
+    findCharacter(name){
         switch(name){
             case 'Bart':
-                imageSource = characterImages.Bart.uri;
+                this.setState({imageSource:characterImages.Bart.uri});
                 break;
             case 'Charlie':
-                imageSource = characterImages.Charlie.uri;
+                this.setState({imageSource:characterImages.Charlie.uri});
                 break;
             case 'Cyclops':
-                imageSource = characterImages.Cyclops.uri;
+                this.setState({imageSource:characterImages.Cyclops.uri});
                 break;
             case 'Dinny':
-                imageSource = characterImages.Dinny.uri;
+                this.setState({imageSource:characterImages.Dinny.uri});
                 break;
             case 'Harry':
-                imageSource = characterImages.Harry.uri;
+                this.setState({imageSource:characterImages.Harry.uri});
                 break;
             case 'Kevin':
-                imageSource = characterImages.Kevin.uri;
+                this.setState({imageSource:characterImages.Kevin.uri});
                 break;
         }
     }
-    findCharacter(route.params.visionResp[0].text);
 
-    
-    return (
-        <View style={styles.container}>
-        <Image source={imageSource} />
-    </View>
-    )
+    render(){
+        const x = this.props.position[0];
+        const y = this.props.position[1];
+        //<Image source={this.state.imageSource} />
+        //<Image style={styles.background} source={require("../assets/images/background")} />
+        
+        
+        return (
+            <View style={[styles.container, {left: x, top: y}]}>
+                <Image source={this.state.imageSource} />
+
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
     container:{
-        justifyContent:"center",
-        alignItems:"center"
+        position:"absolute",
+        height: 120,
+        width: 100,
+        zIndex:2,
+    },
+    background:{
+        flex:1,
+        resizeMode:'cover',
+        backgroundColor:"red"
     }
 })
-
-export default SelectCharacter;
