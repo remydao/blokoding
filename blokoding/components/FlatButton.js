@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
         width:'100%',
         justifyContent:'center',
         alignItems:'center',
-        paddingVertical:35,
+        paddingVertical:22,
     },
     textStyle:{
         fontWeight:"700",
         color:"white",
-        fontSize:20,
+        fontSize:40,
         fontFamily: 'Montserrat'
     }
 })
