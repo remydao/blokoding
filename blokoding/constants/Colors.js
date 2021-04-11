@@ -4,7 +4,7 @@ export default {
     red: '#ff6b6a',
     purpleBlue:'#6c63ff',
     turquoise:'#25e3c5',
-    yellow: '#fff88c',
+    yellow: '#ffcc00',
     palePink: '#FF9C9B',
     azure:'#cbcef8',
 }
