@@ -30,7 +30,7 @@ function App() {
         <Stack.Screen name="Options" component={Options} options={{headerShown: false}}/>
         <Stack.Screen name="Result" component={Result} options={{headerTitle: () => <Header title="RESULTS"/>}}/>
         <Stack.Screen name="Level Select" component={LevelSelect} options={{headerTitle: () => <Header title="LEVEL SELECT"/>}}/>
-        <Stack.Screen name="Game" component={Game} options={{headerTitle: () => <Header title="Jeu"/>}}/>
+        <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
