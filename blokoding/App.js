@@ -5,13 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import Header from './components/Header';
-import Home from './screens/HomeScreen';
-import Camera from './screens/CameraScreen';
-import Help from './screens/HelpScreen';
-import Options from './screens/OptionsScreen';
-import Result from './screens/ScreenResult';
-import LevelSelect from './screens/LevelSelectScreen';
-import Game from "./screens/GameScreen";
+import {Home, Camera, Help, Options, Result, LevelSelect, Game} from './screens/Screens';
+import Colors from "./constants/Colors"
 
 const Stack = createStackNavigator();
 
@@ -26,8 +21,8 @@ function App() {
       <Stack.Navigator screenOptions={{ headerShown: true, headerTitleAlign:'center' }}>
         <Stack.Screen name="Home" component={Home} options={{headerTitle: () => <Header title="BLOKODING"/>}}/>
         <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
-        <Stack.Screen name="Help" component={Help} options={{headerShown: false}}/>
-        <Stack.Screen name="Options" component={Options} options={{headerShown: false}}/>
+        <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <Header title="Aide" backgroundColor={Colors.purpleBlue}/>}}/>
+        <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <Header title="Options" backgroundColor={Colors.purpleBlue}/>}}/>
         <Stack.Screen name="Result" component={Result} options={{headerTitle: () => <Header title="RESULTS"/>}}/>
         <Stack.Screen name="Level Select" component={LevelSelect} options={{headerTitle: () => <Header title="LEVEL SELECT"/>}}/>
         <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
