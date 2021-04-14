@@ -4,6 +4,7 @@ import {StatusBar} from 'react-native';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, Button } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
+import CharacterImages, { characterImages } from "../constants/CharacterImages";
 
 
 class Camera extends Component {
@@ -13,7 +14,7 @@ class Camera extends Component {
           <RNCamera style={styles.preview} ref={ref => {this.camera = ref;}} type={RNCamera.Constants.Type.back} flashMode={RNCamera.Constants.FlashMode.off} captureAudio={false} />
           <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
             <TouchableOpacity onPress={() => this.detectText(this.props.navigation, this.props.route.params.isSelectCharacter)} style={styles.capture}>
-              <Text style={{ fontSize: 14 }}>Process</Text>
+              <Text style={{ fontSize: 14 }}>      </Text>
             </TouchableOpacity>
           </View>
           <StatusBar translucent backgroundColor="transparent"/>
@@ -31,14 +32,22 @@ class Camera extends Component {
         };
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
+        const characterList = [];
+        for (var character in characterImages){
+          characterList.push(characterImages[character].imageName);
+        }
         if (isSelectCharacter){
-          navigation.navigate('Game', {visionResp: visionResp});
+          if (visionResp.length == 0 || !characterList.includes(visionResp[0].text)){
+            navigation.navigate('Error', {visionResp : visionResp});
+          }
+          else
+            navigation.navigate('Game', {visionResp: visionResp});
         }
         else{
           navigation.navigate('Result', {visionResp : visionResp});
         }
       } catch (e) {
-        console.warn(e);
+        //console.warn(e)
       }
     };
   }
@@ -47,7 +56,6 @@ class Camera extends Component {
     container: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: 'black',
     },
     preview: {
       flex: 1,
@@ -55,13 +63,14 @@ class Camera extends Component {
       alignItems: 'center',
     },
     capture: {
+      position:'absolute',
       flex: 0,
-      backgroundColor: '#fff',
-      borderRadius: 5,
-      padding: 15,
-      paddingHorizontal: 20,
+      borderRadius: 100,
+      borderWidth:5,
+      borderColor:'white',
+      padding: 30,
       alignSelf: 'center',
-      margin: 20,
+      bottom:30
     },
   });
 

@@ -13,18 +13,16 @@ const LevelSelect = ({ navigation }) => {
         const levelTitle = "Level " + (i + 1)
 
         buttons.push(
-            <Button  key={i} title={levelTitle} color={Colors.secondary}></Button>
+            <Button  key={i} title={levelTitle} color={Colors.purpleBlue} style={styles.button}></Button>
         )
     }
 
     return (
       <SafeAreaView style={styles.contentContainer}>
         <ScrollView style={styles.scrollView}>
-            
             {buttons}
-
-          <StatusBar backgroundColor={Colors.secondary}/>
         </ScrollView>
+        <StatusBar backgroundColor={Colors.azure}/>
       </SafeAreaView>
     );
   };
@@ -35,8 +33,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex:1,
     },
-    scrollView: {
-        backgroundColor: 'beige',
-        marginVertical: 20,
-      },
+    button:{
+    }
 })

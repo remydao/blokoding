@@ -11,9 +11,8 @@ const Home = ({ navigation }) => {
       <View style={styles.container}>
         <Image
           source={require("../assets/icon.png")}
-          style={{ width: 200, height: 200}}
           resizeMode="stretch"
-          style={{marginBottom:16,}}
+          style={{margin:35}}
           />
             <View style={styles.button}>
               <FlatButton text="Découverte" color={Colors.red} onPress={() => navigation.navigate('Level Select')}/>
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'purple',
+    backgroundColor:'#cbcef8',
     marginTop:-1,
   },
   button:{

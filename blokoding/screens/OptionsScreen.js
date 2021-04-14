@@ -11,13 +11,12 @@ const Options = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.picker}>
           <Picker
-            dropdownIconColor="black" >
+            dropdownIconColor="black">
             <Picker.Item label="Français" value="fr"/>
             <Picker.Item label="English" value="en"/>
           </Picker>
         </View>
         <Image style={styles.image} source={characterImages.Harry.uri}></Image>
-        
         <StatusBar backgroundColor={Colors.purpleBlue}/>
       </View>
     );

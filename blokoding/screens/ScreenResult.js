@@ -29,8 +29,9 @@ const Result = ({ route, navigation }) => {
             keyExtractor={item => item.id}
             />
           </View>
-
+          <StatusBar backgroundColor={Colors.azure}/>
       </View>
+
     );
   };
 

@@ -6,9 +6,9 @@ const Header = (props) => {
     return (
         <View style={styles(props).header}>
             <Image
-          source={require("../assets/icon.png")}
-          style={{ width: 20, height: 20 }}
-          resizeMode="stretch"/>
+                source={require("../assets/icon.png")}
+                style={{ width: 20, height: 20 }}
+                resizeMode="stretch"/>
             <Text style={styles(props).headerTitle}>{props.title}</Text>
         </View>
     )
@@ -26,7 +26,8 @@ const styles = (props) => StyleSheet.create({
     headerTitle:{
         color:'black',
         fontSize:18,
-        paddingHorizontal:5
+        paddingHorizontal:5,
+        fontWeight:'bold'
     },
 })
 

@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import Header from './components/Header';
-import {Home, Camera, Help, Options, Result, LevelSelect, Game} from './screens/Screens';
+import {Home, Camera, Help, Options, Result, LevelSelect, Game, Error} from './screens/Screens';
 import Colors from "./constants/Colors"
 
 const Stack = createStackNavigator();
@@ -26,11 +26,10 @@ function App() {
         <Stack.Screen name="Result" component={Result} options={{headerTitle: () => <Header title="RESULTS"/>}}/>
         <Stack.Screen name="Level Select" component={LevelSelect} options={{headerTitle: () => <Header title="LEVEL SELECT"/>}}/>
         <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
+        <Stack.Screen name="Error" component={Error} options={{headerTitle: () => <Header title="Error"/>}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
-
 
 export default App;

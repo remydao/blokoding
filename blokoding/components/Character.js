@@ -40,14 +40,10 @@ export default class Character extends Component {
     render(){
         const x = this.props.position[0];
         const y = this.props.position[1];
-        //<Image source={this.state.imageSource} />
-        //<Image style={styles.background} source={require("../assets/images/background")} />
-        
         
         return (
             <View style={[styles.container, {left: x, top: y}]}>
                 <Image source={this.state.imageSource} />
-
             </View>
         )
     }

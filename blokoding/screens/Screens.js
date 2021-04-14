@@ -5,3 +5,4 @@ export {default as Options} from './OptionsScreen';
 export {default as Result} from './ScreenResult';
 export {default as LevelSelect} from './LevelSelectScreen';
 export {default as Game} from "./GameScreen";
+export {default as Error} from './ErrorScreen';

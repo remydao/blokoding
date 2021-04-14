@@ -4,7 +4,6 @@ import Matter from "matter-js";
 import { GameEngine } from "react-native-game-engine";
 import Character from "../components/Character";
 import BackgroundGame from "../components/BackgroundGame";
-import { Tooltip, Text } from 'react-native-elements';
 
 export default class Game extends Component {
 
@@ -15,13 +14,8 @@ export default class Game extends Component {
         this.tooltipRef = React.createRef();
     }
 
-    componentDidMount() {
-        this.tooltipRef.current.toggleTooltip();
-    }
-
     render() {
-        if (this.props.params && this.props.params.visionResp && this.props.params.visionResp.length > 0)
-        {
+        console.log(this.props.route.params.visionResp[0].text)
             return (
                 <GameEngine
                 style={{flex:1}}
@@ -34,13 +28,6 @@ export default class Game extends Component {
                 </GameEngine>
             )
         }
-        else
-        {
-            return (
-                <Tooltip ref={this.tooltipRef} popover={<Text>No character found.</Text>}/>
-            )
-        }
-    }
 }
 
 const styles = StyleSheet.create({
