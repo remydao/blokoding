@@ -4,37 +4,36 @@ import Matter from "matter-js";
 import { GameEngine } from "react-native-game-engine";
 import Character from "../components/Character";
 import BackgroundGame from "../components/BackgroundGame";
-
 import parseInit from "../scripts/parsing/Parser";
 
-export default class Game extends Component {
+import EngineConstants from '../constants/EngineConstants';
+import { GameLoop } from '../components/GameLoop';
 
-    tooltipRef = null;
+
+
+export default class Game extends Component {
 
     constructor(props) {
         super(props);
 
         parseInit(props.route.params.visionResp).execute();
+        this.engine = null;
     }
 
     render() {
         console.log(this.props.route.params.visionResp[0].text)
             return (
                 <GameEngine
-                style={{flex:1}}
-                systems={[]}
+                ref={(ref) => { this.engine = ref }}
+                style={{width: this.width, height: this.height, flex: 1}}
+                systems={[ GameLoop ]}
                 entities={{
-                    1: { position: [0,0], renderer: <BackgroundGame/> },
-                    2: { position: [0, 500], characterName: this.props.route.params.visionResp[0].text, renderer: <Character/> },
+                    background0: { position: [0, 0], renderer: <BackgroundGame/> },
+                    background1: { position: [EngineConstants.MAX_WIDTH, 0], renderer: <BackgroundGame/> },
+                    player: { position: [20, 500], isMoving: true, characterName: this.props.route.params.visionResp[0].text, renderer: <Character/> },
                 }}>
                 <StatusBar hidden={true} />
                 </GameEngine>
             )
         }
 }
-
-const styles = StyleSheet.create({
-    container:{
-        flex:1
-    }
-})

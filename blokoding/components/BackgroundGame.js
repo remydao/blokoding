@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
+import EngineConstants from '../constants/EngineConstants';
 
 export default class BackgroundGame extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state= {
-            imageSource:""
+            imageSource:"",
         }
     }
 
-    componentDidMount(){
-        this.setState({imageSource:require("../assets/images/background.png")});
+    componentDidMount() {
+        this.setState({ imageSource: require("../assets/images/background.jpg") })
     }
 
     render(){
@@ -18,22 +19,15 @@ export default class BackgroundGame extends Component {
         const y = this.props.position[1];
         
         return (
-            <View style={[styles.container2, {left: x, top: y}]}>
-                <Image style={styles.background} source={this.state.imageSource} />
+            <View style={[styles.bg, {left: x, top: y}]}>
+                <Image source={this.state.imageSource}  style={{ width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT }}/>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container2:{
-        zIndex:-1,
-        flex:1
+    bg: {
+        position: 'absolute',
     },
-    background:{
-        flex:1,
-        height:"100%",
-        resizeMode:'stretch'
-    }
-
 })

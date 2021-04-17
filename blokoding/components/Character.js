@@ -56,9 +56,4 @@ const styles = StyleSheet.create({
         width: 100,
         zIndex:2,
     },
-    background:{
-        flex:1,
-        resizeMode:'cover',
-        backgroundColor:"red"
-    }
 })
