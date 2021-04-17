@@ -1,24 +1,41 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native';
+import { back } from 'react-native/Libraries/Animated/Easing';
 
-const FlatButton = ({text, onPress, color}) => {
+const FlatButton = ({text, onPress, color, pressColor}) => {
+
+    const [currentColor, setCurrentColor] = useState(color)
+    const [isPressed, setIsPressed] = useState(false)
+
+    var buttonProps = {
+        onPressIn: () => {
+            setCurrentColor(pressColor)
+            setIsPressed(true)
+        },
+        onPressOut: () => {
+            setCurrentColor(color)
+            setIsPressed(false)
+        },
+        style: styles.button
+    }
+
     return (
-        <TouchableOpacity onPress={onPress}>
-            <View style={[styles.button, {backgroundColor:color}]}>
+        <Pressable onPress={onPress} {...buttonProps} backgroundColor={currentColor}>
+            <View >
                 <Text style={styles.textStyle}>{text}</Text>
             </View>
-        </TouchableOpacity>
+        </Pressable>
     )
 }
 
 const styles = StyleSheet.create({
-    button:{
+    button: {
         width:'100%',
         justifyContent:'center',
         alignItems:'center',
-        paddingVertical:22,
+        paddingVertical:22
     },
-    textStyle:{
+    textStyle: {
         fontWeight:"700",
         color:"white",
         fontSize:40,
