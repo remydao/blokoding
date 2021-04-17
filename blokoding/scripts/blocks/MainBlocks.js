@@ -5,7 +5,6 @@ class CodeBlock {
 }
 
 class StructureBlock extends CodeBlock {
-
     constructor(nextBlock) {
         super()
         this.nextBlock = nextBlock;
@@ -22,8 +21,20 @@ class InstructionBlock extends StructureBlock {
 
 class ConditionBlock extends CodeBlock {
     constructor(entityBlock) {
+        super();
         this.entityBlock = entityBlock;
     }
 }
 
-export { CodeBlock, StructureBlock, InstructionBlock, ConditionBlock };
+class DataBlock extends CodeBlock {
+    constructor(value) {
+        super();
+        this.value = value;
+    }
+
+    execute() {
+        return this.value;
+    }
+}
+
+export { CodeBlock, StructureBlock, InstructionBlock, ConditionBlock, DataBlock };

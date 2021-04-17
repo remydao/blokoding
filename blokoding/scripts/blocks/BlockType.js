@@ -10,4 +10,10 @@ const Actions = {
     Speak: 'parler'
 }
 
-export { Characters, Actions };
+const Instructions = {
+    For: 'pour',
+    While: 'tant que',
+    If: 'si'
+}
+
+export { Characters, Actions, Instructions };
