@@ -5,13 +5,16 @@ import { GameEngine } from "react-native-game-engine";
 import Character from "../components/Character";
 import BackgroundGame from "../components/BackgroundGame";
 
+import parseInit from "../scripts/parsing/Parser";
+
 export default class Game extends Component {
 
     tooltipRef = null;
 
     constructor(props) {
         super(props);
-        this.tooltipRef = React.createRef();
+
+        parseInit(props.route.params.visionResp).execute();
     }
 
     render() {

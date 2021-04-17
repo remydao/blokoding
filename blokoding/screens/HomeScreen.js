@@ -9,26 +9,27 @@ import FlatButton from '../components/FlatButton';
 const Home = ({ navigation }) => {
     return (
       <View style={styles.container}>
-        <Image
-          source={require("../assets/icon.png")}
-          resizeMode="stretch"
-          style={{margin:35}}
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../assets/icon.png")}
+            resizeMode="stretch"
           />
-            <View style={styles.button}>
-              <FlatButton text="Découverte" color={Colors.red} onPress={() => navigation.navigate('Level Select')}/>
-            </View>
-            <View style={styles.button}>
-              <FlatButton text="Commencer" color={Colors.purpleBlue} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:false})}/>
-            </View>
-            <View style={styles.button}>
-              <FlatButton text="Aide" color={Colors.turquoise} onPress={() => navigation.navigate('Help')}/>
-            </View>
-            <View style={styles.button}>
-              <FlatButton text="Options" color={Colors.yellow} onPress={() => navigation.navigate('Options')}/>
-            </View>
-            <View style={styles.button}>
-              <FlatButton text="Créer Personnage" color={Colors.palePink} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:true})}/>
-            </View>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text="Découverte" color={Colors.red} pressColor={Colors.dark_red} onPress={() => navigation.navigate('Level Select')}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text="Commencer" color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:false})}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text="Aide" color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => navigation.navigate('Help')}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text="Options" color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Options')}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text="Créer Personnage" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:true})}/>
+        </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
     );
@@ -37,13 +38,18 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor:'#cbcef8',
     marginTop:-1,
   },
   button:{
     width:"100%",
+  },
+  logoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
