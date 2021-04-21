@@ -66,6 +66,9 @@ class Camera extends Component {
         for (var character in characterImages){
           characterList.push(characterImages[character].imageName);
         }
+        (visionResp).forEach(element => {
+          console.log(element.text);
+        });
         if (visionResp.length == 0 || !characterList.includes(visionResp[0].text)){
           this.setModalVisible(!this.modalVisible)
         }
