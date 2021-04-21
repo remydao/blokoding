@@ -1,15 +1,24 @@
 import { StructureBlock } from "./MainBlocks";
-
+import EngineConstants from '../../constants/EngineConstants'
+import Game from '../../screens/GameScreen'
 
 class MoveBlock extends StructureBlock {
     constructor(nextBlock) {
         super(nextBlock);
+        this.executed = 0;
     }
 
-    execute() {
-        console.log("move");
+    execute(player) {
+
+        if (!this.executed)
+        {
+            player.movePixel = EngineConstants.CELL_SIZE;
+            this.executed = 1;
+            return;
+        }
+        
         if (this.nextBlock) {
-            this.nextBlock.execute();
+            this.nextBlock.execute(player);
         }
     }
 }

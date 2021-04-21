@@ -37,7 +37,7 @@ const parseStructureCard = cardList => {
             return null;
     }
 
-    console.log('error');
+    console.log('error1');
     return null;
 }
 
@@ -47,7 +47,7 @@ const parseCharacter = cardList => {
     if (res.length > 0) {
         return new CharacterBlock(parseStructureCard(cardList), res[0]);
     } else {
-        console.log('error');
+        console.log('error2');
     }
 }
 
@@ -95,7 +95,7 @@ const parseInstruction = (instruction, cardList) => {
 const parseNumber = cardList => {
     let number = getFirstElm(cardList);
     if (isNaN(number)) {
-        console.log('error');
+        console.log('error3');
         return null;
     }
 

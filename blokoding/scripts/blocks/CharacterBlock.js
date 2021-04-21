@@ -6,13 +6,20 @@ class CharacterBlock extends StructureBlock {
     constructor(nextBlock, character) {
         super(nextBlock);
         this.character = character;
+        this.executed = 0;
     }
 
-    execute() {
-        //call game engine to display character
-        console.log(this.character);
+    execute(player) {
+    
+        if (!this.executed)
+        {
+            console.log(this.character);
+            this.executed = 1;
+            return;
+        }
+
         if (this.nextBlock) {
-            this.nextBlock.execute();
+            this.nextBlock.execute(player);
         }
     }
 }
