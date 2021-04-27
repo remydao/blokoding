@@ -4,9 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import Header from './components/Header';
-import {Home, Camera, Help, Options, Result, LevelSelect, Game, Error} from './screens/Screens';
-import Colors from "./constants/Colors"
+import Header from './src/components/Header';
+import {Home, Camera, Help, Options, Result, LevelSelect, Game, Error, Test} from './src/screens/Screens';
+import Colors from "./src/constants/Colors"
 
 const Stack = createStackNavigator();
 

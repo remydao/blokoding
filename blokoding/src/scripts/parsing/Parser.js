@@ -1,4 +1,4 @@
-import { Characters, Actions, Instructions } from "../blocks/BlockType";
+import { Characters, Actions, Instructions } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
 import { ForBlock } from "../blocks/InstructionBlock";

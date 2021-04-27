@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
+import EngineConstants from '../constants/EngineConstants';
 import {characterImages} from "../constants/CharacterImages";
 
 export default class Character extends Component {
@@ -8,6 +9,7 @@ export default class Character extends Component {
         this.state= {
             imageSource:""
         }
+        console.log(props.characterName)
     }
 
     componentDidMount(){
@@ -34,6 +36,8 @@ export default class Character extends Component {
             case 'Kevin':
                 this.setState({imageSource:characterImages.Kevin.uri});
                 break;
+            default:
+                break;
         }
     }
 
@@ -42,18 +46,17 @@ export default class Character extends Component {
         const y = this.props.position[1];
         
         return (
-            <View style={[styles.container, {left: x, top: y}]}>
-                <Image source={this.state.imageSource} />
+            <View style={[styles.container, {bottom: y}]}>
+                <Image source={this.state.imageSource} style={{width: EngineConstants.CELL_SIZE, resizeMode: 'contain'}} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container:{
-        position:"absolute",
-        height: 120,
-        width: 100,
-        zIndex:2,
+    container: {
+        position: "absolute",
+        zIndex: 2,
+        
     },
 })

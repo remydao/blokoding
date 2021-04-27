@@ -6,20 +6,13 @@ class CharacterBlock extends StructureBlock {
     constructor(nextBlock, character) {
         super(nextBlock);
         this.character = character;
-        this.executed = 0;
     }
 
-    execute(player) {
-    
-        if (!this.executed)
-        {
-            console.log(this.character);
-            this.executed = 1;
-            return;
-        }
+    execute(engine) {
+        console.log(this.character);
 
         if (this.nextBlock) {
-            this.nextBlock.execute(player);
+            this.nextBlock.execute(engine);
         }
     }
 }

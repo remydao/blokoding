@@ -23,7 +23,7 @@ class Camera extends Component {
           
           <RNCamera style={styles.preview} ref={ref => {this.camera = ref;}} type={RNCamera.Constants.Type.back} flashMode={RNCamera.Constants.FlashMode.off} captureAudio={false} />
           <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={() => this.detectText(this.props.navigation, this.props.route.params.isSelectCharacter)} style={styles.capture}>
+            <TouchableOpacity onPress={() => this.detectText(this.props.navigation)} style={styles.capture}>
                 <Text style={{ fontSize: 14 }}>      </Text>
               </TouchableOpacity>
           <Modal
@@ -52,7 +52,7 @@ class Camera extends Component {
       )
     }
   
-    detectText = async (navigation, isSelectCharacter) => {
+    detectText = async (navigation) => {
       try {
         const options = {
           quality: 0.8,
@@ -72,11 +72,8 @@ class Camera extends Component {
         if (visionResp.length == 0 || !characterList.includes(visionResp[0].text)){
           this.setModalVisible(!this.modalVisible)
         }
-        else if (isSelectCharacter){
-            navigation.navigate('Game', {visionResp: visionResp});
-        }
-        else{
-          navigation.navigate('Result', {visionResp : visionResp});
+        else {
+            navigation.navigate('Game', {visionResp: visionResp, isTesting: false});
         }
       } catch (e) {
         this.setModalVisible(!this.modalVisible)

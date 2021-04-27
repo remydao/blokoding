@@ -1,19 +1,19 @@
-import { InstructionBlock} from "./MainBlocks";
+import { InstructionBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
     constructor(nextBlock, execBlock, predicateBlock) {
         super(nextBlock, execBlock, predicateBlock);
     }
 
-    execute() {
+    async execute(engine) {
         let n = this.predicateBlock.execute();
         for (let i = 0; i < n; i++) {
-            this.execBlock.execute();
+            await this.execBlock.execute(engine);
         }
 
         if (this.nextBlock)
-            this.nextBlock.execute();
+            this.nextBlock.execute(engine);
     }
 }
 
-export { ForBlock };
+export default ForBlock;

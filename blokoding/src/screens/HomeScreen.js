@@ -19,7 +19,7 @@ const Home = ({ navigation }) => {
           <FlatButton text="Découverte" color={Colors.red} pressColor={Colors.dark_red} onPress={() => navigation.navigate('Level Select')}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Commencer" color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:false})}/>
+          <FlatButton text="Commencer" color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => navigation.navigate('Take Picture')}/>
         </View>
         <View style={styles.button}>
           <FlatButton text="Aide" color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => navigation.navigate('Help')}/>
@@ -28,7 +28,7 @@ const Home = ({ navigation }) => {
           <FlatButton text="Options" color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Options')}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Créer Personnage" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Take Picture', {isSelectCharacter:true})}/>
+          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {isTesting: true})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     flex: 1,
+    flexGrow: 2,
     justifyContent: 'center',
     alignItems: 'center'
   }
