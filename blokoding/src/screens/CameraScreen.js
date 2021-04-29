@@ -73,7 +73,8 @@ class Camera extends Component {
           this.setModalVisible(!this.modalVisible)
         }
         else {
-            navigation.navigate('Game', {visionResp: visionResp, isTesting: false});
+          // TODO pass the map in properties
+            navigation.navigate('Game', {visionResp: visionResp, isTesting: false, mapItems: ["e", "e", "w", "e", "e"]});
         }
       } catch (e) {
         this.setModalVisible(!this.modalVisible)

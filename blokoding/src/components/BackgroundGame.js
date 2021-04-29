@@ -29,6 +29,7 @@ export default class BackgroundGame extends Component {
 const styles = StyleSheet.create({
     bg: {
         position: 'absolute',
-        resizeMode: 'stretch'
+        resizeMode: 'stretch',
+        zIndex: -2
     }
 })

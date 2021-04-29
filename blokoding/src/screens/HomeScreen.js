@@ -28,7 +28,7 @@ const Home = ({ navigation }) => {
           <FlatButton text="Options" color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Options')}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {isTesting: true})}/>
+          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {isTesting: true, mapItems: ["e", "e", "w", "e", "e"]})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
