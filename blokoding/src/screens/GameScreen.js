@@ -19,6 +19,7 @@ class Game extends Component {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
+            character: '',
             mapBackground: props.route.params.mapInfo.background,
             mapItems: props.route.params.mapInfo.map,
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index)
@@ -26,23 +27,26 @@ class Game extends Component {
         if (props.route.params.isTesting) {
             this.actions = new CharacterBlock(new ForBlock(new JumpBlock(null), new MoveBlock(null), new DataBlock(5)), Characters.Kevin);
         } else {
-            this.actions = parseInit(props.route.params.visionResp);
+            this.actions = props.route.params.actions;
+            console.log(this.actions);
         }
         this.speed = EngineConstants.MAX_WIDTH * 0.01;
     }
 
     componentDidMount() {
-        console.log(EngineConstants.MAX_WIDTH);
         this.actions.execute(this);
     }
 
-    async move(nextBlock) {
+    setCharacter(character) {
+        this.setState({character: character});
+    }
+
+    async move() {
         this.setState({moveDistance: 0});
         
         let interval = setInterval(() => {
             this.moveItems();
             this.moveBackground();
-            console.log(this.state.itemsPos);
             this.setState({moveDistance: this.state.moveDistance + this.speed})
             if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
                 clearInterval(interval);
@@ -52,7 +56,7 @@ class Game extends Component {
         return await new Promise(resolve => setTimeout(resolve, 200 + 15 * EngineConstants.CELL_SIZE / this.speed));
     }
 
-    async jump(nextBlock) {
+    async jump() {
         this.setState({moveDistance: 0});
         let interval = setInterval(() => {
             this.moveItems();
@@ -105,12 +109,11 @@ class Game extends Component {
             }
         });
 
-
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                 <BackgroundGame imgBackground={this.state.mapBackground} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.state.mapBackground} position={[this.state.bg1Pos, 0]} />
-                <Character position={[0, this.state.playerPosY]} characterName='Dinny' />
+                <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
             </View>
         )

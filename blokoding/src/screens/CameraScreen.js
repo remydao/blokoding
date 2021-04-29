@@ -6,11 +6,13 @@ import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
 import CharacterImages, { characterImages } from "../constants/CharacterImages";
 import Maps from '../constants/Maps';
+import parseInit from '../scripts/parsing/Parser';
 
 
 class Camera extends Component {
     state = {
-      modalVisible: false
+      modalVisible: false,
+      modalText: 'Le scan a échoué, veuillez réessayer'
     }
 
     setModalVisible = (visible) => {
@@ -37,7 +39,7 @@ class Camera extends Component {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Le scan a échoué, veuillez réessayer</Text>
+                <Text style={styles.modalText}>{this.state.modalText}</Text>
                   <Pressable
                     style={[styles.button, styles.buttonClose]}
                     onPress={() => this.setModalVisible(false)}
@@ -63,21 +65,13 @@ class Camera extends Component {
         };
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
-        const characterList = [];
-        for (var character in characterImages){
-          characterList.push(characterImages[character].imageName);
-        }
-        (visionResp).forEach(element => {
-          console.log(element.text);
-        });
-        if (visionResp.length == 0 || !characterList.includes(visionResp[0].text)){
-          this.setModalVisible(!this.modalVisible)
-        }
-        else {
-          // TODO pass the map in properties
-            navigation.navigate('Game', {visionResp: visionResp, isTesting: false, mapInfo: Maps.foret1});
-        }
+        const actions = parseInit(visionResp);
+        console.log(actions);
+
+        // TODO pass the map in properties
+        navigation.navigate('Game', {actions: actions, isTesting: false, mapInfo: Maps.foret1});
       } catch (e) {
+        this.setState({modalText: e})
         this.setModalVisible(!this.modalVisible)
       }
     };

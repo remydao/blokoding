@@ -6,7 +6,6 @@ export default class BackgroundGame extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props.imgBackground);
         this.state = {
             imageSource: this.props.imgBackground,
         }

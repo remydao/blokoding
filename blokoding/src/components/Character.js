@@ -2,38 +2,40 @@ import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import {characterImages} from "../constants/CharacterImages";
+import { Characters } from "../constants/BlockType"
 
 export default class Character extends Component {
     constructor(props){
         super(props);
         this.state= {
-            imageSource:""
+            imageSource: ''
         }
-        console.log(props.characterName)
+        console.log(props.character)
+        
     }
 
-    componentDidMount(){
-        this.findCharacter(this.props.characterName);
+    componentDidMount() {
+        this.findCharacter(this.props.character)
     }
 
-    findCharacter(name){
-        switch(name){
-            case 'Bart':
+    findCharacter(character){
+        switch(character){
+            case Characters.Bart:
                 this.setState({imageSource:characterImages.Bart.uri});
                 break;
-            case 'Charlie':
+            case Characters.Charlie:
                 this.setState({imageSource:characterImages.Charlie.uri});
                 break;
-            case 'Cyclops':
+            case Characters.Cyclops:
                 this.setState({imageSource:characterImages.Cyclops.uri});
                 break;
-            case 'Dinny':
+            case Characters.Dinny:
                 this.setState({imageSource:characterImages.Dinny.uri});
                 break;
-            case 'Harry':
+            case Characters.Harry:
                 this.setState({imageSource:characterImages.Harry.uri});
                 break;
-            case 'Kevin':
+            case Characters.Kevin:
                 this.setState({imageSource:characterImages.Kevin.uri});
                 break;
             default:
@@ -45,6 +47,9 @@ export default class Character extends Component {
         const x = this.props.position[0];
         const y = this.props.position[1];
         
+        // if (this.state.imageSource == '')
+        //     this.findCharacter(this.props.character);
+
         return (
             <View style={[styles.container, {bottom: y}]}>
                 <Image source={this.state.imageSource} style={{width: EngineConstants.CELL_SIZE, resizeMode: 'contain'}} />
