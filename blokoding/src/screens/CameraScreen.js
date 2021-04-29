@@ -5,6 +5,7 @@ import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, But
 import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
 import CharacterImages, { characterImages } from "../constants/CharacterImages";
+import Maps from '../constants/Maps';
 
 
 class Camera extends Component {
@@ -74,7 +75,7 @@ class Camera extends Component {
         }
         else {
           // TODO pass the map in properties
-            navigation.navigate('Game', {visionResp: visionResp, isTesting: false, mapItems: ["e", "e", "w", "e", "e"]});
+            navigation.navigate('Game', {visionResp: visionResp, isTesting: false, mapInfo: Maps.foret1});
         }
       } catch (e) {
         this.setModalVisible(!this.modalVisible)

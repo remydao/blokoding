@@ -19,11 +19,10 @@ class Game extends Component {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
-            mapItems: props.route.params.mapItems,
-            itemsPos: props.route.params.mapItems.map((item, index) => EngineConstants.CELL_SIZE * index)
+            mapBackground: props.route.params.mapInfo.background,
+            mapItems: props.route.params.mapInfo.map,
+            itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index)
         };
-        console.log(props.route.params.mapItems);
-        console.log(props.route.params);
         if (props.route.params.isTesting) {
             this.actions = new CharacterBlock(new ForBlock(new JumpBlock(null), new MoveBlock(null), new DataBlock(5)), Characters.Kevin);
         } else {
@@ -109,8 +108,8 @@ class Game extends Component {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                <BackgroundGame position={[this.state.bg0Pos, 0]} />
-                <BackgroundGame position={[this.state.bg1Pos, 0]} />
+                <BackgroundGame imgBackground={this.state.mapBackground} position={[this.state.bg0Pos, 0]} />
+                <BackgroundGame imgBackground={this.state.mapBackground} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} characterName='Dinny' />
                 { this.arr }
             </View>

@@ -5,8 +5,10 @@ import EngineConstants from '../constants/EngineConstants';
 export default class BackgroundGame extends Component {
     constructor(props) {
         super(props);
-        this.state= {
-            imageSource: require("../assets/images/background1.jpg"),
+
+        console.log(this.props.imgBackground);
+        this.state = {
+            imageSource: this.props.imgBackground,
         }
     }
 
