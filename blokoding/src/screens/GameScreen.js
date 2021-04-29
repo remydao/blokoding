@@ -106,7 +106,7 @@ class Game extends Component {
             }
         });
 
-        
+
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                 <BackgroundGame position={[this.state.bg0Pos, 0]} />
