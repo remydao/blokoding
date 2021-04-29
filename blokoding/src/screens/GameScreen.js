@@ -43,30 +43,30 @@ class Game extends Component {
             }
         }, 15);
 
-        return await new Promise(resolve => setTimeout(resolve, 15 * (EngineConstants.CELL_SIZE / this.speed + 10)));
+        return await new Promise(resolve => setTimeout(resolve, 200 + 15 * EngineConstants.CELL_SIZE / this.speed));
     }
 
     async jump(nextBlock) {
         this.setState({moveDistance: 0});
         let interval = setInterval(() => {
             this.moveBackground();
-            if (this.state.moveDistance <= EngineConstants.CELL_SIZE / 2) {
-                let acc = 1 - this.state.moveDistance / (EngineConstants.CELL_SIZE / 2);
+            if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
+                let acc = 1 - this.state.moveDistance / EngineConstants.CELL_SIZE;
                 this.setState({playerPosY: this.state.playerPosY + this.speed + this.speed * acc});
             } else {
-                let acc = this.state.moveDistance / (EngineConstants.CELL_SIZE / 2) - 1;
+                let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
                 this.setState({playerPosY: this.state.playerPosY - this.speed - this.speed * acc});
             }
 
             this.setState({moveDistance: this.state.moveDistance + this.speed})
 
-            if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
+            if (this.state.moveDistance > EngineConstants.CELL_SIZE * 2) {
                 clearInterval(interval);
             }
         }, 15);
 
 
-        return await new Promise(resolve => setTimeout(resolve, 15 * (EngineConstants.CELL_SIZE / this.speed + 10)));
+        return await new Promise(resolve => setTimeout(resolve, 200 + 15 * EngineConstants.CELL_SIZE * 2 / this.speed));
     }
 
     moveBackground = () => {
@@ -87,7 +87,7 @@ class Game extends Component {
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                 <BackgroundGame position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame position={[this.state.bg1Pos, 0]} />
-                <Character position={[0, this.state.playerPosY]} characterName='Bart' />
+                <Character position={[0, this.state.playerPosY]} characterName='Dinny' />
             </View>
         )
     }
