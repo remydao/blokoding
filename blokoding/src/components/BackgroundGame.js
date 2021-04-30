@@ -5,8 +5,9 @@ import EngineConstants from '../constants/EngineConstants';
 export default class BackgroundGame extends Component {
     constructor(props) {
         super(props);
-        this.state= {
-            imageSource: require("../assets/images/background1.jpg"),
+
+        this.state = {
+            imageSource: this.props.imgBackground,
         }
     }
 
@@ -29,6 +30,7 @@ export default class BackgroundGame extends Component {
 const styles = StyleSheet.create({
     bg: {
         position: 'absolute',
-        resizeMode: 'stretch'
+        resizeMode: 'stretch',
+        zIndex: -2
     }
 })

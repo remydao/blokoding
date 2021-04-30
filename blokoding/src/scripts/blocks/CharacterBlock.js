@@ -9,7 +9,6 @@ class CharacterBlock extends StructureBlock {
     }
 
     execute(engine) {
-        console.log(this.character);
 
         if (this.nextBlock) {
             this.nextBlock.execute(engine);

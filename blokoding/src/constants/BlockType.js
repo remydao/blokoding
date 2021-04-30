@@ -1,6 +1,10 @@
 const Characters = {
     Bart: 'bart',
-    Kevin: 'kevin'
+    Kevin: 'kevin',
+    Dinny: 'dinny',
+    Harry: 'harry',
+    Charlie: 'charlie',
+    Cyclops: 'cyclops'
 }
 
 const Actions = {

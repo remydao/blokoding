@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {View, Text, StyleSheet, Image } from 'react-native'
 import MapItems from '../constants/BlockType';
 import EngineConstants from '../constants/EngineConstants';
@@ -6,23 +6,24 @@ import EngineConstants from '../constants/EngineConstants';
 
 export default class MapItem extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state= {
-            imageSource:""
+        this.state = {
+            imageSource: ""
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.findItem(this.props.itemName);
     }
 
-    findItem(item){
-        switch(item){
+    findItem(item) {
+        switch(item) {
             case 'w':
-                this.setState({imageSource: "../assets/MapItems/water.png"});
+                this.setState({imageSource: require("../assets/MapItems/water.png")});
                 break;
             default:
+                this.setState({imageSource: null});
                 break;
         }
     }
@@ -42,6 +43,6 @@ export default class MapItem extends Component {
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        zIndex: 3,
+        zIndex: 0,
     },
 })

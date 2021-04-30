@@ -1,8 +1,8 @@
 import { Characters, Actions, Instructions } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
-import { ForBlock } from "../blocks/InstructionBlock";
-import { DataBlock } from "../blocks/MainBlocks";
+import ForBlock from "../blocks/InstructionBlock";
+import { DataBlock } from "../blocks/DataBlock";
 
 
 var loopDepth = 0;
@@ -19,8 +19,14 @@ const getFirstElm = cardList => {
 const parseStructureCard = cardList => {
     let blockName = getFirstElm(cardList);
 
-    if (blockName === undefined)
-        return null;
+    console.log(blockName);
+
+    if (typeof blockName === 'undefined') {
+        if (loopDepth > 0) {
+            throw "Il manque une carte fin à la fin d'une instruction"; 
+        } else
+            return null;
+    }
     
     let res = Object.entries(Actions).filter(action => action[1] == blockName);
     if (res.length > 0) {
@@ -32,22 +38,23 @@ const parseStructureCard = cardList => {
         return parseInstruction(res[0], cardList);
     }
 
-    if (blockName == "fin") {
+    if (blockName === "fin") {
         if (loopDepth > 0)
             return null;
+        else
+            throw 'Une carte fin est mal placée'
     }
 
-    console.log('error1');
-    return null;
+    throw 'Une instruction doit toujours se finir par une carte Fin';
 }
 
 const parseCharacter = cardList => {
     let character = getFirstElm(cardList);
     let res = Object.entries(Characters).filter(charac => charac[1] == character);
     if (res.length > 0) {
-        return new CharacterBlock(parseStructureCard(cardList), res[0]);
+        return new CharacterBlock(parseStructureCard(cardList), res[0][1]);
     } else {
-        console.log('error2');
+        throw 'Ton programme doit commencer par une carte personnage';
     }
 }
 
@@ -88,18 +95,19 @@ const parseInstruction = (instruction, cardList) => {
     loopDepth--;
 
     let nextBlock = parseStructureCard(cardList);
-
     return new ForBlock(nextBlock, execBlock, predicateBlock);
 }
 
 const parseNumber = cardList => {
     let number = getFirstElm(cardList);
+    console.log(number)
     if (isNaN(number)) {
         console.log('error3');
         return null;
     }
-
-    return new DataBlock(parseInt(number));
+    let n = parseInt(number);
+    console.log(n);
+    return new DataBlock(n);
 }
 
 export default parseInit;
