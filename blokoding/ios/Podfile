@@ -5,13 +5,16 @@ platform :ios, '10.0'
 
 target 'blokoding' do
   config = use_native_modules!
-
+  #pod 'OpenSSL', '~> 1.0'
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
   )
-
+  
+  #permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera/Permission-Camera.podspec"
+  
   target 'blokodingTests' do
     inherit! :complete
     # Pods for testing
@@ -21,7 +24,7 @@ target 'blokoding' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
+  #use_flipper!()
 
   #react_native_post_install(installer)
   post_install do |installer|

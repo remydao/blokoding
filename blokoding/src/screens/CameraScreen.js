@@ -5,7 +5,7 @@ import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, But
 import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
 import CharacterImages, { characterImages } from "../constants/CharacterImages";
-
+import {Permission, PERMISSION_TYPE} from '../AppPermission'
 
 class Camera extends Component {
     state = {
@@ -14,6 +14,10 @@ class Camera extends Component {
 
     setModalVisible = (visible) => {
       this.setState({modalVisible: visible})
+    }
+
+    componentDidMount(){
+      Permission.checkPermission(PERMISSION_TYPE.camera)
     }
 
     render() {
