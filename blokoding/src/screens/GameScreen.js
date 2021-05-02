@@ -30,7 +30,7 @@ class Game extends Component {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
-        this.speed = EngineConstants.MAX_WIDTH * 0.01;
+        this.speed = EngineConstants.MAX_WIDTH * 0.015;
     }
 
     componentDidMount() {
@@ -43,41 +43,44 @@ class Game extends Component {
 
     async move() {
         this.setState({moveDistance: 0});
-        
-        let interval = setInterval(() => {
-            this.moveItems();
-            this.moveBackground();
-            this.setState({moveDistance: this.state.moveDistance + this.speed})
-            if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
-                clearInterval(interval);
-            }
-        }, 15);
-
-        return await new Promise(resolve => setTimeout(resolve, 200 + 15 * EngineConstants.CELL_SIZE / this.speed));
+        return await new Promise(resolve => {
+            let interval = setInterval(() => {
+                this.moveItems();
+                this.moveBackground();
+                this.setState({moveDistance: this.state.moveDistance + this.speed})
+                if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 15)
+        });
     }
 
     async jump() {
         this.setState({moveDistance: 0});
-        let interval = setInterval(() => {
-            this.moveItems();
-            this.moveBackground();
-            if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
-                let acc = 1 - this.state.moveDistance /  EngineConstants.CELL_SIZE;
-                this.setState({playerPosY: this.state.playerPosY + this.speed + this.speed * acc});
-            } else {
-                let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
-                this.setState({playerPosY: this.state.playerPosY - this.speed - this.speed * acc});
-            }
+        return await new Promise(resolve => {
+            let interval = setInterval(() => {
+                this.moveItems();
+                this.moveBackground();
+                this.moveCharacUpDown();
+                this.setState({moveDistance: this.state.moveDistance + this.speed})
 
-            this.setState({moveDistance: this.state.moveDistance + this.speed})
+                if (this.state.moveDistance > EngineConstants.CELL_SIZE * 2) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 15)
+        });
+    }
 
-            if (this.state.moveDistance > EngineConstants.CELL_SIZE * 2) {
-                clearInterval(interval);
-            }
-        }, 15);
-
-
-        return await new Promise(resolve => setTimeout(resolve, 200 + 15 * EngineConstants.CELL_SIZE * 2 / this.speed));
+    moveCharacUpDown = () => {
+        if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
+            let acc = 1 - this.state.moveDistance /  EngineConstants.CELL_SIZE;
+            this.setState({playerPosY: this.state.playerPosY + this.speed * 2 * acc});
+        } else {
+            let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
+            this.setState({playerPosY: this.state.playerPosY - this.speed * 2 * acc});
+        }
     }
 
     moveBackground = () => {
@@ -105,7 +108,7 @@ class Game extends Component {
     render() {
         this.arr = this.state.mapItems.map((item, index) => {
             if (item !== "e") {
-                return <MapItem key={index} itemName={item} position={[this.state.itemsPos[index], this.state.playerPosY]} />                            
+                return <MapItem key={index} itemName={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
         });
 
