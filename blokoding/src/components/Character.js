@@ -7,48 +7,31 @@ import { Characters } from "../constants/BlockType"
 export default class Character extends Component {
     constructor(props){
         super(props);
-        this.state= {
-            imageSource: ''
+        this.state = {
+            imageSource: this.findCharacter(props.character)
         }
-        console.log(props.character)
-        
-    }
-
-    componentDidMount() {
-        this.findCharacter(this.props.character)
     }
 
     findCharacter(character){
         switch(character){
             case Characters.Bart:
-                this.setState({imageSource:characterImages.Bart.uri});
-                break;
+                return characterImages.Bart.uri;
             case Characters.Charlie:
-                this.setState({imageSource:characterImages.Charlie.uri});
-                break;
+                return characterImages.Charlie.uri;
             case Characters.Cyclops:
-                this.setState({imageSource:characterImages.Cyclops.uri});
-                break;
+                return characterImages.Cyclops.uri;
             case Characters.Dinny:
-                this.setState({imageSource:characterImages.Dinny.uri});
-                break;
+                return characterImages.Dinny.uri;
             case Characters.Harry:
-                this.setState({imageSource:characterImages.Harry.uri});
-                break;
+                return characterImages.Harry.uri;
             case Characters.Kevin:
-                this.setState({imageSource:characterImages.Kevin.uri});
-                break;
-            default:
-                break;
+                return characterImages.Kevin.uri;
         }
     }
 
     render(){
         const x = this.props.position[0];
         const y = this.props.position[1];
-        
-        // if (this.state.imageSource == '')
-        //     this.findCharacter(this.props.character);
 
         return (
             <View style={[styles.container, {bottom: y}]}>

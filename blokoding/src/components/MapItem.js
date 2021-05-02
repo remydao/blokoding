@@ -9,26 +9,18 @@ export default class MapItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageSource: ""
+            imageSource: this.findItem(props.itemName)
         }
-    }
-
-    componentDidMount() {
-        this.findItem(this.props.itemName);
     }
 
     findItem(item) {
         switch(item) {
             case 'w':
-                this.setState({imageSource: require("../assets/MapItems/water.png")});
-                break;
-            default:
-                this.setState({imageSource: null});
-                break;
+                return require("../assets/MapItems/water.png");
         }
     }
 
-    render(){
+    render() {
         const x = this.props.position[0];
         const y = this.props.position[1];
 
