@@ -18,7 +18,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: true, headerTitleAlign:'center' }}>
+      <Stack.Navigator initialRouteName="Home" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center', }}>
         <Stack.Screen name="Home" component={Home} options={{headerTitle: () => <Header title="BLOKODING"/>}}/>
         <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
         <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <Header title="Aide" backgroundColor={Colors.purpleBlue}/>}}/>

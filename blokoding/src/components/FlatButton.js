@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native';
 import { back } from 'react-native/Libraries/Animated/Easing';
+import EngineConstants from '../constants/EngineConstants';
 
 const FlatButton = ({text, onPress, color, pressColor}) => {
 
@@ -16,7 +17,7 @@ const FlatButton = ({text, onPress, color, pressColor}) => {
             setCurrentColor(color)
             setIsPressed(false)
         },
-        style: styles.button
+        style: styles.button, paddingVertical:EngineConstants.MAX_HEIGHT / 35
     }
 
     return (
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
         width:'100%',
         justifyContent:'center',
         alignItems:'center',
-        paddingVertical:22
     },
     textStyle: {
         fontWeight:"700",
