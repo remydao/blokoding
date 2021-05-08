@@ -20,12 +20,11 @@ class Game extends Component {
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
             character: '',
-            mapBackground: props.route.params.mapInfo.background,
             mapItems: props.route.params.mapInfo.map,
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index)
         };
         if (props.route.params.isTesting) {
-            this.actions = new CharacterBlock(new ForBlock(new JumpBlock(null), new MoveBlock(null), new DataBlock(5)), Characters.Kevin);
+            this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(5)), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -114,8 +113,8 @@ class Game extends Component {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                <BackgroundGame imgBackground={this.state.mapBackground} position={[this.state.bg0Pos, 0]} />
-                <BackgroundGame imgBackground={this.state.mapBackground} position={[this.state.bg1Pos, 0]} />
+                <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
+                <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
             </View>

@@ -23,7 +23,7 @@ const parseStructureCard = cardList => {
 
     if (typeof blockName === 'undefined') {
         if (loopDepth > 0) {
-            throw "Il manque une carte fin à la fin d'une instruction"; 
+            throw 'Une instruction doit toujours se finir par une carte Fin'; 
         } else
             return null;
     }
@@ -45,7 +45,7 @@ const parseStructureCard = cardList => {
             throw 'Une carte fin est mal placée'
     }
 
-    throw 'Une instruction doit toujours se finir par une carte Fin';
+    throw 'Texte inconnu';
 }
 
 const parseCharacter = cardList => {

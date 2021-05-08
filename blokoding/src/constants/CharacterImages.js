@@ -1,40 +1,42 @@
-const characterImages = {
-    Bart:{
-        imageName: "Bart",
-        uri: require("../assets/Characters/Bart/1x/Bart.png")
+import { Characters } from './BlockType';
+
+const characterImages = [
+    {
+        imageName: Characters.Bart,
+        uri: require("../assets/characters/Bart/1x/Bart.png")
     },
-    Charlie:{
-        imageName:"Charlie",
-        uri: require("../assets/Characters/Charlie/1x/Charlie.png")
+    {
+        imageName: Characters.Charlie,
+        uri: require("../assets/characters/Charlie/1x/Charlie.png")
     },
-    Cyclops:{
-        imageName:"Cyclops",
-        uri: require("../assets/Characters/Cyclops/1x/Cyclops.png")
+    {
+        imageName: Characters.Cyclops,
+        uri: require("../assets/characters/Cyclops/1x/Cyclops.png")
     },
-    Dinny:{
-        imageName:"Dinny",
-        uri: require("../assets/Characters/Dinny/1x/Dinny.png")
+    {
+        imageName: Characters.Dinny,
+        uri: require("../assets/characters/Dinny/1x/Dinny.png")
     },
-    Harry:{
-        imageName:"Harry",
-        uri: require("../assets/Characters/Harry/1x/Harry.png")
+    {
+        imageName: Characters.Harry,
+        uri: require("../assets/characters/Harry/1x/Harry.png")
     },
-    Kevin:{
-        imageName:"Kevin",
-        uri: require("../assets/Characters/Kevin/1x/Kevin.png")
+    {
+        imageName: Characters.Kevin,
+        uri: require("../assets/characters/Kevin/1x/Kevin.png")
     },
-    MrMoustache:{
-        imageName:"MrMoustache",
-        uri: require("../assets/Characters/MrMoustache/1x/Mr_Moustache.png")
+    {
+        imageName: Characters.MrMustache,
+        uri: require("../assets/characters/MrMoustache/1x/Mr_Moustache.png")
     },
-    MsBrocoli:{
-        imageName:"MsBrocoli",
-        uri: require("../assets/Characters/MsBrocoli/1x/Ms_Brocoli.png")
+    {
+        imageName: Characters.MsBrocoli,
+        uri: require("../assets/characters/MsBrocoli/1x/Ms_Brocoli.png")
     },
-    Nosy:{
-        imageName:"Nosy",
-        uri: require("../assets/Characters/Nosy/1x/Nosy.png")
+    {
+        imageName: Characters.Nosy,
+        uri: require("../assets/characters/Nosy/1x/Nosy.png")
     }
-}
+]
 
 export {characterImages};

@@ -13,20 +13,7 @@ export default class Character extends Component {
     }
 
     findCharacter(character){
-        switch(character){
-            case Characters.Bart:
-                return characterImages.Bart.uri;
-            case Characters.Charlie:
-                return characterImages.Charlie.uri;
-            case Characters.Cyclops:
-                return characterImages.Cyclops.uri;
-            case Characters.Dinny:
-                return characterImages.Dinny.uri;
-            case Characters.Harry:
-                return characterImages.Harry.uri;
-            case Characters.Kevin:
-                return characterImages.Kevin.uri;
-        }
+        return characterImages.filter(characImg => characImg.imageName == character)[0].uri
     }
 
     render(){
@@ -34,7 +21,7 @@ export default class Character extends Component {
         const y = this.props.position[1];
 
         return (
-            <View style={[styles.container, {bottom: y}]}>
+            <View style={[styles.container, {bottom: y, left: x}]}>
                 <Image source={this.state.imageSource} style={{width: EngineConstants.CELL_SIZE, resizeMode: 'contain'}} />
             </View>
         )

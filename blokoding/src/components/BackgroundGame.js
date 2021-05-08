@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
     bg: {
         position: 'absolute',
         resizeMode: 'stretch',
-        zIndex: -2
+        zIndex: 0
     }
 })

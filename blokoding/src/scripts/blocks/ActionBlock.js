@@ -33,10 +33,10 @@ class GrabBlock extends StructureBlock {
         super(nextBlock);
     }
 
-    execute() {
+    execute(engine) {
         console.log("grab");
         if (this.nextBlock) {
-            this.nextBlock.execute();
+            this.nextBlock.execute(engine);
         }
     }
 }

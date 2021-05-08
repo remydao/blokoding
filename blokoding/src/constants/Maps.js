@@ -1,10 +1,12 @@
+import Themes from "./Themes";
+
 export default Maps = {
     foret1: {
-        background: require("../assets/images/background1.jpg"),
+        theme: Themes.Workshop,
         map: ["e", "e", "w", "e", "e", "e", "e", "W"] 
     },
     foret2: {
-        background: require("../assets/images/background1.jpg"),
+        theme: Themes.Forest,
         map: ["e", "e", "e", "e", "e", "e", "e", "W"]
     }
 }
