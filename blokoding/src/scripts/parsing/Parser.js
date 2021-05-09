@@ -1,4 +1,4 @@
-import { Characters, Actions, Instructions } from "../../constants/BlockType";
+import { Characters, Actions, Instructions, Items } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
 import ForBlock from "../blocks/InstructionBlock";
@@ -102,12 +102,21 @@ const parseNumber = cardList => {
     let number = getFirstElm(cardList);
     console.log(number)
     if (isNaN(number)) {
-        console.log('error3');
-        return null;
+        throw 'Il manque une carte nombre';
     }
     let n = parseInt(number);
     console.log(n);
     return new DataBlock(n);
+}
+
+const parseItem = cardList => {
+    let item = getFirstElm(cardList);
+    let res = Object.entries(Items).filter(it => it[1] == item);
+    if (res.length > 0) {
+        return new DataBlock(res[0][1]);
+    } else {
+        throw 'Il manque une carte objet';
+    }
 }
 
 export default parseInit;
