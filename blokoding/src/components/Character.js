@@ -22,7 +22,7 @@ export default class Character extends Component {
 
         return (
             <View style={[styles.container, {bottom: y, left: x}]}>
-                <Image source={this.state.imageSource} style={{width: EngineConstants.CELL_SIZE, resizeMode: 'contain'}} />
+                <Image source={this.state.imageSource} style={styles.image} />
             </View>
         )
     }
@@ -34,4 +34,8 @@ const styles = StyleSheet.create({
         zIndex: 2,
         
     },
+    image: {
+        width: EngineConstants.CELL_SIZE, 
+        resizeMode: 'contain'
+    }
 })
