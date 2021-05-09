@@ -10,6 +10,7 @@ import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
 import parseInit from '../scripts/parsing/Parser'
 import MapItem from '../components/MapItem'
+import Inventory from '../components/Inventory';
 
 
 class Game extends Component {
@@ -117,6 +118,7 @@ class Game extends Component {
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
+                <Inventory />
             </View>
         )
     }
