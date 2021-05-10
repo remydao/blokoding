@@ -16,4 +16,21 @@ class ForBlock extends InstructionBlock {
     }
 }
 
+
+class IfBlock extends InstructionBlock {
+    constructor(nextBlock, execBlock, predicateBlock) {
+        super(nextBlock, execBlock, predicateBlock);
+    }
+
+    async execute(engine) {
+        let isConditionTrue = this.predicateBlock.execute();
+        
+        if (isConditionTrue)
+            await this.execBlock.execute(engine);
+
+        if (this.nextBlock)
+            this.nextBlock.execute(engine);
+    }
+}
+
 export default ForBlock;
