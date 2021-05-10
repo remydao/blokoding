@@ -17,6 +17,8 @@ export default class MapItem extends Component {
         switch(item) {
             case 'w':
                 return require("../assets/MapItems/water.png");
+            case 'b':
+                return require("../assets/MapItems/buisson.png");
         }
     }
 

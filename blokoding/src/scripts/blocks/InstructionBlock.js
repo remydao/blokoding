@@ -35,4 +35,4 @@ class IfBlock extends InstructionBlock {
     }
 }
 
-export default ForBlock;
+export default {ForBlock, IfBlock};

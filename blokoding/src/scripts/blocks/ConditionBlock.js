@@ -6,8 +6,10 @@ class IsInFrontBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    execute() {
+    async execute(engine) {
+        let entity = this.entityBlock.execute();
 
+        return engine.isInFrontOf(entity);
     }
 }
 

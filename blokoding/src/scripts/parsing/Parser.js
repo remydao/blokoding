@@ -1,8 +1,7 @@
 import { Characters, Actions, Instructions, Items, Conditions, Environments } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
-import ForBlock from "../blocks/InstructionBlock";
-import { DataBlock } from "../blocks/DataBlock";
+import { ForBlock, IfBlock } from "../blocks/InstructionBlock";
 import IsInFrontBlock from "../blocks/ConditionBlock";
 
 
@@ -96,7 +95,18 @@ const parseInstruction = (instruction, cardList) => {
     loopDepth--;
 
     let nextBlock = parseStructureCard(cardList);
-    return new ForBlock(nextBlock, execBlock, predicateBlock);
+
+    switch (instruction[1]) {
+        case Instructions.For:
+            return new ForBlock(nextBlock, execBlock, predicateBlock);
+        case Instructions.If:
+            return new IfBlock(nextBlock, execBlock, predicateBlock);
+        case Instructions.While:
+            //parse condition
+            break;
+        default:
+            return null;
+    }
 }
 
 const parseNumber = cardList => {
