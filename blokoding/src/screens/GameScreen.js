@@ -25,7 +25,8 @@ class Game extends Component {
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
             characterPos: 0,
             hasLost: false,
-            hasWon: false
+            hasWon: false,
+            inventory: {}
         };
         if (props.route.params.isTesting) {
             //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
@@ -161,7 +162,7 @@ class Game extends Component {
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
-                <Inventory />
+                <Inventory inventory={this.state.inventory} />
             </View>
         )
     }
