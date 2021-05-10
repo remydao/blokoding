@@ -39,4 +39,8 @@ const Environments = {
     Bin: 'poubelle'
 }
 
-export { Characters, Actions, Instructions, Items, Environments };
+const Conditions = {
+    IsInFront: "être devant"
+}
+
+export { Characters, Actions, Instructions, Items, Environments, Conditions };

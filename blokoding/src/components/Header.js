@@ -1,6 +1,7 @@
 import React from 'react'
 import { Platform } from 'react-native'
 import {View, Text, StyleSheet, Image, StatusBar } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Colors from '../constants/Colors'
 
 
@@ -12,6 +13,9 @@ const Header = (props) => {
                 (<View style={styles(props).statusBarIOS}></View>)
                 : <View></View>
             }
+            <View>
+                <Text style={styles(props).backBtn}>lol</Text>
+            </View>
             <Image
                 source={require("../assets/icon.png")}
                 style={{ width: 20, height: 20 }}
@@ -21,15 +25,20 @@ const Header = (props) => {
     )
 }
 
-const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+
+const STATUSBAR_HEIGHT = getStatusBarHeight();
 
 const styles = (props) => StyleSheet.create({
     statusBarIOS:{
         position: 'absolute',
-        top:-14,
-        height: 15,
+        top: -STATUSBAR_HEIGHT,
+        height: STATUSBAR_HEIGHT,
         width:1500,
         backgroundColor: props.backgroundColor || Colors.azure,
+    },
+    backBtn:{
+        position:'absolute',
+        left: 10,
     },
     header:{
         width:1500,

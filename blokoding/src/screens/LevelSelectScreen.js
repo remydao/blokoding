@@ -1,8 +1,16 @@
 import React from 'react';
-import {StyleSheet, StatusBar, Button, ScrollView, SafeAreaView} from 'react-native';
+import {Text, View, StatusBar, StyleSheet, FlatList, Pressable} from 'react-native';
+import {default as UUID} from "uuid"; 
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
+import FlatButton from '../components/FlatButton';
+import { BackgroundColor } from 'chalk';
 
+const LevelSelectColors = [
+  Colors.dark_pink,
+  Colors.azure,
+  Colors.turquoise
+]
 
 const LevelSelect = ({ navigation }) => {
 
@@ -11,28 +19,43 @@ const LevelSelect = ({ navigation }) => {
     for (let i = 0; i < 30; i++)
     {
         const levelTitle = "Level " + (i + 1)
+        buttons.push({id:UUID.v4(), value:levelTitle})
+    }
 
-        buttons.push(
-            <Button  key={i} title={levelTitle} color={Colors.purpleBlue} style={styles.button}></Button>
-        )
+    const onPress = (index) => {
+      console.log("you pressed " + index)
+    }
+
+    const selectBgColor = (index) => {
+      return LevelSelectColors[index % LevelSelectColors.length];
     }
 
     return (
-      <SafeAreaView style={styles.contentContainer}>
-        <ScrollView style={styles.scrollView}>
-            {buttons}
-        </ScrollView>
-        <StatusBar backgroundColor={Colors.azure}/>
-      </SafeAreaView>
+      <View style={styles.container}>
+          <View>
+            <FlatList
+                data={buttons}
+                renderItem={({item, index}) => 
+                   (  
+                     <View style={{backgroundColor: selectBgColor(index)}}>
+                       <FlatButton text={item.value} onPress={() => onPress(index)} pressColor={'red'}>
+                      </FlatButton>
+                      </View>
+                    
+                    )}
+                keyExtractor={item => item.id}
+            />
+          </View>
+          <StatusBar backgroundColor={Colors.azure}/>
+      </View>
     );
   };
 
 export default LevelSelect;
 
 const styles = StyleSheet.create({
-    contentContainer: {
-        flex:1,
+    container: {
+      flex: 1,
+      backgroundColor: 'white'
     },
-    button:{
-    }
 })
