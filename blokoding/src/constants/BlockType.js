@@ -4,7 +4,10 @@ const Characters = {
     Dinny: 'dinny',
     Harry: 'harry',
     Charlie: 'charlie',
-    Cyclops: 'cyclops'
+    Cyclops: 'cyclops',
+    Nosy: 'nosy',
+    MrMustache: 'mr. mustache',
+    MsBrocoli: 'ms. brocoli'
 }
 
 const Actions = {
@@ -15,9 +18,25 @@ const Actions = {
 }
 
 const Instructions = {
-    For: 'pour',
+    For: 'répéter',
     While: 'tant que',
     If: 'si'
 }
 
-export { Characters, Actions, Instructions };
+const Items = {
+    Key: 'clé',
+    Plush: 'peluche',
+    Flower: 'fleur',
+    Machete: 'machette',
+    Trash: 'déchet'
+}
+
+const Environments = {
+    Door: 'porte',
+    Chair: 'chaise',
+    Bush: 'buission',
+    Puddle: 'flaque',
+    Bin: 'poubelle'
+}
+
+export { Characters, Actions, Instructions, Items, Environments };

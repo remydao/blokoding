@@ -26,7 +26,7 @@ export default class MapItem extends Component {
 
         return (
             <View style={[styles.container, {bottom: y, left: x}]}>
-                <Image source={this.state.imageSource} style={{width: EngineConstants.CELL_SIZE, resizeMode: 'contain'}} />
+                <Image source={this.state.imageSource} style={styles.image} />
             </View>
         )
     }
@@ -35,6 +35,10 @@ export default class MapItem extends Component {
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        zIndex: 0,
+        zIndex: 1,
     },
+    image: {
+        width: EngineConstants.CELL_SIZE, 
+        resizeMode: 'contain'
+    }
 })

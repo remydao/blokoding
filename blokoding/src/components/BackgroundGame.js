@@ -11,17 +11,13 @@ export default class BackgroundGame extends Component {
         }
     }
 
-    // componentDidMount() {
-    //     this.setState({ imageSource: require("../assets/images/background1.jpg") })
-    // }
-
     render(){
         const x = this.props.position[0];
         const y = this.props.position[1];
         
         return (
             <View>
-                <Image source={this.state.imageSource}  style={[styles.bg, {left: x, top: y, width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT }]}/>
+                <Image source={this.state.imageSource}  style={[styles.bg, {left: x, top: y}]}/>
             </View>
         )
     }
@@ -31,6 +27,8 @@ const styles = StyleSheet.create({
     bg: {
         position: 'absolute',
         resizeMode: 'stretch',
-        zIndex: -2
+        width: EngineConstants.MAX_WIDTH,
+        height: EngineConstants.MAX_HEIGHT,
+        zIndex: 0
     }
 })
