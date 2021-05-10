@@ -13,7 +13,7 @@ export default class Character extends Component {
     }
 
     findCharacter(character){
-        return characterImages.filter(characImg => characImg.imageName == character)[0].uri
+        return Object.entries(characterImages).filter(characImg => characImg[1].imageName == character)[0][1].uri
     }
 
     render(){
