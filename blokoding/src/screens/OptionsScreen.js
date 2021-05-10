@@ -23,23 +23,21 @@ const Options = ({ navigation }) => {
   };
 
   const styles = StyleSheet.create({
-    container:{
+    container: {
       flex: 1,
       alignItems: 'center',
-      backgroundColor:Colors.turquoise 
+      backgroundColor: Colors.turquoise 
     },
-    picker:
-    {
-      marginTop:50,
+    picker: {
+      marginTop: 50,
       height: 50,
       width: 150,
-      borderRadius:10,
-      backgroundColor:Colors.purpleBlue
+      borderRadius: 10,
+      backgroundColor: Colors.purpleBlue
     },
-    image:{
-      top:150
+    image: {
+      top: 150
     }
-
   })
 
 

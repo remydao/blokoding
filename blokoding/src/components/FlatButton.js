@@ -31,15 +31,15 @@ const FlatButton = ({text, onPress, color, pressColor}) => {
 
 const styles = StyleSheet.create({
     button: {
-        width:'100%',
-        justifyContent:'center',
-        alignItems:'center',
-        paddingVertical:EngineConstants.MAX_HEIGHT / 35
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: EngineConstants.MAX_HEIGHT * 0.03
     },
     textStyle: {
-        fontWeight:"700",
-        color:"white",
-        fontSize:40,
+        fontWeight: '700',
+        color: 'white',
+        fontSize: EngineConstants.MAX_HEIGHT * 0.05,
         fontFamily: 'Montserrat'
     }
 })

@@ -22,10 +22,15 @@ class Game extends Component {
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
             character: '',
             mapItems: props.route.params.mapInfo.map,
-            itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index)
+            itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
+            characterPos: 0,
+            hasLost: false,
+            hasWon: false,
+            inventory: {}
         };
         if (props.route.params.isTesting) {
-            this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(5)), Characters.Kevin);
+            //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -37,10 +42,34 @@ class Game extends Component {
         this.actions.execute(this);
     }
 
-    setCharacter(character) {
-        this.setState({character: character});
+    // function that check user's win or loss
+    // return -1 if lose, 0 if nothing, 1 if win
+    checkState() {
+        switch (this.state.mapItems[this.state.characterPos]) {
+            case 'W':
+                this.setState({hasWon: true});
+                this.win();
+                break;
+            case 'w':
+                this.setState({hasLost: true});
+                this.loose();
+                break;
+            default:
+                break;
+        }
     }
 
+    // Getter of hasLost state
+    getStateHasLost(){
+        return this.state.hasLost;
+    }
+
+    // Getter of hasWon state
+    getStateHasWon(){
+        return this.state.hasWon;
+    }
+
+    // General function to move the character (used in ActionBlock.js)
     async move() {
         this.setState({moveDistance: 0});
         return await new Promise(resolve => {
@@ -50,12 +79,14 @@ class Game extends Component {
                 this.setState({moveDistance: this.state.moveDistance + this.speed})
                 if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
                     clearInterval(interval);
+                    this.setState({characterPos: this.state.characterPos + 1});
                     resolve();
                 }
             }, 15)
         });
     }
 
+    // General function to jump the character (used in ActionBlock.js)
     async jump() {
         this.setState({moveDistance: 0});
         return await new Promise(resolve => {
@@ -67,12 +98,14 @@ class Game extends Component {
 
                 if (this.state.moveDistance > EngineConstants.CELL_SIZE * 2) {
                     clearInterval(interval);
+                    this.setState({characterPos: this.state.characterPos + 2});
                     resolve();
                 }
             }, 15)
         });
     }
 
+    // Function for jump translation
     moveCharacUpDown = () => {
         if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
             let acc = 1 - this.state.moveDistance /  EngineConstants.CELL_SIZE;
@@ -83,6 +116,7 @@ class Game extends Component {
         }
     }
 
+    // Function for move translation of the character
     moveBackground = () => {
 
         let newBg0Pos = this.state.bg0Pos - this.speed;
@@ -96,6 +130,7 @@ class Game extends Component {
         this.setState({bg0Pos: newBg0Pos, bg1Pos: newBg1Pos});
     }
 
+    // Function for move translation of all the items in the map
     moveItems = () => {
         let newItemPos = [];
         for (let item of this.state.itemsPos)
@@ -104,6 +139,15 @@ class Game extends Component {
         this.setState({itemsPos: newItemPos});
     }
 
+    // Function to notify loose
+    loose() {
+        console.log('You have loose');
+    }
+
+    // Function to notify win
+    win() {
+        console.log('You have win');
+    }
     
     render() {
         this.arr = this.state.mapItems.map((item, index) => {
@@ -118,7 +162,7 @@ class Game extends Component {
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
-                <Inventory/>
+                <Inventory inventory={this.state.inventory} />
             </View>
         )
     }

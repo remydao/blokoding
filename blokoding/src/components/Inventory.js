@@ -1,40 +1,58 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import { Environments } from "../constants/BlockType";
 import EngineConstants from "../constants/EngineConstants";
 
-export default class Inventory extends Component {
+const Inventory = ({inventory}) => {
+    inventory= { cyclop: 1, bart: 1}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            imageSource: require('../assets/characters/Cyclops/1x/Cyclops.png')
-        }
-    }
-
-    render() {
+    let inventoryList = Object.entries(inventory).map((item, index) => {
+        let imageSource = ''
+        if (item[0] == 'cyclop')
+            imageSource = require('../assets/characters/Cyclops/1x/Cyclops.png')
+        else
+            imageSource = require('../assets/characters/Bart/1x/Bart.png')
 
         return (
-            <View style={styles.container}>
-                <Image source={this.state.imageSource} style={styles.image} />
-                <Image source={this.state.imageSource} style={styles.image} />
-
+            <View key={index} style={styles.inventory_row}>
+                <Image source={imageSource} style={styles.image} />
+                <Text style={styles.inventory_txt}>{item[1]}</Text>
             </View>
         )
-    }
+    })
+
+    return (
+        <View style={styles.container}>
+            { inventoryList }
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-    container : {
+
+    inventory_row: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: EngineConstants.MAX_HEIGHT * 0.0075
+    },
+    inventory_txt: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: EngineConstants.MAX_HEIGHT * 0.04 
+    },  
+    container: {
         position: 'absolute',
-        top: 0,
-        right: 0,
-        width: EngineConstants.CELL_SIZE / 2,
+        top: EngineConstants.MAX_HEIGHT * 0.02,
+        right: EngineConstants.MAX_HEIGHT * 0.02,
+        width: EngineConstants.CELL_SIZE * 0.75,
         zIndex: 1,
     },
     image: {
-        width: EngineConstants.CELL_SIZE / 4,
-        height: EngineConstants.CELL_SIZE / 4,
-        //resizeMode: 'contain'
+        width: EngineConstants.CELL_SIZE / 3,
+        height: EngineConstants.CELL_SIZE / 3,
     }
 })
+
+export default Inventory;
