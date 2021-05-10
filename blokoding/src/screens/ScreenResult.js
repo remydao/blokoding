@@ -24,9 +24,9 @@ const Result = ({ route, navigation }) => {
       <View style={styles.container}>
           <View>
             <FlatList
-            data={textList}
-            renderItem={({item}) => <Card style={styles.card}><Text>{item.value}</Text></Card>}
-            keyExtractor={item => item.id}
+                data={textList}
+                renderItem={({item}) => <Card style={styles.card}><Text>{item.value}</Text></Card>}
+                keyExtractor={item => item.id}
             />
           </View>
           <StatusBar backgroundColor={Colors.azure}/>

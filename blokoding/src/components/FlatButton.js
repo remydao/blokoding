@@ -17,7 +17,7 @@ const FlatButton = ({text, onPress, color, pressColor}) => {
             setCurrentColor(color)
             setIsPressed(false)
         },
-        style: styles.button, paddingVertical:EngineConstants.MAX_HEIGHT / 35
+        style: styles.button
     }
 
     return (
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         width:'100%',
         justifyContent:'center',
         alignItems:'center',
+        paddingVertical:EngineConstants.MAX_HEIGHT / 35
     },
     textStyle: {
         fontWeight:"700",

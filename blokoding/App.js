@@ -24,7 +24,6 @@ function App() {
         <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
         <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <Header title="Aide" backgroundColor={Colors.purpleBlue}/>}}/>
         <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <Header title="Options" backgroundColor={Colors.purpleBlue}/>}}/>
-        <Stack.Screen name="Result" component={Result} options={{headerTitle: () => <Header title="RESULTS"/>}}/>
         <Stack.Screen name="Level Select" component={LevelSelect} options={{headerTitle: () => <Header title="LEVEL SELECT"/>}}/>
         <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
         <Stack.Screen name="Error" component={Error} options={{headerTitle: () => <Header title="Error"/>}}/>

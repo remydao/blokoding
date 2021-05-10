@@ -4,7 +4,6 @@ import {StatusBar} from 'react-native';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, Button, Modal, Pressable } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
-import CharacterImages, { characterImages } from "../constants/CharacterImages";
 import {Permission, PERMISSION_TYPE} from '../AppPermission'
 import Maps from '../constants/Maps';
 import parseInit from '../scripts/parsing/Parser';
