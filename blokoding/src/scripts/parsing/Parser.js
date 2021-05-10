@@ -8,6 +8,11 @@ import IsInFrontBlock from "../blocks/ConditionBlock";
 
 var loopDepth = 0;
 
+const parseDiscover = (cardListObj) => {
+    let cardList = cardListObj.map(item => item.text.toLowerCase());
+    return cardList;
+}
+
 const parseInit = cardListObj => {
     let cardList = cardListObj.map(item => item.text.toLowerCase());
     return parseCharacter(cardList);
@@ -142,4 +147,4 @@ const parseEnvironnement = cardList => {
     }
 }
 
-export default parseInit;
+export {parseInit, parseDiscover};

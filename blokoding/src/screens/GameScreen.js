@@ -118,7 +118,7 @@ class Game extends Component {
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
-                <Inventory />
+                <Inventory/>
             </View>
         )
     }

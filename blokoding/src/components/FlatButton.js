@@ -22,7 +22,7 @@ const FlatButton = ({text, onPress, color, pressColor}) => {
 
     return (
         <Pressable onPress={onPress} {...buttonProps} backgroundColor={currentColor}>
-            <View >
+            <View>
                 <Text style={styles.textStyle}>{text}</Text>
             </View>
         </Pressable>

@@ -6,13 +6,17 @@ import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
 import {Permission, PERMISSION_TYPE} from '../AppPermission'
 import Maps from '../constants/Maps';
-import parseInit from '../scripts/parsing/Parser';
+import {parseInit, parseDiscover} from '../scripts/parsing/Parser';
 
 class Camera extends Component {
-    state = {
+  constructor(props){
+    super(props)
+    this.state = {
       modalVisible: false,
       modalText: 'Le scan a échoué, veuillez réessayer'
     }
+  }
+    
 
     setModalVisible = (visible) => {
       this.setState({modalVisible: visible})
@@ -69,11 +73,25 @@ class Camera extends Component {
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
         const actions = parseInit(visionResp);
-        console.log(actions);
 
-        // TODO pass the map in properties
-        navigation.navigate('Game', {actions: actions, isTesting: false, mapInfo: Maps.foret1});
-      } catch (e) {
+        // Discover Mode
+        if (this.props.route.params.map){
+          const actionsText = parseDiscover(visionResp);
+          const expectedCards = this.props.route.params.expectedCards;
+          console.log("actions : " + actionsText)
+          console.log("expected : " + expectedCards)
+          if (actionsText.toString() !== expectedCards.toString()){
+            this.setState({modalText: "Ce ne sont pas les cartes attendues !"});
+            this.setModalVisible(true);
+          }
+          else{
+            navigation.navigate('Game', {actions: actions, isTesting: false, mapInfo: this.props.route.params.map});
+          }
+        } //Start Mode
+        else {
+          navigation.navigate('Game', {actions: actions, isTesting: false, mapInfo: Maps.foret1});
+        }
+      } catch (e) { //Error thrown by the parser
         this.setState({modalText: e})
         this.setModalVisible(!this.modalVisible)
       }

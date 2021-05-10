@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
           />
         </View>
         <View style={styles.button}>
-          <FlatButton text="Découverte" color={Colors.red} pressColor={Colors.dark_red} onPress={() => navigation.navigate('Level Select')}/>
+          <FlatButton text="Découverte" color={Colors.red} pressColor={Colors.dark_red} onPress={() => navigation.navigate('Découverte')}/>
         </View>
         <View style={styles.button}>
           <FlatButton text="Commencer" color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => navigation.navigate('Take Picture')}/>

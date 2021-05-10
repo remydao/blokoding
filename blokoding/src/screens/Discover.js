@@ -4,30 +4,31 @@ import {default as UUID} from "uuid";
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import FlatButton from '../components/FlatButton';
-import { BackgroundColor } from 'chalk';
+import { numberOfLevels } from '../constants/LevelsDetails';
 
-const LevelSelectColors = [
+const DiscoverColors = [
   Colors.dark_pink,
   Colors.azure,
   Colors.turquoise
 ]
 
-const LevelSelect = ({ navigation }) => {
+const Discover = ({ navigation }) => {
 
     var buttons = []
-
-    for (let i = 0; i < 30; i++)
+    for (let i = 0; i < numberOfLevels; i++)
     {
         const levelTitle = "Level " + (i + 1)
         buttons.push({id:UUID.v4(), value:levelTitle})
     }
 
     const onPress = (index) => {
-      console.log("you pressed " + index)
+      navigation.navigate('LevelScreen', {
+        levelNumber: index
+      })
     }
 
     const selectBgColor = (index) => {
-      return LevelSelectColors[index % LevelSelectColors.length];
+      return DiscoverColors[index % DiscoverColors.length];
     }
 
     return (
@@ -51,7 +52,7 @@ const LevelSelect = ({ navigation }) => {
     );
   };
 
-export default LevelSelect;
+export default Discover;
 
 const styles = StyleSheet.create({
     container: {
