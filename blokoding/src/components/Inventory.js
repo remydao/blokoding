@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
+import AutoHeightImage from "react-native-auto-height-image";
 import { Environments } from "../constants/BlockType";
 import EngineConstants from "../constants/EngineConstants";
+import ItemImages from "../constants/ItemImages";
 
 const Inventory = ({inventory}) => {
-    inventory= { cyclop: 1, bart: 1}
 
     let inventoryList = Object.entries(inventory).map((item, index) => {
-        let imageSource = ''
-        if (item[0] == 'cyclop')
-            imageSource = require('../assets/characters/Cyclops/1x/Cyclops.png')
-        else
-            imageSource = require('../assets/characters/Bart/1x/Bart.png')
+        let imageSource = Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item[0])[0][1].uri;
 
         return (
             <View key={index} style={styles.inventory_row}>
-                <Image source={imageSource} style={styles.image} />
+                <AutoHeightImage source={imageSource} width={EngineConstants.CELL_SIZE / 3}/>
                 <Text style={styles.inventory_txt}>{item[1]}</Text>
             </View>
         )
@@ -48,10 +45,6 @@ const styles = StyleSheet.create({
         right: EngineConstants.MAX_HEIGHT * 0.02,
         width: EngineConstants.CELL_SIZE * 0.75,
         zIndex: 1,
-    },
-    image: {
-        width: EngineConstants.CELL_SIZE / 3,
-        height: EngineConstants.CELL_SIZE / 3,
     }
 })
 

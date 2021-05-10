@@ -25,7 +25,6 @@ const Header = (props) => {
     )
 }
 
-
 const STATUSBAR_HEIGHT = getStatusBarHeight();
 
 const styles = (props) => StyleSheet.create({

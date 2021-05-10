@@ -5,7 +5,7 @@ import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
 import { MoveBlock, JumpBlock } from '../scripts/blocks/ActionBlock';
 import ForBlock from '../scripts/blocks/InstructionBlock';
-import { Characters } from '../constants/BlockType';
+import { Characters, Items } from '../constants/BlockType';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
 import parseInit from '../scripts/parsing/Parser'
@@ -20,16 +20,15 @@ class Game extends Component {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
-            character: '',
             mapItems: props.route.params.mapInfo.map,
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
             characterPos: 0,
             hasLost: false,
             hasWon: false,
-            inventory: {}
+            inventory: {[Items.Key]: 1, [Items.Flower]: 1}
         };
         if (props.route.params.isTesting) {
-            //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
+            //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(2)), Characters.Kevin);
             this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
@@ -105,6 +104,14 @@ class Game extends Component {
         });
     }
 
+    grab(item) {
+        this.setState(prevState => {
+            let inventory = Object.assign({}, prevState.inventory);  
+            inventory[item] += 1;                                  
+            return { inventory };                                 
+        });
+    }
+
     // Function for jump translation
     moveCharacUpDown = () => {
         if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
@@ -151,7 +158,7 @@ class Game extends Component {
     
     render() {
         this.arr = this.state.mapItems.map((item, index) => {
-            if (item !== "e") {
+            if (item == "w") {
                 return <MapItem key={index} itemName={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
         });

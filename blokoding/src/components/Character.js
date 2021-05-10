@@ -3,6 +3,7 @@ import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import {characterImages} from "../constants/CharacterImages";
 import { Characters } from "../constants/BlockType"
+import AutoHeightImage from 'react-native-auto-height-image';
 
 export default class Character extends Component {
     constructor(props){
@@ -22,7 +23,7 @@ export default class Character extends Component {
 
         return (
             <View style={[styles.container, {bottom: y, left: x}]}>
-                <Image source={this.state.imageSource} style={styles.image} />
+                <AutoHeightImage source={this.state.imageSource} width={EngineConstants.CELL_SIZE} />
             </View>
         )
     }
@@ -33,9 +34,5 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 2,
         
-    },
-    image: {
-        width: EngineConstants.CELL_SIZE, 
-        resizeMode: 'contain'
     }
 })

@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     marginTop:-1,
   },
   button:{
-    width:"100%",
+    width: '100%',
   },
   logoContainer: {
     flex: 1,
