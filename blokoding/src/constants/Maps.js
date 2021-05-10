@@ -3,7 +3,7 @@ import Themes from "./Themes";
 export default Maps = {
     foret1: {
         theme: Themes.Workshop,
-        map: ["e", "e", "w", "e", "e", "e", "e", "W"] 
+        map: ["e", "e", "e", "e", "e", "w", "e", "W"] 
     },
     foret2: {
         theme: Themes.Forest,
