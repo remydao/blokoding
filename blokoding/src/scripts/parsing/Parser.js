@@ -1,8 +1,9 @@
-import { Characters, Actions, Instructions, Items } from "../../constants/BlockType";
+import { Characters, Actions, Instructions, Items, Conditions, Environments } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
 import ForBlock from "../blocks/InstructionBlock";
 import { DataBlock } from "../blocks/DataBlock";
+import IsInFrontBlock from "../blocks/ConditionBlock";
 
 
 var loopDepth = 0;
@@ -78,10 +79,10 @@ const parseInstruction = (instruction, cardList) => {
 
     switch (instruction[1]) {
         case Instructions.For:
-            predicateBlock = parseNumber(cardList)
+            predicateBlock = parseNumber(cardList);
             break;
         case Instructions.If:
-            //parse condition
+            predicateBlock = parseCondition(cardList);
             break;
         case Instructions.While:
             //parse condition
@@ -109,13 +110,35 @@ const parseNumber = cardList => {
     return new DataBlock(n);
 }
 
+const parseCondition = cardList => {
+    let conditionFirstCard = getFirstElm(cardList);
+    let res = Object.entries(Conditions).filter(cond => cond[1] == conditionFirstCard);
+
+    if (res.length > 0)
+        return new IsInFrontBlock(parseEnvironnement(cardList));
+    else
+        console.log("error");
+}
+
 const parseItem = cardList => {
     let item = getFirstElm(cardList);
     let res = Object.entries(Items).filter(it => it[1] == item);
+
     if (res.length > 0) {
         return new DataBlock(res[0][1]);
     } else {
         throw 'Il manque une carte objet';
+    }
+}
+
+const parseEnvironnement = cardList => {
+    let env = getFirstElm(cardList);
+    let res = Object.entries(Environments).filter(e => e[1] == env);
+
+    if (res.length > 0) {
+        return new DataBlock(res[0][1]);
+    } else {
+        throw 'Il manque une carte environnement';
     }
 }
 
