@@ -10,7 +10,7 @@ const Help = ({ navigation }) => {
     <View style={styles.container}>
       <View>
       </View>
-      <Image style={styles.image} source={characterImages.MrMoustache.uri}></Image>
+      <Image style={styles.image} source={characterImages.MrMustache.uri}></Image>
       
       <StatusBar backgroundColor={Colors.purpleBlue}/>
     </View>
@@ -18,13 +18,13 @@ const Help = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor:Colors.turquoise 
+    backgroundColor: Colors.turquoise 
   },
-  image:{
-    top:150
+  image: {
+    top: 150
   }
 
 })
