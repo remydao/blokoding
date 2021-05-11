@@ -34,13 +34,13 @@ const Items = {
 const Environments = {
     Door: 'porte',
     Chair: 'chaise',
-    Bush: 'buission',
+    Bush: 'buisson',
     Puddle: 'flaque',
     Bin: 'poubelle'
 }
 
 const Conditions = {
-    IsInFront: "être devant"
+    IsInFront: "est devant"
 }
 
 export { Characters, Actions, Instructions, Items, Environments, Conditions };

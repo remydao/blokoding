@@ -19,6 +19,8 @@ export default class MapItem extends Component {
         switch(item) {
             case 'w':
                 return EnvironmentImages.Puddle.uri;
+            case 'b':
+                return EnvironmentImages.Bush.uri;
         }
     }
 

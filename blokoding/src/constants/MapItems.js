@@ -1,7 +1,7 @@
 export default MapItems = {
-    win: "W",
-    empty: "e",
-    water: "w",
-    flower: "f",
-    mosquitos: "m"
+    Win: "W",
+    Empty: "e",
+    flaque: "w",
+    Flower: "f",
+    buisson: "b"
 }
