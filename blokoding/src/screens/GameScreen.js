@@ -40,7 +40,8 @@ class Game extends Component {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
-        this.speed = EngineConstants.MAX_WIDTH * 0.01;
+        this.speed = EngineConstants.MAX_WIDTH * 0.008;
+        this.lastTicks = Date.now();
     }
 
     componentDidMount() {
@@ -77,6 +78,10 @@ class Game extends Component {
     // General function to move the character (used in ActionBlock.js)
     async move() {
         this.setState({moveDistance: 0});
+
+        var tmp = this.lastTicks;
+        this.lastTicks = Date.now();
+
         return await new Promise(resolve => {
             let interval = setInterval(() => {
                 this.moveItems();
@@ -87,13 +92,17 @@ class Game extends Component {
                     this.setState({characterPos: this.state.characterPos + 1});
                     resolve();
                 }
-            }, 10)
+            },  16 - (this.lastTicks - tmp))
         });
     }
 
     // General function to jump the character (used in ActionBlock.js)
     async jump() {
         this.setState({moveDistance: 0});
+
+        var tmp = this.lastTicks;
+        this.lastTicks = Date.now();
+
         return await new Promise(resolve => {
             let interval = setInterval(() => {
                 this.moveItems();
@@ -106,7 +115,7 @@ class Game extends Component {
                     this.setState({characterPos: this.state.characterPos + 2});
                     resolve();
                 }
-            }, 10)
+            }, 16 - (this.lastTicks - tmp))
         });
     }
 
