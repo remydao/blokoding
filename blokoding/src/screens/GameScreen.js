@@ -14,6 +14,7 @@ import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock } from '../scripts/blocks/ConditionBlock';
 import MapItems from "../constants/MapItems";
+import Overlay from '../components/Overlay';
 
 
 class Game extends Component {
@@ -28,12 +29,12 @@ class Game extends Component {
             characterPos: 0,
             hasLost: false,
             hasWon: false,
-            inventory: {[Items.Key]: 1, [Items.Flower]: 1}
+            inventory: {[Items.Key]: 1, [Items.Flower]: 1},
         };
         if (props.route.params.isTesting) {
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
-            this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
+            this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
+            //this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
@@ -182,6 +183,8 @@ class Game extends Component {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+                { this.state.hasLost && <Overlay text="You have lost" color="red"/>}
+                { this.state.hasWon && <Overlay text="You have won" color="white"/>}
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
