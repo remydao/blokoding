@@ -25,7 +25,7 @@ class IfBlock extends InstructionBlock {
     }
 
     async execute(engine) {
-        let isConditionTrue = this.predicateBlock.execute();
+        let isConditionTrue = await this.predicateBlock.execute(engine);
         
         if (isConditionTrue)
             await this.execBlock.execute(engine);
@@ -35,4 +35,4 @@ class IfBlock extends InstructionBlock {
     }
 }
 
-export default {ForBlock, IfBlock};
+export  {ForBlock, IfBlock };

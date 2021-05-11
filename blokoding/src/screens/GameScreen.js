@@ -13,6 +13,7 @@ import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
 import IsInFrontBlock from '../scripts/blocks/ConditionBlock';
+import MapItems from "../constants/MapItems";
 
 
 class Game extends Component {
@@ -31,7 +32,7 @@ class Game extends Component {
         };
         if (props.route.params.isTesting) {
             //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
-            this.actions = new CharacterBlock(new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), Characters.Bart)
+            this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
@@ -143,21 +144,22 @@ class Game extends Component {
 
     // Function to notify loose
     loose() {
-        console.log('You have loose');
+        console.log('You have lost');
     }
 
     // Function to notify win
     win() {
-        console.log('You have win');
+        console.log('You have won');
     }
 
     isInFrontOf(entity) {
         let res = Object.entries(MapItems).filter(mapItem => mapItem[0] == entity);
 
-        if (res && res[0] && this.state.mapItems[this.state.characterPos + 1] === res[0][1]){
-            return true;
-        }
-        return false;
+        console.log("gazi: " + this.state.mapItems[this.state.characterPos + 1] + " " + res[0][1])
+        console.log("res: " + res)
+        console.log(res[0]);
+        console.log(this.state.mapItems[this.state.characterPos + 1] === res[0][1]);
+        return res && res[0] && this.state.mapItems[this.state.characterPos + 1] === res[0][1];
     }
     
     render() {
