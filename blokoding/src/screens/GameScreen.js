@@ -39,7 +39,7 @@ class Game extends Component {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
-        this.speed = EngineConstants.MAX_WIDTH * 0.015;
+        this.speed = EngineConstants.MAX_WIDTH * 0.01;
     }
 
     componentDidMount() {
@@ -86,7 +86,7 @@ class Game extends Component {
                     this.setState({characterPos: this.state.characterPos + 1});
                     resolve();
                 }
-            }, 15)
+            }, 10)
         });
     }
 
@@ -105,7 +105,7 @@ class Game extends Component {
                     this.setState({characterPos: this.state.characterPos + 2});
                     resolve();
                 }
-            }, 15)
+            }, 10)
         });
     }
 
