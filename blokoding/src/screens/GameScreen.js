@@ -185,7 +185,7 @@ class Game extends Component {
     
     render() {
         this.arr = this.state.mapItems.map((item, index) => {
-            if (item == "w" || item == "b") {
+            if (item == "w" || item == "b" || item == "W") {
                 return <MapItem key={index} itemName={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
         });

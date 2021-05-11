@@ -22,6 +22,10 @@ const EnvironmentImages = {
         imageName: Environments.Bin,
         uri: require('../assets/environments/bin.png')
     },
+    Flag: {
+        imageName: Environments.Flag,
+        uri: require('../assets/environments/flag.png')
+    }
 }
 
 export default EnvironmentImages;

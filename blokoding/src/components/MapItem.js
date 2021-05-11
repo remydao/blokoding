@@ -21,6 +21,8 @@ export default class MapItem extends Component {
                 return EnvironmentImages.Puddle.uri;
             case 'b':
                 return EnvironmentImages.Bush.uri;
+            case 'W':
+                return EnvironmentImages.Flag.uri
         }
     }
 
