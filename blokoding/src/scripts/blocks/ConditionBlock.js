@@ -13,4 +13,16 @@ class IsInFrontBlock extends ConditionBlock {
     }
 }
 
-export default IsInFrontBlock;
+class IsOnBlock extends ConditionBlock {
+    constructor(entityBlock) {
+        super(entityBlock);
+    }
+
+    async execute(engine) {
+        let entity = this.entityBlock.execute();
+
+        return engine.isOn(entity);
+    }
+}
+
+export { IsInFrontBlock, IsOnBlock };

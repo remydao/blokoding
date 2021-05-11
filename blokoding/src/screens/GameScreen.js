@@ -12,7 +12,7 @@ import parseInit from '../scripts/parsing/Parser'
 import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
-import IsInFrontBlock from '../scripts/blocks/ConditionBlock';
+import { IsInFrontBlock, IsOnBlock } from '../scripts/blocks/ConditionBlock';
 import MapItems from "../constants/MapItems";
 
 
@@ -32,9 +32,8 @@ class Game extends Component {
         };
         if (props.route.params.isTesting) {
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-
             //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
-            this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
+            this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
@@ -162,19 +161,21 @@ class Game extends Component {
         console.log('You have won');
     }
 
+    // return true if character is in front of an entity(data block)
     isInFrontOf(entity) {
         let res = Object.entries(MapItems).filter(mapItem => mapItem[0] == entity);
-
-        console.log("gazi: " + this.state.mapItems[this.state.characterPos + 1] + " " + res[0][1])
-        console.log("res: " + res)
-        console.log(res[0]);
-        console.log(this.state.mapItems[this.state.characterPos + 1] === res[0][1]);
         return res && res[0] && this.state.mapItems[this.state.characterPos + 1] === res[0][1];
+    }
+
+    // return true if character is on an entity(data block)
+    isOn(entity) {
+        let res = Object.entries(MapItems).filter(mapItem => mapItem[0] == entity);
+        return res && res[0] && this.state.mapItems[this.state.characterPos] === res[0][1];
     }
     
     render() {
         this.arr = this.state.mapItems.map((item, index) => {
-            if (item == "w") {
+            if (item == "w" || item == "b") {
                 return <MapItem key={index} itemName={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
         });

@@ -2,7 +2,7 @@ import { Characters, Actions, Instructions, Items, Conditions, Environments } fr
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
 import { ForBlock, IfBlock } from "../blocks/InstructionBlock";
-import IsInFrontBlock from "../blocks/ConditionBlock";
+import { IsInFrontBlock, IsOnBlock } from "../blocks/ConditionBlock";
 
 
 var loopDepth = 0;
@@ -129,10 +129,14 @@ const parseCondition = cardList => {
     let conditionFirstCard = getFirstElm(cardList);
     let res = Object.entries(Conditions).filter(cond => cond[1] == conditionFirstCard);
 
-    if (res.length > 0)
-        return new IsInFrontBlock(parseEnvironnement(cardList));
-    else
-        console.log("error");
+    switch (res[0][0]) {
+        case Conditions.IsInFront:
+            return new IsInFrontBlock(parseEnvironnement(cardList))
+        case Conditions.IsOn:
+            return new IsOnBlock(parseEnvironnement(cardList));
+        default:
+            console.log('error on parser Conditions');
+    }
 }
 
 const parseItem = cardList => {

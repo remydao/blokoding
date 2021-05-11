@@ -40,7 +40,8 @@ const Environments = {
 }
 
 const Conditions = {
-    IsInFront: "est devant"
+    IsInFront: "est devant",
+    IsOn: "est sur"
 }
 
 export { Characters, Actions, Instructions, Items, Environments, Conditions };
