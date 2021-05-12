@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
           <FlatButton text="Commencer" color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => navigation.navigate('Take Picture')}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Aide" color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => navigation.navigate('Help')}/>
+          <FlatButton text="Enigme" color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => navigation.navigate('EnigmaScreen')}/>
         </View>
         <View style={styles.button}>
           <FlatButton text="Options" color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Options')}/>
