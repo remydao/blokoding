@@ -13,9 +13,9 @@ const Header = (props) => {
                 (<View style={styles(props).statusBarIOS}></View>)
                 : <View></View>
             }
-            <View>
+            {/* <View>
                 <Text style={styles(props).backBtn}>lol</Text>
-            </View>
+            </View> */}
             <Image
                 source={require("../assets/icon.png")}
                 style={{ width: 20, height: 20 }}

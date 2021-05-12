@@ -3,12 +3,12 @@ import { View, StyleSheet, Image, Text } from "react-native";
 import AutoHeightImage from "react-native-auto-height-image";
 import { Environments } from "../constants/BlockType";
 import EngineConstants from "../constants/EngineConstants";
-import ItemImages from "../constants/ItemImages";
+import ItemImages, { getItemUri } from "../constants/ItemImages";
 
 const Inventory = ({inventory}) => {
 
     let inventoryList = Object.entries(inventory).map((item, index) => {
-        let imageSource = Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item[0])[0][1].uri;
+        let imageSource = getItemUri(item[0]);
 
         return (
             <View key={index} style={styles.inventory_row}>

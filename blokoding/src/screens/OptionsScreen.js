@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
+import { Characters } from '../constants/BlockType';
 
 
 const Options = ({ navigation }) => {
