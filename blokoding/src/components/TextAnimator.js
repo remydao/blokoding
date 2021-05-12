@@ -56,12 +56,20 @@ const styles = StyleSheet.create({
     containerStyle: {
         flexDirection: 'row',
         flexWrap: 'wrap',
+        position: 'absolute', // child
+        //top: -300, // position where you want
+        //left: 80,
+        //paddingRight: 60,
+        //marginRight: 60
+        margin: 80,
         justifyContent: 'center',
+        alignItems: 'center'
     },
     textStyle: {
-        fontSize: 28,
+        fontSize: 16,
         fontWeight: 'bold',
         fontFamily: 'Montserrat',
-        marginBottom: 14
+        zIndex: 4,
+        //marginBottom: 14
     }
 })
