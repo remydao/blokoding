@@ -121,11 +121,21 @@ class Game extends Component {
     }
 
     grab(item) {
+        var currItem = this.state.mapItems[this.state.characterPos];
+        if (currItem !== 'f') {
+            this.setState({hasLost: true});
+            console.log("grab failed");
+            return false;
+        }
+            
+
         this.setState(prevState => {
             let inventory = Object.assign({}, prevState.inventory);  
             inventory[item] += 1;                                  
             return { inventory };                                 
         });
+
+        return true;
     }
 
     // Function for jump translation
