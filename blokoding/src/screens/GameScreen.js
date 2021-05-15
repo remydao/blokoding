@@ -3,8 +3,8 @@ import { View, StyleSheet, Image } from 'react-native';
 import BackgroundGame from "../components/BackgroundGame";
 import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
-import { MoveBlock, JumpBlock } from '../scripts/blocks/ActionBlock';
-import { Characters, Items } from '../constants/BlockType';
+import { MoveBlock, JumpBlock, GrabBlock } from '../scripts/blocks/ActionBlock';
+import { Characters, Environments, Items } from '../constants/BlockType';
 import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
@@ -16,6 +16,8 @@ import { IsInFrontBlock, IsOnBlock } from '../scripts/blocks/ConditionBlock';
 import MapItems from "../constants/MapItems";
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
+import Cells from '../constants/Cells';
+
 
 
 class Game extends Component {
@@ -25,19 +27,19 @@ class Game extends Component {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
-            mapItems: props.route.params.mapInfo.map,
+            map: props.route.params.mapInfo.map,
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
             characterPos: 0,
             hasLost: false,
             hasWon: false,
-            inventory: {[Items.Key]: 1, [Items.Flower]: 1},
+            inventory: {},
         };
         if (props.route.params.cameraMode == CameraMode.TEST) {
             // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
             // this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
-            this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), Characters.Bart)
+            //this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock(Environments.Bush))), Characters.Bart)
             // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
-            // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -60,12 +62,13 @@ class Game extends Component {
     // function that check user's win or loss
     // return -1 if lose, 0 if nothing, 1 if win
     checkState() {
-        switch (this.state.mapItems[this.state.characterPos]) {
-            case 'W':
+        console.log(this.state.map[this.state.characterPos].content)
+        switch (this.state.map[this.state.characterPos].content) {
+            case Cells.Win:
                 this.setState({hasWon: true});
                 this.win();
                 break;
-            case 'w':
+            case Cells.Puddle:
                 this.setState({hasLost: true});
                 this.loose();
                 break;
@@ -101,7 +104,7 @@ class Game extends Component {
                     this.setState({characterPos: this.state.characterPos + 1});
                     resolve();
                 }
-            },  16 - (this.lastTicks - tmp))
+            },  16 /*- (this.lastTicks - tmp)*/)
         });
     }
 
@@ -124,13 +127,13 @@ class Game extends Component {
                     this.setState({characterPos: this.state.characterPos + 2});
                     resolve();
                 }
-            }, 16 - (this.lastTicks - tmp))
+            }, 16 /*- (this.lastTicks - tmp)*/)
         });
     }
 
-    grab(item) {
-        var currItem = this.state.mapItems[this.state.characterPos];
-        if (currItem !== 'f') {
+    grab() {
+        var currItem = this.state.map[this.state.characterPos];
+        if (currItem == Cells.Empty) {
             this.setState({hasLost: true});
             console.log("grab failed");
             return false;
@@ -139,8 +142,10 @@ class Game extends Component {
 
         this.setState(prevState => {
             let inventory = Object.assign({}, prevState.inventory);  
-            inventory[item] += 1;                                  
-            return { inventory };                                 
+            inventory[currItem.content.imageName] = inventory[currItem.content.imageName] ? inventory[currItem.content.imageName] + 1 : 1;                                  
+            let newMap = prevState.map;
+            newMap[this.state.characterPos] = Cells.Empty
+            return { inventory, newMap };                                 
         });
 
         return true;
@@ -192,14 +197,14 @@ class Game extends Component {
 
     // return true if character is in front of an entity(data block)
     isInFrontOf(entity) {
-        let res = Object.entries(MapItems).filter(mapItem => mapItem[0] == entity);
-        return res && res[0] && this.state.mapItems[this.state.characterPos + 1] === res[0][1];
+        let res = Object.entries(Environments).filter(env => env[1] == entity);
+        return res && res[0] && this.state.map[this.state.characterPos + 1].content && this.state.map[this.state.characterPos + 1].content.imageName == res[0][1];
     }
 
     // return true if character is on an entity(data block)
     isOn(entity) {
-        let res = Object.entries(MapItems).filter(mapItem => mapItem[0] == entity);
-        return res && res[0] && this.state.mapItems[this.state.characterPos] === res[0][1];
+        let res = Object.entries(Items).filter(item => item[1] == entity);
+        return res && res[0] && this.state.map[this.state.characterPos + 1].content && this.state.map[this.state.characterPos].content.imageName == res[0][1];
     }
 
     backToSelectLevels = () => {
@@ -214,9 +219,9 @@ class Game extends Component {
     }
     
     render() {
-        this.arr = this.state.mapItems.map((item, index) => {
-            if (item == "w" || item == "b" || item == "W") {
-                return <MapItem key={index} itemName={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
+        this.arr = this.state.map.map((item, index) => {
+            if (item != Cells.Empty) {
+                return <MapItem key={index} item={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
         });
 

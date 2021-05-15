@@ -26,8 +26,6 @@ const getFirstElm = cardList => {
 const parseStructureCard = cardList => {
     let blockName = getFirstElm(cardList);
 
-    console.log(blockName);
-
     if (typeof blockName === 'undefined') {
         if (loopDepth > 0) {
             throw 'Une instruction doit toujours se finir par une carte Fin'; 
@@ -132,23 +130,18 @@ const parseCondition = cardList => {
 
     if (res.length > 0)
     {
-        console.log(res[0]);
-        console.log(res[0][1]);
-        console.log(Conditions.IsOn);
 
         switch (res[0][1]) {
             case Conditions.IsInFront:
                 return new IsInFrontBlock(parseEnvironnement(cardList))
             case Conditions.IsOn:
-                return new IsOnBlock(parseEnvironnement(cardList));
+                return new IsOnBlock(parseItem(cardList));
             default:
                 console.log('error on parser');
         }
     }
     else
         console.log('error');
-
-    
 }
 
 const parseItem = cardList => {

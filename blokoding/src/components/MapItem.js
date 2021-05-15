@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, Image } from 'react-native'
 import AutoHeightImage from 'react-native-auto-height-image';
-import MapItems from '../constants/BlockType';
+import MapItems, { Environments } from '../constants/BlockType';
 import EngineConstants from '../constants/EngineConstants';
-import { EnvironmentImages } from '../constants/EnvironmentImages';
+import { EnvironmentImages, getEnvironmentUri } from '../constants/EnvironmentImages';
 
 
 export default class MapItem extends Component {
@@ -11,19 +11,9 @@ export default class MapItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageSource: this.findItem(props.itemName)
+            imageSource: props.item.content.uri
         }
-    }
-
-    findItem(item) {
-        switch(item) {
-            case 'w':
-                return EnvironmentImages.Puddle.uri;
-            case 'b':
-                return EnvironmentImages.Bush.uri;
-            case 'W':
-                return EnvironmentImages.Flag.uri
-        }
+        this.isEnv = Object.entries(Environments).filter(env => this.props.item.content.imageName == env[1])[0] != null;
     }
 
     render() {
@@ -32,7 +22,7 @@ export default class MapItem extends Component {
 
         return (
             <View style={[styles.container, {bottom: y, left: x}]}>
-                <AutoHeightImage source={this.state.imageSource} width={EngineConstants.CELL_SIZE} />
+                <AutoHeightImage source={this.state.imageSource} width={ this.isEnv ? EngineConstants.CELL_SIZE : EngineConstants.CELL_SIZE / 2} />
             </View>
         )
     }
