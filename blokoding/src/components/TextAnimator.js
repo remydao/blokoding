@@ -6,22 +6,19 @@ export default class TextAnimator extends Component {
 
     // crée le tableau de mots passé en props et rempli le tableau animatedValues avec des Value à 0
     constructor(props) {
+        console.log("Constructor");
         super(props);
 
         this.textArray = this.props.content.trim().split(' ');
-
-        this.textArray.forEach((_, index) => {
-            this.animatedValues[index] = new Animated.Value(0);
-        });
     }
 
     componentDidMount(){
-        this.animated();
+        console.log('CDM');
     }
 
     // Est appelé au lancement pour set les animations 
     animated(toValue = 1){
-        const animations = this.textArray.map((_, index) => {
+        const animations = this.props.content.trim().split(' ').map((_, index) => {
             return Animated.timing(this.animatedValues[index],
                 {
                     toValue: toValue,
@@ -35,15 +32,21 @@ export default class TextAnimator extends Component {
     }
 
     render(){
+        this.props.content.trim().split(' ').forEach((_, index) => {
+            this.animatedValues[index] = new Animated.Value(0);
+        });
+        this.animated();
+
+        console.log('Render Animator');
         return (
             <View style={styles.containerStyle}>
-                { this.textArray.map((word, index) => {
+                { this.props.content.trim().split(' ').map((word, index) => {
                     return (
                         <Animated.Text 
                         key={'word' + index} 
                         style={[styles.textStyle, {opacity: this.animatedValues[index]}]}>
                             {word}
-                            { index < this.textArray.length - 1 ? ' ' : ''}
+                            { index < this.props.content.trim().split(' ').length - 1 ? ' ' : ''}
                         </Animated.Text>
                     )
                 })}
@@ -61,12 +64,15 @@ const styles = StyleSheet.create({
         //left: 80,
         //paddingRight: 60,
         //marginRight: 60
-        margin: 80,
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginLeft: 40,
+        marginRight: 45,
+        top: 150
+        //justifyContent: 'center',
+        //alignItems: 'center',
+        //alignSelf: "stretch"
     },
     textStyle: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         fontFamily: 'Montserrat',
         zIndex: 4,
