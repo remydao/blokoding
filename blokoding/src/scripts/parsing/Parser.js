@@ -133,7 +133,7 @@ const parseCondition = cardList => {
         case Conditions.IsInFront:
             return new IsInFrontBlock(parseEnvironnement(cardList))
         case Conditions.IsOn:
-            return new IsOnBlock(parseEnvironnement(cardList));
+            return new IsOnBlock(parseItem(cardList));
         default:
             console.log('error on parser Conditions');
     }
