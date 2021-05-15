@@ -26,8 +26,6 @@ const getFirstElm = cardList => {
 const parseStructureCard = cardList => {
     let blockName = getFirstElm(cardList);
 
-    console.log(blockName);
-
     if (typeof blockName === 'undefined') {
         if (loopDepth > 0) {
             throw 'Une instruction doit toujours se finir par une carte Fin'; 
