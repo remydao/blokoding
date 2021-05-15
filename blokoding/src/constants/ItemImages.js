@@ -24,4 +24,8 @@ const ItemImages = {
     },
 }
 
-export default ItemImages;
+const getItemUri = (item) => {
+    return Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item)[0][1].uri;
+}
+
+export {ItemImages, getItemUri};

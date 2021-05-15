@@ -39,4 +39,8 @@ const characterImages = {
     }
 }
 
-export {characterImages};
+const getCharacterUri = (character) => {
+    return Object.entries(characterImages).filter(characImg => characImg[1].imageName == character)[0][1].uri;
+}
+
+export { characterImages, getCharacterUri };

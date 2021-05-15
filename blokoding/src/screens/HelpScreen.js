@@ -3,6 +3,7 @@ import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
+import { Characters } from '../constants/BlockType';
 
 
 const Help = ({ navigation }) => {

@@ -1,8 +1,9 @@
 import { Characters, Actions, Instructions, Items, Conditions, Environments } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
-import { ForBlock, IfBlock } from "../blocks/InstructionBlock";
+import { ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
 import { IsInFrontBlock, IsOnBlock } from "../blocks/ConditionBlock";
+import { DataBlock } from "../blocks/DataBlock";
 
 
 var loopDepth = 0;
@@ -14,6 +15,7 @@ const parseDiscover = (cardListObj) => {
 
 const parseInit = cardListObj => {
     let cardList = cardListObj.map(item => item.text.toLowerCase());
+    console.log(cardList);
     return parseCharacter(cardList);
 }
 
@@ -89,7 +91,7 @@ const parseInstruction = (instruction, cardList) => {
             predicateBlock = parseCondition(cardList);
             break;
         case Instructions.While:
-            //parse condition
+            predicateBlock = parseCondition(cardList);
             break;
         default:
             return null;
@@ -107,8 +109,7 @@ const parseInstruction = (instruction, cardList) => {
         case Instructions.If:
             return new IfBlock(nextBlock, execBlock, predicateBlock);
         case Instructions.While:
-            //parse condition
-            break;
+            return new WhileBlock(nextBlock, execBlock, predicateBlock);
         default:
             return null;
     }
@@ -129,14 +130,20 @@ const parseCondition = cardList => {
     let conditionFirstCard = getFirstElm(cardList);
     let res = Object.entries(Conditions).filter(cond => cond[1] == conditionFirstCard);
 
-    switch (res[0][0]) {
-        case Conditions.IsInFront:
-            return new IsInFrontBlock(parseEnvironnement(cardList))
-        case Conditions.IsOn:
-            return new IsOnBlock(parseItem(cardList));
-        default:
-            console.log('error on parser Conditions');
+    if (res.length > 0)
+    {
+
+        switch (res[0][1]) {
+            case Conditions.IsInFront:
+                return new IsInFrontBlock(parseEnvironnement(cardList))
+            case Conditions.IsOn:
+                return new IsOnBlock(parseItem(cardList));
+            default:
+                console.log('error on parser');
+        }
     }
+    else
+        console.log('error');
 }
 
 const parseItem = cardList => {
@@ -161,4 +168,4 @@ const parseEnvironnement = cardList => {
     }
 }
 
-export {parseInit, parseDiscover};
+export { parseInit, parseDiscover };

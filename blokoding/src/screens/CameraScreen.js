@@ -75,7 +75,7 @@ class Camera extends Component {
         const actions = parseInit(visionResp);
 
         // Discover Mode
-        if (this.props.route.params.map){
+        if (this.props.route.params && this.props.route.params.map){
           const actionsText = parseDiscover(visionResp);
           const expectedCards = this.props.route.params.expectedCards;
           console.log("actions : " + actionsText)

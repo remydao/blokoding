@@ -28,4 +28,8 @@ const EnvironmentImages = {
     }
 }
 
-export default EnvironmentImages;
+const getEnvironmentUri = (environment) => {
+    return Object.entries(EnvironmentImages).filter(envImg => envImg[1].imageName == environment)[0][1].uri;
+}
+
+export {EnvironmentImages, getEnvironmentUri};

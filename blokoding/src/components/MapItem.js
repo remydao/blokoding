@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Image } from 'react-native'
 import AutoHeightImage from 'react-native-auto-height-image';
 import MapItems from '../constants/BlockType';
 import EngineConstants from '../constants/EngineConstants';
-import EnvironmentImages from '../constants/EnvironmentImages';
+import { EnvironmentImages } from '../constants/EnvironmentImages';
 
 
 export default class MapItem extends Component {

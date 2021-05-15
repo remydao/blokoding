@@ -5,7 +5,7 @@ import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
 import { MoveBlock, JumpBlock } from '../scripts/blocks/ActionBlock';
 import { Characters, Items } from '../constants/BlockType';
-import { ForBlock, IfBlock } from '../scripts/blocks/InstructionBlock';
+import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
 import parseInit from '../scripts/parsing/Parser'
@@ -32,15 +32,16 @@ class Game extends Component {
             inventory: {[Items.Key]: 1, [Items.Flower]: 1},
         };
         if (props.route.params.isTesting) {
-            //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
-            //this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
-            //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            // this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
+            this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), Characters.Bart)
+            // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
+            // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
-        this.speed = EngineConstants.MAX_WIDTH * 0.008;
+        this.speed = EngineConstants.MAX_WIDTH * 0.01;
         this.lastTicks = Date.now();
     }
 
@@ -120,11 +121,21 @@ class Game extends Component {
     }
 
     grab(item) {
+        var currItem = this.state.mapItems[this.state.characterPos];
+        if (currItem !== 'f') {
+            this.setState({hasLost: true});
+            console.log("grab failed");
+            return false;
+        }
+            
+
         this.setState(prevState => {
             let inventory = Object.assign({}, prevState.inventory);  
             inventory[item] += 1;                                  
             return { inventory };                                 
         });
+
+        return true;
     }
 
     // Function for jump translation

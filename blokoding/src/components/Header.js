@@ -13,11 +13,11 @@ const Header = (props) => {
                 (<View style={styles(props).statusBarIOS}></View>)
                 : <View></View>
             }
-            <View>
+            {/* <View>
                 <Text style={styles(props).backBtn}>lol</Text>
-            </View>
+            </View> */}
             <Image
-                source={require("../assets/icon.png")}
+                source={require("../assets/icon_secondary.png")}
                 style={{ width: 20, height: 20 }}
                 resizeMode="stretch"/>
             <Text style={styles(props).headerTitle}>{props.title}</Text>
