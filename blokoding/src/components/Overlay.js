@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
+import { CameraMode } from '../constants/CameraMode';
+
+const EndButton = ({onPress, text}) => {
+    return (
+        <TouchableOpacity onPress={() => onPress()} >
+            <Text style={styles.buttonText}>{text}</Text>
+        </TouchableOpacity> 
+    )
+}
 
 export default class Overlay extends Component {
     constructor(props) {
@@ -12,6 +21,14 @@ export default class Overlay extends Component {
             <View style= {[styles.overlay_container]}>
                 <Text style={[styles.textStyle, {color: this.props.color}]}>{this.props.text}</Text>
                 <View style={[styles.overlay]}>
+                </View>
+                <View style={styles.button}>
+                {(this.props.cameraMode == CameraMode.DISCOVER) &&
+                    (this.props.hasWon ? <EndButton onPress={this.props.backToSelectLevels} text="Retour a l'ecran de selection des niveaux" >
+                    </EndButton> :
+                    <EndButton onPress={this.props.backToLevelFailed} text="Perdu, essaie encore !">
+                    </EndButton>
+                    )}
                 </View>
             </View>
         )
@@ -28,7 +45,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
-        zIndex: 3,
+        zIndex: -1,
         justifyContent: 'center'
     },
     overlay_container: {
@@ -47,5 +64,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         opacity: 10,
         zIndex: 4,
+    },
+    button:{
+        top: 10,
+        elevation: 10,
+        backgroundColor: "#009688",
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12,
+        marginHorizontal: 15
+    },
+    buttonText:{
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        textAlign:'center'
     }
 })

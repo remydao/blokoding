@@ -15,6 +15,7 @@ import { ConditionBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock } from '../scripts/blocks/ConditionBlock';
 import MapItems from "../constants/MapItems";
 import Overlay from '../components/Overlay';
+import { CameraMode } from '../constants/CameraMode';
 
 
 class Game extends Component {
@@ -31,7 +32,7 @@ class Game extends Component {
             hasWon: false,
             inventory: {[Items.Key]: 1, [Items.Flower]: 1},
         };
-        if (props.route.params.isTesting) {
+        if (props.route.params.cameraMode == CameraMode.TEST) {
             // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
             // this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
             this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsOnBlock(new DataBlock("buisson"))), Characters.Bart)
@@ -47,6 +48,13 @@ class Game extends Component {
 
     componentDidMount() {
         this.actions.execute(this);
+        if (this.state.mapItems[this.state.characterPos] != 'W'){
+            console.log("ici")
+            console.log(this.state.mapItems[this.state.characterPos])
+            this.setState({hasWon: false});
+            this.setState({hasLost: true});
+            this.loose();
+        }
     }
 
     // function that check user's win or loss
@@ -174,12 +182,12 @@ class Game extends Component {
 
     // Function to notify loose
     loose() {
-        console.log('You have lost');
+        console.log('You lost');
     }
 
     // Function to notify win
     win() {
-        console.log('You have won');
+        console.log('You won');
     }
 
     // return true if character is in front of an entity(data block)
@@ -193,6 +201,17 @@ class Game extends Component {
         let res = Object.entries(MapItems).filter(mapItem => mapItem[0] == entity);
         return res && res[0] && this.state.mapItems[this.state.characterPos] === res[0][1];
     }
+
+    backToSelectLevels = () => {
+        this.props.navigation.pop();
+        this.props.navigation.pop();
+        this.props.navigation.pop();
+    }
+
+    backToLevelFailed = () => {
+        this.props.navigation.pop();
+        this.props.navigation.pop();
+    }
     
     render() {
         this.arr = this.state.mapItems.map((item, index) => {
@@ -203,8 +222,8 @@ class Game extends Component {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                { this.state.hasLost && <Overlay text="You have lost" color="red"/>}
-                { this.state.hasWon && <Overlay text="You have won" color="white"/>}
+                { this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text="Tu as gagne" color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
+                { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text="Tu as perdu" color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />

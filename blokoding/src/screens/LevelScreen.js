@@ -11,12 +11,10 @@ const LevelScreen = ({route, navigation}) => {
     const tutorial = levelInfo.tutorial;
     const congratulations = levelInfo.congratulations;
     const map = levelInfo.map
-    const expectedCards = levelInfo.expectedCards
 
     const openCamera = () => {
         navigation.navigate('Take Picture', {
             map,
-            expectedCards,
         })
     }
 

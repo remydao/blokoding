@@ -7,6 +7,7 @@ import RNTextDetector from "rn-text-detector";
 import {Permission, PERMISSION_TYPE} from '../AppPermission'
 import Maps from '../constants/Maps';
 import {parseInit, parseDiscover} from '../scripts/parsing/Parser';
+import { CameraMode } from '../constants/CameraMode';
 
 class Camera extends Component {
   constructor(props){
@@ -76,20 +77,10 @@ class Camera extends Component {
 
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map){
-          const actionsText = parseDiscover(visionResp);
-          const expectedCards = this.props.route.params.expectedCards;
-          console.log("actions : " + actionsText)
-          console.log("expected : " + expectedCards)
-          if (actionsText.toString() !== expectedCards.toString()){
-            this.setState({modalText: "Ce ne sont pas les cartes attendues !"});
-            this.setModalVisible(true);
-          }
-          else{
-            navigation.navigate('Game', {actions: actions, isTesting: false, mapInfo: this.props.route.params.map});
-          }
+            navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.DISCOVER, mapInfo: this.props.route.params.map});
         } //Start Mode
         else {
-          navigation.navigate('Game', {actions: actions, isTesting: false, mapInfo: Maps.foret1});
+          navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret1});
         }
       } catch (e) { //Error thrown by the parser
         this.setState({modalText: e})
