@@ -10,7 +10,9 @@ class CharacterBlock extends StructureBlock {
 
     execute(engine) {
 
-        if (this.nextBlock) {
+        engine.checkState();
+
+        if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
             this.nextBlock.execute(engine);
         }
     }

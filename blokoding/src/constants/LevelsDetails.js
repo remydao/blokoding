@@ -9,8 +9,7 @@ Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose
 Ensuite, clique sur le bouton ci-dessous et prend la carte en photo.
         `,
         congratulations:"Bravo, tu as réussi à faire entrer Mr. Mustache dans son atelier.",
-        map: Maps.foret1,
-        expectedCards: ["bart"]
+        map: Maps.level1,
     },
     {
         title: "Faire avancer le personnage",
@@ -20,8 +19,7 @@ Les cartes actions permettent de produire un effet sur ton personnage. Je te lai
 Pose une carte “avancer” en dessous de Mr. Mustache puis prend la photo !        
         `,
         congratulations:"Bravo grâce à toi Mr. Mustache a pu avancer ! Voyons comment faire pour le faire avancer plusieurs fois !",
-        map: Maps.foret1,
-        expectedCards: ["bart", "avancer"]
+        map: Maps.level2,
     },
     {
         title: "Faire avancer le personnage 3 fois",
@@ -32,7 +30,7 @@ N’oublie pas de prendre toutes les cartes en photo !
         `,
         congratulations:"Bravo, c’est un premier pas vers le nettoyage de l’atelier !",
         map: Maps.foret1,
-        expectedCards: ["bart", "avancer", "avancer", "avancer"]
+        //expectedCards: ["bart", "avancer", "avancer", "avancer"]
     },
     {
         title: "Faire répéter une action plusieurs fois",
@@ -43,7 +41,7 @@ Pour cet exemple, répète 5 fois l’action avancer puis ramasser.
         `,
         congratulations:"Bravo, c’est un premier pas vers le nettoyage de l’atelier !",
         map: Maps.foret1,
-        expectedCards: ["bart", "avancer"]
+        //expectedCards: ["bart", "avancer"]
     },
     {
         title: "Faire avancer le personnage",
@@ -54,7 +52,7 @@ Pose une carte “avancer” en dessous de Mr. Mustache puis prend la photo !
         `,
         congratulations:"Bravo grâce à toi Mr. Mustache a pu avancer ! Voyons comment faire pour le faire avancer plusieurs fois !",
         map: Maps.foret1,
-        expectedCards: ["bart", "avancer"]
+        //expectedCards: ["bart", "avancer"]
     },
 ]
 
