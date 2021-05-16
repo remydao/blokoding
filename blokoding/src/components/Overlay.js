@@ -24,9 +24,9 @@ export default class Overlay extends Component {
                 </View>
                 {(this.props.cameraMode == CameraMode.DISCOVER) &&
                     <View style={styles.button}>
-                        this.props.hasWon ? 
+                        {this.props.hasWon ? 
                         <EndButton onPress={this.props.backToSelectLevels} text="Retour a l'ecran de selection des niveaux" /> :
-                        <EndButton onPress={this.props.backToLevelFailed} text="Perdu, essaie encore !"/>
+                        <EndButton onPress={this.props.backToLevelFailed} text="Perdu, essaie encore !"/>}
                     </View>
                     }
             </View>

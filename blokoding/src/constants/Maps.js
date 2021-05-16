@@ -4,7 +4,7 @@ import Themes from "./Themes";
 export default Maps = {
     level1:{
         theme: Themes.Workshop,
-        map: [Cells.Win] 
+        map: [Cells.Win]
     },
     level2:{
         theme: Themes.Workshop,

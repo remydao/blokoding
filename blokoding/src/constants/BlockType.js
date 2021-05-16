@@ -36,7 +36,8 @@ const Environments = {
     Chair: 'chaise',
     Bush: 'buisson',
     Puddle: 'flaque',
-    Bin: 'poubelle'
+    Bin: 'poubelle',
+    Flag: 'drapeau',
 }
 
 const Conditions = {

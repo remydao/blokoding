@@ -8,7 +8,7 @@ class MoveBlock extends StructureBlock {
     async execute(engine) {
         console.log("move");
         await engine.move();
-        engine.checkState();
+        await engine.checkState();
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
             await this.nextBlock.execute(engine);
@@ -24,7 +24,7 @@ class JumpBlock extends StructureBlock {
     async execute(engine) {
         console.log("jump");
         await engine.jump();
-        engine.checkState();
+        await engine.checkState();
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
             await this.nextBlock.execute(engine);

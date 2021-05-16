@@ -17,6 +17,7 @@ import MapItems from "../constants/MapItems";
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
+import { resolvePreset } from '@babel/core';
 
 
 
@@ -61,20 +62,26 @@ class Game extends Component {
 
     // function that check user's win or loss
     // return -1 if lose, 0 if nothing, 1 if win
-    checkState() {
+    async checkState() {
         console.log(this.state.map[this.state.characterPos].content)
-        switch (this.state.map[this.state.characterPos].content) {
-            case Cells.Win:
-                this.setState({hasWon: true});
-                this.win();
-                break;
-            case Cells.Puddle:
-                this.setState({hasLost: true});
-                this.loose();
-                break;
-            default:
-                break;
-        }
+        console.log(Cells.Win);
+        return await new Promise((resolve) => {
+            switch (this.state.map[this.state.characterPos]) {
+                case Cells.Win:
+                    console.log("win")
+                    this.setState({hasWon: true});
+                    this.win();
+                    break;
+                case Cells.Puddle:
+                    this.setState({hasLost: true});
+                    this.loose();
+                    break;
+                default:
+                    break;
+            }
+            resolve()
+        })
+        
     }
 
     // Getter of hasLost state
