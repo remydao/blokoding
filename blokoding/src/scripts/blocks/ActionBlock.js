@@ -11,7 +11,7 @@ class MoveBlock extends StructureBlock {
         engine.checkState();
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
-            this.nextBlock.execute(engine);
+            await this.nextBlock.execute(engine);
         }
     }
 }
@@ -27,7 +27,7 @@ class JumpBlock extends StructureBlock {
         engine.checkState();
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
-            this.nextBlock.execute(engine);
+            await this.nextBlock.execute(engine);
         }
     }
 }

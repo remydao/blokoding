@@ -27,7 +27,7 @@ class Game extends Component {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
-            map: props.route.params.mapInfo.map,
+            map: [...props.route.params.mapInfo.map],
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
             characterPos: 0,
             hasLost: false,
