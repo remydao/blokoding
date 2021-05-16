@@ -20,7 +20,7 @@ class LevelScreen extends React.Component {
         this.index = 0;
         this.state = {
             buttonText: this.tutorial.length === 1 ? "Ouvrir la caméra" : "Suivant",
-            textAnimator: <TextAnimator content={this.tutorial[0]}></TextAnimator>,
+            textAnimator: <TextAnimator key={this.index} content={this.tutorial[0]}></TextAnimator>,
         }
     }
 
@@ -39,7 +39,7 @@ class LevelScreen extends React.Component {
             }
 
             this.setState({
-                textAnimator: <TextAnimator content={this.tutorial[this.index]}></TextAnimator>
+                textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>
             })
         }
         else

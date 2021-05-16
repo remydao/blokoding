@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Animated} from 'react-native';
 
 export default class TextAnimator extends Component {
-    animatedValues = [];
+    
 
     // crée le tableau de mots passé en props et rempli le tableau animatedValues avec des Value à 0
     constructor(props) {
@@ -10,16 +10,20 @@ export default class TextAnimator extends Component {
         super(props);
 
         this.textArray = this.props.content.trim().split(' ');
+
+        this.state = {
+            animatedValues: []
+        }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log('CDM');
     }
 
     // Est appelé au lancement pour set les animations 
-    animated(toValue = 1){
+    animated(toValue = 1) {
         const animations = this.props.content.trim().split(' ').map((_, index) => {
-            return Animated.timing(this.animatedValues[index],
+            return Animated.timing(this.state.animatedValues[index],
                 {
                     toValue: toValue,
                     duration: 500,
@@ -31,12 +35,21 @@ export default class TextAnimator extends Component {
         Animated.stagger(100, animations).start();
     }
 
-    render(){
-        this.props.content.trim().split(' ').forEach((_, index) => {
-            this.animatedValues[index] = new Animated.Value(0);
-        });
-        this.animated();
+    
+    componentDidMount() {
+        console.log("cdm")
 
+        this.props.content.trim().split(' ').forEach((_, index) => {
+            this.state.animatedValues[index] = new Animated.Value(0);
+        });
+
+        this.setState({
+            animatedValues: this.state.animatedValues
+        })
+        this.animated();
+    }
+
+    render() {
         console.log('Render Animator');
         return (
             <View style={styles.containerStyle}>
@@ -44,7 +57,7 @@ export default class TextAnimator extends Component {
                     return (
                         <Animated.Text 
                         key={'word' + index} 
-                        style={[styles.textStyle, {opacity: this.animatedValues[index]}]}>
+                        style={[styles.textStyle, {opacity: this.state.animatedValues[index]}]}>
                             {word}
                             { index < this.props.content.trim().split(' ').length - 1 ? ' ' : ''}
                         </Animated.Text>
