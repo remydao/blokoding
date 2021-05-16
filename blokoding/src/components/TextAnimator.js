@@ -59,17 +59,7 @@ const styles = StyleSheet.create({
     containerStyle: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        position: 'absolute', // child
-        //top: -300, // position where you want
-        //left: 80,
-        //paddingRight: 60,
-        //marginRight: 60
-        marginLeft: 40,
-        marginRight: 45,
-        top: 150
-        //justifyContent: 'center',
-        //alignItems: 'center',
-        //alignSelf: "stretch"
+        width: '90%'
     },
     textStyle: {
         fontSize: 14,
