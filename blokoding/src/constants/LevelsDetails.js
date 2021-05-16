@@ -3,31 +3,19 @@ import Maps from "./Maps";
 const levelsTexts = [
     {
         title: "Faire apparaître un personnage",
-        tutorial: `Avant de ramasser les objets de Mr. Mustache, apprenons déjà comment le faire entrer dans son atelier.
-Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage. Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite.
-Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi.
-Ensuite, clique sur le bouton ci-dessous et prend la carte en photo.
-        `,
+        tutorial: ["Avant de ramasser les objets de Mr. Mustache, apprenons déjà comment le faire entrer dans son atelier. Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage.", "Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite. Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi. Ensuite, clique sur le bouton ci-dessous et prend la carte en photo."],
         congratulations:"Bravo, tu as réussi à faire entrer Mr. Mustache dans son atelier.",
         map: Maps.level1,
     },
     {
         title: "Faire avancer le personnage",
-        tutorial: `À présent, voyons comment le faire avancer.
-Pour faire avancer un personnage, tu dois utiliser la carte action ‘avancer’ (jaune). 
-Les cartes actions permettent de produire un effet sur ton personnage. Je te laisse découvrir les autres ! 
-Pose une carte “avancer” en dessous de Mr. Mustache puis prend la photo !        
-        `,
+        tutorial: ["À présent, voyons comment le faire avancer. Pour faire avancer un personnage, tu dois utiliser la carte action ‘avancer’ (jaune).", "Les cartes actions permettent de produire un effet sur ton personnage. Je te laisse découvrir les autres ! Pose une carte “avancer” en dessous de Mr. Mustache puis prend la photo !"],
         congratulations:"Bravo grâce à toi Mr. Mustache a pu avancer ! Voyons comment faire pour le faire avancer plusieurs fois !",
         map: Maps.level2,
     },
     {
         title: "Faire avancer le personnage 3 fois",
-        tutorial: `Ici, nous allons faire avancer Mr. Mustache plusieurs fois. Pour cela, rien de plus simple !
-Il te suffit de placer plusieurs cartes actions “avancer” les unes en dessous des autres ! 
-Tu peux remarquer un symbole de flèche en bas de tes cartes actions, ce genre d'icônes est présent sur toutes les cartes et te permet de voir le type de carte qui peut être placé ensuite
-N’oublie pas de prendre toutes les cartes en photo !             
-        `,
+        tutorial: ["Ici, nous allons faire avancer Mr. Mustache plusieurs fois. Pour cela, rien de plus simple ! Il te suffit de placer plusieurs cartes actions “avancer” les unes en dessous des autres !", "Tu peux remarquer un symbole de flèche en bas de tes cartes actions, ce genre d'icônes est présent sur toutes les cartes et te permet de voir le type de carte qui peut être placé ensuite N’oublie pas de prendre toutes les cartes en photo !  "],
         congratulations:"Bravo, c’est un premier pas vers le nettoyage de l’atelier !",
         map: Maps.foret1,
         //expectedCards: ["bart", "avancer", "avancer", "avancer"]

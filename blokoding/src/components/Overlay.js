@@ -22,14 +22,13 @@ export default class Overlay extends Component {
                 <Text style={[styles.textStyle, {color: this.props.color}]}>{this.props.text}</Text>
                 <View style={[styles.overlay]}>
                 </View>
-                <View style={styles.button}>
                 {(this.props.cameraMode == CameraMode.DISCOVER) &&
-                    (this.props.hasWon ? <EndButton onPress={this.props.backToSelectLevels} text="Retour a l'ecran de selection des niveaux" >
-                    </EndButton> :
-                    <EndButton onPress={this.props.backToLevelFailed} text="Perdu, essaie encore !">
-                    </EndButton>
-                    )}
-                </View>
+                    <View style={styles.button}>
+                        this.props.hasWon ? 
+                        <EndButton onPress={this.props.backToSelectLevels} text="Retour a l'ecran de selection des niveaux" /> :
+                        <EndButton onPress={this.props.backToLevelFailed} text="Perdu, essaie encore !"/>
+                    </View>
+                    }
             </View>
         )
     }

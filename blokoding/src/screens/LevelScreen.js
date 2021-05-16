@@ -1,53 +1,89 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button, StatusBar} from 'react-native';
+import {View, Text, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
 import {levelsTexts} from '../constants/LevelsDetails';
 import Colors from '../constants/Colors';
+import TextAnimator from '../components/TextAnimator';
+import EngineConstants from '../constants/EngineConstants';
 
-const LevelScreen = ({route, navigation}) => {
+
+class LevelScreen extends React.Component {
     
-    const levelNumber = route.params.levelNumber;
-    const levelInfo = levelsTexts[levelNumber];
-    const title = levelInfo.title;
-    const tutorial = levelInfo.tutorial;
-    const congratulations = levelInfo.congratulations;
-    const map = levelInfo.map
-
-    const openCamera = () => {
-        navigation.navigate('Take Picture', {
-            map,
-        })
+    constructor(props){
+        super(props);
+        const {route} = this.props;
+        this.levelNumber = route.params.levelNumber;
+        this.levelInfo = levelsTexts[this.levelNumber];
+        this.title = this.levelInfo.title;
+        this.tutorial = this.levelInfo.tutorial;
+        this.congratulations = this.levelInfo.congratulations;
+        this.map = this.levelInfo.map
+        this.state = {
+            textAnimator: <TextAnimator content={this.tutorial[0]}></TextAnimator>,
+        }
     }
 
-    return (
-        <View style={styles.container}>
-            <View>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.tutorial}>{tutorial}</Text>
-            </View>
-            <Button title="Ouvrir la Camera" onPress={openCamera}></Button>
-            <Text>{congratulations}</Text>
-            <StatusBar translucent backgroundColor="transparent"/>
-        </View>
-    )
+    openCamera = () => {
+        this.props.navigation.navigate('Take Picture', {
+            map: this.map
+        })
+    }
+    
+    render(){
+        return (
+            <SafeAreaView style={styles.container}>
+                <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
+                <View style={styles.animatedText}>
+                        {this.state.textAnimator}
+                </View>
+                {/* <View>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.tutorial}>{tutorial}</Text>
+                </View>
+                <Text>{congratulations}</Text> */}
+                <View style={styles.openCamera} >
+                    <Button color={Colors.dark_turquoise} title="Ouvrir la Camera" onPress={this.openCamera}></Button>
+
+
+                </View>
+                <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
+                <StatusBar translucent backgroundColor="transparent"/>
+            </SafeAreaView>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display:'flex',
+    container:{
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'purple'
     },
-    title: {
-        padding:15,
-        paddingTop:30,
-        fontSize:30,
-        textAlign:'center',
-        backgroundColor:Colors.turquoise
+    popupImage:{
+        position:'absolute',
+        width: EngineConstants.MAX_WIDTH,
+        height: EngineConstants.MAX_HEIGHT,
     },
-    tutorial: {
-        padding:10,
-        fontSize:16,
-        textAlign:'left',
-        backgroundColor:Colors.purple
+    animatedText:{
+        position:'absolute',
+        justifyContent:'center',
+        alignItems: 'center',
+        paddingBottom: EngineConstants.MAX_HEIGHT / 7,
     },
+    openCamera:{
+        position:'absolute',
+        bottom: EngineConstants.MAX_HEIGHT / 4,
+        left: EngineConstants.MAX_WIDTH / 2.5,
+    },
+    cameraBtn:{
+        position:'absolute'
+    },
+    image: {
+        position: 'absolute',
+        bottom: EngineConstants.MAX_HEIGHT / 7,
+        left: -EngineConstants.MAX_WIDTH / 30,
+    }
 })
 
 export default LevelScreen;
