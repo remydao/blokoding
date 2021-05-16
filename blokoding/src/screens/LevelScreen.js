@@ -17,16 +17,39 @@ class LevelScreen extends React.Component {
         this.tutorial = this.levelInfo.tutorial;
         this.congratulations = this.levelInfo.congratulations;
         this.map = this.levelInfo.map
+        this.index = 0;
         this.state = {
+            buttonText: this.tutorial.length === 1 ? "Ouvrir la caméra" : "Suivant",
             textAnimator: <TextAnimator content={this.tutorial[0]}></TextAnimator>,
         }
     }
 
-    openCamera = () => {
-        this.props.navigation.navigate('Take Picture', {
-            map: this.map
-        })
+    onPressNextButton = () => {
+        console.log('Press Button')
+
+        this.index++;
+
+        if (this.index < this.tutorial.length)
+        {
+            if (this.index === this.tutorial.length - 1)
+            {
+                this.setState({
+                    buttonText: "Ouvrir la caméra"
+                });
+            }
+
+            this.setState({
+                textAnimator: <TextAnimator content={this.tutorial[this.index]}></TextAnimator>
+            })
+        }
+        else
+        {
+            this.props.navigation.navigate('Take Picture', {
+                map: this.map
+            })
+        }
     }
+
     
     render(){
         return (
@@ -40,12 +63,17 @@ class LevelScreen extends React.Component {
                     <Text style={styles.tutorial}>{tutorial}</Text>
                 </View>
                 <Text>{congratulations}</Text> */}
-                <View style={styles.openCamera} >
-                    <Button color={Colors.dark_turquoise} title="Ouvrir la Camera" onPress={this.openCamera}></Button>
-
-
-                </View>
+    
                 <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
+
+                <View style={styles.openCamera}>   
+                    <Button
+                        onPress={this.onPressNextButton.bind(this)}
+                        title={this.state.buttonText}
+                        color={Colors.dark_turquoise}
+                        style={styles.cameraBtn}
+                    />
+                </View>
                 <StatusBar translucent backgroundColor="transparent"/>
             </SafeAreaView>
         )
