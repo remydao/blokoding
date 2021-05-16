@@ -8,12 +8,12 @@ class CharacterBlock extends StructureBlock {
         this.character = character;
     }
 
-    execute(engine) {
+    async execute(engine) {
 
         engine.checkState();
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
-            this.nextBlock.execute(engine);
+            await this.nextBlock.execute(engine);
         }
     }
 }

@@ -48,11 +48,11 @@ class Game extends Component {
         this.lastTicks = Date.now();
     }
 
-    componentDidMount() {
-        this.actions.execute(this);
-        if (this.state.mapItems[this.state.characterPos] != 'W'){
+    async componentDidMount() {
+        await this.actions.execute(this);
+        if (this.state.map[this.state.characterPos] != Cells.Win){
             console.log("ici")
-            console.log(this.state.mapItems[this.state.characterPos])
+            console.log(this.state.map[this.state.characterPos])
             this.setState({hasWon: false});
             this.setState({hasLost: true});
             this.loose();
