@@ -56,7 +56,7 @@ class LevelScreen extends React.Component {
         return (
             <View>
             <Header 
-                centerComponent={{ text: "Niveau " + (this.levelNumber + 1), style: {fontSize: 30, color: '#fff', paddingTop: 15, paddingBottom: 15} }}
+                centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
             />
             <SafeAreaView style={styles.container}>
                 
@@ -88,6 +88,12 @@ class LevelScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    header:{
+        color: '#fff',
+        paddingBottom: 15,
+        fontSize: 30,
+        fontFamily: 'Pangolin-Regular'
+    },
     container:{
         width: '100%',
         height: '100%',
@@ -100,13 +106,14 @@ const styles = StyleSheet.create({
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
         bottom: EngineConstants.MAX_HEIGHT / 4,
+        left: EngineConstants.MAX_WIDTH / 40,
     },
     animatedText:{
         position:'absolute',
         justifyContent:'center',
         alignItems: 'center',
         //paddingBottom: EngineConstants.MAX_HEIGHT / 7,
-        top: EngineConstants.MAX_HEIGHT / 5.5,
+        top: EngineConstants.MAX_HEIGHT / 4,
         paddingRight: 15
     },
     openCamera:{

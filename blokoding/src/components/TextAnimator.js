@@ -57,7 +57,7 @@ export default class TextAnimator extends Component {
                     return (
                         <Animated.Text 
                         key={'word' + index} 
-                        style={[styles.textStyle, {opacity: this.state.animatedValues[index]}]}>
+                        style={{...styles.textStyle, opacity: this.state.animatedValues[index], fontFamily:'Pangolin-Regular'}}>
                             {word}
                             { index < this.props.content.trim().split(' ').length - 1 ? ' ' : ''}
                         </Animated.Text>
@@ -72,12 +72,10 @@ const styles = StyleSheet.create({
     containerStyle: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        width: '90%'
+        width: '90%',
+        fontFamily:'Sarpanch-Regular'
     },
     textStyle: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        fontFamily: 'Montserrat',
         zIndex: 4,
         //marginBottom: 14
     }

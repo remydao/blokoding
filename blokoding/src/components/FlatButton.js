@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
         paddingVertical: EngineConstants.MAX_HEIGHT * 0.03
     },
     textStyle: {
-        fontWeight: '700',
         color: 'white',
         fontSize: EngineConstants.MAX_HEIGHT * 0.05,
-        fontFamily: 'Montserrat'
+        fontFamily:"Pangolin-Regular",
+        fontSize:35
     }
 })
 

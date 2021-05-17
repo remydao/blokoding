@@ -49,9 +49,9 @@ const styles = (props) => StyleSheet.create({
     },
     headerTitle:{
         color:'black',
-        fontSize:18,
         paddingHorizontal:5,
-        fontWeight:'bold'
+        fontFamily:"Pangolin-Regular",
+        fontSize: 20
     },
 })
 
