@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         left : EngineConstants.MAX_WIDTH / 40,
         paddingBottom: EngineConstants.MAX_HEIGHT / 7,
+        paddingHorizontal: EngineConstants.MAX_WIDTH / 20,
     },
     openCamera:{
         position:'absolute',
