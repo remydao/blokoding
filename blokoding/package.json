@@ -20,7 +20,7 @@
     "react-native": "0.64.0",
     "react-native-auto-height-image": "^3.2.4",
     "react-native-camera": "^3.43.0",
-    "react-native-elements": "^3.3.2",
+    "react-native-elements": "^3.4.1",
     "react-native-game-engine": "^1.2.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-permissions": "^3.0.3",

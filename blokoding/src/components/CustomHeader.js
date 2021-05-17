@@ -5,7 +5,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Colors from '../constants/Colors'
 
 
-const Header = (props) => {
+const CustomHeader = (props) => {
     return (
         <View style={styles(props).header}>
             {
@@ -55,4 +55,4 @@ const styles = (props) => StyleSheet.create({
     },
 })
 
-export default Header;
+export default CustomHeader;

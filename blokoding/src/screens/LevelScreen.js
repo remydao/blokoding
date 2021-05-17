@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
+import {Header} from 'react-native-elements';
 import {levelsTexts} from '../constants/LevelsDetails';
 import Colors from '../constants/Colors';
 import TextAnimator from '../components/TextAnimator';
@@ -53,10 +54,15 @@ class LevelScreen extends React.Component {
     
     render(){
         return (
+            <View>
+            <Header 
+                centerComponent={{ text: "Niveau " + (this.levelNumber + 1), style: {fontSize: 30, color: '#fff', paddingTop: 15, paddingBottom: 15} }}
+            />
             <SafeAreaView style={styles.container}>
+                
                 <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
                 <View style={styles.animatedText}>
-                        {this.state.textAnimator}
+                    {this.state.textAnimator}
                 </View>
                 {/* <View>
                     <Text style={styles.title}>{title}</Text>
@@ -76,6 +82,7 @@ class LevelScreen extends React.Component {
                 </View>
                 <StatusBar translucent backgroundColor="transparent"/>
             </SafeAreaView>
+            </View>
         )
     }
 }
@@ -84,32 +91,35 @@ const styles = StyleSheet.create({
     container:{
         width: '100%',
         height: '100%',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'purple'
+        backgroundColor: '#cbcef8',
     },
     popupImage:{
         position:'absolute',
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
+        bottom: EngineConstants.MAX_HEIGHT / 4,
     },
     animatedText:{
         position:'absolute',
         justifyContent:'center',
         alignItems: 'center',
-        paddingBottom: EngineConstants.MAX_HEIGHT / 7,
+        //paddingBottom: EngineConstants.MAX_HEIGHT / 7,
+        top: EngineConstants.MAX_HEIGHT / 5.5,
+        paddingRight: 15
     },
     openCamera:{
         position:'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 4,
-        left: EngineConstants.MAX_WIDTH / 2.5,
+        bottom: EngineConstants.MAX_HEIGHT / 2,
+        left: EngineConstants.MAX_WIDTH / 2,
     },
     cameraBtn:{
         position:'absolute'
     },
     image: {
         position: 'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 7,
+        bottom: EngineConstants.MAX_HEIGHT / 2.5,
         left: -EngineConstants.MAX_WIDTH / 30,
     }
 })
