@@ -34,6 +34,11 @@ class Game extends Component {
             hasLost: false,
             hasWon: false,
             inventory: {},
+            speed: EngineConstants.MAX_WIDTH * 16 * 0.0002,
+            lastTicks: Date.now(),
+            diff: 0,
+            diffMod16: 0,
+            tmp: 0
         };
         if (props.route.params.cameraMode == CameraMode.TEST) {
             // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
@@ -45,8 +50,8 @@ class Game extends Component {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
-        this.speed = EngineConstants.MAX_WIDTH * 0.01;
-        this.lastTicks = Date.now();
+        
+        
     }
 
     async componentDidMount() {
@@ -85,12 +90,12 @@ class Game extends Component {
     }
 
     // Getter of hasLost state
-    getStateHasLost(){
+    getStateHasLost() {
         return this.state.hasLost;
     }
 
     // Getter of hasWon state
-    getStateHasWon(){
+    getStateHasWon() {
         return this.state.hasWon;
     }
 
@@ -98,20 +103,38 @@ class Game extends Component {
     async move() {
         this.setState({moveDistance: 0});
 
-        var tmp = this.lastTicks;
-        this.lastTicks = Date.now();
-
-        return await new Promise(resolve => {
+        
+        return new Promise(resolve => {
             let interval = setInterval(() => {
+                // Frame handling
+                this.setState({
+                    tmp: this.state.lastTicks,
+                    lastTicks: Date.now()
+                });
+
+                var diff = this.state.lastTicks - this.state.tmp
+
+                var diffMod16 = diff % 16;
+                if (diffMod16 === 0)
+                    diffMod16 = 16;
+                diff += (16 - diffMod16);
+
+                this.setState({
+                    diff: diff, 
+                    diffMod16: diffMod16,
+                    speed: EngineConstants.MAX_WIDTH * diff * 0.0002
+                });
+
+                // Moving
                 this.moveItems();
                 this.moveBackground();
-                this.setState({moveDistance: this.state.moveDistance + this.speed})
+                this.setState({moveDistance: this.state.moveDistance + this.state.speed})
                 if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
                     clearInterval(interval);
                     this.setState({characterPos: this.state.characterPos + 1});
                     resolve();
                 }
-            },  16 /*- (this.lastTicks - tmp)*/)
+            }, 16 - this.state.diffMod16)
         });
     }
 
@@ -119,22 +142,39 @@ class Game extends Component {
     async jump() {
         this.setState({moveDistance: 0});
 
-        var tmp = this.lastTicks;
-        this.lastTicks = Date.now();
-
         return await new Promise(resolve => {
             let interval = setInterval(() => {
+                // Frame handling
+                this.setState({
+                    tmp: this.state.lastTicks,
+                    lastTicks: Date.now()
+                });
+
+                var diff = this.state.lastTicks - this.state.tmp
+
+                var diffMod16 = diff % 16;
+                if (diffMod16 === 0)
+                    diffMod16 = 16;
+                diff += (16 - diffMod16);
+
+                this.setState({
+                    diff: diff, 
+                    diffMod16: diffMod16,
+                    speed: EngineConstants.MAX_WIDTH * diff * 0.0002
+                });
+
+                // Jumping
                 this.moveItems();
                 this.moveBackground();
                 this.moveCharacUpDown();
-                this.setState({moveDistance: this.state.moveDistance + this.speed})
+                this.setState({moveDistance: this.state.moveDistance + this.state.speed})
 
                 if (this.state.moveDistance > EngineConstants.CELL_SIZE * 2) {
                     clearInterval(interval);
                     this.setState({characterPos: this.state.characterPos + 2});
                     resolve();
                 }
-            }, 16 /*- (this.lastTicks - tmp)*/)
+            }, 16 - this.state.diffMod16)
         });
     }
 
@@ -162,21 +202,21 @@ class Game extends Component {
     moveCharacUpDown = () => {
         if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
             let acc = 1 - this.state.moveDistance /  EngineConstants.CELL_SIZE;
-            this.setState({playerPosY: this.state.playerPosY + this.speed * 2 * acc});
+            this.setState({playerPosY: this.state.playerPosY + this.state.speed * 2 * acc});
         } else {
             let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
-            this.setState({playerPosY: this.state.playerPosY - this.speed * 2 * acc});
+            this.setState({playerPosY: this.state.playerPosY - this.state.speed * 2 * acc});
         }
     }
 
     // Function for move translation of the character
     moveBackground = () => {
 
-        let newBg0Pos = this.state.bg0Pos - this.speed;
+        let newBg0Pos = this.state.bg0Pos - this.state.speed;
         if (newBg0Pos + EngineConstants.MAX_WIDTH < 0)
             newBg0Pos += EngineConstants.MAX_WIDTH * 2;
 
-        let newBg1Pos = this.state.bg1Pos - this.speed;
+        let newBg1Pos = this.state.bg1Pos - this.state.speed;
         if (newBg1Pos + EngineConstants.MAX_WIDTH < 0)
             newBg1Pos += EngineConstants.MAX_WIDTH * 2;
         
@@ -187,7 +227,7 @@ class Game extends Component {
     moveItems = () => {
         let newItemPos = [];
         for (let item of this.state.itemsPos)
-            newItemPos.push(item - this.speed);
+            newItemPos.push(item - this.state.speed);
 
         this.setState({itemsPos: newItemPos});
     }

@@ -21,7 +21,7 @@ class LevelScreen extends React.Component {
         this.map = this.levelInfo.map
         this.index = 0;
         this.state = {
-            buttonText: this.tutorial.length === 1 ? "Ouvrir la caméra" : "Suivant",
+            buttonText: this.tutorial.length === 1 ? "\nOuvrir la caméra\n" : "\nSuivant\n",
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[0]}></TextAnimator>,
         }
     }
@@ -36,7 +36,7 @@ class LevelScreen extends React.Component {
             if (this.index === this.tutorial.length - 1)
             {
                 this.setState({
-                    buttonText: "Ouvrir la caméra"
+                    buttonText: "\nOuvrir la caméra\n"
                 });
             }
 
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
         zIndex: 1,
         position: 'absolute',
         backgroundColor: 'lightblue',
-        paddingTop:15,
-        height:EngineConstants.MAX_HEIGHT/ 8,
+        paddingTop: 15,
+        height: EngineConstants.MAX_HEIGHT/ 8,
     },
     textStyle: {
         fontSize: 30,
@@ -114,25 +114,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#cbcef8',
     },
     popupImage:{
-        position:'absolute',
+        position: 'absolute',
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
     },
     animatedText:{
-        position:'absolute',
-        justifyContent:'center',
+        position: 'absolute',
+        justifyContent: 'center',
         alignItems: 'center',
         left : EngineConstants.MAX_WIDTH / 40,
         paddingBottom: EngineConstants.MAX_HEIGHT / 7,
         paddingHorizontal: EngineConstants.MAX_WIDTH / 20,
     },
     openCamera:{
-        position:'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 4,
+        position: 'absolute',
+        bottom: EngineConstants.MAX_HEIGHT / 5,
         left: EngineConstants.MAX_WIDTH / 2.5,
+        borderRadius: 10,
+        width: EngineConstants.MAX_WIDTH / 2,
+        overflow: 'hidden', // for borderRadius
     },
     cameraBtn:{
-        position:'absolute'
+        position: 'absolute',
     },
     image: {
         position: 'absolute',
