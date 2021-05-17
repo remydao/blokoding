@@ -55,35 +55,36 @@ class LevelScreen extends React.Component {
     
     render(){
         return (
-            <SafeAreaView style={styles.bigContainer} >
+            <SafeAreaView style={styles.bigContainer}>
+
                 <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} backgroundColor={Colors.purpleBlue} isLogo={false}></CustomHeader>
 
-            <SafeAreaView style={styles.container}>
-                {/* <Header 
-                    centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
-                /> */}
-                <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
-                <View style={styles.animatedText}>
-                    {this.state.textAnimator}
-                </View>
-                {/* <View>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.tutorial}>{tutorial}</Text>
-                </View>
-                <Text>{congratulations}</Text> */}
-    
-                <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
+                <SafeAreaView style={styles.container}>
+                    {/* <Header 
+                        centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
+                    /> */}
+                    <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
+                    <View style={styles.animatedText}>
+                        {this.state.textAnimator}
+                    </View>
+                    {/* <View>
+                        <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.tutorial}>{tutorial}</Text>
+                    </View>
+                    <Text>{congratulations}</Text> */}
+        
+                    <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
 
-                <View style={styles.openCamera}>   
-                    <Button
-                        onPress={this.onPressNextButton.bind(this)}
-                        title={this.state.buttonText}
-                        color={Colors.dark_turquoise}
-                        style={styles.cameraBtn}
-                    />
-                </View>
-                <StatusBar translucent backgroundColor="transparent"/>
-            </SafeAreaView>
+                    <View style={styles.openCamera}>   
+                        <Button
+                                onPress={this.onPressNextButton.bind(this)}
+                                title={this.state.buttonText}
+                                color={Colors.dark_turquoise}
+                                style={styles.cameraBtn}
+                        />
+                    </View>
+                    <StatusBar translucent backgroundColor="transparent"/>
+                </SafeAreaView>
             </SafeAreaView>
 
         )
@@ -91,7 +92,7 @@ class LevelScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    header:{
+    header: {
         zIndex: 1,
         position: 'absolute',
         backgroundColor: 'lightblue',
@@ -102,40 +103,41 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontFamily: 'Pangolin-Regular'
     },
-    bigContainer:{
+    bigContainer: {
         flex: 1,
         alignItems: 'center'
     },
-    container:{
+    container: {
         width: '100%',
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#cbcef8',
     },
-    popupImage:{
-        position: 'absolute',
+
+    popupImage: {
+        position:'absolute',
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
     },
-    animatedText:{
-        position: 'absolute',
-        justifyContent: 'center',
+    animatedText: {
+        position:'absolute',
+        justifyContent:'center',
         alignItems: 'center',
         left : EngineConstants.MAX_WIDTH / 40,
         paddingBottom: EngineConstants.MAX_HEIGHT / 7,
         paddingHorizontal: EngineConstants.MAX_WIDTH / 20,
     },
-    openCamera:{
-        position: 'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 5,
+    openCamera: {
+        position:'absolute',
+        bottom: EngineConstants.MAX_HEIGHT / 4,
         left: EngineConstants.MAX_WIDTH / 2.5,
         borderRadius: 10,
         width: EngineConstants.MAX_WIDTH / 2,
         overflow: 'hidden', // for borderRadius
     },
-    cameraBtn:{
-        position: 'absolute',
+    cameraBtn: {
+        position:'absolute'
     },
     image: {
         position: 'absolute',
