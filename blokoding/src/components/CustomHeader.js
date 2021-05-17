@@ -6,8 +6,11 @@ import Colors from '../constants/Colors'
 
 
 const CustomHeader = (props) => {
+
+    const isLogo = props.isLogo == false ? false : true;
+
     return (
-        <View style={styles(props).header}>
+        <View style={{...styles(props).header, ...props.style}}>
             {
                 Platform.OS === 'ios' ?
                 (<View style={styles(props).statusBarIOS}></View>)
@@ -16,11 +19,14 @@ const CustomHeader = (props) => {
             {/* <View>
                 <Text style={styles(props).backBtn}>lol</Text>
             </View> */}
-            <Image
+            {isLogo &&
+                <Image
                 source={require("../assets/icon_secondary.png")}
                 style={{ width: 20, height: 20 }}
                 resizeMode="stretch"/>
-            <Text style={styles(props).headerTitle}>{props.title}</Text>
+            }
+            
+            <Text style={{...styles(props).headerTitle, ...props.textStyle}}>{props.title}</Text>
         </View>
     )
 }

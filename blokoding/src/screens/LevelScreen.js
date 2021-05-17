@@ -5,6 +5,7 @@ import {levelsTexts} from '../constants/LevelsDetails';
 import Colors from '../constants/Colors';
 import TextAnimator from '../components/TextAnimator';
 import EngineConstants from '../constants/EngineConstants';
+import CustomHeader from '../components/CustomHeader';
 
 
 class LevelScreen extends React.Component {
@@ -54,12 +55,13 @@ class LevelScreen extends React.Component {
     
     render(){
         return (
-            <View>
-            <Header 
-                centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
-            />
+            <SafeAreaView style={styles.bigContainer} >
+                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} backgroundColor={Colors.purpleBlue} isLogo={false}></CustomHeader>
+
             <SafeAreaView style={styles.container}>
-                
+                {/* <Header 
+                    centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
+                /> */}
                 <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
                 <View style={styles.animatedText}>
                     {this.state.textAnimator}
@@ -82,22 +84,32 @@ class LevelScreen extends React.Component {
                 </View>
                 <StatusBar translucent backgroundColor="transparent"/>
             </SafeAreaView>
-            </View>
+            </SafeAreaView>
+
         )
     }
 }
 
 const styles = StyleSheet.create({
     header:{
-        color: '#fff',
-        paddingBottom: 15,
+        zIndex: 1,
+        position: 'absolute',
+        backgroundColor: 'lightblue',
+        paddingTop:15,
+        height:EngineConstants.MAX_HEIGHT/ 8,
+    },
+    textStyle: {
         fontSize: 30,
         fontFamily: 'Pangolin-Regular'
+    },
+    bigContainer:{
+        flex: 1,
+        alignItems: 'center'
     },
     container:{
         width: '100%',
         height: '100%',
-        //justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#cbcef8',
     },
@@ -105,28 +117,25 @@ const styles = StyleSheet.create({
         position:'absolute',
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
-        bottom: EngineConstants.MAX_HEIGHT / 4,
-        left: EngineConstants.MAX_WIDTH / 40,
     },
     animatedText:{
         position:'absolute',
         justifyContent:'center',
         alignItems: 'center',
-        //paddingBottom: EngineConstants.MAX_HEIGHT / 7,
-        top: EngineConstants.MAX_HEIGHT / 4,
-        paddingRight: 15
+        left : EngineConstants.MAX_WIDTH / 40,
+        paddingBottom: EngineConstants.MAX_HEIGHT / 7,
     },
     openCamera:{
         position:'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 2,
-        left: EngineConstants.MAX_WIDTH / 2,
+        bottom: EngineConstants.MAX_HEIGHT / 4,
+        left: EngineConstants.MAX_WIDTH / 2.5,
     },
     cameraBtn:{
         position:'absolute'
     },
     image: {
         position: 'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 2.5,
+        bottom: EngineConstants.MAX_HEIGHT / 7,
         left: -EngineConstants.MAX_WIDTH / 30,
     }
 })
