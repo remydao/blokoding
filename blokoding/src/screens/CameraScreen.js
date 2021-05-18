@@ -74,7 +74,6 @@ class Camera extends Component {
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
         const actions = parseInit(visionResp);
-
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map){
             navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.DISCOVER, mapInfo: this.props.route.params.map});

@@ -4,6 +4,7 @@ import { back } from 'react-native/Libraries/Animated/Easing';
 import EngineConstants from '../constants/EngineConstants';
 import Colors from '../constants/Colors';
 
+const HEIGHT = EngineConstants.MAX_HEIGHT - 64;
 const BUTTON_PADDING = EngineConstants.MAX_HEIGHT * 0.02;
 const BUTTON_HEIGHT = 100 + BUTTON_PADDING * 2;
 
@@ -23,25 +24,25 @@ const LevelButton = ({text, onPress, color, pressColor, ...props}) => {
     const position = Animated.subtract(props.index * BUTTON_HEIGHT, y);
     const isDisappearing = -BUTTON_HEIGHT;
     const isTop = 0;
-    const isBottom = EngineConstants.MAX_HEIGHT - BUTTON_HEIGHT;
-    const isAppearing = EngineConstants.MAX_HEIGHT;
+    const isBottom = HEIGHT - BUTTON_HEIGHT;
+    const isAppearing = HEIGHT;
     const translateY = Animated.add(
         y,
         y.interpolate({
-            inputRange: [0, 0.0001 + props.index * BUTTON_HEIGHT],
+            inputRange: [0, 0.00001 + props.index * BUTTON_HEIGHT],
             outputRange: [0, -props.index * BUTTON_HEIGHT],
             extrapolateRight: "clamp"
         }),
         position.interpolate({
             inputRange: [isBottom, isAppearing],
-            outputRange: [0, -BUTTON_HEIGHT / 10],
+            outputRange: [0, -BUTTON_HEIGHT / 4],
             extrapolate: "clamp"
         })
     )
     const scale = position.interpolate({
         inputRange: [isDisappearing, isTop, isBottom, isAppearing],
         outputRange: [0.5, 1, 1, 0.5],
-        extrapolateRight: "clamp"
+        extrapolate: "clamp"
     })
 
     const opacity = position.interpolate({
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems:'center',
         textAlign:'center'
@@ -89,7 +91,6 @@ const styles = StyleSheet.create({
         fontSize: EngineConstants.MAX_HEIGHT * 0.05,
         fontFamily:"Pangolin-Regular",
         fontSize: 35,
-        paddingTop: EngineConstants.MAX_HEIGHT * 0.02,
     }
 })
 

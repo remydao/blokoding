@@ -46,6 +46,7 @@ class LevelScreen extends React.Component {
         }
         else
         {
+            console.log("before take pic")
             this.props.navigation.navigate('Take Picture', {
                 map: this.map
             })
