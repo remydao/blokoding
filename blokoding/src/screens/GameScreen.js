@@ -42,10 +42,10 @@ class Game extends Component {
         };
         if (props.route.params.cameraMode == CameraMode.TEST) {
             // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            // this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(null), new DataBlock(10)), Characters.Kevin);
+            this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(new IfBlock(null, new GrabBlock(null), new IsOnBlock(new DataBlock(Items.Key)))), new DataBlock(10)), Characters.Kevin);
             //this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock(Environments.Bush))), Characters.Bart)
             // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
-            this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(null))))))), Characters.Kevin);
+            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -251,7 +251,7 @@ class Game extends Component {
     // return true if character is on an entity(data block)
     isOn(entity) {
         let res = Object.entries(Items).filter(item => item[1] == entity);
-        return res && res[0] && this.state.map[this.state.characterPos + 1].content && this.state.map[this.state.characterPos].content.imageName == res[0][1];
+        return res && res[0] && this.state.map[this.state.characterPos].content && this.state.map[this.state.characterPos].content.imageName == res[0][1];
     }
 
     backToSelectLevels = () => {
