@@ -14,6 +14,7 @@ const parseDiscover = (cardListObj) => {
 }
 
 const parseInit = cardListObj => {
+    loopDepth = 0;
     let cardList = cardListObj.map(item => item.text.toLowerCase());
     console.log(cardList);
     return parseCharacter(cardList);
@@ -98,6 +99,8 @@ const parseInstruction = (instruction, cardList) => {
     loopDepth++;
     let execBlock = parseStructureCard(cardList);
     loopDepth--;
+
+    console.log(execBlock);
 
     let nextBlock = parseStructureCard(cardList);
 
