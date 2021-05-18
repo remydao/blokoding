@@ -18,7 +18,7 @@ const Actions = {
 }
 
 const Instructions = {
-    For: 'répéter',
+    For: 'repeter',
     While: 'tant que',
     If: 'si'
 }
