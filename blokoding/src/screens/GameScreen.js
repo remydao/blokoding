@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, StatusBar} from 'react-native';
 import BackgroundGame from "../components/BackgroundGame";
 import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
@@ -274,13 +274,15 @@ class Game extends Component {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                { this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text="Tu as gagne" color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
-                { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text="Tu as perdu" color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
+                { this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text="Niveau réussi, Bravo !" color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
+                { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text="Perdu, tu n'as pas atteint la ligne d'arrivée" color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
                 { this.arr }
                 <Inventory inventory={this.state.inventory} />
+                <StatusBar translucent backgroundColor="transparent"/>
+
             </View>
         )
     }
