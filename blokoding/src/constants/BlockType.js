@@ -24,7 +24,7 @@ const Instructions = {
 }
 
 const Items = {
-    Key: 'clé',
+    Key: 'cle',
     Plush: 'peluche',
     Flower: 'fleur',
     Machete: 'machette',
