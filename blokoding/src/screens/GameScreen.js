@@ -183,7 +183,7 @@ class Game extends Component {
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * 2) {
-                    characterPos += 2;
+                    self.characterPos += 2;
                     resolve();
                 }
                 else {
@@ -218,11 +218,11 @@ class Game extends Component {
 
     // Function for jump translation
     moveCharacUpDown = () => {
-        if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
-            let acc = 1 - this.state.moveDistance / EngineConstants.CELL_SIZE;
+        if (this.moveDistance <= EngineConstants.CELL_SIZE) {
+            let acc = 1 - this.moveDistance / EngineConstants.CELL_SIZE;
             return this.state.playerPosY + this.speed * 2 * acc;
         } else {
-            let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
+            let acc = this.moveDistance / EngineConstants.CELL_SIZE - 1;
             return this.state.playerPosY - this.speed * 2 * acc;
         }
     }
