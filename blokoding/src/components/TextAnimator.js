@@ -3,10 +3,9 @@ import {View, Text, StyleSheet, Animated} from 'react-native';
 
 export default class TextAnimator extends Component {
     
-
-    // crée le tableau de mots passé en props et rempli le tableau animatedValues avec des Value à 0
+    // Créé le tableau de mots passé en props et rempli
+    // le tableau animatedValues avec des Value à 0
     constructor(props) {
-        console.log("Constructor");
         super(props);
 
         this.textArray = this.props.content.trim().split(' ');
@@ -14,10 +13,6 @@ export default class TextAnimator extends Component {
         this.state = {
             animatedValues: []
         }
-    }
-
-    componentDidMount() {
-        console.log('CDM');
     }
 
     // Est appelé au lancement pour set les animations 
@@ -37,8 +32,6 @@ export default class TextAnimator extends Component {
 
     
     componentDidMount() {
-        console.log("cdm")
-
         this.props.content.trim().split(' ').forEach((_, index) => {
             this.state.animatedValues[index] = new Animated.Value(0);
         });
@@ -50,7 +43,6 @@ export default class TextAnimator extends Component {
     }
 
     render() {
-        console.log('Render Animator');
         return (
             <View style={styles.containerStyle}>
                 { this.props.content.trim().split(' ').map((word, index) => {

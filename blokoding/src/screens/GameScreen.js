@@ -35,11 +35,9 @@ class Game extends Component {
             hasWon: false,
             inventory: {},
             speed: EngineConstants.MAX_WIDTH * 16 * 0.0002,
-            lastTicks: Date.now(),
-            diff: 0,
-            diffMod16: 0,
-            tmp: 0
+            
         };
+
         if (props.route.params.cameraMode == CameraMode.TEST) {
             // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
             this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(new IfBlock(null, new GrabBlock(null), new IsOnBlock(new DataBlock(Items.Key)))), new DataBlock(10)), Characters.Kevin);
@@ -51,13 +49,18 @@ class Game extends Component {
             console.log(this.actions);
         }
         
-        
+        this.frameCount = 0;
+        this.rateTicks = 1000.0 / 60.0;
+        this.baseTicks = Date.now();
+        this.lastTicks = this.baseTicks;
+        this.timePassed = 0;
+        this.frameDelay = 0;
     }
 
     async componentDidMount() {
         await this.actions.execute(this);
-        if (this.state.map[this.state.characterPos] != Cells.Win){
-            console.log("ici")
+
+        if (this.state.map[this.state.characterPos] != Cells.Win) {
             console.log(this.state.map[this.state.characterPos])
             this.setState({hasWon: false});
             this.setState({hasLost: true});
@@ -66,10 +69,7 @@ class Game extends Component {
     }
 
     // function that check user's win or loss
-    // return -1 if lose, 0 if nothing, 1 if win
     async checkState() {
-        console.log(this.state.map[this.state.characterPos].content)
-        console.log(Cells.Win);
         return await new Promise((resolve) => {
             switch (this.state.map[this.state.characterPos]) {
                 case Cells.Win:
@@ -99,89 +99,114 @@ class Game extends Component {
         return this.state.hasWon;
     }
 
+    // Frame handling
+    setFramerateDelay() {   
+        this.frameCount++;
+
+        var currentTicks = Date.now();
+        this.timePassed = currentTicks - this.lastTicks;
+        this.lastTicks = currentTicks;
+        var targetTicks = this.baseTicks + this.frameCount * this.rateTicks;
+
+        if (currentTicks <= targetTicks) {
+            this.frameDelay = targetTicks - currentTicks;
+        } else {
+            this.frameCount = 0;
+            this.baseTicks = Date.now();
+            this.frameDelay = 0;
+            // console.log("Reset FPS ->")
+        }
+
+        this.setState({
+            speed: EngineConstants.MAX_WIDTH * this.timePassed * 0.0002
+        });
+
+        //console.log("this.timePassed: " + this.timePassed + "  currTicks: " + currentTicks + "  targetTicks: " + targetTicks, "  this.frameDelay: " + this.frameDelay);
+    }
+
     // General function to move the character (used in ActionBlock.js)
     async move() {
-        this.setState({moveDistance: 0});
+        this.setState({
+            moveDistance: 0
+        });
 
-        
-        return new Promise(resolve => {
-            let interval = setInterval(() => {
-                // Frame handling
-                this.setState({
-                    tmp: this.state.lastTicks,
-                    lastTicks: Date.now()
-                });
+        var self = this;
 
-                var diff = this.state.lastTicks - this.state.tmp
+        return await new Promise(resolve => {
+            movePos();
 
-                var diffMod16 = diff % 16;
-                if (diffMod16 === 0)
-                    diffMod16 = 16;
-                diff += (16 - diffMod16);
+            function movePos() {
+                self.setFramerateDelay();
 
-                this.setState({
-                    diff: diff, 
-                    diffMod16: diffMod16,
-                    speed: EngineConstants.MAX_WIDTH * diff * 0.0002
-                });
+                var newItemPos = self.moveItems();
+                var newBgPos = self.moveBackground();
 
-                // Moving
-                this.moveItems();
-                this.moveBackground();
-                this.setState({moveDistance: this.state.moveDistance + this.state.speed})
-                if (this.state.moveDistance > EngineConstants.CELL_SIZE) {
-                    clearInterval(interval);
-                    this.setState({characterPos: this.state.characterPos + 1});
+                self.setState({
+                    bg0Pos: newBgPos[0],
+                    bg1Pos: newBgPos[1],
+                    itemsPos: newItemPos,
+                    moveDistance: self.state.moveDistance + self.state.speed,
+                })
+
+                if (self.state.moveDistance >= EngineConstants.CELL_SIZE) {
+                    self.setState({
+                        characterPos: self.state.characterPos + 1
+                    });
                     resolve();
                 }
-            }, 16 - this.state.diffMod16)
+                else {
+                    setTimeout(movePos, self.frameDelay);
+                }      
+            }
         });
     }
 
     // General function to jump the character (used in ActionBlock.js)
     async jump() {
-        this.setState({moveDistance: 0});
+        this.setState({
+            moveDistance: 0
+        });
+
+        var self = this;
 
         return await new Promise(resolve => {
-            let interval = setInterval(() => {
-                // Frame handling
-                this.setState({
-                    tmp: this.state.lastTicks,
-                    lastTicks: Date.now()
-                });
+            jumpPos();
 
-                var diff = this.state.lastTicks - this.state.tmp
+            function jumpPos() {
+                self.setFramerateDelay();
 
-                var diffMod16 = diff % 16;
-                if (diffMod16 === 0)
-                    diffMod16 = 16;
-                diff += (16 - diffMod16);
+                var newItemPos = self.moveItems();
+                var newBgPos = self.moveBackground();
+                var playerPosY = self.moveCharacUpDown();
 
-                this.setState({
-                    diff: diff, 
-                    diffMod16: diffMod16,
-                    speed: EngineConstants.MAX_WIDTH * diff * 0.0002
-                });
+                self.setState({
+                    bg0Pos: newBgPos[0],
+                    bg1Pos: newBgPos[1],
+                    itemsPos: newItemPos,
+                    playerPosY: playerPosY,
+                    moveDistance: self.state.moveDistance + self.state.speed,
+                })
 
-                // Jumping
-                this.moveItems();
-                this.moveBackground();
-                this.moveCharacUpDown();
-                this.setState({moveDistance: this.state.moveDistance + this.state.speed})
-
-                if (this.state.moveDistance > EngineConstants.CELL_SIZE * 2) {
-                    clearInterval(interval);
-                    this.setState({characterPos: this.state.characterPos + 2});
+                if (self.state.moveDistance >= EngineConstants.CELL_SIZE * 2) {
+                    self.setState({
+                        characterPos: self.state.characterPos + 2
+                    });
                     resolve();
                 }
-            }, 16 - this.state.diffMod16)
+                else {
+                    setTimeout(jumpPos, self.frameDelay);
+                }      
+            }
         });
     }
 
     grab() {
         var currItem = this.state.map[this.state.characterPos];
+        
         if (currItem == Cells.Empty) {
-            this.setState({hasLost: true});
+            this.setState({
+                hasLost: true
+            });
             console.log("grab failed");
             return false;
         }
@@ -201,17 +226,16 @@ class Game extends Component {
     // Function for jump translation
     moveCharacUpDown = () => {
         if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
-            let acc = 1 - this.state.moveDistance /  EngineConstants.CELL_SIZE;
-            this.setState({playerPosY: this.state.playerPosY + this.state.speed * 2 * acc});
+            let acc = 1 - this.state.moveDistance / EngineConstants.CELL_SIZE;
+            return this.state.playerPosY + this.state.speed * 2 * acc;
         } else {
             let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
-            this.setState({playerPosY: this.state.playerPosY - this.state.speed * 2 * acc});
+            return this.state.playerPosY - this.state.speed * 2 * acc;
         }
     }
 
     // Function for move translation of the character
     moveBackground = () => {
-
         let newBg0Pos = this.state.bg0Pos - this.state.speed;
         if (newBg0Pos + EngineConstants.MAX_WIDTH < 0)
             newBg0Pos += EngineConstants.MAX_WIDTH * 2;
@@ -219,8 +243,8 @@ class Game extends Component {
         let newBg1Pos = this.state.bg1Pos - this.state.speed;
         if (newBg1Pos + EngineConstants.MAX_WIDTH < 0)
             newBg1Pos += EngineConstants.MAX_WIDTH * 2;
-        
-        this.setState({bg0Pos: newBg0Pos, bg1Pos: newBg1Pos});
+
+        return [newBg0Pos, newBg1Pos];
     }
 
     // Function for move translation of all the items in the map
@@ -228,8 +252,8 @@ class Game extends Component {
         let newItemPos = [];
         for (let item of this.state.itemsPos)
             newItemPos.push(item - this.state.speed);
-
-        this.setState({itemsPos: newItemPos});
+        
+        return newItemPos;
     }
 
     // Function to notify loose
