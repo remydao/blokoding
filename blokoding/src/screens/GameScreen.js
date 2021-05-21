@@ -30,12 +30,9 @@ class Game extends Component {
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
             map: [...props.route.params.mapInfo.map],
             itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
-            characterPos: 0,
             hasLost: false,
             hasWon: false,
             inventory: {},
-            speed: EngineConstants.MAX_WIDTH * 16 * 0.0002,
-            
         };
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
@@ -49,19 +46,23 @@ class Game extends Component {
             console.log(this.actions);
         }
         
+        this.moveDistance = 0;
+        this.characterPos = 0;
+
         this.frameCount = 0;
         this.rateTicks = 1000.0 / 60.0;
         this.baseTicks = Date.now();
         this.lastTicks = this.baseTicks;
         this.timePassed = 0;
         this.frameDelay = 0;
+        this.speed = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
     }
 
     async componentDidMount() {
         await this.actions.execute(this);
 
-        if (this.state.map[this.state.characterPos] != Cells.Win) {
-            console.log(this.state.map[this.state.characterPos])
+        if (this.state.map[this.characterPos] != Cells.Win) {
+            console.log(this.state.map[this.characterPos])
             this.setState({hasWon: false});
             this.setState({hasLost: true});
             this.loose();
@@ -71,7 +72,7 @@ class Game extends Component {
     // function that check user's win or loss
     async checkState() {
         return await new Promise((resolve) => {
-            switch (this.state.map[this.state.characterPos]) {
+            switch (this.state.map[this.characterPos]) {
                 case Cells.Win:
                     console.log("win")
                     this.setState({hasWon: true});
@@ -117,19 +118,15 @@ class Game extends Component {
             // console.log("Reset FPS ->")
         }
 
-        this.setState({
-            speed: EngineConstants.MAX_WIDTH * this.timePassed * 0.0002
-        });
+        this.speed = EngineConstants.MAX_WIDTH * this.timePassed * 0.0002;
 
-        //console.log("this.timePassed: " + this.timePassed + "  currTicks: " + currentTicks + "  targetTicks: " + targetTicks, "  this.frameDelay: " + this.frameDelay);
+        // console.log("this.timePassed: " + this.timePassed + "  currTicks: " + currentTicks + "  targetTicks: " + targetTicks, "  this.frameDelay: " + this.frameDelay);
     }
 
-    // General function to move the character (used in ActionBlock.js)
+    // Method to move the character (used in ActionBlock.js)
     async move() {
-        this.setState({
-            moveDistance: 0
-        });
-
+        this.moveDistance =  0
+        
         var self = this;
 
         return await new Promise(resolve => {
@@ -141,17 +138,16 @@ class Game extends Component {
                 var newItemPos = self.moveItems();
                 var newBgPos = self.moveBackground();
 
+                self.moveDistance += self.speed;
+
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
-                    moveDistance: self.state.moveDistance + self.state.speed,
                 })
 
-                if (self.state.moveDistance >= EngineConstants.CELL_SIZE) {
-                    self.setState({
-                        characterPos: self.state.characterPos + 1
-                    });
+                if (self.moveDistance >= EngineConstants.CELL_SIZE) {
+                    self.characterPos++;
                     resolve();
                 }
                 else {
@@ -163,9 +159,7 @@ class Game extends Component {
 
     // General function to jump the character (used in ActionBlock.js)
     async jump() {
-        this.setState({
-            moveDistance: 0
-        });
+        this.moveDistance = 0;
 
         var self = this;
 
@@ -179,18 +173,17 @@ class Game extends Component {
                 var newBgPos = self.moveBackground();
                 var playerPosY = self.moveCharacUpDown();
 
+                self.moveDistance += self.speed;
+
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     playerPosY: playerPosY,
-                    moveDistance: self.state.moveDistance + self.state.speed,
                 })
 
-                if (self.state.moveDistance >= EngineConstants.CELL_SIZE * 2) {
-                    self.setState({
-                        characterPos: self.state.characterPos + 2
-                    });
+                if (self.moveDistance >= EngineConstants.CELL_SIZE * 2) {
+                    characterPos += 2;
                     resolve();
                 }
                 else {
@@ -201,7 +194,7 @@ class Game extends Component {
     }
 
     grab() {
-        var currItem = this.state.map[this.state.characterPos];
+        var currItem = this.state.map[this.characterPos];
         
         if (currItem == Cells.Empty) {
             this.setState({
@@ -216,7 +209,7 @@ class Game extends Component {
             let inventory = Object.assign({}, prevState.inventory);  
             inventory[currItem.content.imageName] = inventory[currItem.content.imageName] ? inventory[currItem.content.imageName] + 1 : 1;                                  
             let newMap = prevState.map;
-            newMap[this.state.characterPos] = Cells.Empty
+            newMap[this.characterPos] = Cells.Empty
             return { inventory, newMap };                                 
         });
 
@@ -227,20 +220,20 @@ class Game extends Component {
     moveCharacUpDown = () => {
         if (this.state.moveDistance <= EngineConstants.CELL_SIZE) {
             let acc = 1 - this.state.moveDistance / EngineConstants.CELL_SIZE;
-            return this.state.playerPosY + this.state.speed * 2 * acc;
+            return this.state.playerPosY + this.speed * 2 * acc;
         } else {
             let acc = this.state.moveDistance / EngineConstants.CELL_SIZE - 1;
-            return this.state.playerPosY - this.state.speed * 2 * acc;
+            return this.state.playerPosY - this.speed * 2 * acc;
         }
     }
 
     // Function for move translation of the character
     moveBackground = () => {
-        let newBg0Pos = this.state.bg0Pos - this.state.speed;
+        let newBg0Pos = this.state.bg0Pos - this.speed;
         if (newBg0Pos + EngineConstants.MAX_WIDTH < 0)
             newBg0Pos += EngineConstants.MAX_WIDTH * 2;
 
-        let newBg1Pos = this.state.bg1Pos - this.state.speed;
+        let newBg1Pos = this.state.bg1Pos - this.speed;
         if (newBg1Pos + EngineConstants.MAX_WIDTH < 0)
             newBg1Pos += EngineConstants.MAX_WIDTH * 2;
 
@@ -251,7 +244,7 @@ class Game extends Component {
     moveItems = () => {
         let newItemPos = [];
         for (let item of this.state.itemsPos)
-            newItemPos.push(item - this.state.speed);
+            newItemPos.push(item - this.speed);
         
         return newItemPos;
     }
@@ -269,13 +262,13 @@ class Game extends Component {
     // return true if character is in front of an entity(data block)
     isInFrontOf(entity) {
         let res = Object.entries(Environments).filter(env => env[1] == entity);
-        return res && res[0] && this.state.map[this.state.characterPos + 1].content && this.state.map[this.state.characterPos + 1].content.imageName == res[0][1];
+        return res && res[0] && this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == res[0][1];
     }
 
     // return true if character is on an entity(data block)
     isOn(entity) {
         let res = Object.entries(Items).filter(item => item[1] == entity);
-        return res && res[0] && this.state.map[this.state.characterPos].content && this.state.map[this.state.characterPos].content.imageName == res[0][1];
+        return res && res[0] && this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == res[0][1];
     }
 
     backToSelectLevels = () => {
