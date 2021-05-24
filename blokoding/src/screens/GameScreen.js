@@ -18,6 +18,7 @@ import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
 import { resolvePreset } from '@babel/core';
+import { isItem } from '../constants/ItemImages';
 
 
 
@@ -37,10 +38,10 @@ class Game extends Component {
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
             // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(new IfBlock(null, new GrabBlock(null), new IsOnBlock(new DataBlock(Items.Key)))), new DataBlock(10)), Characters.Kevin);
+            //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(new IfBlock(null, new GrabBlock(null), new IsOnBlock(new DataBlock(Items.Key)))), new DataBlock(10)), Characters.Harry);
             //this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock(Environments.Bush))), Characters.Bart)
             // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
-            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -196,7 +197,7 @@ class Game extends Component {
     grab() {
         var currItem = this.state.map[this.characterPos];
         
-        if (currItem == Cells.Empty) {
+        if (!isItem(currItem)) {
             this.setState({
                 hasLost: true
             });
@@ -299,7 +300,6 @@ class Game extends Component {
                 { this.arr }
                 <Inventory inventory={this.state.inventory} />
                 <StatusBar translucent backgroundColor="transparent"/>
-
             </View>
         )
     }

@@ -28,4 +28,8 @@ const getItemUri = (item) => {
     return Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item)[0][1].uri;
 }
 
-export {ItemImages, getItemUri};
+const isItem = (item) => {
+    return Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item).length > 0;
+}
+
+export {ItemImages, getItemUri, isItem};
