@@ -51,7 +51,7 @@ const parseStructureCard = cardList => {
             throw 'Une carte fin est mal placée'
     }
 
-    throw 'Texte inconnu';
+    throw 'Texte inconnu : ' + blockName;
 }
 
 const parseCharacter = cardList => {
@@ -133,18 +133,17 @@ const parseCondition = cardList => {
 
     if (res.length > 0)
     {
-
         switch (res[0][1]) {
             case Conditions.IsInFront:
                 return new IsInFrontBlock(parseEnvironnement(cardList))
             case Conditions.IsOn:
                 return new IsOnBlock(parseItem(cardList));
             default:
-                console.log('error on parser');
+                throw "Une carte condition est manquante";
         }
     }
     else
-        console.log('error');
+        throw "Une carte condition est manquante";
 }
 
 const parseItem = cardList => {
