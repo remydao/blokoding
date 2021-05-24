@@ -7,20 +7,20 @@ import { DataBlock } from "../blocks/DataBlock";
 
 
 var loopDepth = 0;
-
-const parseDiscover = (cardListObj) => {
-    let cardList = cardListObj.map(item => item.text.toLowerCase());
-    return cardList;
-}
+var cardIndex = 0;
 
 const parseInit = cardListObj => {
     loopDepth = 0;
+    cardIndex = 0;
+
     let cardList = cardListObj.map(item => item.text.toLowerCase());
+
     console.log(cardList);
     return parseCharacter(cardList);
 }
 
 const getFirstElm = cardList => {
+    cardIndex++;
     return cardList.shift();
 }
 
@@ -29,7 +29,7 @@ const parseStructureCard = cardList => {
 
     if (typeof blockName === 'undefined') {
         if (loopDepth > 0) {
-            throw 'Une instruction doit toujours se finir par une carte Fin'; 
+            throw 'Une instruction doit toujours se finir par une carte "Fin" ' + cardIndexToString(); 
         } else
             return null;
     }
@@ -48,11 +48,17 @@ const parseStructureCard = cardList => {
         if (loopDepth > 0)
             return null;
         else
-            throw 'Une carte fin est mal placée'
+            throw 'Une carte fin est mal placée ' + cardIndexToString();
     }
 
-    throw 'Texte inconnu : ' + blockName;
+    throw 'Texte inconnu : "' + blockName + '" ' + cardIndexToString();
 }
+
+
+const cardIndexToString = () => {
+    return '(carte numéro ' + cardIndex + ')';
+}
+
 
 const parseCharacter = cardList => {
     let character = getFirstElm(cardList);
@@ -60,7 +66,7 @@ const parseCharacter = cardList => {
     if (res.length > 0) {
         return new CharacterBlock(parseStructureCard(cardList), res[0][1]);
     } else {
-        throw 'Ton programme doit commencer par une carte personnage';
+        throw 'Ton programme doit commencer par une carte personnage ' + cardIndexToString();
     }
 }
 
@@ -120,7 +126,7 @@ const parseNumber = cardList => {
     let number = getFirstElm(cardList);
     console.log(number)
     if (isNaN(number)) {
-        throw 'Il manque une carte nombre';
+        throw 'Il manque une carte nombre ' +  + cardIndexToString();
     }
     let n = parseInt(number);
     console.log(n);
@@ -139,11 +145,11 @@ const parseCondition = cardList => {
             case Conditions.IsOn:
                 return new IsOnBlock(parseItem(cardList));
             default:
-                throw "Une carte condition est manquante";
+                throw 'Une carte condition est manquante ' + cardIndexToString();;
         }
     }
     else
-        throw "Une carte condition est manquante";
+        throw 'Une carte condition est manquante ' + cardIndexToString();
 }
 
 const parseItem = cardList => {
@@ -153,7 +159,7 @@ const parseItem = cardList => {
     if (res.length > 0) {
         return new DataBlock(res[0][1]);
     } else {
-        throw 'Il manque une carte objet';
+        throw 'Il manque une carte objet ' + cardIndexToString();
     }
 }
 
@@ -164,8 +170,8 @@ const parseEnvironnement = cardList => {
     if (res.length > 0) {
         return new DataBlock(res[0][1]);
     } else {
-        throw 'Il manque une carte environnement';
+        throw 'Il manque une carte environnement ' + cardIndexToString();
     }
 }
 
-export { parseInit, parseDiscover };
+export { parseInit };
