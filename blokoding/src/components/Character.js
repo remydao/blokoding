@@ -6,14 +6,14 @@ import { Characters } from "../constants/BlockType"
 import AutoHeightImage from 'react-native-auto-height-image';
 
 export default class Character extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             imageSource: getCharacterUri(props.character)
         }
     }
 
-    render(){
+    render() {
         const x = this.props.position[0];
         const y = this.props.position[1];
 

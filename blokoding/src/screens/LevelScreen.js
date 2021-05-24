@@ -8,8 +8,7 @@ import CustomHeader from '../components/CustomHeader';
 
 
 class LevelScreen extends React.Component {
-    
-    constructor(props){
+    constructor(props) {
         super(props);
         const {route} = this.props;
         this.levelNumber = route.params.levelNumber;

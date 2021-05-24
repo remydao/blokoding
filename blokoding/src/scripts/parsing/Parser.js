@@ -126,7 +126,7 @@ const parseNumber = cardList => {
     let number = getFirstElm(cardList);
     console.log(number)
     if (isNaN(number)) {
-        throw 'Il manque une carte nombre ' +  + cardIndexToString();
+        throw 'Il manque une carte nombre ' + cardIndexToString();
     }
     let n = parseInt(number);
     console.log(n);

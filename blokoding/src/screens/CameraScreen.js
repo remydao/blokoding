@@ -23,7 +23,7 @@ class Camera extends Component {
       this.setState({modalVisible: visible})
     }
 
-    componentDidMount(){
+    componentDidMount() {
       Permission.checkPermission(PERMISSION_TYPE.camera)
     }
 
@@ -71,13 +71,16 @@ class Camera extends Component {
           orientation: RNCamera.Constants.Orientation.portrait,
           fixOrientation: true
         };
+        
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
+        //const visionResp = [{text: "Bart"}, {text: "Sauter"}, {text: "repeter"}, {text: "50"}, {text: "si"}, {text: "est devant"}, {text: "buisson"}, {text: "avancer"}, {text: "fin"}, {text: "si"}, {text: "est devant"}, {text: "buisson"}, {text: "avancer"}, {text: "fin"}, {text: "fin"}]
+
         const actions = parseInit(visionResp);
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map){
             navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.DISCOVER, mapInfo: this.props.route.params.map});
-        } //Start Mode
+        } // Start Mode
         else {
           navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret1});
         }
