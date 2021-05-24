@@ -12,7 +12,7 @@ export default Maps = {
     },
     foret1: {
         theme: Themes.Workshop,
-        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Bush, Cells.Bush, Cells.Puddle, Cells.Empty, Cells.Win]
+        map: [Cells.Empty, Cells.Bush, Cells.Empty, Cells.Bush, Cells.Bush, Cells.Puddle, Cells.Empty, Cells.Win]
     },
     foret2: {
         theme: Themes.Forest,
