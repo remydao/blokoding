@@ -195,9 +195,9 @@ class Game extends Component {
     }
 
     grab() {
-        var currItem = this.state.map[this.characterPos];
-        
-        if (!isItem(currItem)) {
+        var currCell = this.state.map[this.characterPos];
+
+        if (currCell == Cells.Empty || !isItem(currCell.content.imageName)) {
             this.setState({
                 hasLost: true
             });
@@ -208,7 +208,7 @@ class Game extends Component {
 
         this.setState(prevState => {
             let inventory = Object.assign({}, prevState.inventory);  
-            inventory[currItem.content.imageName] = inventory[currItem.content.imageName] ? inventory[currItem.content.imageName] + 1 : 1;                                  
+            inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
             let newMap = prevState.map;
             newMap[this.characterPos] = Cells.Empty
             return { inventory, newMap };                                 

@@ -11,11 +11,7 @@ export default Maps = {
         map: [Cells.Empty, Cells.Win] 
     },
     foret1: {
-        theme: Themes.Workshop,
-        map: [Cells.Empty, Cells.Bush, Cells.Empty, Cells.Bush, Cells.Bush, Cells.Puddle, Cells.Empty, Cells.Win]
-    },
-    foret2: {
         theme: Themes.Forest,
-        map: ["e", "e", "e", "e", "e", "e", "e", "W"]
+        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Key, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win]
     }
 }
