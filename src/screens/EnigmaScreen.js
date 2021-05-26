@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { ImageBackground } from 'react-native';
-import {View, StyleSheet, Image, Text, Button, Animated, TouchableHighlight, SafeAreaView} from 'react-native';
+import {View, StyleSheet, Image, SafeAreaView} from 'react-native';
 import TextAnimator from '../components/TextAnimator';
 import EngineConstants from '../constants/EngineConstants';
 

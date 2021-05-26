@@ -1,9 +1,7 @@
-import React, { BackHandler } from 'react';
+import React from 'react';
 import {View, Image, Button, StatusBar} from 'react-native';
-import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import { StyleSheet } from 'react-native';
-import { back } from 'react-native/Libraries/Animated/Easing';
 import FlatButton from '../components/FlatButton';
 import Maps from '../constants/Maps';
 import { CameraMode } from '../constants/CameraMode';
@@ -30,7 +28,7 @@ const Home = ({ navigation }) => {
           <FlatButton text="Options" color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Options')}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret1})}/>
+          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>

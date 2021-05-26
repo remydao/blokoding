@@ -1,10 +1,8 @@
 import React from 'react';
 import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from 'react-native';
 import {default as UUID} from "uuid"; 
-import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import LevelButton from '../components/LevelButton';
-import { numberOfLevels } from '../constants/LevelsDetails';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 

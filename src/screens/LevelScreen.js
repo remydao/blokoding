@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
+import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
 import {levelsTexts} from '../constants/LevelsDetails';
 import Colors from '../constants/Colors';
 import TextAnimator from '../components/TextAnimator';

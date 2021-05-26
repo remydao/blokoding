@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, StatusBar} from 'react-native';
+import { View, StatusBar} from 'react-native';
 import BackgroundGame from "../components/BackgroundGame";
 import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
@@ -8,16 +8,14 @@ import { Characters, Environments, Items } from '../constants/BlockType';
 import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
-import parseInit from '../scripts/parsing/Parser'
 import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock } from '../scripts/blocks/ConditionBlock';
-import MapItems from "../constants/MapItems";
+import MapItems from "../constants/MapItems"
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
-import { resolvePreset } from '@babel/core';
 import { isItem } from '../constants/ItemImages';
 
 
@@ -41,7 +39,8 @@ class Game extends Component {
             //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(new IfBlock(null, new GrabBlock(null), new IsOnBlock(new DataBlock(Items.Key)))), new DataBlock(10)), Characters.Harry);
             //this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock(Environments.Bush))), Characters.Bart)
             // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
-            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            this.actions = new CharacterBlock(new WhileBlock(null, new JumpBlock(null), new IsInFrontBlock(new DataBlock(Environments.Puddle))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);

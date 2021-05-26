@@ -1,10 +1,8 @@
 import React from 'react';
 import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
-import { Characters } from '../constants/BlockType';
 
 
 const Options = ({ navigation }) => {

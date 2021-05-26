@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, Button, Modal, Pressable } from 'react-native';

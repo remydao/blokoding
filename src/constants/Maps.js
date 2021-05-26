@@ -13,5 +13,9 @@ export default Maps = {
     foret1: {
         theme: Themes.Forest,
         map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Key, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win]
+    },
+    foret2: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Puddle, Cells.Win]
     }
 }
