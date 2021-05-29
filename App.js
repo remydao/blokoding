@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import CustomHeader from './src/components/CustomHeader';
-import {Home, Camera, Help, Options, Discover, Game, Error, LevelScreen} from './src/screens/Screens';
+import {Home, Camera, Help, Options, Discover, Game, LevelScreen} from './src/screens/Screens';
 import Colors from "./src/constants/Colors"
 import EnigmaScreen from './src/screens/EnigmaScreen';
 
@@ -26,7 +26,6 @@ function App() {
         <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.purpleBlue}/>}}/>
         <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>
         <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
-        <Stack.Screen name="Error" component={Error} options={{headerTitle: () => <CustomHeader title="Error"/>}}/>
         <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>
         <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={{headerShown:false}}/>
       </Stack.Navigator>

@@ -6,12 +6,29 @@ import TextAnimator from '../components/TextAnimator';
 import EngineConstants from '../constants/EngineConstants';
 import CustomHeader from '../components/CustomHeader';
 
+interface Props {
+    navigation: any,
+    route: any,
+}
 
-class LevelScreen extends React.Component {
+interface State {
+    buttonText: string,
+    textAnimator: JSX.Element
+}
+
+class LevelScreen extends React.Component<Props, State> {
+
+    private levelNumber: number;
+    private levelInfo;
+    private title: string;
+    private tutorial: Array<string>;
+    private congratulations: string;
+    private map: object;
+    private index: number;
+
     constructor(props) {
         super(props);
-        const {route} = this.props;
-        this.levelNumber = route.params.levelNumber;
+        this.levelNumber = this.props.route.params.levelNumber;
         this.levelInfo = levelsTexts[this.levelNumber];
         this.title = this.levelInfo.title;
         this.tutorial = this.levelInfo.tutorial;
@@ -79,7 +96,6 @@ class LevelScreen extends React.Component {
                                 onPress={this.onPressNextButton.bind(this)}
                                 title={this.state.buttonText}
                                 color={Colors.dark_turquoise}
-                                style={styles.cameraBtn}
                         />
                     </View>
                     <StatusBar translucent backgroundColor="transparent"/>
@@ -134,9 +150,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: EngineConstants.MAX_WIDTH / 2,
         overflow: 'hidden', // for borderRadius
-    },
-    cameraBtn: {
-        position:'absolute'
     },
     image: {
         position: 'absolute',

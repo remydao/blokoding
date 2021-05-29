@@ -20,7 +20,19 @@ import { isItem } from '../constants/ItemImages';
 
 
 
-class Game extends Component {
+class Game extends Component<any, any> {
+
+    private moveDistance: number = 0;
+    private characterPos: number = 0;
+    private frameCount: number = 0;
+    private rateTicks: number = 1000.0 / 60.0;
+    private baseTicks: any = Date.now();
+    private lastTicks: any = this.baseTicks;
+    private timePassed: number = 0;
+    private frameDelay: number = 0;
+    private speed: number = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
+    private actions: CharacterBlock
+
     constructor(props) {
         super(props);
         this.state = {
@@ -41,21 +53,11 @@ class Game extends Component {
             // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
             // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
             this.actions = new CharacterBlock(new WhileBlock(null, new JumpBlock(null), new IsInFrontBlock(new DataBlock(Environments.Puddle))), Characters.Kevin);
+            //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
-        
-        this.moveDistance = 0;
-        this.characterPos = 0;
-
-        this.frameCount = 0;
-        this.rateTicks = 1000.0 / 60.0;
-        this.baseTicks = Date.now();
-        this.lastTicks = this.baseTicks;
-        this.timePassed = 0;
-        this.frameDelay = 0;
-        this.speed = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
     }
 
     async componentDidMount() {
@@ -71,7 +73,7 @@ class Game extends Component {
 
     // function that check user's win or loss
     async checkState() {
-        return await new Promise((resolve) => {
+        return await new Promise<void>((resolve) => {
             switch (this.state.map[this.characterPos]) {
                 case Cells.Win:
                     console.log("win")
@@ -129,7 +131,7 @@ class Game extends Component {
         
         var self = this;
 
-        return await new Promise(resolve => {
+        return await new Promise<void>(resolve => {
             movePos();
 
             function movePos() {
@@ -163,7 +165,7 @@ class Game extends Component {
 
         var self = this;
 
-        return await new Promise(resolve => {
+        return await new Promise<void>(resolve => {
             jumpPos();
 
             function jumpPos() {
@@ -283,7 +285,7 @@ class Game extends Component {
     }
     
     render() {
-        this.arr = this.state.map.map((item, index) => {
+        let arr = this.state.map.map((item, index) => {
             if (item != Cells.Empty) {
                 return <MapItem key={index} item={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
@@ -296,7 +298,7 @@ class Game extends Component {
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
-                { this.arr }
+                { arr }
                 <Inventory inventory={this.state.inventory} />
                 <StatusBar translucent backgroundColor="transparent"/>
             </View>

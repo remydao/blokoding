@@ -5,10 +5,22 @@ import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
 import {Permission, PERMISSION_TYPE} from '../AppPermission'
 import Maps from '../constants/Maps';
-import {parseInit, parseDiscover} from '../scripts/parsing/Parser';
+import {parseInit} from '../scripts/parsing/Parser';
 import { CameraMode } from '../constants/CameraMode';
 
-class Camera extends Component {
+interface Props {
+  navigation: any,
+  route: any
+}
+
+interface State {
+  modalVisible: boolean,
+  modalText: string
+}
+
+const circle = "      ";
+
+class Camera extends Component<Props, State> {
   constructor(props){
     super(props)
     this.state = {
@@ -34,7 +46,7 @@ class Camera extends Component {
           <RNCamera style={styles.preview} ref={ref => {this.camera = ref;}} type={RNCamera.Constants.Type.back} flashMode={RNCamera.Constants.FlashMode.off} captureAudio={false} />
           <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
             <TouchableOpacity onPress={() => this.detectText(this.props.navigation)} style={styles.capture}>
-                <Text style={{ fontSize: 14 }}>      </Text>
+                <Text style={{ fontSize: 14 }}>{circle}</Text>
               </TouchableOpacity>
           <Modal
             animationType="slide"
@@ -85,7 +97,7 @@ class Camera extends Component {
         }
       } catch (e) { //Error thrown by the parser
         this.setState({modalText: e})
-        this.setModalVisible(!this.modalVisible)
+        this.setModalVisible(!this.state.modalVisible)
       }
     };
   }

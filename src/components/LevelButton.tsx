@@ -8,15 +8,14 @@ const HEIGHT = EngineConstants.MAX_HEIGHT - 64;
 const BUTTON_PADDING = EngineConstants.MAX_HEIGHT * 0.02;
 const BUTTON_HEIGHT = 100 + BUTTON_PADDING * 2;
 
-const LevelButton = ({text, onPress, color, pressColor, ...props}) => {
+const LevelButton = ({text, onPress, pressColor, ...props}) => {
 
-    const [currentColor, setCurrentColor] = useState(color)
     const [isPressed, setIsPressed] = useState(false)
 
-    handlePressIn = () => {
+    const handlePressIn = () => {
         setIsPressed(true)
     }
-    handlePressOut = () => {
+    const handlePressOut = () => {
         setIsPressed(false)
     }
 
@@ -33,11 +32,6 @@ const LevelButton = ({text, onPress, color, pressColor, ...props}) => {
             outputRange: [0, -props.index * BUTTON_HEIGHT],
             extrapolateRight: "clamp"
         }),
-        position.interpolate({
-            inputRange: [isBottom, isAppearing],
-            outputRange: [0, -BUTTON_HEIGHT / 4],
-            extrapolate: "clamp"
-        })
     )
     const scale = position.interpolate({
         inputRange: [isDisappearing, isTop, isBottom, isAppearing],
@@ -53,10 +47,10 @@ const LevelButton = ({text, onPress, color, pressColor, ...props}) => {
 
     return (
         
-        <Animated.View style={{opacity, transform:[{translateY}, {scale},],
+        <Animated.View style={{transform:[{translateY}, {scale},],
                                 backgroundColor: props.bgColor,
                                 ...styles.view,
-                                opacity: (isPressed ? 0.6 : 1)
+                                opacity: (isPressed ? 0.6 : opacity)
                                 }}>
                                     {console.log("is  pressed " + isPressed)}
             <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress} style={styles.button}>
@@ -88,9 +82,8 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: 'black',
-        fontSize: EngineConstants.MAX_HEIGHT * 0.05,
+        fontSize: EngineConstants.MAX_HEIGHT * 0.045,
         fontFamily:"Pangolin-Regular",
-        fontSize: 35,
     }
 })
 

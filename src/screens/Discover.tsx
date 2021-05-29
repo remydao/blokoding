@@ -4,8 +4,6 @@ import {default as UUID} from "uuid";
 import Colors from '../constants/Colors';
 import LevelButton from '../components/LevelButton';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 const DiscoverColors = [
   Colors.dark_pink,
   Colors.turquoise,
@@ -14,7 +12,16 @@ const DiscoverColors = [
   Colors.dark_purple,
 ]
 
-class Discover extends React.Component {
+interface Props {
+  navigation: any,
+  route: any
+}
+
+interface State {
+  buttons: Array<{id: UUID, value: string}>
+}
+
+class Discover extends React.Component<Props, State> {
 
     constructor(props){
       super(props)

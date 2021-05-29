@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
 
 
-const Options = ({ navigation }) => {
+const Options = ({}) => {
     return (
       <View style={styles.container}>
         <View style={styles.picker}>

@@ -4,7 +4,12 @@ import Colors from '../constants/Colors';
 import Card from '../components/Card';
 import {default as UUID} from "uuid"; 
 
-const Result = ({ route, navigation }) => {
+interface Props {
+    route: any,
+    navigation: any
+}
+
+const Result = ({ route, navigation } : Props) : JSX.Element => {
 
     const [textList, setTextList] = useState([]);
 
