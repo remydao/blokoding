@@ -31,7 +31,7 @@ class Game extends Component<any, any> {
     private timePassed: number = 0;
     private frameDelay: number = 0;
     private speed: number = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
-    private actions: CharacterBlock
+    private actions: any
 
     constructor(props) {
         super(props);

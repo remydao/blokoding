@@ -1,10 +1,11 @@
 class CodeBlock {
-    execute() {
+    execute(engine: any) {
         throw "not implemented";
     }
 }
 
 class StructureBlock extends CodeBlock {
+    protected nextBlock;
     constructor(nextBlock) {
         super();
         this.nextBlock = nextBlock;
@@ -12,6 +13,8 @@ class StructureBlock extends CodeBlock {
 }
 
 class InstructionBlock extends StructureBlock {
+    protected execBlock;
+    protected predicateBlock;
     constructor(nextBlock, execBlock, predicateBlock) {
         super(nextBlock);
         this.execBlock = execBlock;
@@ -20,6 +23,7 @@ class InstructionBlock extends StructureBlock {
 }
 
 class ConditionBlock extends CodeBlock {
+    protected entityBlock;
     constructor(entityBlock) {
         super();
         this.entityBlock = entityBlock;

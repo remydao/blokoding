@@ -8,7 +8,7 @@
       "lib": ["es6"],
       "moduleResolution": "node",
       "noEmit": true,
-      "strict": false,
+      "strict": true,
       "target": "esnext"
     },
     "exclude": [

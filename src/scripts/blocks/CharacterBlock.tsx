@@ -1,7 +1,7 @@
 import { StructureBlock } from "./MainBlocks";
 
 class CharacterBlock extends StructureBlock {
-    
+    private character;
     constructor(nextBlock, character) {
         super(nextBlock);
         this.character = character;
