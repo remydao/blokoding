@@ -1,7 +1,7 @@
 import Cells from "./Cells";
 import Themes from "./Themes";
 
-export default Maps = {
+const Maps = {
     level1:{
         theme: Themes.Workshop,
         map: [Cells.Win]
@@ -19,3 +19,5 @@ export default Maps = {
         map: [Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Puddle, Cells.Win]
     }
 }
+
+export default Maps
