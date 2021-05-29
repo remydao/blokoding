@@ -16,7 +16,7 @@ const Options = ({}) => {
           </Picker>
         </View>
         <Image style={styles.image} source={characterImages.Harry.uri}></Image>
-        <StatusBar backgroundColor={Colors.purpleBlue}/>
+        <StatusBar backgroundColor={Colors.dark_purple}/>
       </View>
     );
   };
@@ -32,7 +32,7 @@ const Options = ({}) => {
       height: 50,
       width: 150,
       borderRadius: 10,
-      backgroundColor: Colors.purpleBlue
+      backgroundColor: Colors.dark_purple
     },
     image: {
       top: 150

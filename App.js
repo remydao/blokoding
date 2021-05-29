@@ -22,8 +22,8 @@ function App() {
       <Stack.Navigator initialRouteName="Home" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center'}}>
         <Stack.Screen name="Home" component={Home} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
         <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
-        <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <CustomHeader title="Aide" backgroundColor={Colors.purpleBlue}/>}}/>
-        <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.purpleBlue}/>}}/>
+        <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <CustomHeader title="Aide" backgroundColor={Colors.dark_purple}/>}}/>
+        <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.dark_purple}/>}}/>
         <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>
         <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
         <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>

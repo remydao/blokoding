@@ -42,7 +42,6 @@ class LevelScreen extends React.Component<Props, State> {
     }
 
     onPressNextButton = () => {
-        console.log('Press Button')
 
         this.index++;
 
@@ -61,7 +60,6 @@ class LevelScreen extends React.Component<Props, State> {
         }
         else
         {
-            console.log("before take pic")
             this.props.navigation.navigate('Take Picture', {
                 map: this.map
             })
@@ -73,7 +71,7 @@ class LevelScreen extends React.Component<Props, State> {
         return (
             <SafeAreaView style={styles.bigContainer}>
 
-                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} backgroundColor={Colors.purpleBlue} isLogo={false}></CustomHeader>
+                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}></CustomHeader>
 
                 <SafeAreaView style={styles.container}>
                     {/* <Header 

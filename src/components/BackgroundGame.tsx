@@ -2,7 +2,16 @@ import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 
-export default class BackgroundGame extends Component {
+interface Props {
+    imgBackground: any,
+    position: object,
+}
+
+interface State {
+    imageSource: any
+}
+
+export default class BackgroundGame extends Component<Props, State> {
     constructor(props) {
         super(props);
 

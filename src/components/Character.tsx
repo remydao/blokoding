@@ -4,13 +4,25 @@ import EngineConstants from '../constants/EngineConstants';
 import {characterImages, getCharacterUri} from "../constants/CharacterImages";
 import { Characters } from "../constants/BlockType"
 import AutoHeightImage from 'react-native-auto-height-image';
+import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 
-export default class Character extends Component {
+interface Props {
+    position: Array<number>
+    character: JSX.Element
+}
+
+interface State {
+    imageSource: any,
+    rotationAngle: number
+}
+
+export default class Character extends Component<Props, State> {
+
+    private coef = 1;
     constructor(props) {
         super(props);
-        this.coef = 1;
         this.state = {
-            imageSource: getCharacterUri(props.character),
+            imageSource: getCharacterUri(this.props.character),
             rotationAngle: 0,
         }
     }

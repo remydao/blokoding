@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import { CameraMode } from '../constants/CameraMode';
 
+
 const EndButton = ({onPress, text}) => {
     return (
         <TouchableOpacity onPress={() => onPress()} >
@@ -11,7 +12,16 @@ const EndButton = ({onPress, text}) => {
     )
 }
 
-export default class Overlay extends Component {
+interface Props {
+    color: string,
+    text: string,
+    cameraMode: CameraMode,
+    hasWon: boolean,
+    backToSelectLevels: object,
+    backToLevelFailed: object
+}
+
+export default class Overlay extends Component<Props> {
     constructor(props) {
         super(props);
     }

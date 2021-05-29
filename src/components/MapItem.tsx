@@ -1,13 +1,22 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, Image } from 'react-native'
 import AutoHeightImage from 'react-native-auto-height-image';
-import MapItems, { Environments } from '../constants/BlockType';
+import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import { Environments } from '../constants/BlockType';
 import EngineConstants from '../constants/EngineConstants';
 import { EnvironmentImages, getEnvironmentUri } from '../constants/EnvironmentImages';
 
+interface Props {
+    position: any,
+    item: any
+}
 
-export default class MapItem extends Component {
+interface State {
+    imageSource: number
+}
 
+export default class MapItem extends Component<Props, State> {
+    private isEnv: boolean
     constructor(props) {
         super(props);
         this.state = {

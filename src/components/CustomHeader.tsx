@@ -4,8 +4,14 @@ import {View, Text, StyleSheet, Image, StatusBar } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Colors from '../constants/Colors'
 
+interface Props {
+    isLogo? : boolean
+    style: any
+    textStyle: any
+    title: String
+}
 
-const CustomHeader = (props) => {
+const CustomHeader = (props : Props) => {
 
     const isLogo = props.isLogo == false ? false : true;
 

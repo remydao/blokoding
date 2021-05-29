@@ -3,7 +3,15 @@ import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native'
 import { back } from 'react-native/Libraries/Animated/Easing';
 import EngineConstants from '../constants/EngineConstants';
 
-const FlatButton = ({text, onPress, color, pressColor}) => {
+interface Props {
+    text: string,
+    onPress: any,
+    color: string,
+    pressColor: any
+}
+
+
+const FlatButton = ({text, onPress, color, pressColor} : Props) => {
 
     const [currentColor, setCurrentColor] = useState(color)
     const [isPressed, setIsPressed] = useState(false)
@@ -17,11 +25,11 @@ const FlatButton = ({text, onPress, color, pressColor}) => {
             setCurrentColor(color)
             setIsPressed(false)
         },
-        style: styles.button
+        style: {...styles.button, backgroundColor:currentColor}
     }
 
     return (
-        <Pressable onPress={onPress} {...buttonProps} backgroundColor={currentColor}>
+        <Pressable onPress={onPress} {...buttonProps} >
             <View>
                 <Text style={styles.textStyle}>{text}</Text>
             </View>
@@ -40,7 +48,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: EngineConstants.MAX_HEIGHT * 0.05,
         fontFamily:"Pangolin-Regular",
-        fontSize:35
     }
 })
 
