@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native';
-import { back } from 'react-native/Libraries/Animated/Easing';
 import EngineConstants from '../constants/EngineConstants';
 
-interface Props {
+interface IProps {
     text: string,
     onPress: any,
     color: string,
@@ -11,7 +10,7 @@ interface Props {
 }
 
 
-const FlatButton = ({text, onPress, color, pressColor} : Props) => {
+const FlatButton = ({text, onPress, color, pressColor} : IProps) => {
 
     const [currentColor, setCurrentColor] = useState(color)
     const [isPressed, setIsPressed] = useState(false)

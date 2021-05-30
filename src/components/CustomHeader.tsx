@@ -4,14 +4,15 @@ import {View, Text, StyleSheet, Image, StatusBar } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Colors from '../constants/Colors'
 
-interface Props {
-    isLogo? : boolean
-    style: any
-    textStyle: any
-    title: String
+interface IProps {
+    isLogo? : boolean,
+    style: any,
+    textStyle: any,
+    title: String,
+    backgroundColor?: string
 }
 
-const CustomHeader = (props : Props) => {
+const CustomHeader = (props : IProps) => {
 
     const isLogo = props.isLogo == false ? false : true;
 
@@ -39,7 +40,7 @@ const CustomHeader = (props : Props) => {
 
 const STATUSBAR_HEIGHT = getStatusBarHeight();
 
-const styles = (props) => StyleSheet.create({
+const styles = (props: IProps) => StyleSheet.create({
     statusBarIOS:{
         position: 'absolute',
         top: -STATUSBAR_HEIGHT,

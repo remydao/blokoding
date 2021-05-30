@@ -5,11 +5,11 @@ import { Environments } from "../constants/BlockType";
 import EngineConstants from "../constants/EngineConstants";
 import { getItemUri } from "../constants/ItemImages";
 
-interface Props {
+interface IProps {
     inventory: object
 }
 
-const Inventory = ({inventory}: Props) => {
+const Inventory = ({inventory}: IProps) => {
 
     let inventoryList = Object.entries(inventory).map((item, index) => {
         let imageSource = getItemUri(item[0]);

@@ -287,13 +287,13 @@ class Game extends Component<IProps, IState> {
         return res && res[0] && this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == res[0][1];
     }
 
-    backToSelectLevels = () => {
+    backToSelectLevels = () : void => {
         this.props.navigation.pop();
         this.props.navigation.pop();
         this.props.navigation.pop();
     }
 
-    backToLevelFailed = () => {
+    backToLevelFailed = () : void => {
         this.props.navigation.pop();
         this.props.navigation.pop();
     }

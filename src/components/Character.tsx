@@ -6,20 +6,20 @@ import { Characters } from "../constants/BlockType"
 import AutoHeightImage from 'react-native-auto-height-image';
 import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 
-interface Props {
+interface IProps {
     position: Array<number>
     character: JSX.Element
 }
 
-interface State {
+interface IState {
     imageSource: any,
     rotationAngle: number
 }
 
-export default class Character extends Component<Props, State> {
+export default class Character extends Component<IProps, IState> {
 
     private coef = 1;
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             imageSource: getCharacterUri(this.props.character),
@@ -27,7 +27,7 @@ export default class Character extends Component<Props, State> {
         }
     }
 
-    componentDidUpdate(previousProps, previousState) {
+    componentDidUpdate(previousProps: IProps, previousState: IState) {
         if (previousProps != this.props){
             if (this.state.rotationAngle == 10){
                 this.coef = -1;

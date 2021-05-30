@@ -4,7 +4,12 @@ import EngineConstants from '../constants/EngineConstants';
 import { CameraMode } from '../constants/CameraMode';
 
 
-const EndButton = ({onPress, text}) => {
+interface IEndProps {
+    onPress: () => void,
+    text: string
+}
+
+const EndButton = ({onPress, text} : IEndProps) => {
     return (
         <TouchableOpacity onPress={() => onPress()} >
             <Text style={styles.buttonText}>{text}</Text>
@@ -12,17 +17,17 @@ const EndButton = ({onPress, text}) => {
     )
 }
 
-interface Props {
+interface IProps {
     color: string,
     text: string,
     cameraMode: CameraMode,
     hasWon: boolean,
-    backToSelectLevels: object,
-    backToLevelFailed: object
+    backToSelectLevels: () => void,
+    backToLevelFailed: () => void,
 }
 
-export default class Overlay extends Component<Props> {
-    constructor(props) {
+export default class Overlay extends Component<IProps> {
+    constructor(props: IProps) {
         super(props);
     }
 

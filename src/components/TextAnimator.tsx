@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Animated} from 'react-native';
 
-interface Props {
+interface IProps {
     content: String
 }
 
-interface State {
+interface IState {
     animatedValues: Array<any>
 }
 
-export default class TextAnimator extends Component<Props, State> {
+export default class TextAnimator extends Component<IProps, IState> {
     
     private textArray : Array<any>
     // Créé le tableau de mots passé en props et rempli
     // le tableau animatedValues avec des Value à 0
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.textArray = this.props.content.trim().split(' ');
 

@@ -24,11 +24,11 @@ const ItemImages = {
     },
 }
 
-const getItemUri = (item) => {
+const getItemUri = (item: string) => {
     return Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item)[0][1].uri;
 }
 
-const isItem = (item) => {
+const isItem = (item: string) => {
     return Object.entries(ItemImages).filter(itemImg => itemImg[1].imageName == item).length > 0;
 }
 

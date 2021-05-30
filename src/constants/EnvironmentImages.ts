@@ -28,7 +28,7 @@ const EnvironmentImages = {
     }
 }
 
-const getEnvironmentUri = (environment) => {
+const getEnvironmentUri = (environment: string) => {
     return Object.entries(EnvironmentImages).filter(envImg => envImg[1].imageName == environment)[0][1].uri;
 }
 

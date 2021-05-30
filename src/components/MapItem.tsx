@@ -6,18 +6,18 @@ import { Environments } from '../constants/BlockType';
 import EngineConstants from '../constants/EngineConstants';
 import { EnvironmentImages, getEnvironmentUri } from '../constants/EnvironmentImages';
 
-interface Props {
+interface IProps {
     position: any,
     item: any
 }
 
-interface State {
+interface IState {
     imageSource: number
 }
 
-export default class MapItem extends Component<Props, State> {
+export default class MapItem extends Component<IProps, IState> {
     private isEnv: boolean
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             imageSource: props.item.content.uri

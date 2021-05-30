@@ -1,7 +1,12 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-const Card = props => {
+interface IProps {
+    style: any,
+    children: JSX.Element
+}
+
+const Card = (props: IProps) => {
     return (
         <View style={{...styles.inputContainer, ...props.style}}>
             {props.children}

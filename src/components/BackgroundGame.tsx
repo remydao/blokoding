@@ -2,17 +2,17 @@ import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 
-interface Props {
+interface IProps {
     imgBackground: any,
-    position: object,
+    position: Array<number>,
 }
 
-interface State {
+interface IState {
     imageSource: any
 }
 
-export default class BackgroundGame extends Component<Props, State> {
-    constructor(props: Props) {
+export default class BackgroundGame extends Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
 
         this.state = {

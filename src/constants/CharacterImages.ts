@@ -39,7 +39,7 @@ const characterImages = {
     }
 }
 
-const getCharacterUri = (character) => {
+const getCharacterUri = (character: string | JSX.Element) => {
     return Object.entries(characterImages).filter(characImg => characImg[1].imageName == character)[0][1].uri;
 }
 

@@ -71,8 +71,7 @@ class Discover extends React.Component<IProps, IState> {
                   renderItem={({item, index}) => 
                      (  
                        //<View style={{backgroundColor: this.selectBgColor(index)}}>
-                         <LevelButton bgColor={this.selectBgColor(index)} index={index} y={y} text={item.value} onPress={() => this.onPress(index)} pressColor={'red'}>
-                        </LevelButton>
+                         <LevelButton bgColor={this.selectBgColor(index)} index={index} y={y} text={item.value} onPress={() => this.onPress(index)} pressColor={'red'}/>
                         //</View>
                       
                       )}

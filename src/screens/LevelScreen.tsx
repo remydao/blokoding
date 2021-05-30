@@ -71,7 +71,7 @@ class LevelScreen extends React.Component<Props, State> {
         return (
             <SafeAreaView style={styles.bigContainer}>
 
-                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}></CustomHeader>
+                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}/>
 
                 <SafeAreaView style={styles.container}>
                     {/* <Header 

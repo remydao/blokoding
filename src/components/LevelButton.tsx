@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Pressable, Animated} from 'react-native';
-import { back } from 'react-native/Libraries/Animated/Easing';
 import EngineConstants from '../constants/EngineConstants';
 import Colors from '../constants/Colors';
 
@@ -8,7 +7,16 @@ const HEIGHT = EngineConstants.MAX_HEIGHT - 64;
 const BUTTON_PADDING = EngineConstants.MAX_HEIGHT * 0.02;
 const BUTTON_HEIGHT = 100 + BUTTON_PADDING * 2;
 
-const LevelButton = ({text, onPress, pressColor, ...props}) => {
+interface IProps {
+    text: string,
+    onPress: () => void,
+    pressColor: any,
+    index: number,
+    y: any
+    bgColor: string
+}
+
+const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
 
     const [isPressed, setIsPressed] = useState(false)
 
