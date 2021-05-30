@@ -34,7 +34,7 @@ class IfBlock extends InstructionBlock {
         }
             
 
-        if (this.nextBlock)
+        if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock)
             this.nextBlock.execute(engine);
     }
 }
@@ -45,14 +45,14 @@ class WhileBlock extends InstructionBlock {
     }
 
     async execute(engine: any) {
-        while (await this.predicateBlock.execute(engine)) {
+        while (!engine.getStateHasLost() && !engine.getStateHasWon() && this.predicateBlock.execute(engine)) {
 
             if (this.execBlock) {
                 await this.execBlock.execute(engine);
             }
         }
 
-        if (this.nextBlock)
+        if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock)
             this.nextBlock.execute(engine)
     }
 }
