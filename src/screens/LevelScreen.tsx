@@ -18,15 +18,15 @@ interface State {
 
 class LevelScreen extends React.Component<Props, State> {
 
-    private levelNumber: number;
-    private levelInfo;
-    private title: string;
-    private tutorial: Array<string>;
-    private congratulations: string;
-    private map: object;
+    private readonly levelNumber: number;
+    private readonly levelInfo;
+    private readonly title: string;
+    private readonly tutorial: Array<string>;
+    private readonly congratulations: string;
+    private readonly map: object;
     private index: number;
 
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
         this.levelNumber = this.props.route.params.levelNumber;
         this.levelInfo = levelsTexts[this.levelNumber];

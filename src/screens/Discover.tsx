@@ -12,18 +12,18 @@ const DiscoverColors = [
   Colors.dark_purple,
 ]
 
-interface Props {
+interface IProps {
   navigation: any,
   route: any
 }
 
-interface State {
-  buttons: Array<{id: UUID, value: string}>
+interface IState {
+  buttons: Array<{id: string, value: string}>
 }
 
-class Discover extends React.Component<Props, State> {
+class Discover extends React.Component<IProps, IState> {
 
-    constructor(props){
+    constructor(props: IProps){
       super(props)
       this.state = {
         buttons : []
@@ -47,13 +47,13 @@ class Discover extends React.Component<Props, State> {
       this.setLevel()
     }
 
-    onPress = (index) => {
+    onPress = (index: number) => {
       this.props.navigation.navigate('LevelScreen', {
         levelNumber: index
       })
     }
 
-    selectBgColor = (index) => {
+    selectBgColor = (index: number) => {
       return DiscoverColors[index % DiscoverColors.length];
     }
 

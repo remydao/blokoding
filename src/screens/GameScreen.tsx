@@ -18,29 +18,43 @@ import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
 
+interface IProps {
+    navigation: any,
+    route: any
+}
 
+interface IState {
+    bg0Pos: number,
+    bg1Pos: number,
+    playerPosY: number,
+    map: any,
+    itemsPos: number[],
+    hasLost: boolean,
+    hasWon: boolean,
+    inventory: any,
+}
 
-class Game extends Component<any, any> {
+class Game extends Component<IProps, IState> {
 
     private moveDistance: number = 0;
     private characterPos: number = 0;
     private frameCount: number = 0;
     private rateTicks: number = 1000.0 / 60.0;
-    private baseTicks: any = Date.now();
-    private lastTicks: any = this.baseTicks;
+    private baseTicks: number = Date.now();
+    private lastTicks: number = this.baseTicks;
     private timePassed: number = 0;
     private frameDelay: number = 0;
     private speed: number = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
     private actions: any
 
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
             playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
             map: [...props.route.params.mapInfo.map],
-            itemsPos: props.route.params.mapInfo.map.map((item, index) => EngineConstants.CELL_SIZE * index),
+            itemsPos: props.route.params.mapInfo.map.map((item: any, index: number) => EngineConstants.CELL_SIZE * index),
             hasLost: false,
             hasWon: false,
             inventory: {},
@@ -207,12 +221,12 @@ class Game extends Component<any, any> {
         }
             
 
-        this.setState(prevState => {
+        this.setState((prevState) => {
             let inventory = Object.assign({}, prevState.inventory);  
             inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
             let newMap = prevState.map;
             newMap[this.characterPos] = Cells.Empty
-            return { inventory, newMap };                                 
+            return {...prevState, inventory, newMap };                                 
         });
 
         return true;
@@ -262,13 +276,13 @@ class Game extends Component<any, any> {
     }
 
     // return true if character is in front of an entity(data block)
-    isInFrontOf(entity) {
+    isInFrontOf(entity: string) {
         let res = Object.entries(Environments).filter(env => env[1] == entity);
         return res && res[0] && this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == res[0][1];
     }
 
     // return true if character is on an entity(data block)
-    isOn(entity) {
+    isOn(entity: string) {
         let res = Object.entries(Items).filter(item => item[1] == entity);
         return res && res[0] && this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == res[0][1];
     }
@@ -285,7 +299,7 @@ class Game extends Component<any, any> {
     }
     
     render() {
-        let arr = this.state.map.map((item, index) => {
+        let arr = this.state.map.map((item: any, index: number) => {
             if (item != Cells.Empty) {
                 return <MapItem key={index} item={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
             }
