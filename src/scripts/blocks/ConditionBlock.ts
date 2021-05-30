@@ -10,7 +10,7 @@ class IsInFrontBlock extends ConditionBlock {
     async execute(engine: any) {
         let entity = this.entityBlock.execute();
 
-        return engine.isInFrontOf(entity);
+        return engine.isInFront(entity);
     }
 }
 
@@ -26,4 +26,16 @@ class IsOnBlock extends ConditionBlock {
     }
 }
 
-export { IsInFrontBlock, IsOnBlock };
+class PossessBlock extends ConditionBlock {
+    constructor(entityBlock: DataBlock) {
+        super(entityBlock);
+    }
+
+    async execute(engine: any) {
+        let entity = this.entityBlock.execute();
+
+        return engine.possess(entity);
+    }
+}
+
+export { IsInFrontBlock, IsOnBlock, PossessBlock };

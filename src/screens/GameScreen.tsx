@@ -11,7 +11,7 @@ import { DataBlock } from '../scripts/blocks/DataBlock';
 import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
-import { IsInFrontBlock, IsOnBlock } from '../scripts/blocks/ConditionBlock';
+import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/ConditionBlock';
 import MapItems from "../constants/MapItems"
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
@@ -66,7 +66,7 @@ class Game extends Component<IProps, IState> {
             //this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock(Environments.Bush))), Characters.Bart)
             // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
             // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            this.actions = new CharacterBlock(new WhileBlock(null, new JumpBlock(null), new IsInFrontBlock(new DataBlock(Environments.Puddle))), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new WhileBlock(null, new MoveBlock(null), new PossessBlock(new DataBlock(Items.Key))))), Characters.Kevin);
             //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
@@ -276,7 +276,7 @@ class Game extends Component<IProps, IState> {
     }
 
     // return true if character is in front of an entity(data block)
-    isInFrontOf(entity: string) {
+    isInFront(entity: string) {
         let res = Object.entries(Environments).filter(env => env[1] == entity);
         return res && res[0] && this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == res[0][1];
     }
@@ -285,6 +285,11 @@ class Game extends Component<IProps, IState> {
     isOn(entity: string) {
         let res = Object.entries(Items).filter(item => item[1] == entity);
         return res && res[0] && this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == res[0][1];
+    }
+
+    // return true if character possess an entity(data block)
+    possess(entity: string) {
+        return this.state.inventory[entity] != undefined;
     }
 
     backToSelectLevels = () : void => {

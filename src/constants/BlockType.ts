@@ -28,7 +28,7 @@ const Items = {
     Plush: 'peluche',
     Flower: 'fleur',
     Machete: 'machette',
-    Trash: 'déchet'
+    Trash: 'dechet'
 }
 
 const Environments = {
@@ -41,8 +41,9 @@ const Environments = {
 }
 
 const Conditions = {
-    IsInFront: "est devant",
-    IsOn: "est sur"
+    IsInFront: "etre devant",
+    IsOn: "etre sur",
+    Possess: "posseder"
 }
 
 export { Characters, Actions, Instructions, Items, Environments, Conditions };
