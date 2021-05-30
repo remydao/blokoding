@@ -61,13 +61,7 @@ class Game extends Component<IProps, IState> {
         };
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            // this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            //this.actions = new CharacterBlock(new ForBlock(null, new MoveBlock(new IfBlock(null, new GrabBlock(null), new IsOnBlock(new DataBlock(Items.Key)))), new DataBlock(10)), Characters.Harry);
-            //this.actions = new CharacterBlock(new WhileBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock(Environments.Bush))), Characters.Bart)
-            // this.actions = new CharacterBlock(new ForBlock(null, new IfBlock(null, new MoveBlock(null), new IsInFrontBlock(new DataBlock("buisson"))), new DataBlock(20)), Characters.Bart)
-            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
-            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new WhileBlock(null, new MoveBlock(null), new PossessBlock(new DataBlock(Items.Key))))), Characters.Kevin);
-            //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(new GrabBlock(new MoveBlock(new MoveBlock(null))))))), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new WhileBlock(new PossessBlock(new DataBlock(Items.Key)), new MoveBlock(null), null))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -78,7 +72,6 @@ class Game extends Component<IProps, IState> {
         await this.actions.execute(this);
 
         if (this.state.map[this.characterPos] != Cells.Win) {
-            console.log(this.state.map[this.characterPos])
             this.setState({hasWon: false});
             this.setState({hasLost: true});
             this.loose();

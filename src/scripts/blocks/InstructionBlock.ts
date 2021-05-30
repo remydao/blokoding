@@ -1,8 +1,8 @@
 import { InstructionBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
-    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
-        super(nextBlock, execBlock, predicateBlock);
+    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+        super(predicateBlock, execBlock, nextBlock);
     }
 
     async execute(engine: any) {
@@ -23,8 +23,8 @@ class ForBlock extends InstructionBlock {
 
 
 class IfBlock extends InstructionBlock {
-    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
-        super(nextBlock, execBlock, predicateBlock);
+    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+        super(predicateBlock, execBlock, nextBlock);
     }
 
     async execute(engine: any) {
@@ -40,8 +40,8 @@ class IfBlock extends InstructionBlock {
 }
 
 class WhileBlock extends InstructionBlock {
-    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
-        super(nextBlock, execBlock, predicateBlock)
+    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+        super(predicateBlock, execBlock, nextBlock);
     }
 
     async execute(engine: any) {

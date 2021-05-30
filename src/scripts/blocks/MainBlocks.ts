@@ -15,7 +15,7 @@ class StructureBlock extends CodeBlock {
 class InstructionBlock extends StructureBlock {
     protected execBlock;
     protected predicateBlock;
-    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
+    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
         super(nextBlock);
         this.execBlock = execBlock;
         this.predicateBlock = predicateBlock;

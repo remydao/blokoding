@@ -108,17 +108,15 @@ const parseInstruction = (instruction: any[], cardList: TcardList) => {
     let execBlock = parseStructureCard(cardList);
     loopDepth--;
 
-    console.log(execBlock);
-
     let nextBlock = parseStructureCard(cardList);
 
     switch (instruction[1]) {
         case Instructions.For:
-            return new ForBlock(nextBlock, execBlock, predicateBlock);
+            return new ForBlock(predicateBlock, execBlock, nextBlock);
         case Instructions.If:
-            return new IfBlock(nextBlock, execBlock, predicateBlock);
+            return new IfBlock(predicateBlock, execBlock, nextBlock);
         case Instructions.While:
-            return new WhileBlock(nextBlock, execBlock, predicateBlock);
+            return new WhileBlock(predicateBlock, execBlock, nextBlock);
         default:
             return null;
     }
@@ -126,12 +124,10 @@ const parseInstruction = (instruction: any[], cardList: TcardList) => {
 
 const parseNumber = (cardList: TcardList): DataBlock | never => {
     let number = getFirstElm(cardList);
-    console.log(number)
     if (isNaN(number as any)) {
         throw 'Il manque une carte nombre ' + cardIndexToString();
     }
     let n = parseInt(number || "");
-    console.log(n);
     return new DataBlock(n);
 }
 
