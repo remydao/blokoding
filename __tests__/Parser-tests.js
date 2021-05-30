@@ -13,10 +13,11 @@ import jestConfig from '../jest.config';
 
 import {parseInit} from '../src/scripts/parsing/Parser';
 import CharacterBlock from '../src/scripts/blocks/CharacterBlock';
-import { Characters } from '../src/constants/BlockType';
+import { Characters, Environments } from '../src/constants/BlockType';
 import { JumpBlock, MoveBlock } from '../src/scripts/blocks/ActionBlock';
-import { ForBlock } from '../src/scripts/blocks/InstructionBlock';
+import { ForBlock, WhileBlock } from '../src/scripts/blocks/InstructionBlock';
 import { DataBlock } from '../src/scripts/blocks/DataBlock';
+import { IsInFrontBlock } from '../src/scripts/blocks/ConditionBlock';
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
 
@@ -75,4 +76,29 @@ it('Simple for', () => {
   expect(forBlock.execBlock).toBeInstanceOf(MoveBlock);
   expect(forBlock.execBlock.nextBlock).toBe(null);
   expect(forBlock.nextBlock).toBe(null);
+})
+
+it('Simple While', () => {
+  const ocr = [{text: "cyclops"}, {text: "tant que"}, {text: "etre devant"}, {text: "flaque"}, {text: "avancer"}, {text: "  fin  "}]
+  const blocks = parseInit(ocr);
+
+  expect(blocks).toBeInstanceOf(CharacterBlock);
+  expect(blocks.character).toBe(Characters.Cyclops);
+
+  const whileBlock = blocks.nextBlock;
+
+  expect(whileBlock).toBeInstanceOf(WhileBlock);
+  
+  const predicateBlock = whileBlock.predicateBlock;
+  
+  expect(predicateBlock).toBeInstanceOf(IsInFrontBlock);
+  expect(predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(predicateBlock.entityBlock.value).toBe(Environments.Puddle);
+  
+  const execBlock = whileBlock.execBlock;
+
+  expect(execBlock).toBeInstanceOf(MoveBlock);
+  expect(execBlock.nextBlock).toBe(null);
+
+  expect(whileBlock.nextBlock).toBe(null)
 })

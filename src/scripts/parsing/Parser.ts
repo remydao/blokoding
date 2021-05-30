@@ -15,7 +15,7 @@ const parseInit = (cardListObj: any[]) => {
     loopDepth = 0;
     cardIndex = 0;
 
-    let cardList: TcardList = cardListObj.map((item: { text: string; }) => item.text.toLowerCase());
+    let cardList: TcardList = cardListObj.map((item: { text: string; }) => item.text.trim().toLowerCase());
 
     console.log(cardList);
     return parseCharacter(cardList);
