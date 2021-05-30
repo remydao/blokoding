@@ -1,21 +1,21 @@
 import {check, request, PERMISSIONS, RESULTS} from "react-native-permissions";
 import {Platform} from 'react-native'
 
-const PLATFORM_CAMERA_PERMISSIONS = {
+const PLATFORM_CAMERA_PERMISSIONS: any = {
     ios: PERMISSIONS.IOS.CAMERA,
     android:PERMISSIONS.ANDROID.CAMERA
 }
 
-const REQUEST_PERMISSION_TYPE = {
+const REQUEST_PERMISSION_TYPE: any = {
     camera: PLATFORM_CAMERA_PERMISSIONS
 }
 
 const PERMISSION_TYPE = {
-    camera:'camera'
+    camera: 'camera'
 }
 
 class AppPermission {
-    checkPermission = async (type) => {
+    checkPermission = async (type: string) => {
         const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS]
         if (!permissions) {
             return true;
@@ -29,7 +29,7 @@ class AppPermission {
         }
     }
 
-    requestPermission = async (permissions) =>{
+    requestPermission = async (permissions: any) =>{
         try {
             const result = await request(permissions)
             return result === RESULTS.GRANTED

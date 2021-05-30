@@ -1,11 +1,11 @@
 import { InstructionBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
-    constructor(nextBlock, execBlock, predicateBlock) {
+    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
         super(nextBlock, execBlock, predicateBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         let n = this.predicateBlock.execute();
         let i = 0;
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
@@ -23,11 +23,11 @@ class ForBlock extends InstructionBlock {
 
 
 class IfBlock extends InstructionBlock {
-    constructor(nextBlock, execBlock, predicateBlock) {
+    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
         super(nextBlock, execBlock, predicateBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         if (await this.predicateBlock.execute(engine)) {
             if (this.execBlock)
                 await this.execBlock.execute(engine);
@@ -40,11 +40,11 @@ class IfBlock extends InstructionBlock {
 }
 
 class WhileBlock extends InstructionBlock {
-    constructor(nextBlock, execBlock, predicateBlock) {
+    constructor(nextBlock: any, execBlock: any, predicateBlock: any) {
         super(nextBlock, execBlock, predicateBlock)
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         while (await this.predicateBlock.execute(engine)) {
 
             if (this.execBlock) {

@@ -1,13 +1,15 @@
-import { StructureBlock } from "./MainBlocks";
+import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "./ActionBlock";
+import { WhileBlock } from "./InstructionBlock";
+import { CodeBlock, StructureBlock } from "./MainBlocks";
 
 class CharacterBlock extends StructureBlock {
     private character;
-    constructor(nextBlock, character) {
+    constructor(nextBlock: CodeBlock | null, character: string) {
         super(nextBlock);
         this.character = character;
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
 
         await engine.checkState();
 

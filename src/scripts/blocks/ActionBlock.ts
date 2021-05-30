@@ -1,11 +1,11 @@
 import { StructureBlock } from "./MainBlocks";
 
 class MoveBlock extends StructureBlock {
-    constructor(nextBlock) {
+    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
         super(nextBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         console.log("move");
         await engine.move();
         await engine.checkState();
@@ -17,11 +17,11 @@ class MoveBlock extends StructureBlock {
 }
 
 class JumpBlock extends StructureBlock {
-    constructor(nextBlock) {
+    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
         super(nextBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         console.log("jump");
         await engine.jump();
         await engine.checkState();
@@ -33,11 +33,11 @@ class JumpBlock extends StructureBlock {
 }
 
 class GrabBlock extends StructureBlock {
-    constructor(nextBlock) {
+    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
         super(nextBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         console.log("grab");
 
         if (engine.grab()) // If grab success
@@ -50,7 +50,7 @@ class GrabBlock extends StructureBlock {
 }
 
 class SpeakBlock extends StructureBlock {
-    constructor(nextBlock) {
+    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
         super(nextBlock);
     }
 

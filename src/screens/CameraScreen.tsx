@@ -21,7 +21,8 @@ interface State {
 const circle = "      ";
 
 class Camera extends Component<Props, State> {
-  constructor(props){
+  private camera: any;
+  constructor(props: Props){
     super(props)
     this.state = {
       modalVisible: false,
@@ -30,7 +31,7 @@ class Camera extends Component<Props, State> {
   }
     
 
-    setModalVisible = (visible) => {
+    setModalVisible = (visible: boolean) => {
       this.setState({modalVisible: visible})
     }
 
@@ -74,7 +75,7 @@ class Camera extends Component<Props, State> {
       )
     }
   
-    detectText = async (navigation) => {
+    detectText = async (navigation: any) => {
       try {
         const options = {
           quality: 0.8,

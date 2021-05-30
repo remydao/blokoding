@@ -244,7 +244,7 @@ class Game extends Component<any, any> {
 
     // Function for move translation of all the items in the map
     moveItems = () => {
-        let newItemPos = [];
+        let newItemPos: number[] = [];
         for (let item of this.state.itemsPos)
             newItemPos.push(item - this.speed);
         

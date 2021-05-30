@@ -1,12 +1,13 @@
+import { DataBlock } from "./DataBlock";
 import { ConditionBlock } from "./MainBlocks";
 
 
 class IsInFrontBlock extends ConditionBlock {
-    constructor(entityBlock) {
+    constructor(entityBlock: DataBlock) {
         super(entityBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         let entity = this.entityBlock.execute();
 
         return engine.isInFrontOf(entity);
@@ -14,11 +15,11 @@ class IsInFrontBlock extends ConditionBlock {
 }
 
 class IsOnBlock extends ConditionBlock {
-    constructor(entityBlock) {
+    constructor(entityBlock: DataBlock) {
         super(entityBlock);
     }
 
-    async execute(engine) {
+    async execute(engine: any) {
         let entity = this.entityBlock.execute();
 
         return engine.isOn(entity);

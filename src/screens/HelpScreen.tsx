@@ -13,7 +13,7 @@ const Help = ({ navigation }) => {
       </View>
       <Image style={styles.image} source={characterImages.MrMustache.uri}></Image>
       
-      <StatusBar backgroundColor={Colors.purpleBlue}/>
+      <StatusBar backgroundColor={Colors.dark_purple}/>
     </View>
   );
 };

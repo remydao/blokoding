@@ -9,22 +9,24 @@ import { DataBlock } from "../blocks/DataBlock";
 var loopDepth = 0;
 var cardIndex = 0;
 
-const parseInit = cardListObj => {
+type TcardList = Array<string>
+
+const parseInit = (cardListObj: any[]) => {
     loopDepth = 0;
     cardIndex = 0;
 
-    let cardList = cardListObj.map(item => item.text.toLowerCase());
+    let cardList: TcardList = cardListObj.map((item: { text: string; }) => item.text.toLowerCase());
 
     console.log(cardList);
     return parseCharacter(cardList);
 }
 
-const getFirstElm = cardList => {
+const getFirstElm = (cardList: TcardList): string | undefined => {
     cardIndex++;
     return cardList.shift();
 }
 
-const parseStructureCard = cardList => {
+const parseStructureCard = (cardList: TcardList) : never | MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null => {
     let blockName = getFirstElm(cardList);
 
     if (typeof blockName === 'undefined') {
@@ -60,7 +62,7 @@ const cardIndexToString = () => {
 }
 
 
-const parseCharacter = cardList => {
+const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
     let character = getFirstElm(cardList);
     let res = Object.entries(Characters).filter(charac => charac[1] == character);
     if (res.length > 0) {
@@ -70,7 +72,7 @@ const parseCharacter = cardList => {
     }
 }
 
-const parseAction = (action, cardList) => {
+const parseAction = (action: any[], cardList: TcardList) => {
     switch (action[1]) {
         case Actions.Move:
             return new MoveBlock(parseStructureCard(cardList));
@@ -85,8 +87,8 @@ const parseAction = (action, cardList) => {
     }
 }
 
-const parseInstruction = (instruction, cardList) => {
-    let predicateBlock;
+const parseInstruction = (instruction: any[], cardList: TcardList) => {
+    let predicateBlock: DataBlock | IsInFrontBlock | IsOnBlock;
 
     switch (instruction[1]) {
         case Instructions.For:
@@ -122,18 +124,18 @@ const parseInstruction = (instruction, cardList) => {
     }
 }
 
-const parseNumber = cardList => {
+const parseNumber = (cardList: TcardList): DataBlock | never => {
     let number = getFirstElm(cardList);
     console.log(number)
-    if (isNaN(number)) {
+    if (number) {
         throw 'Il manque une carte nombre ' + cardIndexToString();
     }
-    let n = parseInt(number);
+    let n = parseInt(number || "");
     console.log(n);
     return new DataBlock(n);
 }
 
-const parseCondition = cardList => {
+const parseCondition = (cardList: TcardList): IsInFrontBlock | IsOnBlock | never => {
     let conditionFirstCard = getFirstElm(cardList);
     let res = Object.entries(Conditions).filter(cond => cond[1] == conditionFirstCard);
 
@@ -152,7 +154,7 @@ const parseCondition = cardList => {
         throw 'Une carte condition est manquante ' + cardIndexToString();
 }
 
-const parseItem = cardList => {
+const parseItem = (cardList: TcardList): DataBlock | never => {
     let item = getFirstElm(cardList);
     let res = Object.entries(Items).filter(it => it[1] == item);
 
@@ -163,7 +165,7 @@ const parseItem = cardList => {
     }
 }
 
-const parseEnvironnement = cardList => {
+const parseEnvironnement = (cardList: TcardList): DataBlock | never => {
     let env = getFirstElm(cardList);
     let res = Object.entries(Environments).filter(e => e[1] == env);
 
