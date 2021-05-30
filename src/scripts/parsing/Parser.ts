@@ -127,7 +127,7 @@ const parseInstruction = (instruction: any[], cardList: TcardList) => {
 const parseNumber = (cardList: TcardList): DataBlock | never => {
     let number = getFirstElm(cardList);
     console.log(number)
-    if (number) {
+    if (isNaN(number as any)) {
         throw 'Il manque une carte nombre ' + cardIndexToString();
     }
     let n = parseInt(number || "");

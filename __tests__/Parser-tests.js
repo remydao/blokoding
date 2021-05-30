@@ -39,7 +39,7 @@ it('Simple jump', () => {
   expect(blocks.nextBlock.nextBlock).toBe(null);
 });
 
-it('Missing chacareter', () => {
+it('Missing character', () => {
   const ocr = [{text: "Avancer"}]
   expect(() => {
     parseInit(ocr);

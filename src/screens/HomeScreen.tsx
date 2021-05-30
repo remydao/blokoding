@@ -6,11 +6,11 @@ import FlatButton from '../components/FlatButton';
 import Maps from '../constants/Maps';
 import { CameraMode } from '../constants/CameraMode';
 
-interface HomeProps {
+interface IProps {
   navigation: any,
 }
 
-const Home = ({ navigation }: HomeProps) => {
+const Home = ({ navigation }: IProps) => {
     return (
       <View style={styles.container}>
         <View style={styles.logoContainer}>

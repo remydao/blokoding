@@ -8,21 +8,21 @@ import Maps from '../constants/Maps';
 import {parseInit} from '../scripts/parsing/Parser';
 import { CameraMode } from '../constants/CameraMode';
 
-interface Props {
+interface IProps {
   navigation: any,
   route: any
 }
 
-interface State {
+interface IState {
   modalVisible: boolean,
   modalText: string
 }
 
 const circle = "      ";
 
-class Camera extends Component<Props, State> {
+class Camera extends Component<IProps, IState> {
   private camera: any;
-  constructor(props: Props){
+  constructor(props: IProps){
     super(props)
     this.state = {
       modalVisible: false,

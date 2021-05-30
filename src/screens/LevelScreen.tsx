@@ -6,17 +6,17 @@ import TextAnimator from '../components/TextAnimator';
 import EngineConstants from '../constants/EngineConstants';
 import CustomHeader from '../components/CustomHeader';
 
-interface Props {
+interface IProps {
     navigation: any,
     route: any,
 }
 
-interface State {
+interface IState {
     buttonText: string,
     textAnimator: JSX.Element
 }
 
-class LevelScreen extends React.Component<Props, State> {
+class LevelScreen extends React.Component<IProps, IState> {
 
     private readonly levelNumber: number;
     private readonly levelInfo;
@@ -26,7 +26,7 @@ class LevelScreen extends React.Component<Props, State> {
     private readonly map: object;
     private index: number;
 
-    constructor(props: Props) {
+    constructor(props: IProps) {
         super(props);
         this.levelNumber = this.props.route.params.levelNumber;
         this.levelInfo = levelsTexts[this.levelNumber];

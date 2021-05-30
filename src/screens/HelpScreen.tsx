@@ -5,11 +5,11 @@ import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
 import { Characters } from '../constants/BlockType';
 
-interface Props {
+interface IProps {
   navigation: any
 }
 
-const Help = ({ navigation }: Props) => {
+const Help = ({ navigation }: IProps) => {
   return (
     <View style={styles.container}>
       <View>
