@@ -12,7 +12,6 @@ import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/ConditionBlock';
-import MapItems from "../constants/MapItems"
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
@@ -64,6 +63,7 @@ class Game extends Component<IProps, IState> {
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
             this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
+            // this.actions = new CharacterBlock(new ForBlock(new DataBlock(10), new MoveBlock(new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null)), null), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -324,14 +324,12 @@ class Game extends Component<IProps, IState> {
 
     // return true if character is in front of an entity(data block)
     isInFront(entity: string) {
-        let res = Object.entries(Environments).filter(env => env[1] == entity);
-        return res && res[0] && this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == res[0][1];
+        return this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == entity;
     }
 
     // return true if character is on an entity(data block)
     isOn(entity: string) {
-        let res = Object.entries(Items).filter(item => item[1] == entity);
-        return res && res[0] && this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == res[0][1];
+        return this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == entity;
     }
 
     // return true if character possess an entity(data block)
