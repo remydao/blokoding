@@ -23,8 +23,15 @@ class JumpBlock extends StructureBlock {
 
     async execute(engine: any) {
         console.log("jump");
-        await engine.jump();
-        await engine.checkState();
+        await engine.preCheckState();
+
+        if (engine.getStateHasWon()) {
+            await engine.jump(0.5);
+        }
+        else if (!engine.getStateHasLost() && !engine.getStateHasWon()) {
+            await engine.jump();
+            await engine.checkState();
+        }
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock) {
             await this.nextBlock.execute(engine);

@@ -45,7 +45,8 @@ class Game extends Component<IProps, IState> {
     private timePassed: number = 0;
     private frameDelay: number = 0;
     private speed: number = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
-    private actions: any
+    private actions: any;
+    private endReason: string = "";
 
     constructor(props: IProps) {
         super(props);
@@ -61,7 +62,7 @@ class Game extends Component<IProps, IState> {
         };
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new WhileBlock(new PossessBlock(new DataBlock(Items.Key)), new MoveBlock(null), null))), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new JumpBlock(null)), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -71,11 +72,26 @@ class Game extends Component<IProps, IState> {
     async componentDidMount() {
         await this.actions.execute(this);
 
-        if (this.state.map[this.characterPos] != Cells.Win) {
-            this.setState({hasWon: false});
-            this.setState({hasLost: true});
-            this.loose();
+        if (this.state.map[this.characterPos] != Cells.Win && !this.state.hasLost && !this.state.hasWon) {
+            this.fireEndScreen("loose", "Perdu, tu n'as pas atteint la ligne d'arrivée")
         }
+    }
+
+    // function that check if user can jump or not
+    async preCheckState() {
+        return await new Promise<void>((resolve) => {
+            switch (this.state.map[this.characterPos + 1]) {
+                case Cells.Win:
+                    this.fireEndScreen("won")
+                    break;
+                case Cells.Bush:
+                    this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer")
+                    break;
+                default:
+                    break;
+            }
+            resolve()
+        }) 
     }
 
     // function that check user's win or loss
@@ -83,19 +99,32 @@ class Game extends Component<IProps, IState> {
         return await new Promise<void>((resolve) => {
             switch (this.state.map[this.characterPos]) {
                 case Cells.Win:
-                    console.log("win")
-                    this.setState({hasWon: true});
-                    this.win();
+                    this.fireEndScreen("won")
                     break;
                 case Cells.Puddle:
-                    this.setState({hasLost: true});
-                    this.loose();
+                    this.fireEndScreen("loose", "Perdu, fait attention aux flaques d'eau")
+                    break;
+                case Cells.Bush:
+                    this.fireEndScreen("loose", "Perdu, utilise la machette quand tu es devant le buisson pour le couper")
                     break;
                 default:
                     break;
             }
             resolve()
-        })
+        }) 
+    }
+
+    // Fire the loose screen with a message
+    fireEndScreen(looseOrWon: string, endReason: string = "Bravo, tu as réussi !") {
+        if (looseOrWon === "loose") {
+            this.endReason = endReason;
+            this.setState({hasLost: true});
+            this.loose();
+        } else {
+            this.endReason = endReason;
+            this.setState({hasWon: true});
+            this.win();
+        }
         
     }
 
@@ -167,7 +196,8 @@ class Game extends Component<IProps, IState> {
     }
 
     // General function to jump the character (used in ActionBlock.js)
-    async jump() {
+    // num_cell is the number of cell the animation last
+    async jump(num_cell : number = 2) {
         this.moveDistance = 0;
 
         var self = this;
@@ -191,8 +221,8 @@ class Game extends Component<IProps, IState> {
                     playerPosY: playerPosY,
                 })
 
-                if (self.moveDistance >= EngineConstants.CELL_SIZE * 2) {
-                    self.characterPos += 2;
+                if (self.moveDistance >= EngineConstants.CELL_SIZE * num_cell) {
+                    self.characterPos += num_cell;
                     resolve();
                 }
                 else {
@@ -305,8 +335,8 @@ class Game extends Component<IProps, IState> {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                { this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text="Niveau réussi, Bravo !" color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
-                { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text="Perdu, tu n'as pas atteint la ligne d'arrivée" color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
+                { this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
+                { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                 <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
