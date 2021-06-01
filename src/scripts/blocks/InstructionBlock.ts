@@ -8,7 +8,12 @@ class ForBlock extends InstructionBlock {
     async execute(engine: any) {
         let n = this.predicateBlock.execute();
         let i = 0;
+
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
+            // If GameEngine is unmounted
+            if (!super.execute(engine))
+                return;
+
             if (this.execBlock) {
                 await this.execBlock.execute(engine);
             }
@@ -29,6 +34,10 @@ class IfBlock extends InstructionBlock {
 
     async execute(engine: any) {
         if (await this.predicateBlock.execute(engine)) {
+            // If GameEngine is unmounted
+            if (!super.execute(engine))
+                return;
+
             if (this.execBlock)
                 await this.execBlock.execute(engine);
         }
@@ -46,7 +55,10 @@ class WhileBlock extends InstructionBlock {
 
     async execute(engine: any) {
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && this.predicateBlock.execute(engine)) {
-
+            // If GameEngine is unmounted
+            if (!super.execute(engine))
+                return;
+                
             if (this.execBlock) {
                 await this.execBlock.execute(engine);
             }

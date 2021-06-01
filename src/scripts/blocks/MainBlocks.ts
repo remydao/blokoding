@@ -1,6 +1,7 @@
 class CodeBlock {
     execute(engine: any) {
-        throw "not implemented";
+        console.log("CodeBlock: mounted: " + engine.isMounted())
+        return engine.isMounted();
     }
 }
 
