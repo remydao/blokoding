@@ -11,7 +11,7 @@ class ForBlock extends InstructionBlock {
 
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
             // If GameEngine is unmounted
-            if (!super.execute(engine))
+            if (!engine.isMounted())
                 return;
 
             if (this.execBlock) {
@@ -35,7 +35,7 @@ class IfBlock extends InstructionBlock {
     async execute(engine: any) {
         if (await this.predicateBlock.execute(engine)) {
             // If GameEngine is unmounted
-            if (!super.execute(engine))
+            if (!engine.isMounted())
                 return;
 
             if (this.execBlock)
@@ -56,7 +56,7 @@ class WhileBlock extends InstructionBlock {
     async execute(engine: any) {
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && this.predicateBlock.execute(engine)) {
             // If GameEngine is unmounted
-            if (!super.execute(engine))
+            if (!engine.isMounted())
                 return;
                 
             if (this.execBlock) {

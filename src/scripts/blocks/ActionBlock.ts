@@ -27,7 +27,7 @@ class JumpBlock extends StructureBlock {
 
     async execute(engine: any) {
         // If GameEngine is unmounted
-        if (!super.execute(engine))
+        if (!engine.isMounted())
             return;
 
         console.log("jump");
@@ -54,7 +54,7 @@ class GrabBlock extends StructureBlock {
 
     async execute(engine: any) {
         // If GameEngine is unmounted
-        if (!super.execute(engine))
+        if (!engine.isMounted())
             return;
 
         console.log("grab");
@@ -75,7 +75,7 @@ class SpeakBlock extends StructureBlock {
 
     async execute(engine: any) {
         // If GameEngine is unmounted
-        if (!super.execute(engine))
+        if (!engine.isMounted())
             return;
 
         console.log("speak");
