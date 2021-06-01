@@ -12,7 +12,6 @@ import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
 import { ConditionBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/ConditionBlock';
-import MapItems from "../constants/MapItems"
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
@@ -47,6 +46,7 @@ class Game extends Component<IProps, IState> {
     private speed: number = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
     private actions: any;
     private endReason: string = "";
+    private mounted: boolean = false;
 
     constructor(props: IProps) {
         super(props);
@@ -62,7 +62,8 @@ class Game extends Component<IProps, IState> {
         };
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new MoveBlock(new JumpBlock(null)), Characters.Kevin);
+            this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
+            // this.actions = new CharacterBlock(new ForBlock(new DataBlock(10), new MoveBlock(new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null)), null), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -70,11 +71,22 @@ class Game extends Component<IProps, IState> {
     }
 
     async componentDidMount() {
+        this.mounted = true;
+
         await this.actions.execute(this);
 
         if (this.state.map[this.characterPos] != Cells.Win && !this.state.hasLost && !this.state.hasWon) {
             this.fireEndScreen("loose", "Perdu, tu n'as pas atteint la ligne d'arrivée")
         }
+    }
+
+    async componentWillUnmount() {
+        this.mounted = false;
+        console.log("unMounted");
+    }
+
+    isMounted(): boolean {
+        return this.mounted;
     }
 
     // function that check if user can jump or not
@@ -153,21 +165,18 @@ class Game extends Component<IProps, IState> {
             this.frameCount = 0;
             this.baseTicks = Date.now();
             this.frameDelay = 0;
-            // console.log("Reset FPS ->")
         }
 
         this.speed = EngineConstants.MAX_WIDTH * this.timePassed * 0.0002;
-
-        // console.log("this.timePassed: " + this.timePassed + "  currTicks: " + currentTicks + "  targetTicks: " + targetTicks, "  this.frameDelay: " + this.frameDelay);
     }
 
     // Method to move the character (used in ActionBlock.js)
     async move() {
-        this.moveDistance =  0
+        this.moveDistance = 0
         
         var self = this;
 
-        return await new Promise<void>(resolve => {
+        return await new Promise<void>(resolve => {                
             movePos();
 
             function movePos() {
@@ -177,6 +186,10 @@ class Game extends Component<IProps, IState> {
                 var newBgPos = self.moveBackground();
 
                 self.moveDistance += self.speed;
+
+                // Fix memory leak when quitting
+                if (!self.mounted)
+                    resolve();
 
                 self.setState({
                     bg0Pos: newBgPos[0],
@@ -197,12 +210,16 @@ class Game extends Component<IProps, IState> {
 
     // General function to jump the character (used in ActionBlock.js)
     // num_cell is the number of cell the animation last
-    async jump(num_cell : number = 2) {
+    async jump(numCells : number = 2) {
         this.moveDistance = 0;
 
         var self = this;
 
         return await new Promise<void>(resolve => {
+            // Fix memory leak when quitting
+            if (!self.mounted)
+                resolve();
+
             jumpPos();
 
             function jumpPos() {
@@ -214,6 +231,10 @@ class Game extends Component<IProps, IState> {
 
                 self.moveDistance += self.speed;
 
+                // Fix memory leak when quitting
+                if (!self.mounted)
+                    resolve();
+
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
@@ -221,8 +242,8 @@ class Game extends Component<IProps, IState> {
                     playerPosY: playerPosY,
                 })
 
-                if (self.moveDistance >= EngineConstants.CELL_SIZE * num_cell) {
-                    self.characterPos += num_cell;
+                if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
+                    self.characterPos += numCells;
                     resolve();
                 }
                 else {
@@ -243,6 +264,9 @@ class Game extends Component<IProps, IState> {
             return false;
         }
             
+        // Fix memory leak when quitting
+        if (!this.mounted)
+            return false;
 
         this.setState((prevState) => {
             let inventory = Object.assign({}, prevState.inventory);  
@@ -300,14 +324,12 @@ class Game extends Component<IProps, IState> {
 
     // return true if character is in front of an entity(data block)
     isInFront(entity: string) {
-        let res = Object.entries(Environments).filter(env => env[1] == entity);
-        return res && res[0] && this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == res[0][1];
+        return this.state.map[this.characterPos + 1].content && this.state.map[this.characterPos + 1].content.imageName == entity;
     }
 
     // return true if character is on an entity(data block)
     isOn(entity: string) {
-        let res = Object.entries(Items).filter(item => item[1] == entity);
-        return res && res[0] && this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == res[0][1];
+        return this.state.map[this.characterPos].content && this.state.map[this.characterPos].content.imageName == entity;
     }
 
     // return true if character possess an entity(data block)

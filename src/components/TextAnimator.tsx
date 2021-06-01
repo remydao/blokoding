@@ -11,13 +11,11 @@ interface IState {
 
 export default class TextAnimator extends Component<IProps, IState> {
     
-    private textArray : Array<any>
+    private textArray : Array<any> = []
     // Créé le tableau de mots passé en props et rempli
     // le tableau animatedValues avec des Value à 0
     constructor(props: IProps) {
         super(props);
-        this.textArray = this.props.content.trim().split(' ');
-
         this.state = {
             animatedValues: []
         }
@@ -25,7 +23,7 @@ export default class TextAnimator extends Component<IProps, IState> {
 
     // Est appelé au lancement pour set les animations 
     animated(toValue = 1) {
-        const animations = this.props.content.trim().split(' ').map((_, index) => {
+        const animations = this.textArray.map((_, index) => {
             return Animated.timing(this.state.animatedValues[index],
                 {
                     toValue: toValue,
@@ -40,7 +38,9 @@ export default class TextAnimator extends Component<IProps, IState> {
 
     
     componentDidMount() {
-        this.props.content.trim().split(' ').forEach((_, index) => {
+        this.textArray = this.props.content.trim().split(' ');
+
+        this.textArray.forEach((_, index) => {
             this.state.animatedValues[index] = new Animated.Value(0);
         });
 
@@ -53,13 +53,13 @@ export default class TextAnimator extends Component<IProps, IState> {
     render() {
         return (
             <View style={styles.containerStyle}>
-                { this.props.content.trim().split(' ').map((word, index) => {
+                { this.textArray.map((word, index) => {
                     return (
                         <Animated.Text 
                         key={'word' + index} 
                         style={{...styles.textStyle, opacity: this.state.animatedValues[index]}}>
                             {word}
-                            { index < this.props.content.trim().split(' ').length - 1 ? ' ' : ''}
+                            { index < this.textArray.length - 1 ? ' ' : ''}
                         </Animated.Text>
                     )
                 })}

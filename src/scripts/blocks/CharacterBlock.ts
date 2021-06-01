@@ -10,6 +10,9 @@ class CharacterBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
+        // If GameEngine is unmounted
+        if (!engine.isMounted())
+            return;
 
         await engine.checkState();
 

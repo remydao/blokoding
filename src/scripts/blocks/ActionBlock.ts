@@ -6,6 +6,10 @@ class MoveBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
+        // If GameEngine is unmounted
+        if (!super.execute(engine))
+            return;
+
         console.log("move");
         await engine.move();
         await engine.checkState();
@@ -22,6 +26,10 @@ class JumpBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
+        // If GameEngine is unmounted
+        if (!engine.isMounted())
+            return;
+
         console.log("jump");
         await engine.preCheckState();
 
@@ -45,6 +53,10 @@ class GrabBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
+        // If GameEngine is unmounted
+        if (!engine.isMounted())
+            return;
+
         console.log("grab");
 
         if (engine.grab()) // If grab success
@@ -61,7 +73,11 @@ class SpeakBlock extends StructureBlock {
         super(nextBlock);
     }
 
-    execute() {
+    async execute(engine: any) {
+        // If GameEngine is unmounted
+        if (!engine.isMounted())
+            return;
+
         console.log("speak");
         if (this.nextBlock) {
             this.nextBlock.execute();
