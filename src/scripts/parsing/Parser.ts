@@ -2,7 +2,7 @@ import { Characters, Actions, Instructions, Items, Conditions, Environments } fr
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
 import { ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
-import { IsInFrontBlock, IsOnBlock } from "../blocks/ConditionBlock";
+import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBlock";
 import { DataBlock } from "../blocks/DataBlock";
 
 
@@ -139,11 +139,13 @@ const parseCondition = (cardList: TcardList): IsInFrontBlock | IsOnBlock | never
     {
         switch (res[0][1]) {
             case Conditions.IsInFront:
-                return new IsInFrontBlock(parseEnvironnement(cardList))
+                return new IsInFrontBlock(parseEnvironnement(cardList));
             case Conditions.IsOn:
                 return new IsOnBlock(parseItem(cardList));
+            case Conditions.Possess: 
+                return new PossessBlock(parseItem(cardList));
             default:
-                throw 'Une carte condition est manquante ' + cardIndexToString();;
+                throw 'Une carte condition est manquante ' + cardIndexToString();
         }
     }
     else
