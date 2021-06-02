@@ -10,7 +10,7 @@ import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
 import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
-import { ConditionBlock } from '../scripts/blocks/MainBlocks';
+import { ConditionBlock, StructureBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/ConditionBlock';
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
@@ -62,8 +62,8 @@ class Game extends Component<IProps, IState> {
         };
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
-            // this.actions = new CharacterBlock(new ForBlock(new DataBlock(10), new MoveBlock(new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null)), null), Characters.Kevin);
+            //this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
+            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new StructureBlock(null))), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -257,9 +257,7 @@ class Game extends Component<IProps, IState> {
         var currCell = this.state.map[this.characterPos];
 
         if (currCell == Cells.Empty || !isItem(currCell.content.imageName)) {
-            this.setState({
-                hasLost: true
-            });
+            this.fireEndScreen("loose", "Perdu, fait attention de ramasser au bon moment !")
             console.log("grab failed");
             return false;
         }
