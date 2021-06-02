@@ -1,7 +1,7 @@
 import { StructureBlock } from "./MainBlocks";
 
 class MoveBlock extends StructureBlock {
-    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
+    constructor(nextBlock: StructureBlock | null) {
         super(nextBlock);
     }
 
@@ -21,7 +21,7 @@ class MoveBlock extends StructureBlock {
 }
 
 class JumpBlock extends StructureBlock {
-    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
+    constructor(nextBlock: StructureBlock | null) {
         super(nextBlock);
     }
 
@@ -48,7 +48,7 @@ class JumpBlock extends StructureBlock {
 }
 
 class GrabBlock extends StructureBlock {
-    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
+    constructor(nextBlock: StructureBlock | null) {
         super(nextBlock);
     }
 
@@ -69,7 +69,7 @@ class GrabBlock extends StructureBlock {
 }
 
 class SpeakBlock extends StructureBlock {
-    constructor(nextBlock: MoveBlock | JumpBlock | GrabBlock | SpeakBlock | null) {
+    constructor(nextBlock: StructureBlock | null) {
         super(nextBlock);
     }
 
