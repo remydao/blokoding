@@ -8,6 +8,13 @@ import {Home, Camera, Help, Options, Discover, Game, LevelScreen} from './src/sc
 import Colors from "./src/constants/Colors"
 import EnigmaScreen from './src/screens/EnigmaScreen';
 
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({ 
+  dsn: 'https://61430177b69e43478da38120cdd6a069@o792555.ingest.sentry.io/5801070', 
+});
+
+
 
 const Stack = createStackNavigator();
 

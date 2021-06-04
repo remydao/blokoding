@@ -375,11 +375,17 @@ PODS:
     - Yoga
   - RNScreens (2.18.1):
     - React-Core
+  - RNSentry (2.4.3):
+    - React-Core
+    - Sentry (= 6.1.4)
   - RNTextDetector (0.0.8):
     - GoogleMLKit/TextRecognition
     - React
   - RNVectorIcons (8.1.0):
     - React-Core
+  - Sentry (6.1.4):
+    - Sentry/Core (= 6.1.4)
+  - Sentry/Core (6.1.4)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -422,6 +428,7 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNTextDetector (from `../node_modules/rn-text-detector/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -441,6 +448,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - Sentry
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -517,6 +525,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNTextDetector:
     :path: "../node_modules/rn-text-detector/ios"
   RNVectorIcons:
@@ -575,8 +585,10 @@ SPEC CHECKSUMS:
   RNPermissions: 034db8a73d562766f990c89abbdeaa5d6e204c67
   RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
+  RNSentry: 6f8f9ee7e4c939dcd35e5633b94d0e3782888e46
   RNTextDetector: 97972c3544614d9791daae6e5b1af5cfcbb30413
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  Sentry: 9d055e2de30a77685e86b219acf02e59b82091fc
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
 PODFILE CHECKSUM: 7a722ac4873b99ad25f4f821a434f570c8bfbdcb
