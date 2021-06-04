@@ -18,9 +18,6 @@ interface IState {
   modalText: string
 }
 
-const MAX_DEVIATION_NUMBER = 3;
-const MAX_LEVENSHTEIN_DISTANCE = 2;
-
 const circle = "      ";
 
 class Camera extends Component<IProps, IState> {
@@ -90,7 +87,7 @@ class Camera extends Component<IProps, IState> {
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
         // Mettre ttes les cartes en deuxieme argument
-        //this.checkVisionResp(visionResp, []);
+        // checkVisionResp(visionResp, []);
         //const visionResp = [{text: "Bart"}, {text: "Sauter"}, {text: "repeter"}, {text: "50"}, {text: "si"}, {text: "est devant"}, {text: "buisson"}, {text: "avancer"}, {text: "fin"}, {text: "si"}, {text: "est devant"}, {text: "buisson"}, {text: "avancer"}, {text: "fin"}, {text: "fin"}]
 
         const actions = parseInit(visionResp);
@@ -106,59 +103,6 @@ class Camera extends Component<IProps, IState> {
         this.setModalVisible(!this.state.modalVisible)
       }
     };
-
-    levenshteinDistance = (str1: string, str2: string) => {
-      str1 = str1.toLowerCase();
-      str2 = str2.toLowerCase();
-      const track = Array(str2.length + 1).fill(null).map(() =>
-      Array(str1.length + 1).fill(null));
-      for (let i = 0; i <= str1.length; i += 1) {
-          track[0][i] = i;
-      }
-      for (let j = 0; j <= str2.length; j += 1) {
-          track[j][0] = j;
-      }
-      for (let j = 1; j <= str2.length; j += 1) {
-          for (let i = 1; i <= str1.length; i += 1) {
-          const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
-          track[j][i] = Math.min(
-              track[j][i - 1] + 1, // deletion
-              track[j - 1][i] + 1, // insertion
-              track[j - 1][i - 1] + indicator, // substitution
-          );
-          }
-      }
-      return track[str2.length][str1.length];
-    };
-
-    deviationMatching = (first: string, second: string, num: number) => {
-      let count = 0;
-      let firstComparator = first.length > second.length ? first.toLowerCase() : second.toLowerCase();
-      let secondComparator = first.length > second.length ? second.toLowerCase() : first.toLowerCase();
-      for(let i = 0; i < firstComparator.length; i++){
-        if(!secondComparator.includes(firstComparator[i])){
-            count++;
-        };
-        if(count > num){
-            return false;
-        };
-      };
-      return true;
-    };
-
-    checkVisionResp = (visionResp: string[] , allCards: string[]) => {
-        var i = 0;
-        visionResp.forEach(element => {
-            allCards.forEach(card => {
-                if (this.deviationMatching(element, card, MAX_DEVIATION_NUMBER)) {
-                    if (this.levenshteinDistance(element, card) <= MAX_LEVENSHTEIN_DISTANCE) {
-                      visionResp[i] = card;
-                    }
-                }
-            });
-            i++;
-      });
-    }
 }
   
   const styles = StyleSheet.create({
