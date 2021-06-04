@@ -9,6 +9,7 @@ import jestConfig from '../jest.config';
 import { checkVisionResp } from '../src/scripts/corrector/corrector';
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
+jest.mock('@sentry/react-native', () => ({ init: () => jest.fn() }));
 
 it('Corrector simple', () => {
     const ocr = ['Bart', 'avanceer'];
