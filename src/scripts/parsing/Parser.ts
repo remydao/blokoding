@@ -5,6 +5,7 @@ import { ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBlock";
 import { DataBlock } from "../blocks/DataBlock";
 import { ConditionBlock, StructureBlock } from "../blocks/MainBlocks";
+import { checkVisionResp } from "../corrector/corrector";
 
 
 var loopDepth = 0;
@@ -18,7 +19,7 @@ const parseInit = (cardListObj: any[]) => {
 
     let cardList: TcardList = cardListObj.map((item: { text: string; }) => item.text.trim().toLowerCase());
 
-    console.log(cardList);
+    //console.log(cardList);
     return parseCharacter(cardList);
 }
 
@@ -38,13 +39,24 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
     }
     
     let res = Object.entries(Actions).filter(action => action[1] == blockName);
+    
     if (res.length > 0) {
-        return parseAction(res[0], cardList);
+        return parseAction(res[0][1], cardList);
+    } else {
+        let modifiedBlock = checkVisionResp(blockName, Object.values(Actions));
+        if (modifiedBlock !== null) {
+            return parseAction(modifiedBlock, cardList);
+        }
     }
     
     res = Object.entries(Instructions).filter(instruction => instruction[1] == blockName);
     if (res.length > 0) {
-        return parseInstruction(res[0], cardList);
+        return parseInstruction(res[0][1], cardList);
+    } else {
+        let modifiedBlock = checkVisionResp(blockName, Object.values(Instructions));
+        if (modifiedBlock !== null) {
+            return parseInstruction(modifiedBlock, cardList);
+        }
     }
 
     if (blockName === "fin") {
@@ -79,15 +91,24 @@ const cardIndexToString = () => {
 const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
     let character = getFirstElm(cardList);
     let res = Object.entries(Characters).filter(charac => charac[1] == character);
+
     if (res.length > 0) {
         return new CharacterBlock(parseStructureCard(cardList), res[0][1]);
     } else {
+        if (typeof character !== 'undefined')
+        {
+            let modifiedCharacter = checkVisionResp(character, Object.values(Characters));
+            if (modifiedCharacter !== null) {
+                return new CharacterBlock(parseStructureCard(cardList), modifiedCharacter);
+            }
+        }
+
         throw 'Ton programme doit commencer par une carte personnage ' + cardIndexToString();
     }
 }
 
-const parseAction = (action: any[], cardList: TcardList) => {
-    switch (action[1]) {
+const parseAction = (action: any, cardList: TcardList) => {
+    switch (action) {
         case Actions.Move:
             return new MoveBlock(parseStructureCard(cardList));
         case Actions.Jump:
@@ -101,10 +122,10 @@ const parseAction = (action: any[], cardList: TcardList) => {
     }
 }
 
-const parseInstruction = (instruction: any[], cardList: TcardList) => {
+const parseInstruction = (instruction: any, cardList: TcardList) => {
     let predicateBlock: DataBlock | ConditionBlock | null;
 
-    switch (instruction[1]) {
+    switch (instruction) {
         case Instructions.For:
             if (!(predicateBlock = parseNumber(cardList)))
                 throw "L'instruction Répéter doit être suivie d'un nombre " + cardIndexToString();
@@ -127,7 +148,7 @@ const parseInstruction = (instruction: any[], cardList: TcardList) => {
 
     let nextBlock = parseStructureCard(cardList);
 
-    switch (instruction[1]) {
+    switch (instruction) {
         case Instructions.For:
             return new ForBlock(predicateBlock, execBlock, nextBlock);
         case Instructions.If:
@@ -156,29 +177,38 @@ const parseCondition = (cardList: TcardList): ConditionBlock | null => {
     let conditionFirstCard = getFirstElm(cardList);
     let res = Object.entries(Conditions).filter(cond => cond[1] == conditionFirstCard);
 
+    let finalCondition;
+
+    if (res.length === 0 && typeof conditionFirstCard !== 'undefined') {
+        var modifiedCondition = checkVisionResp(conditionFirstCard, Object.values(Conditions))
+        if (modifiedCondition !== null) {
+            finalCondition = modifiedCondition;
+        } else {
+            return null;
+        }
+    } else {
+        finalCondition = res[0][1];
+    }
+
     let entity : DataBlock | null
 
-    if (res.length > 0)
-    {
-        switch (res[0][1]) {
-            case Conditions.IsInFront:
-                if (!(entity = parseEnvironnement(cardList)))
-                    throw "La condition être devant doit être suivie d'un environnement " + cardIndexToString();
-                return new IsInFrontBlock(entity);
-            case Conditions.IsOn:
-                if (!(entity = parseItem(cardList)))
-                    throw "La condition être sur doit être suivie d'un objet " + cardIndexToString();
-                return new IsOnBlock(entity);
-            case Conditions.Possess: 
-                if (!(entity = parseItem(cardList)))
-                    throw "La condition posséder doit être suivie d'un objet " + cardIndexToString();
-                return new PossessBlock(entity);
-            default:
-                return null;
-        }
+    
+    switch (finalCondition) {
+        case Conditions.IsInFront:
+            if (!(entity = parseEnvironnement(cardList)))
+                throw "La condition être devant doit être suivie d'un environnement " + cardIndexToString();
+            return new IsInFrontBlock(entity);
+        case Conditions.IsOn:
+            if (!(entity = parseItem(cardList)))
+                throw "La condition être sur doit être suivie d'un objet " + cardIndexToString();
+            return new IsOnBlock(entity);
+        case Conditions.Possess: 
+            if (!(entity = parseItem(cardList)))
+                throw "La condition posséder doit être suivie d'un objet " + cardIndexToString();
+            return new PossessBlock(entity);
+        default:
+            return null;
     }
-    else
-        return null;
 }
 
 const parseItem = (cardList: TcardList): DataBlock | null => {
@@ -188,6 +218,12 @@ const parseItem = (cardList: TcardList): DataBlock | null => {
     if (res.length > 0) {
         return new DataBlock(res[0][1]);
     } else {
+        if (typeof item !== 'undefined') {
+            let modifiedItem = checkVisionResp(item, Object.values(Items));
+            if (modifiedItem !== null) {
+                return new DataBlock(modifiedItem);
+            }
+        }
         return null;
     }
 }
@@ -199,6 +235,12 @@ const parseEnvironnement = (cardList: TcardList): DataBlock | null => {
     if (res.length > 0) {
         return new DataBlock(res[0][1]);
     } else {
+        if (typeof env !== 'undefined') {
+            let modifiedEnv = checkVisionResp(env, Object.values(Environments));
+            if (modifiedEnv!== null) {
+                return new DataBlock(modifiedEnv);
+            }
+        }
         return null;
     }
 }

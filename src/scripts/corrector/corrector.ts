@@ -1,5 +1,5 @@
 const MAX_DEVIATION_NUMBER = 3;
-const MAX_LEVENSHTEIN_DISTANCE = 2;
+const MAX_LEVENSHTEIN_DISTANCE = 1;
 
 
 const levenshteinDistance = (str1: string, str2: string) => {
@@ -7,6 +7,7 @@ const levenshteinDistance = (str1: string, str2: string) => {
     str2 = str2.toLowerCase();
     const track = Array(str2.length + 1).fill(null).map(() =>
     Array(str1.length + 1).fill(null));
+
     for (let i = 0; i <= str1.length; i += 1) {
         track[0][i] = i;
     }
@@ -30,29 +31,30 @@ const deviationMatching = (first: string, second: string, num: number) => {
     let count = 0;
     let firstComparator = first.length > second.length ? first.toLowerCase() : second.toLowerCase();
     let secondComparator = first.length > second.length ? second.toLowerCase() : first.toLowerCase();
-    for(let i = 0; i < firstComparator.length; i++){
-      if(!secondComparator.includes(firstComparator[i])){
-          count++;
-      };
-      if(count > num){
-          return false;
-      };
+
+    for (let i = 0; i < firstComparator.length; i++) {
+        if (!secondComparator.includes(firstComparator[i])) {
+            count++;
+        };
+        if (count > num){
+            return false;
+        };
     };
     return true;
   };
 
-const checkVisionResp = (visionResp: string[], allCards: string[]) => {
-      var i = 0;
-      visionResp.forEach(element => {
-          allCards.forEach(card => {
-              if (deviationMatching(element, card, MAX_DEVIATION_NUMBER)) {
-                  if (levenshteinDistance(element, card) <= MAX_LEVENSHTEIN_DISTANCE) {
-                    visionResp[i] = card;
-                  }
-              }
-          });
-          i++;
-    });
-  }
+const checkVisionResp = (str: string, allCards: string[]) => {
+
+    for (let i = 0; i < allCards.length; i++)
+    {
+        if (deviationMatching(str, allCards[i], MAX_DEVIATION_NUMBER)) {  
+            if (levenshteinDistance(str, allCards[i]) <= MAX_LEVENSHTEIN_DISTANCE) {
+                return allCards[i];
+            }
+        }
+    }
+
+    return null;
+}
 
 export { checkVisionResp }

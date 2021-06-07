@@ -7,27 +7,36 @@ import App from '../App';
 import renderer from 'react-test-renderer';
 import jestConfig from '../jest.config';
 import { checkVisionResp } from '../src/scripts/corrector/corrector';
+import { Actions, Characters, Instructions } from '../src/constants/BlockType';
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
 jest.mock('@sentry/react-native', () => ({ init: () => jest.fn() }));
 
 it('Corrector simple', () => {
-    const ocr = ['Bart', 'avanceer'];
-    checkVisionResp(ocr, ['Bart', 'Avancer']);
+    const ocr = 'bar';
+    const res = checkVisionResp(ocr, Object.values(Characters));
   
-    expect(ocr).toStrictEqual(['Bart', 'Avancer']);
+    expect(res).toStrictEqual('bart');
 });
 
 it('Corrector medium', () => {
-    const ocr = ['Bar', 'repaater', '10', 'Saute', 'etre devant', 'fiN'];
-    checkVisionResp(ocr, ['Bart', 'Repeter', '10', 'Sauter', 'etre devant', 'fin']);
+    const ocr = 'repeeter'
+    const res = checkVisionResp(ocr, Object.values(Instructions));
   
-    expect(ocr).toStrictEqual(['Bart', 'Repeter', '10', 'Sauter', 'etre devant', 'fin']);
+    expect(res).toStrictEqual('repeter');
 })
 
 it('Corrector hard', () => {
-    const ocr = ['Kev', 'AVANCER ', '50', 'Sauter_', "etre sur", 'fin', 'fin'];
-    checkVisionResp(ocr, ['Kevin', 'Avancer', '50', 'Sauter', "etre sur", 'fin', 'fin'])
+    const ocr = 'sauter_';
+    const res = checkVisionResp(ocr, Object.values(Actions));
 
-    expect(ocr).toStrictEqual(['Kevin', 'Avancer', '50', 'Sauter', "etre sur", 'fin', 'fin']);
+    expect(res).toStrictEqual('sauter');
+})
+
+
+it('Corrector fin with instructions', () => {
+    const ocr = 'fin';
+    const res = checkVisionResp(ocr, Object.values(Instructions));
+
+    expect(res).toBe(null);
 })
