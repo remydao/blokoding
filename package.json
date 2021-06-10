@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "codecov": "yarn test && codecov"
+    "codecov": "jest --coverage && codecov"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
@@ -50,7 +50,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "coverageDirectory": "../.circleci/coverage/",
+    "coverageDirectory": "./coverage/",
     "collectCoverage": true
   }
 }
