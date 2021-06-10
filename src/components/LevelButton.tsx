@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Pressable, Animated} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Pressable, Animated, Image} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import Colors from '../constants/Colors';
+import AutoHeightImage from 'react-native-auto-height-image';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommonActions } from '@react-navigation/native';
+
 
 const HEIGHT = EngineConstants.MAX_HEIGHT - 64;
 const BUTTON_PADDING = EngineConstants.MAX_HEIGHT * 0.02;
 const BUTTON_HEIGHT = 100 + BUTTON_PADDING * 2;
+
 
 interface IProps {
     text: string,
@@ -16,9 +21,28 @@ interface IProps {
     bgColor: string
 }
 
+const getIsDoneList = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@isDoneList')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    }
+    catch (e) {
+      console.log(e);
+    }
+}
+
 const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
 
     const [isPressed, setIsPressed] = useState(false)
+    const [isDone, setIsDone] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+            const isDoneList = await getIsDoneList();
+            console.log("isDoneList Mount : ", isDoneList)
+            setIsDone(isDoneList[props.index]);
+        })()
+    }, [])
 
     const handlePressIn = () => {
         setIsPressed(true)
@@ -60,9 +84,13 @@ const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
                                 ...styles.view,
                                 opacity: (isPressed ? 0.6 : opacity)
                                 }}>
-                                    {console.log("is  pressed " + isPressed)}
             <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress} style={styles.button}>
-                <View >
+                <View style={styles.cellContent}>
+                    {isDone &&
+                    <View style={styles.checked}>
+                        <Image source={require('../assets/check.png')} style={{width: 30, height:30}}></Image>
+                    </View>
+                    }
                     <View>
                         <Text style={styles.textStyle}>{text}</Text>
                     </View>
@@ -92,6 +120,15 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: EngineConstants.MAX_HEIGHT * 0.045,
         fontFamily:"Pangolin-Regular",
+    },
+    checked:{
+    },
+    cellContent:{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
     }
 })
 

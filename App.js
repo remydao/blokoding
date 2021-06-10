@@ -7,6 +7,9 @@ import CustomHeader from './src/components/CustomHeader';
 import {Home, Camera, Help, Options, Discover, Game, LevelScreen} from './src/screens/Screens';
 import Colors from "./src/constants/Colors"
 import EnigmaScreen from './src/screens/EnigmaScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 import * as Sentry from '@sentry/react-native';
 
@@ -18,10 +21,22 @@ Sentry.init({
 
 const Stack = createStackNavigator();
 
+const storeIsDoneList = async (value) => {
+  try {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('@isDoneList', jsonValue)
+  } catch (e) {
+      console.log(e);
+  }
+}
+
 
 function App() {
   useEffect(() => {
+    (async () => {
     SplashScreen.hide();
+    await storeIsDoneList(Array(30).fill(false))}
+    )()
   }, []);
 
   return (

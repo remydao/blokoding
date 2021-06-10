@@ -42,9 +42,7 @@ class LevelScreen extends React.Component<IProps, IState> {
     }
 
     onPressNextButton = () => {
-
         this.index++;
-
         if (this.index < this.tutorial.length)
         {
             if (this.index === this.tutorial.length - 1)
@@ -53,7 +51,6 @@ class LevelScreen extends React.Component<IProps, IState> {
                     buttonText: "\nOuvrir la caméra\n"
                 });
             }
-
             this.setState({
                 textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>
             })
@@ -61,7 +58,8 @@ class LevelScreen extends React.Component<IProps, IState> {
         else
         {
             this.props.navigation.navigate('Take Picture', {
-                map: this.map
+                map: this.map,
+                levelNumber: this.levelNumber
             })
         }
     }

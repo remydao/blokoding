@@ -12,6 +12,7 @@ const DiscoverColors = [
   Colors.dark_purple,
 ]
 
+
 interface IProps {
   navigation: any,
   route: any
@@ -43,7 +44,7 @@ class Discover extends React.Component<IProps, IState> {
       })
     }
 
-    componentDidMount(){
+    componentDidMount = () => {
       this.setLevel()
     }
 

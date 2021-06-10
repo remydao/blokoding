@@ -93,7 +93,9 @@ class Camera extends Component<IProps, IState> {
         const actions = parseInit(visionResp);
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map){
-            navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.DISCOVER, mapInfo: this.props.route.params.map});
+            navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.DISCOVER, 
+              mapInfo: this.props.route.params.map,
+              levelNumber: this.props.route.params.levelNumber});
         } // Start Mode
         else {
           navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret1});

@@ -16,10 +16,11 @@ import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IProps {
     navigation: any,
-    route: any
+    route: any,
 }
 
 interface IState {
@@ -31,6 +32,25 @@ interface IState {
     hasLost: boolean,
     hasWon: boolean,
     inventory: any,
+}
+
+const storeIsDoneList = async (value: boolean[]) => {
+    try {
+        const jsonValue = JSON.stringify(value)
+        await AsyncStorage.setItem('@isDoneList', jsonValue)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+const getIsDoneList = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@isDoneList')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    }
+    catch (e) {
+      console.log(e);
+    }
 }
 
 class Game extends Component<IProps, IState> {
@@ -311,12 +331,21 @@ class Game extends Component<IProps, IState> {
     }
 
     // Function to notify loose
-    loose() {
+    loose = async () => {
+        const isDoneList : boolean[] = await getIsDoneList()
+        isDoneList[this.props.route.params.levelNumber] = false;
+        await storeIsDoneList(isDoneList);
         console.log('You lost');
     }
 
     // Function to notify win
-    win() {
+    win = async () => {
+        const isDoneList : boolean[] = await getIsDoneList()
+        console.log("GetisDoneList", isDoneList);
+        console.log("levelNumber", this.props.route.params.levelNumber);
+        isDoneList[this.props.route.params.levelNumber] = true;
+        console.log("SetisDoneList", isDoneList);
+        await storeIsDoneList(isDoneList);
         console.log('You won');
     }
 
