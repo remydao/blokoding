@@ -11,6 +11,7 @@
     "codecov": "jest --coverage && codecov"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-picker/picker": "^1.15.0",
     "@react-navigation/native": "^5.9.3",
