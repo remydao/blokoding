@@ -16,6 +16,7 @@ module.exports = {
         + "|react-native-gesture-handler"
         + "|@react-native-picker"
         + "|react-native-auto-height-image"
+        + "|@react-native-async-storage"
       + ")/)",
     ],
     setupFiles: ["./node_modules/react-native-gesture-handler/jestSetup.js"],

@@ -22,6 +22,7 @@ import { IsInFrontBlock, IsOnBlock } from '../src/scripts/blocks/ConditionBlock'
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
 jest.mock('@sentry/react-native', () => ({ init: () => jest.fn() }));
 
+
 it('Character alone', () => {
   const ocr = [{text: 'Bart'}];
   const blocks = parseInit(ocr);
