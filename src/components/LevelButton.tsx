@@ -24,7 +24,7 @@ interface IProps {
 const getIsDoneList = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@isDoneList')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+      return jsonValue != null ? JSON.parse(jsonValue) : Array(30).fill(false);
     }
     catch (e) {
       console.log(e);
