@@ -14,5 +14,5 @@ jobs:
           name: Run tests
           command: yarn test
       - codecov/upload:
-          file: './coverage/clover.xml'
+          file: '../coverage/clover.xml'
           token: d384d0cb-ef68-40dd-a4c5-a70894e3e94f
