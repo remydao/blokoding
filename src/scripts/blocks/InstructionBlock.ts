@@ -1,7 +1,7 @@
-import { InstructionBlock } from "./MainBlocks";
+import { CodeBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
-    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
         super(predicateBlock, execBlock, nextBlock);
     }
 
@@ -28,12 +28,12 @@ class ForBlock extends InstructionBlock {
 
 
 class IfBlock extends InstructionBlock {
-    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
         super(predicateBlock, execBlock, nextBlock);
     }
 
     async execute(engine: any) {
-        if (await this.predicateBlock.execute(engine)) {
+        if (this.predicateBlock.execute(engine)) {
             // If GameEngine is unmounted
             if (!engine.isMounted())
                 return;
@@ -49,7 +49,7 @@ class IfBlock extends InstructionBlock {
 }
 
 class WhileBlock extends InstructionBlock {
-    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
         super(predicateBlock, execBlock, nextBlock);
     }
 

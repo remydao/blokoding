@@ -45,11 +45,11 @@ const storeIsDoneList = async (value: boolean[]) => {
 
 const getIsDoneList = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('@isDoneList')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+        const jsonValue = await AsyncStorage.getItem('@isDoneList')
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
     }
     catch (e) {
-      console.log(e);
+        console.log(e);
     }
 }
 

@@ -1,12 +1,15 @@
+import Game from "../../screens/GameScreen";
+import { DataBlock } from "./DataBlock";
+
 class CodeBlock {
-    execute(engine: any) {
+    execute(engine: Game) {
         throw "not implemented";
     }
 }
 
 class StructureBlock extends CodeBlock {
     protected nextBlock;
-    constructor(nextBlock: any) {
+    constructor(nextBlock: StructureBlock) {
         super();
         this.nextBlock = nextBlock;
     }
@@ -15,7 +18,7 @@ class StructureBlock extends CodeBlock {
 class InstructionBlock extends StructureBlock {
     protected execBlock;
     protected predicateBlock;
-    constructor(predicateBlock: any, execBlock: any, nextBlock: any) {
+    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
         super(nextBlock);
         this.execBlock = execBlock;
         this.predicateBlock = predicateBlock;
@@ -24,7 +27,7 @@ class InstructionBlock extends StructureBlock {
 
 class ConditionBlock extends CodeBlock {
     protected entityBlock;
-    constructor(entityBlock: any) {
+    constructor(entityBlock: DataBlock) {
         super();
         this.entityBlock = entityBlock;
     }
