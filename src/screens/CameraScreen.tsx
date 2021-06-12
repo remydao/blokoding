@@ -7,6 +7,7 @@ import {Permission, PERMISSION_TYPE} from '../AppPermission'
 import Maps from '../constants/Maps';
 import {parseInit} from '../scripts/parsing/Parser';
 import { CameraMode } from '../constants/CameraMode';
+import { modifyCoordinates } from '../scripts/corrector/coordinates';
 
 interface IProps {
   navigation: any,
@@ -86,16 +87,16 @@ class Camera extends Component<IProps, IState> {
         
         const { uri } = await this.camera.takePictureAsync(options);
         const visionResp = await RNTextDetector.detectFromUri(uri);
-        // Mettre ttes les cartes en deuxieme argument
-        // checkVisionResp(visionResp, []);
-        //const visionResp = [{text: "Bart"}, {text: "Sauter"}, {text: "repeter"}, {text: "50"}, {text: "si"}, {text: "est devant"}, {text: "buisson"}, {text: "avancer"}, {text: "fin"}, {text: "si"}, {text: "est devant"}, {text: "buisson"}, {text: "avancer"}, {text: "fin"}, {text: "fin"}]
+
+        modifyCoordinates(visionResp);
 
         const actions = parseInit(visionResp);
         // Discover Mode
-        if (this.props.route.params && this.props.route.params.map){
-            navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.DISCOVER, 
-              mapInfo: this.props.route.params.map,
-              levelNumber: this.props.route.params.levelNumber});
+        if (this.props.route.params && this.props.route.params.map) {
+            navigation.navigate('Game',
+                { actions: actions, cameraMode: CameraMode.DISCOVER, 
+                  mapInfo: this.props.route.params.map,
+                  levelNumber: this.props.route.params.levelNumber });
         } // Start Mode
         else {
           navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret1});
