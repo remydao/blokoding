@@ -40,10 +40,7 @@ class IfBlock extends InstructionBlock {
         if (!engine.isMounted())
         return;
 
-        if (!this.predicateBlock && this.execBlock) {
-            await this.execBlock.execute(engine);
-        }
-        else if (this.predicateBlock.execute(engine) && this.execBlock) {
+        if ((!this.predicateBlock || this.predicateBlock.execute(engine)) && this.execBlock) {
             await this.execBlock.execute(engine);
         }
         else if (this.nextIfBlock) {
