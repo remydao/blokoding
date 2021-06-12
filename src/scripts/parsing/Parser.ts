@@ -1,4 +1,4 @@
-import { Characters, Actions, Instructions, Items, Conditions, Environments } from "../../constants/BlockType";
+import { Characters, Actions, Instructions, SecondaryInstructions, Items, Conditions, Environments } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
 import { ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
@@ -59,7 +59,7 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
         }
     }
 
-    if (blockName === "fin") {
+    if (blockName == SecondaryInstructions.End) {
         if (loopDepth > 0)
             return null;
         else
@@ -152,7 +152,7 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
         case Instructions.For:
             return new ForBlock(predicateBlock, execBlock, nextBlock);
         case Instructions.If:
-            return new IfBlock(predicateBlock, execBlock, nextBlock);
+            return new IfBlock(predicateBlock, execBlock, null, nextBlock);
         case Instructions.While:
             return new WhileBlock(predicateBlock, execBlock, nextBlock);
         default:

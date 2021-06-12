@@ -23,6 +23,12 @@ const Instructions = {
     If: 'si'
 }
 
+const SecondaryInstructions = {
+    Elif: 'ou si',
+    Else: 'sinon',
+    End: 'fin'
+}
+
 const Items = {
     Key: 'cle',
     Plush: 'peluche',
@@ -46,4 +52,4 @@ const Conditions = {
     Possess: "posseder"
 }
 
-export { Characters, Actions, Instructions, Items, Environments, Conditions };
+export { Characters, Actions, Instructions, SecondaryInstructions, Items, Environments, Conditions };
