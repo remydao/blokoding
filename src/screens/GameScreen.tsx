@@ -46,7 +46,7 @@ const storeIsDoneList = async (value: boolean[]) => {
 const getIsDoneList = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@isDoneList')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+      return jsonValue != null ? JSON.parse(jsonValue) : Array(30).fill(false);
     }
     catch (e) {
       console.log(e);
@@ -341,10 +341,7 @@ class Game extends Component<IProps, IState> {
     // Function to notify win
     win = async () => {
         const isDoneList : boolean[] = await getIsDoneList()
-        console.log("GetisDoneList", isDoneList);
-        console.log("levelNumber", this.props.route.params.levelNumber);
         isDoneList[this.props.route.params.levelNumber] = true;
-        console.log("SetisDoneList", isDoneList);
         await storeIsDoneList(isDoneList);
         console.log('You won');
     }
@@ -368,6 +365,8 @@ class Game extends Component<IProps, IState> {
         this.props.navigation.pop();
         this.props.navigation.pop();
         this.props.navigation.pop();
+        this.props.navigation.pop();
+        this.props.navigation.navigate('Découverte');
     }
 
     backToLevelFailed = () : void => {

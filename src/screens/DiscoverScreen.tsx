@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from 'react-native';
 import {default as UUID} from "uuid"; 
 import Colors from '../constants/Colors';
@@ -19,46 +19,39 @@ interface IProps {
 }
 
 interface IState {
-  buttons: Array<{id: string, value: string}>
+  id: string,
+  value: string
 }
+//extends React.Component<IProps, IState>
+const Discover = ({navigation, route}: IProps) => {
+    const [buttons, setButtons] = useState<IState[]>([]);
 
-class Discover extends React.Component<IProps, IState> {
-
-    constructor(props: IProps){
-      super(props)
-      this.state = {
-        buttons : []
-      }
-    }
-
-    setLevel = () => {
-      let btns = [...this.state.buttons];
+    const setLevel = () => {
+      let btns = [...buttons];
       //numberOfLevels
       for (let i = 0; i < 30; i++)
       {
           const levelTitle = "Niveau " + (i + 1)
           btns.push({id:UUID.v4(), value:levelTitle})
       }
-      this.setState({
-        buttons: btns
-      })
+      setButtons(btns);
     }
 
-    componentDidMount = () => {
-      this.setLevel()
-    }
+    useEffect(() => {
+      setLevel();
+    }, [])
 
-    onPress = (index: number) => {
-      this.props.navigation.navigate('LevelScreen', {
+    const onPress = (index: number) => {
+      navigation.navigate('LevelScreen', {
         levelNumber: index
       })
     }
 
-    selectBgColor = (index: number) => {
+    const selectBgColor = (index: number) => {
       return DiscoverColors[index % DiscoverColors.length];
     }
 
-    render(){
+
       const y = new Animated.Value(0);
       const onScroll = Animated.event([{nativeEvent: {contentOffset: { y } } }], {
         useNativeDriver: true
@@ -68,11 +61,11 @@ class Discover extends React.Component<IProps, IState> {
             <View>
               <Animated.FlatList
                   scrollEventThrottle={16}
-                  data={this.state.buttons}
+                  data={buttons}
                   renderItem={({item, index}) => 
                     (  
                         //<View style={{backgroundColor: this.selectBgColor(index)}}>
-                        <LevelButton bgColor={this.selectBgColor(index)} index={index} y={y} text={item.value} onPress={() => this.onPress(index)} pressColor={'red'}/>
+                        <LevelButton bgColor={selectBgColor(index)} index={index} y={y} text={item.value} onPress={() => onPress(index)} pressColor={'red'}/>
                         //</View>
                       
                       )}
@@ -83,7 +76,6 @@ class Discover extends React.Component<IProps, IState> {
             <StatusBar backgroundColor={Colors.azure}/>
         </View>
       );
-    }
   };
 
 export default Discover;

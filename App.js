@@ -15,12 +15,12 @@ Sentry.init({
 });
 
 
-
 const Stack = createStackNavigator();
 
 
 function App() {
-  useEffect(() => {
+
+    useEffect(() => {
     SplashScreen.hide();
   }, []);
 

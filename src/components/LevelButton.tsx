@@ -17,8 +17,8 @@ interface IProps {
     onPress: () => void,
     pressColor: any,
     index: number,
-    y: any
-    bgColor: string
+    y: any,
+    bgColor: string,
 }
 
 const getIsDoneList = async () => {
@@ -76,9 +76,7 @@ const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
         outputRange: [0.5, 1, 1, 0.5],
     })
 
-
     return (
-        
         <Animated.View style={{transform:[{translateY}, {scale},],
                                 backgroundColor: props.bgColor,
                                 ...styles.view,
@@ -86,12 +84,15 @@ const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
                                 }}>
             <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress} style={styles.button}>
                 <View style={styles.cellContent}>
-                    {isDone &&
+                    {isDone ?
                     <View style={styles.checked}>
                         <Image source={require('../assets/check.png')} style={{width: 30, height:30}}></Image>
-                    </View>
+                    </View> :
+                    <View style={styles.checked}>
+                        <Image source={require('../assets/circle.png')} style={{width: 30, height:30}}></Image>
+                     </View> 
                     }
-                    <View>
+                    <View style={styles.textStyleWrapper}>
                         <Text style={styles.textStyle}>{text}</Text>
                     </View>
                 </View>
@@ -120,6 +121,9 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: EngineConstants.MAX_HEIGHT * 0.045,
         fontFamily:"Pangolin-Regular",
+    },
+    textStyleWrapper: {
+        paddingBottom: EngineConstants.MAX_HEIGHT * 0.012,
     },
     checked:{
     },
