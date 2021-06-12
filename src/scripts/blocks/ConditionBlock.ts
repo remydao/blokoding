@@ -7,7 +7,7 @@ class IsInFrontBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    async execute(engine: any) {
+    execute(engine: any) : Boolean {
         let entity = this.entityBlock.execute();
 
         return engine.isInFront(entity);
@@ -19,7 +19,7 @@ class IsOnBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    async execute(engine: any) {
+    execute(engine: any) : Boolean {
         let entity = this.entityBlock.execute();
 
         return engine.isOn(entity);
@@ -31,7 +31,7 @@ class PossessBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    async execute(engine: any) {
+    execute(engine: any) : Boolean {
         let entity = this.entityBlock.execute();
 
         return engine.possess(entity);

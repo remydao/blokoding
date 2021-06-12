@@ -1,4 +1,4 @@
-import { CodeBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
+import { CodeBlock, ConditionBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
     constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
@@ -6,7 +6,7 @@ class ForBlock extends InstructionBlock {
     }
 
     async execute(engine: any) {
-        let n = this.predicateBlock.execute();
+        var n = this.predicateBlock.execute();
         let i = 0;
 
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
@@ -22,27 +22,33 @@ class ForBlock extends InstructionBlock {
         }
 
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock)
-            this.nextBlock.execute(engine);
+            await this.nextBlock.execute(engine);
     }
 }
 
 
 class IfBlock extends InstructionBlock {
-    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
+    private nextIfBlock;
+    constructor(predicateBlock: ConditionBlock, execBlock: StructureBlock, nextIfBlock: IfBlock, nextBlock: StructureBlock) {
         super(predicateBlock, execBlock, nextBlock);
+        this.nextIfBlock = nextIfBlock;
     }
 
     async execute(engine: any) {
-        if (this.predicateBlock.execute(engine)) {
-            // If GameEngine is unmounted
-            if (!engine.isMounted())
-                return;
 
-            if (this.execBlock)
-                await this.execBlock.execute(engine);
+        // If GameEngine is unmounted
+        if (!engine.isMounted())
+        return;
+
+        if (!this.predicateBlock && this.execBlock) {
+            await this.execBlock.execute(engine);
         }
-            
-
+        else if (this.predicateBlock.execute(engine) && this.execBlock) {
+            await this.execBlock.execute(engine);
+        }
+        else if (this.nextIfBlock) {
+            await this.nextIfBlock.execute(engine);
+        }
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock)
             this.nextBlock.execute(engine);
     }
