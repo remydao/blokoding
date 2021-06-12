@@ -8,7 +8,9 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "codecov": "jest --coverage && codecov"
+    "codecov": "jest --coverage && codecov",
+    "clean:android": "cd android && ./gradlew clean && cd ../",
+    "clean:ios": "cd ios && xcodebuild clean && cd ../"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
