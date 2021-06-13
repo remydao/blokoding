@@ -23,12 +23,17 @@ const circle = "      ";
 
 class Camera extends Component<IProps, IState> {
     private camera: any;
+    private isTakingPicture: boolean;
+
     constructor(props: IProps){
-      super(props)
+      super(props);
+
       this.state = {
         modalVisible: false,
         modalText: 'Le scan a échoué, veuillez réessayer'
       }
+
+      this.isTakingPicture = false;
     }
     
 
@@ -78,6 +83,11 @@ class Camera extends Component<IProps, IState> {
   
     detectText = async (navigation: any) => {
       try {
+        if (this.isTakingPicture)
+          return;
+
+        this.isTakingPicture = true;
+
         const options = {
           quality: 0.8,
           base64: true,
@@ -97,13 +107,16 @@ class Camera extends Component<IProps, IState> {
                 { actions: actions, cameraMode: CameraMode.DISCOVER, 
                   mapInfo: this.props.route.params.map,
                   levelNumber: this.props.route.params.levelNumber });
+            this.isTakingPicture = false;
         } // Start Mode
         else {
           navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret1});
+          this.isTakingPicture = false;
         }
-      } catch (e) { //Error thrown by the parser
-        this.setState({modalText: e})
-        this.setModalVisible(!this.state.modalVisible)
+      } catch (e) { // Error thrown by the parser
+        this.setState({ modalText: e });
+        this.setModalVisible(!this.state.modalVisible);
+        this.isTakingPicture = false;
       }
     };
 }
