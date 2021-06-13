@@ -18,7 +18,7 @@ const Maps = {
             removedFromMap: [
                 Items.Key
             ],
-            presentInInventory: [
+            isInInventory: [
                 {item: Items.Key, quantity: 2}
             ]
         }

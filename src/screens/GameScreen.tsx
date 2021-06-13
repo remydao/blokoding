@@ -67,6 +67,7 @@ class Game extends Component<IProps, IState> {
     private actions: any;
     private endReason: string = "";
     private mounted: boolean = false;
+    private winCondition: any;
 
     constructor(props: IProps) {
         super(props);
@@ -80,6 +81,7 @@ class Game extends Component<IProps, IState> {
             hasWon: false,
             inventory: {},
         };
+        this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
             //this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
@@ -115,15 +117,15 @@ class Game extends Component<IProps, IState> {
         return await new Promise<void>((resolve) => {
             switch (this.state.map[this.characterPos + 1]) {
                 case Cells.Win:
-                    this.fireEndScreen("won")
+                    this.fireEndScreen("won");
                     break;
                 case Cells.Bush:
-                    this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer")
+                    this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer");
                     break;
                 default:
                     break;
             }
-            resolve()
+            resolve();
         }) 
     }
 
@@ -132,19 +134,59 @@ class Game extends Component<IProps, IState> {
         return await new Promise<void>((resolve) => {
             switch (this.state.map[this.characterPos]) {
                 case Cells.Win:
-                    this.fireEndScreen("won")
+
+                    if (this.checkWinCondition())
+                        this.fireEndScreen("won");
                     break;
                 case Cells.Puddle:
-                    this.fireEndScreen("loose", "Perdu, fait attention aux flaques d'eau")
+                    this.fireEndScreen("loose", "Perdu, fais attention aux flaques d'eau");
                     break;
                 case Cells.Bush:
-                    this.fireEndScreen("loose", "Perdu, utilise la machette quand tu es devant le buisson pour le couper")
+                    this.fireEndScreen("loose", "Perdu, utilise la machette quand tu es devant le buisson pour le couper");
                     break;
                 default:
                     break;
             }
-            resolve()
+            resolve();
         }) 
+    }
+
+    checkWinCondition() : boolean {
+        if (this.winCondition && (!this.checkRemovedFromMap() || !this.checkIsInInventory()))
+            return false;
+        return true;
+    }
+
+    checkRemovedFromMap() : boolean {
+        if (this.winCondition.removedFromMap) {
+            for (let i = 0; i < this.winCondition.removedFromMap.length; i++) {
+                const itemName = this.winCondition.removedFromMap[i];
+                
+                for (let j = 0; j < this.state.map.length; j++) {
+                    if (this.state.map[j].content && this.state.map[j].content.imageName == itemName) {
+                        this.fireEndScreen("loose", "Perdu, il reste des " + itemName + " sur le terrain");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    checkIsInInventory() : boolean {
+        if (this.winCondition.isInInventory) {
+            let inventory = Object.entries(this.state.inventory);
+            for (let i = 0; i < this.winCondition.isInInventory.length; i++) {
+                const invItem = this.winCondition.isInInventory[i];
+                
+                let res = inventory.filter(item => item[0] == invItem.item);
+                if (res.length < 1 || res[0][1] != invItem.quantity) {
+                    this.fireEndScreen("loose", "Perdu, tu n'as pas le bon nombre de " + invItem.item + " dans ton inventaire   ");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     // Fire the loose screen with a message
