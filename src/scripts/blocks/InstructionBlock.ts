@@ -29,7 +29,7 @@ class ForBlock extends InstructionBlock {
 
 class IfBlock extends InstructionBlock {
     private nextIfBlock;
-    constructor(predicateBlock: ConditionBlock, execBlock: StructureBlock, nextIfBlock: IfBlock, nextBlock: StructureBlock) {
+    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextIfBlock: IfBlock, nextBlock: StructureBlock) {
         super(predicateBlock, execBlock, nextBlock);
         this.nextIfBlock = nextIfBlock;
     }

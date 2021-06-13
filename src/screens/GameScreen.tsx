@@ -83,8 +83,8 @@ class Game extends Component<IProps, IState> {
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
             //this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
-            // this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.Kevin);
-            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
+            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.Kevin);
+            // this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);

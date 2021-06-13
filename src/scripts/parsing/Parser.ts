@@ -6,26 +6,34 @@ import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBloc
 import { DataBlock } from "../blocks/DataBlock";
 import { ConditionBlock, StructureBlock } from "../blocks/MainBlocks";
 import { checkVisionResp } from "../corrector/corrector";
+import { block } from "react-native-reanimated";
 
 
 var loopDepth = 0;
 var cardIndex = 0;
+var isInIf = 0;
 
 type TcardList = Array<string>
 
 const parseInit = (cardListObj: any[]) => {
     loopDepth = 0;
     cardIndex = 0;
+    isInIf = 0;
 
     let cardList: TcardList = cardListObj.map((item: { text: string; }) => item.text.trim().toLowerCase());
 
-    //console.log(cardList);
+    console.log(cardList);
     return parseCharacter(cardList);
 }
 
 const getFirstElm = (cardList: TcardList): string | undefined => {
     cardIndex++;
     return cardList.shift();
+}
+
+const setFirstElm = (cardList : TcardList, elm: string) : void => {
+    cardIndex--;
+    cardList.unshift(elm);
 }
 
 const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null => {
@@ -64,6 +72,24 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             return null;
         else
             throw 'Une carte fin est mal placée ' + cardIndexToString();
+    }
+
+    if (blockName == SecondaryInstructions.Elif) {
+        if (isInIf > 0) {
+            setFirstElm(cardList, blockName);
+            return null;
+        }
+        else
+            throw 'Une carte "Ou si" est mal placée ' + cardIndexToString();
+    }
+
+    if (blockName == SecondaryInstructions.Else) {
+        if (isInIf > 0) {
+            setFirstElm(cardList, blockName);
+            return null;
+        }
+        else
+            throw 'Une carte "Sinon" est mal placée ' + cardIndexToString();
     }
 
     res = Object.entries(Conditions).filter(condition => condition[1] == blockName);
@@ -123,7 +149,8 @@ const parseAction = (action: any, cardList: TcardList) => {
 }
 
 const parseInstruction = (instruction: any, cardList: TcardList) => {
-    let predicateBlock: DataBlock | ConditionBlock | null;
+    let predicateBlock: DataBlock | ConditionBlock;
+    let nextIfBlock : IfBlock | null = null;
 
     switch (instruction) {
         case Instructions.For:
@@ -131,8 +158,11 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
                 throw "L'instruction Répéter doit être suivie d'un nombre " + cardIndexToString();
             break;
         case Instructions.If:
+            isInIf++;    
             if (!(predicateBlock = parseCondition(cardList)))
-                throw "L'instruction Si doit être suivie d'une condition " + cardIndexToString();            
+                throw "L'instruction Si doit être suivie d'une condition " + cardIndexToString();
+            break;
+        case SecondaryInstructions.Else:
             break;
         case Instructions.While:
             if (!(predicateBlock = parseCondition(cardList)))
@@ -144,6 +174,11 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
 
     loopDepth++;
     let execBlock = parseStructureCard(cardList);
+
+    if (isInIf > 0) {
+        nextIfBlock = parseSecondaryInstruction(cardList);
+        isInIf--;
+    }
     loopDepth--;
 
     let nextBlock = parseStructureCard(cardList);
@@ -152,12 +187,36 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
         case Instructions.For:
             return new ForBlock(predicateBlock, execBlock, nextBlock);
         case Instructions.If:
-            return new IfBlock(predicateBlock, execBlock, null, nextBlock);
+            return new IfBlock(predicateBlock, execBlock, nextIfBlock, nextBlock);
         case Instructions.While:
             return new WhileBlock(predicateBlock, execBlock, nextBlock);
         default:
             return null;
     }
+}
+
+const parseSecondaryInstruction = (cardList : TcardList): IfBlock | null => {
+    let predicateBlock: DataBlock | ConditionBlock | null = null;
+    let nextIfBlock : IfBlock | null = null;
+
+    let instruction = getFirstElm(cardList);
+
+    switch (instruction) {
+        case SecondaryInstructions.Elif:
+            if (!(predicateBlock = parseCondition(cardList)))
+                throw "L'instruction Ou si doit être suivie d'une condition " + cardIndexToString();
+        case SecondaryInstructions.Else:
+            break;
+        default:
+            setFirstElm(cardList, instruction);
+            return null;
+    }
+
+    let execBlock = parseStructureCard(cardList);
+
+    nextIfBlock = parseSecondaryInstruction(cardList);
+
+    return new IfBlock(predicateBlock, execBlock, nextIfBlock, null);
 }
 
 const parseNumber = (cardList: TcardList): DataBlock | null => {
