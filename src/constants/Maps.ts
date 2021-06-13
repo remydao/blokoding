@@ -1,3 +1,4 @@
+import { Items } from "./BlockType";
 import Cells from "./Cells";
 import Themes from "./Themes";
 
@@ -12,7 +13,15 @@ const Maps = {
     },
     foret1: {
         theme: Themes.Forest,
-        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Key, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win]
+        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Key, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Key
+            ],
+            presentInInventory: [
+                {item: Items.Key, quantity: 2}
+            ]
+        }
     },
     foret2: {
         theme: Themes.Forest,
