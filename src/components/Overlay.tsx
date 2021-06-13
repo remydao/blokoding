@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import { CameraMode } from '../constants/CameraMode';
+import LottieView from 'lottie-react-native';
 
 
 interface IEndProps {
@@ -35,6 +36,16 @@ export default class Overlay extends Component<IProps> {
         return (
             <View style= {[styles.overlay_container]}>
                 <Text style={[styles.textStyle, {color: this.props.color}]}>{this.props.text}</Text>
+                {this.props.hasWon &&
+                    <View style={styles.anim_container}>
+                        <LottieView
+                            style={styles.anim}
+                            source={require('../assets/lotties/fireworks.json')}
+                            autoPlay
+                            loop={false}
+                        />
+                    </View>
+                }
                 <View style={[styles.overlay]}>
                 </View>
                 {(this.props.cameraMode == CameraMode.DISCOVER) &&
@@ -50,6 +61,15 @@ export default class Overlay extends Component<IProps> {
 }
 
 const styles = StyleSheet.create({
+    anim_container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position:'absolute'
+    },
+    anim: {
+        height: 200,
+        width: 200,
+    },
     overlay: {
         flex: 1,
         position: 'absolute',
