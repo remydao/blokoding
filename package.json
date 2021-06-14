@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "npx react-native run-android",
+    "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
+    "release-android": "react-native run-android --variant=release",
     "lint": "eslint .",
     "codecov": "jest --coverage && codecov",
     "clean:android": "cd android && ./gradlew clean && cd ../",

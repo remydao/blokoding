@@ -11,12 +11,13 @@ import { modifyCoordinates } from '../scripts/corrector/coordinates';
 
 interface IProps {
   navigation: any,
-  route: any
+  route: any,
 }
 
 interface IState {
   modalVisible: boolean,
-  modalText: string
+  modalText: string,
+  isLoaded: boolean
 }
 
 const circle = "      ";
@@ -30,7 +31,8 @@ class Camera extends Component<IProps, IState> {
 
       this.state = {
         modalVisible: false,
-        modalText: 'Le scan a échoué, veuillez réessayer'
+        modalText: 'Le scan a échoué, veuillez réessayer',
+        isLoaded: false
       }
 
       this.isTakingPicture = false;
@@ -41,16 +43,17 @@ class Camera extends Component<IProps, IState> {
       this.setState({modalVisible: visible})
     }
 
-    componentDidMount() {
-      Permission.checkPermission(PERMISSION_TYPE.camera)
+    async componentDidMount() {
+      await Permission.checkPermission(PERMISSION_TYPE.camera);
+      this.setState({isLoaded: true})
     }
 
     render() {
       const {modalVisible} = this.state;
       return (
         <View style={styles.container}>
-          
-          <RNCamera style={styles.preview} ref={ref => {this.camera = ref;}} type={RNCamera.Constants.Type.back} flashMode={RNCamera.Constants.FlashMode.off} captureAudio={false} />
+          {this.state.isLoaded &&
+          <RNCamera style={styles.preview} ref={ref => {this.camera = ref;}} type={RNCamera.Constants.Type.back} flashMode={RNCamera.Constants.FlashMode.off} captureAudio={false} /> }
           <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
             <TouchableOpacity onPress={() => this.detectText(this.props.navigation)} style={styles.capture}>
                 <Text style={{ fontSize: 14 }}>{circle}</Text>

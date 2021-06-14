@@ -5,7 +5,7 @@ import { View, Text, SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry
 import SplashScreen from 'react-native-splash-screen';
 import CustomHeader from './src/components/CustomHeader';
 import {Home, Camera, Help, Options, Discover, Game, LevelScreen} from './src/screens/Screens';
-import Colors from "./src/constants/Colors"
+import Colors from "./src/constants/Colors";
 import EnigmaScreen from './src/screens/EnigmaScreen';
 
 import * as Sentry from '@sentry/react-native';
