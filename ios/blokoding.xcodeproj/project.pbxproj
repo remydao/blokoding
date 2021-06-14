@@ -13,6 +13,7 @@
 		5526DAC02653B4820038F7A3 /* Sarpanch-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DBA89BD790F47278C29CAB9 /* Sarpanch-Regular.ttf */; };
 		5526DAC12653B4820038F7A3 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAD1739D365F457888C63C4C /* Montserrat-Medium.ttf */; };
 		5526DAC22653B4820038F7A3 /* Pangolin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31606041412240E2B777CE9E /* Pangolin-Regular.ttf */; };
+		55A7AE412677803800D92018 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A7AE402677803800D92018 /* libswiftWebKit.tbd */; };
 		5709D9E4E21608437709BA2A /* libPods-blokoding-blokodingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B518DC3E567EFE30385DA0A7 /* libPods-blokoding-blokodingTests.a */; };
 		E134D62EE102070BE0478991 /* libPods-blokoding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2B1F734DBBC938F16945D2 /* libPods-blokoding.a */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		4D2B1F734DBBC938F16945D2 /* libPods-blokoding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-blokoding.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		500600A250074A98A89290CC /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		51D9975AAFD44173A3813BBE /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		55A7AE402677803800D92018 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		65AC80C868A6499498A4D8C0 /* Pods-blokoding-blokodingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding-blokodingTests.debug.xcconfig"; path = "Target Support Files/Pods-blokoding-blokodingTests/Pods-blokoding-blokodingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = blokoding/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84865E107842484895E34D98 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A7AE412677803800D92018 /* libswiftWebKit.tbd in Frameworks */,
 				E134D62EE102070BE0478991 /* libPods-blokoding.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,6 +136,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55A7AE402677803800D92018 /* libswiftWebKit.tbd */,
 				1ED47CDD263C31E000C175E3 /* OpenSSL.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				4D2B1F734DBBC938F16945D2 /* libPods-blokoding.a */,
@@ -339,6 +343,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		982B767B945E4F11899868F0 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
+		};
 		C73276ED93271075C1F881DC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -413,20 +431,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		982B767B945E4F11899868F0 /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			name = "Upload Debug Symbols to Sentry";
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -529,6 +533,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -558,6 +566,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
