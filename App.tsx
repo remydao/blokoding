@@ -19,7 +19,6 @@ const Stack = createStackNavigator();
 
 
 function App() {
-
     useEffect(() => {
     SplashScreen.hide();
   }, []);

@@ -6,8 +6,8 @@ import Colors from '../constants/Colors'
 
 interface IProps {
     isLogo? : boolean,
-    style: any,
-    textStyle: any,
+    style?: any,
+    textStyle?: any,
     title: String,
     backgroundColor?: string
 }
