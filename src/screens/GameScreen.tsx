@@ -16,6 +16,7 @@ import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
+import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IProps {
@@ -32,25 +33,6 @@ interface IState {
     hasLost: boolean,
     hasWon: boolean,
     inventory: any,
-}
-
-const storeIsDoneList = async (value: boolean[]) => {
-    try {
-        const jsonValue = JSON.stringify(value)
-        await AsyncStorage.setItem('@isDoneList', jsonValue)
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-const getIsDoneList = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@isDoneList')
-      return jsonValue != null ? JSON.parse(jsonValue) : Array(30).fill(false);
-    }
-    catch (e) {
-        console.log(e);
-    }
 }
 
 class Game extends Component<IProps, IState> {
@@ -195,11 +177,11 @@ class Game extends Component<IProps, IState> {
         if (looseOrWon === "loose") {
             this.endReason = endReason;
             this.setState({hasLost: true});
-            this.loose();
+            this.onLose();
         } else {
             this.endReason = endReason;
             this.setState({hasWon: true});
-            this.win();
+            this.onWin();
         }
         
     }
@@ -375,7 +357,7 @@ class Game extends Component<IProps, IState> {
     }
 
     // Function to notify loose
-    loose = async () => {
+    onLose = async () => {
         const isDoneList : boolean[] = await getIsDoneList()
         isDoneList[this.props.route.params.levelNumber] = false;
         await storeIsDoneList(isDoneList);
@@ -383,9 +365,9 @@ class Game extends Component<IProps, IState> {
     }
 
     // Function to notify win
-    win = async () => {
+    onWin = async () => {
         const isDoneList : boolean[] = await getIsDoneList()
-        isDoneList[this.props.route.params.levelNumber] = true;
+        isDoneList[this.props.route.params.levelNumber] = false;
         await storeIsDoneList(isDoneList);
         console.log('You won');
     }

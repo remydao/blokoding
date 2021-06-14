@@ -3,9 +3,8 @@ import {View, Text, StyleSheet, TouchableOpacity, Pressable, Animated, Image} fr
 import EngineConstants from '../constants/EngineConstants';
 import Colors from '../constants/Colors';
 import AutoHeightImage from 'react-native-auto-height-image';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getIsDoneList } from '../scripts/storage/DiscoverLevels';
 import { CommonActions } from '@react-navigation/native';
-
 
 const HEIGHT = EngineConstants.MAX_HEIGHT - 64;
 const BUTTON_PADDING = EngineConstants.MAX_HEIGHT * 0.02;
@@ -19,16 +18,6 @@ interface IProps {
     index: number,
     y: any,
     bgColor: string,
-}
-
-const getIsDoneList = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@isDoneList')
-      return jsonValue != null ? JSON.parse(jsonValue) : Array(30).fill(false);
-    }
-    catch (e) {
-      console.log(e);
-    }
 }
 
 const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {

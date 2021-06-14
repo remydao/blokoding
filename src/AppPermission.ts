@@ -15,21 +15,21 @@ const PERMISSION_TYPE = {
 }
 
 class AppPermission {
-    checkPermission = async (type: string) => {
+    checkPermission = async (type: string): Promise<boolean> => {
         const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS]
         if (!permissions) {
             return true;
         }
         try {
             const result = await check(permissions)
-            if(result === RESULTS.GRANTED) return true
+            if (result === RESULTS.GRANTED) return true
             return this.requestPermission(permissions)
         } catch(error){
             return false;
         }
     }
 
-    requestPermission = async (permissions: any) =>{
+    requestPermission = async (permissions: any): Promise<boolean> =>{
         try {
             const result = await request(permissions)
             return result === RESULTS.GRANTED
