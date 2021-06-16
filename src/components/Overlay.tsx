@@ -42,7 +42,7 @@ export default class Overlay extends Component<IProps> {
                             style={styles.anim}
                             source={require('../assets/lotties/fireworks.json')}
                             autoPlay
-                            loop={false}
+                            loop={true}
                         />
                     </View>
                 }
