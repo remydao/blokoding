@@ -367,7 +367,7 @@ class Game extends Component<IProps, IState> {
     // Function to notify win
     onWin = async () => {
         const isDoneList : boolean[] = await getIsDoneList()
-        isDoneList[this.props.route.params.levelNumber] = false;
+        isDoneList[this.props.route.params.levelNumber] = true;
         await storeIsDoneList(isDoneList);
         console.log('You won');
     }
