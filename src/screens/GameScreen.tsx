@@ -18,7 +18,7 @@ import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getCharacterImages } from '../constants/CharacterImages';
+import { getCharacterDefaultImage, getCharacterImages } from '../constants/CharacterImages';
 
 interface IProps {
     navigation: any,
@@ -53,6 +53,9 @@ class Game extends Component<IProps, IState> {
     private mounted: boolean = false;
     private winCondition: any;
     private images: any;
+    private defaultImage: number;
+    private numFramesPerImage: number;
+    private numFrame: number;
 
     constructor(props: IProps) {
         super(props);
@@ -87,8 +90,9 @@ class Game extends Component<IProps, IState> {
         }
 
         this.images = getCharacterImages(this.actions.character);
-        console.log(this.images);
-        
+        this.defaultImage = getCharacterDefaultImage(this.actions.character);
+        this.numFramesPerImage = 2;
+        this.numFrame = 0;
     }
 
 
@@ -234,11 +238,16 @@ class Game extends Component<IProps, IState> {
 
     getNewImage() {
         var currentImageNum = this.state.imageNum;
-        currentImageNum++;
-        if (currentImageNum >= 30)
-            currentImageNum = 0;
 
-        console.log(currentImageNum);
+        if (this.numFrame % 2 == 0)
+        {
+            currentImageNum++;
+            if (currentImageNum >= 30)
+                currentImageNum = 0;
+        }
+
+        this.numFrame++;
+        
 
         return currentImageNum;
     }
@@ -447,7 +456,7 @@ class Game extends Component<IProps, IState> {
                 { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                <Character position={[0, this.state.playerPosY]} image={ this.images[this.state.imageNum] } />
+                <Character position={[0, this.state.playerPosY]} image={this.images[this.state.imageNum]} defaultImage={this.images[this.defaultImage]}/>
                 { arr }
                 <Inventory inventory={this.state.inventory} />
                 <StatusBar translucent backgroundColor="transparent"/>

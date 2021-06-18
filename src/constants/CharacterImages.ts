@@ -4,23 +4,28 @@ import { Characters } from './BlockType';
 const characterImages = {
     Bart: {
         imageName: Characters.Bart,
-        uri: require("../assets/characters/Bart/1x/Bart.png")
+        uri: require("../assets/characters/Bart/1x/Bart.png"),
+        defaultUri: 0,
     },
     Charlie: {
         imageName: Characters.Charlie,
-        uri: require("../assets/characters/Charlie/1x/Charlie.png")
+        uri: require("../assets/characters/Charlie/1x/Charlie.png"),
+        defaultUri: 0,
     },
     Cyclops: {
         imageName: Characters.Cyclops,
-        uri: require("../assets/characters/Cyclops/1x/Cyclops.png")
+        uri: require("../assets/characters/Cyclops/1x/Cyclops.png"),
+        defaultUri: 0,
     },
     Dinny: {
         imageName: Characters.Dinny,
-        uri: require("../assets/characters/Dinny/1x/Dinny.png")
+        uri: require("../assets/characters/Dinny/1x/Dinny.png"),
+        defaultUri: 0,
     },
     Harry: {
         imageName: Characters.Harry,
-        uri: require("../assets/characters/Harry/1x/Harry.png")
+        uri: require("../assets/characters/Harry/1x/Harry.png"),
+        defaultUri: 0,
     },
     Kevin: {
         imageName: Characters.Kevin,
@@ -55,28 +60,34 @@ const characterImages = {
             require("../assets/characters/Kevin/Kevin28.png"),
             require("../assets/characters/Kevin/Kevin29.png"),
             require("../assets/characters/Kevin/Kevin30.png"),
-        ]
+        ],
+        defaultUri: 19,
     },
     MrMustache: {
         imageName: Characters.MrMustache,
-        uri: require("../assets/characters/MrMoustache/1x/Mr_Moustache.png")
+        uri: require("../assets/characters/MrMoustache/1x/Mr_Moustache.png"),
+        defaultUri: 0,
     },
     MsBrocoli: {
         imageName: Characters.MsBrocoli,
-        uri: require("../assets/characters/MsBrocoli/1x/Ms_Brocoli.png")
+        uri: require("../assets/characters/MsBrocoli/1x/Ms_Brocoli.png"),
+        defaultUri: 0,
     },
     Nosy: {
         imageName: Characters.Nosy,
-        uri: require("../assets/characters/Nosy/1x/Nosy.png")
+        uri: require("../assets/characters/Nosy/1x/Nosy.png"),
+        defaultUri: 0,
     }
 }
 
 const getCharacterImages = (character: string | JSX.Element) => {
-    var test = Object.entries(characterImages).filter(characImg => characImg[1].imageName.toLowerCase() === character)[0][1].uri;
-    console.log(test);
-    return test;
+    return Object.entries(characterImages).filter(characImg => characImg[1].imageName.toLowerCase() === character)[0][1].uri;
+}
+
+const getCharacterDefaultImage = (character: string | JSX.Element) => {
+    return Object.entries(characterImages).filter(characImg => characImg[1].imageName.toLowerCase() === character)[0][1].defaultUri;
 }
 
 
 
-export { characterImages, getCharacterImages };
+export { characterImages, getCharacterImages, getCharacterDefaultImage };
