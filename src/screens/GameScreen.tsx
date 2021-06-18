@@ -50,13 +50,14 @@ class Game extends Component<IProps, IState> {
     private endReason: string = "";
     private mounted: boolean = false;
     private winCondition: any;
+    private initialPlayerPosY : number = EngineConstants.MAX_HEIGHT * 0.15;
 
     constructor(props: IProps) {
         super(props);
         this.state = {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
-            playerPosY: EngineConstants.MAX_HEIGHT * 0.15,
+            playerPosY: this.initialPlayerPosY,
             map: [...props.route.params.mapInfo.map],
             itemsPos: props.route.params.mapInfo.map.map((item: any, index: number) => EngineConstants.CELL_SIZE * index),
             hasLost: false,
@@ -66,9 +67,9 @@ class Game extends Component<IProps, IState> {
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new MoveBlock(null), Characters.Bart);
+            //this.actions = new CharacterBlock(new MoveBlock(null), Characters.Bart);
             //this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
-            //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.Kevin);
+            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.Kevin);
             // this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
@@ -228,10 +229,15 @@ class Game extends Component<IProps, IState> {
             function movePos() {
                 self.setFramerateDelay();
 
+                if (self.moveDistance + self.speed > EngineConstants.CELL_SIZE) {
+                    self.speed = EngineConstants.CELL_SIZE - self.moveDistance;
+                    self.moveDistance = EngineConstants.CELL_SIZE;
+                } else {
+                    self.moveDistance += self.speed;
+                }
+
                 var newItemPos = self.moveItems();
                 var newBgPos = self.moveBackground();
-
-                self.moveDistance += self.speed;
 
                 // Fix memory leak when quitting
                 if (!self.mounted)
@@ -260,6 +266,7 @@ class Game extends Component<IProps, IState> {
         this.moveDistance = 0;
 
         var self = this;
+        console.log("begin Y : " + this.state.playerPosY);
 
         return await new Promise<void>(resolve => {
             // Fix memory leak when quitting
@@ -271,11 +278,16 @@ class Game extends Component<IProps, IState> {
             function jumpPos() {
                 self.setFramerateDelay();
 
+                if (self.moveDistance + self.speed > EngineConstants.CELL_SIZE * numCells) {
+                    self.speed = EngineConstants.CELL_SIZE * numCells - self.moveDistance;
+                    self.moveDistance = EngineConstants.CELL_SIZE * numCells;
+                } else {
+                    self.moveDistance += self.speed;
+                }
+
                 var newItemPos = self.moveItems();
                 var newBgPos = self.moveBackground();
                 var playerPosY = self.moveCharacUpDown();
-
-                self.moveDistance += self.speed;
 
                 // Fix memory leak when quitting
                 if (!self.mounted)
@@ -290,6 +302,7 @@ class Game extends Component<IProps, IState> {
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
                     self.characterPos += numCells;
+                    console.log("end Y : " + self.state.playerPosY);
                     resolve();
                 }
                 else {
@@ -326,11 +339,14 @@ class Game extends Component<IProps, IState> {
     // Function for jump translation
     moveCharacUpDown = () => {
         if (this.moveDistance <= EngineConstants.CELL_SIZE) {
-            let acc = 1 - this.moveDistance / EngineConstants.CELL_SIZE;
+            const acc = 1 - this.moveDistance / EngineConstants.CELL_SIZE;
             return this.state.playerPosY + this.speed * 2 * acc;
         } else {
-            let acc = this.moveDistance / EngineConstants.CELL_SIZE - 1;
-            return this.state.playerPosY - this.speed * 2 * acc;
+            const acc = this.moveDistance / EngineConstants.CELL_SIZE - 1;
+            const nextPlayerPosY = this.state.playerPosY - this.speed * 2 * acc
+            if (nextPlayerPosY < this.initialPlayerPosY)
+                return this.initialPlayerPosY;
+            return nextPlayerPosY;
         }
     }
 
@@ -403,7 +419,7 @@ class Game extends Component<IProps, IState> {
     render() {
         let arr = this.state.map.map((item: any, index: number) => {
             if (item != Cells.Empty) {
-                return <MapItem key={index} item={item} position={[this.state.itemsPos[index], EngineConstants.MAX_HEIGHT * 0.15 ]} />                            
+                return <MapItem key={index} item={item} position={[this.state.itemsPos[index], this.initialPlayerPosY ]} />                            
             }
         });
 
