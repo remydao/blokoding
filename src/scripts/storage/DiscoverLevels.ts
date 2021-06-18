@@ -12,7 +12,7 @@ const storeIsDoneList = async (value: boolean[]) => {
 const getIsDoneList = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@isDoneList')
-      return jsonValue != null ? JSON.parse(jsonValue) : Array(1000).fill(false);
+      return jsonValue != null ? JSON.parse(jsonValue) : Array(30).fill(false);
     }
     catch (e) {
         throw 'Fail to load isDoneList from localstorage';

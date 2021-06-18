@@ -1,5 +1,6 @@
 import { Characters } from './BlockType';
 
+
 const characterImages = {
     Bart: {
         imageName: Characters.Bart,
@@ -23,7 +24,38 @@ const characterImages = {
     },
     Kevin: {
         imageName: Characters.Kevin,
-        uri: require("../assets/characters/Kevin/1x/Kevin.png")
+        uri: [
+            require("../assets/characters/Kevin/Kevin1.png"),
+            require("../assets/characters/Kevin/Kevin2.png"),
+            require("../assets/characters/Kevin/Kevin3.png"),
+            require("../assets/characters/Kevin/Kevin4.png"),
+            require("../assets/characters/Kevin/Kevin5.png"),
+            require("../assets/characters/Kevin/Kevin6.png"),
+            require("../assets/characters/Kevin/Kevin7.png"),
+            require("../assets/characters/Kevin/Kevin8.png"),
+            require("../assets/characters/Kevin/Kevin9.png"),
+            require("../assets/characters/Kevin/Kevin10.png"),
+            require("../assets/characters/Kevin/Kevin11.png"),
+            require("../assets/characters/Kevin/Kevin12.png"),
+            require("../assets/characters/Kevin/Kevin13.png"),
+            require("../assets/characters/Kevin/Kevin14.png"),
+            require("../assets/characters/Kevin/Kevin15.png"),
+            require("../assets/characters/Kevin/Kevin16.png"),
+            require("../assets/characters/Kevin/Kevin17.png"),
+            require("../assets/characters/Kevin/Kevin18.png"),
+            require("../assets/characters/Kevin/Kevin19.png"),
+            require("../assets/characters/Kevin/Kevin20.png"),
+            require("../assets/characters/Kevin/Kevin21.png"),
+            require("../assets/characters/Kevin/Kevin22.png"),
+            require("../assets/characters/Kevin/Kevin23.png"),
+            require("../assets/characters/Kevin/Kevin24.png"),
+            require("../assets/characters/Kevin/Kevin25.png"),
+            require("../assets/characters/Kevin/Kevin26.png"),
+            require("../assets/characters/Kevin/Kevin27.png"),
+            require("../assets/characters/Kevin/Kevin28.png"),
+            require("../assets/characters/Kevin/Kevin29.png"),
+            require("../assets/characters/Kevin/Kevin30.png"),
+        ]
     },
     MrMustache: {
         imageName: Characters.MrMustache,
@@ -39,8 +71,12 @@ const characterImages = {
     }
 }
 
-const getCharacterUri = (character: string | JSX.Element) => {
-    return Object.entries(characterImages).filter(characImg => characImg[1].imageName == character)[0][1].uri;
+const getCharacterImages = (character: string | JSX.Element) => {
+    var test = Object.entries(characterImages).filter(characImg => characImg[1].imageName.toLowerCase() === character)[0][1].uri;
+    console.log(test);
+    return test;
 }
 
-export { characterImages, getCharacterUri };
+
+
+export { characterImages, getCharacterImages };

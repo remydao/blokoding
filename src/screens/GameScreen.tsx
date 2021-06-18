@@ -18,6 +18,7 @@ import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getCharacterImages } from '../constants/CharacterImages';
 
 interface IProps {
     navigation: any,
@@ -33,6 +34,7 @@ interface IState {
     hasLost: boolean,
     hasWon: boolean,
     inventory: any,
+    imageNum: number,
 }
 
 class Game extends Component<IProps, IState> {
@@ -50,6 +52,7 @@ class Game extends Component<IProps, IState> {
     private endReason: string = "";
     private mounted: boolean = false;
     private winCondition: any;
+    private images: any;
 
     constructor(props: IProps) {
         super(props);
@@ -62,19 +65,32 @@ class Game extends Component<IProps, IState> {
             hasLost: false,
             hasWon: false,
             inventory: {},
+            imageNum: 0,
         };
+
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new MoveBlock(null), Characters.Bart);
+            //this.actions = new CharacterBlock(new MoveBlock(null), Characters.Bart);
             //this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
-            //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.Kevin);
-            // this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
+            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+                                    new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
+                                    new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.Kevin);
+            /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+                                    new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
+            //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
         }
+
+        this.images = getCharacterImages(this.actions.character);
+        console.log(this.images);
+        
     }
+
 
     async componentDidMount() {
         this.mounted = true;
@@ -216,6 +232,17 @@ class Game extends Component<IProps, IState> {
         this.speed = EngineConstants.MAX_WIDTH * this.timePassed * 0.0002;
     }
 
+    getNewImage() {
+        var currentImageNum = this.state.imageNum;
+        currentImageNum++;
+        if (currentImageNum >= 30)
+            currentImageNum = 0;
+
+        console.log(currentImageNum);
+
+        return currentImageNum;
+    }
+
     // Method to move the character (used in ActionBlock.js)
     async move() {
         this.moveDistance = 0
@@ -237,10 +264,13 @@ class Game extends Component<IProps, IState> {
                 if (!self.mounted)
                     resolve();
 
+                let currentImageNum = self.getNewImage()
+
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
+                    imageNum: currentImageNum,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE) {
@@ -281,11 +311,15 @@ class Game extends Component<IProps, IState> {
                 if (!self.mounted)
                     resolve();
 
+                let currentImageNum = self.getNewImage()
+
+
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     playerPosY: playerPosY,
+                    imageNum: currentImageNum,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
@@ -413,7 +447,7 @@ class Game extends Component<IProps, IState> {
                 { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                <Character position={[0, this.state.playerPosY]} character={this.actions.character} />
+                <Character position={[0, this.state.playerPosY]} image={ this.images[this.state.imageNum] } />
                 { arr }
                 <Inventory inventory={this.state.inventory} />
                 <StatusBar translucent backgroundColor="transparent"/>

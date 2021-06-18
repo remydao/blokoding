@@ -13,19 +13,19 @@ const Maps = {
     },
     foret1: {
         theme: Themes.Forest,
-        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Key, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win],
+        map: [Cells.Empty, Cells.Flower, Cells.Empty, Cells.Flower, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win],
         winCondition: {
             removedFromMap: [
-                Items.Key
+                Items.Flower
             ],
             isInInventory: [
-                {item: Items.Key, quantity: 2}
+                {item: Items.Flower, quantity: 2}
             ]
         }
     },
     foret2: {
         theme: Themes.Forest,
-        map: [Cells.Empty, Cells.Puddle, Cells.Flower, Cells.Puddle, Cells.Flower, Cells.Win]
+        map: [Cells.Empty, Cells.Empty, Cells.Flower, Cells.Puddle, Cells.Flower, Cells.Win]
     }
 }
 

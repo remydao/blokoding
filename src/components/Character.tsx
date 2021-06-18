@@ -1,45 +1,19 @@
 import React, {Component} from 'react';
 import {View, Text, Image, Button, StatusBar, StyleSheet} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
-import {characterImages, getCharacterUri} from "../constants/CharacterImages";
+import {getCharacterImages} from "../constants/CharacterImages";
 import { Characters } from "../constants/BlockType"
 import AutoHeightImage from 'react-native-auto-height-image';
 import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 
 interface IProps {
     position: Array<number>
-    character: JSX.Element
+    image: number
 }
 
-interface IState {
-    imageSource: any,
-    rotationAngle: number
-}
-
-export default class Character extends Component<IProps, IState> {
-
-    private coef = 1;
+export default class Character extends Component<IProps> {
     constructor(props: IProps) {
         super(props);
-        this.state = {
-            imageSource: getCharacterUri(this.props.character),
-            rotationAngle: 0,
-        }
-    }
-
-    componentDidUpdate(previousProps: IProps, previousState: IState) {
-        if (previousProps != this.props){
-            if (this.state.rotationAngle == 10){
-                this.coef = -1;
-            }
-            else if (this.state.rotationAngle == -10){
-                this.coef = 1;
-            }
-            this.setState({
-                rotationAngle: this.state.rotationAngle + this.coef
-            })
-            
-        }
     }
 
     render() {
@@ -47,8 +21,8 @@ export default class Character extends Component<IProps, IState> {
         const y = this.props.position[1];
 
         return (
-            <View style={[styles.container, {bottom: y, left: x, transform: [{ rotate: `${this.state.rotationAngle.toString()}deg` }]}]}>
-                <AutoHeightImage source={this.state.imageSource} width={EngineConstants.CELL_SIZE} />
+            <View style={[styles.container, {bottom: y, left: x }]}>
+                <AutoHeightImage source={this.props.image} width={EngineConstants.CELL_SIZE} />
             </View>
         )
     }
