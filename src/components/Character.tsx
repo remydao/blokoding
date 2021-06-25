@@ -23,7 +23,6 @@ export default class Character extends Component<IProps> {
         this.defaultWidth = Image.resolveAssetSource(this.props.defaultImage).width;
 
         this.ratio = this.defaultWidth / EngineConstants.CELL_SIZE;
-        console.log("ratio: " + this.ratio);
     }
 
     render() {
@@ -32,13 +31,13 @@ export default class Character extends Component<IProps> {
 
         const width = Image.resolveAssetSource(this.props.image).width;
 
-        x = x + this.defaultWidth / 2 - (width / this.ratio) / 2 - 100;
+        console.log(this.props.image);
 
-        console.log("defaultWidth: " + this.defaultWidth + "    width: " + width);
+        x = 0; // x + this.defaultWidth / 2 - (width / this.ratio) / 2;
 
         return (
-            <View style={[styles.container, {bottom: y, left: x }]}>
-                <AutoHeightImage source={this.props.image} width={width / this.ratio} />
+            <View style={[styles.container, { bottom: y, left: x }]}>
+                <AutoHeightImage source={this.props.image} width={width / this.ratio}/>
             </View>
         )
     }

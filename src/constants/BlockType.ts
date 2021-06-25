@@ -6,7 +6,7 @@ const Characters = {
     Charlie: 'charlie',
     Cyclops: 'cyclops',
     Nosy: 'nosy',
-    MrMustache: 'mr. mustache',
+    MrMustache: 'MrMustache',
     MsBrocoli: 'ms. brocoli'
 }
 

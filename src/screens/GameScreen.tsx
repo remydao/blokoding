@@ -18,7 +18,7 @@ import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getCharacterDefaultImage, getCharacterImages } from '../constants/CharacterImages';
+import { characterImages, getCharacterDefaultImage, getCharacterImages } from '../constants/CharacterImages';
 
 interface IProps {
     navigation: any,
@@ -89,9 +89,11 @@ class Game extends Component<IProps, IState> {
             console.log(this.actions);
         }
 
+        console.log(this.actions.character);
+
         this.images = getCharacterImages(this.actions.character);
         this.defaultImage = getCharacterDefaultImage(this.actions.character);
-        this.numFramesPerImage = 2;
+        this.numFramesPerImage = 1;
         this.numFrame = 0;
     }
 
@@ -239,15 +241,14 @@ class Game extends Component<IProps, IState> {
     getNewImage() {
         var currentImageNum = this.state.imageNum;
 
-        if (this.numFrame % 2 == 0)
+        if (this.numFrame % this.numFramesPerImage == 0)
         {
             currentImageNum++;
-            if (currentImageNum >= 30)
+            if (currentImageNum >= this.images.length)
                 currentImageNum = 0;
         }
 
         this.numFrame++;
-        
 
         return currentImageNum;
     }
