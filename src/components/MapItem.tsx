@@ -26,7 +26,7 @@ export default class MapItem extends Component<IProps, IState> {
     }
 
     render() {
-        const x = this.props.position[0];
+        const x = this.isEnv ? this.props.position[0] : this.props.position[0] + EngineConstants.CELL_SIZE / 4;
         const y = this.props.position[1];
 
         return (
