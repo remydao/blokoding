@@ -5,6 +5,8 @@ import Colors from '../constants/Colors';
 import AutoHeightImage from 'react-native-auto-height-image';
 import { getIsDoneList } from '../scripts/storage/DiscoverLevels';
 import { CommonActions } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
+
 
 const HEIGHT = EngineConstants.MAX_HEIGHT - 64;
 const BUTTON_PADDING = EngineConstants.MAX_HEIGHT * 0.02;
@@ -64,7 +66,8 @@ const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
         inputRange: [isDisappearing, isTop, isBottom, isAppearing],
         outputRange: [0.5, 1, 1, 0.5],
     })
-
+    //<Image source={require('../assets/check.png')} style={{width: 30, height:30}}></Image>
+    
     return (
         <Animated.View style={{transform:[{translateY}, {scale},],
                                 backgroundColor: props.bgColor,
@@ -75,7 +78,12 @@ const LevelButton = ({text, onPress, pressColor, ...props}: IProps) => {
                 <View style={styles.cellContent}>
                     {isDone ?
                     <View style={styles.checked}>
-                        <Image source={require('../assets/check.png')} style={{width: 30, height:30}}></Image>
+                        <LottieView
+                            style={{width: 50, height:50}}
+                            source={require('../assets/lotties/check-animation.json')}
+                            autoPlay
+                            loop={false}
+                        />
                     </View> :
                     <View style={styles.checked}>
                         <Image source={require('../assets/circle.png')} style={{width: 30, height:30}}></Image>
