@@ -9,7 +9,7 @@ class CodeBlock {
 
 class StructureBlock extends CodeBlock {
     protected nextBlock;
-    constructor(nextBlock: StructureBlock) {
+    constructor(nextBlock: StructureBlock | null) {
         super();
         this.nextBlock = nextBlock;
     }
@@ -18,7 +18,7 @@ class StructureBlock extends CodeBlock {
 class InstructionBlock extends StructureBlock {
     protected execBlock;
     protected predicateBlock;
-    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
+    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock | null) {
         super(nextBlock);
         this.execBlock = execBlock;
         this.predicateBlock = predicateBlock;
