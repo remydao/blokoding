@@ -18,16 +18,18 @@ interface IProps {
 
 export default class Character extends Component<IProps> {
 
-    // private ratio: number;
+    private ratio: number;
 
     constructor(props: IProps) {
         super(props);
+        
 
-        // this.ratio = this.props.srcSize / EngineConstants.CELL_SIZE;
+        const srcImage = Image.resolveAssetSource(this.props.image)
+        this.ratio = (srcImage.height / 6) / (srcImage.width / 10);
     }
 
     getTop() {
-        let top = Math.floor(this.props.imageNum / this.props.numImagesPerLine) * this.props.srcHeight;
+        let top = Math.floor(this.props.imageNum / this.props.numImagesPerLine) * EngineConstants.CELL_SIZE * this.ratio;
 
         console.log("top: " + top);
 
@@ -35,7 +37,7 @@ export default class Character extends Component<IProps> {
     }
 
     getLeft() {
-       var tmp = (this.props.imageNum % this.props.numImagesPerLine) * this.props.srcWidth;
+       var tmp = (this.props.imageNum % this.props.numImagesPerLine) * EngineConstants.CELL_SIZE;
        console.log("left: " + tmp)
        return tmp;
     }
@@ -51,8 +53,8 @@ export default class Character extends Component<IProps> {
 
         return (
             <View style={[styles.container, { bottom: y, left: x }]}>
-                <View style={{ overflow: 'hidden', width: this.props.srcWidth, height: this.props.srcHeight}}>
-                    <Image source={this.props.image} style={{ marginTop: -top, marginLeft: -left}} />
+                <View style={{ overflow: 'hidden', width: EngineConstants.CELL_SIZE, height: EngineConstants.CELL_SIZE * this.ratio}}>
+                    <AutoHeightImage source={this.props.image} style={{ marginTop: -top, marginLeft: -left}} width={EngineConstants.CELL_SIZE * 10} />
                 </View>
             </View>
         )

@@ -455,7 +455,7 @@ class Game extends Component<IProps, IState> {
                 { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                 <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                <Character position={[0, this.state.playerPosY]} numImagesPerLine={16} image={this.images} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={257} />
+                <Character position={[0, this.state.playerPosY]} numImagesPerLine={10} image={this.images} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={258} />
                 { arr }
                 <Inventory inventory={this.state.inventory} />
                 <StatusBar translucent backgroundColor="transparent"/>
