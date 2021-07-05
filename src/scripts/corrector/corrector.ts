@@ -57,4 +57,15 @@ const checkVisionResp = (str: string, allCards: string[]) => {
     return null;
 }
 
-export { checkVisionResp }
+
+const dropProblematicTokens = (allCards: []) => {
+    const pbTokens = ['x', 't'];
+
+    const filtered = allCards.filter(function(value, index, arr) {
+        return !pbTokens.includes(allCards[index]);
+    })
+
+    return filtered;
+}
+
+export { checkVisionResp, dropProblematicTokens }

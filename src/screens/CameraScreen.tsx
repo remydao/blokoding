@@ -8,6 +8,7 @@ import Maps from '../constants/Maps';
 import {parseInit} from '../scripts/parsing/Parser';
 import { CameraMode } from '../constants/CameraMode';
 import { modifyCoordinates } from '../scripts/corrector/coordinates';
+import { dropProblematicTokens } from '../scripts/corrector/corrector';
 
 interface IProps {
   navigation: any,
@@ -99,11 +100,12 @@ class Camera extends Component<IProps, IState> {
         };
         
         const { uri } = await this.camera.takePictureAsync(options);
-        const visionResp = await RNTextDetector.detectFromUri(uri);
+        var visionResp = await RNTextDetector.detectFromUri(uri);
 
         modifyCoordinates(visionResp);
-
+        visionResp = dropProblematicTokens(visionResp);
         const actions = parseInit(visionResp);
+        
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {
             navigation.navigate('Game',

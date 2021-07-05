@@ -258,3 +258,54 @@ it('Simple For and If corrector', () => {
 
   expect(forBlock.nextBlock).toBe(null);
 })
+
+it ("Simple if elif", () => {
+  const ocr = [{text: "Bart"}, {text: "si"}, {text: "etre devant"}, {text: "flaque"}, {text: "sauter"}, {text: "ou si"}, {text: "etre sur"}, {text: "cle"}, {text: "ramasser"}, {text: "fin"}]
+
+  const blocks = parseInit(ocr);
+
+  expect(blocks).toBeInstanceOf(CharacterBlock);
+  expect(blocks.character).toBe(Characters.Bart);
+
+  const ifBlock = blocks.nextBlock;
+  expect(ifBlock).toBeInstanceOf(IfBlock);
+  expect(ifBlock.predicateBlock).toBeInstanceOf(IsInFrontBlock);
+  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(ifBlock.predicateBlock.entityBlock.value).toBe(Environments.Puddle);
+
+  expect(ifBlock.execBlock).toBeInstanceOf(JumpBlock);
+
+  const nextIfBlock = ifBlock.nextIfBlock;
+
+  expect(nextIfBlock).toBeInstanceOf(IfBlock);
+  expect(nextIfBlock.predicateBlock).toBeInstanceOf(IsOnBlock);
+  expect(nextIfBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(nextIfBlock.predicateBlock.entityBlock.value).toBe(Items.Key);
+
+  expect(nextIfBlock.execBlock).toBeInstanceOf(GrabBlock);
+  expect(nextIfBlock.nextBlock).toBe(null);
+})
+
+
+it ("Simple if else", () => {
+  const ocr = [{text: "Bart"}, {text: "si"}, {text: "etre devant"}, {text: "flaque"}, {text: "sauter"}, {text: "sinon"}, {text: "ramasser"}, {text: "fin"}]
+
+  const blocks = parseInit(ocr);
+
+  expect(blocks).toBeInstanceOf(CharacterBlock);
+  expect(blocks.character).toBe(Characters.Bart);
+
+  const ifBlock = blocks.nextBlock;
+  expect(ifBlock).toBeInstanceOf(IfBlock);
+  expect(ifBlock.predicateBlock).toBeInstanceOf(IsInFrontBlock);
+  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(ifBlock.predicateBlock.entityBlock.value).toBe(Environments.Puddle);
+
+  expect(ifBlock.execBlock).toBeInstanceOf(JumpBlock);
+
+  const elseBlock = ifBlock.nextIfBlock;
+
+  expect(elseBlock).toBeInstanceOf(IfBlock);
+  expect(elseBlock.execBlock).toBeInstanceOf(GrabBlock);
+  expect(elseBlock.nextBlock).toBe(null);
+})
