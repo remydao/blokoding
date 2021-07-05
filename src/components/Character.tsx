@@ -49,7 +49,7 @@ export default class Character extends Component<IProps> {
     }
 
     render() {
-        const x = this.props.position[0] + EngineConstants.CELL_SIZE / 2 - this.width / 2;
+        const x = this.props.position[0] + EngineConstants.CELL_SIZE - this.width / 2;
         const y = this.props.position[1];
         
 

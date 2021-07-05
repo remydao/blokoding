@@ -50,7 +50,7 @@ class Game extends Component<IProps, IState> {
     private lastTicks: number = this.baseTicks;
     private timePassed: number = 0;
     private frameDelay: number = 0;
-    private speed: number = EngineConstants.MAX_WIDTH * this.rateTicks * 0.0002;
+    private speed: number = EngineConstants.CELL_SIZE * this.rateTicks / 2000;
     private actions: any;
     private endReason: string = "";
     private mounted: boolean = false;
@@ -107,7 +107,10 @@ class Game extends Component<IProps, IState> {
             this.setState({isStartAnimation: !this.state.isStartAnimation})
         }, 2400)
 
+        let start = Date.now();
         await this.actions.execute(this);
+        let end = Date.now();
+        console.log(end - start);
 
         if (this.state.map[this.characterPos] != Cells.Win && !this.state.hasLost && !this.state.hasWon) {
             this.fireEndScreen("loose", "Perdu, tu n'as pas atteint la ligne d'arrivée")
@@ -247,22 +250,13 @@ class Game extends Component<IProps, IState> {
             this.frameDelay = 0;
         }
 
-        this.speed = EngineConstants.MAX_WIDTH * this.timePassed * 0.0002;
+        this.speed = (EngineConstants.CELL_SIZE * (this.timePassed + this.frameDelay)) / 2000;
     }
 
     getNewImage() {
-        var currentImageNum = this.state.imageNum;
+        const progress =  this.moveDistance / EngineConstants.CELL_SIZE;
 
-        if (this.numFrame % this.numFramesPerImage == 0)
-        {
-            currentImageNum++;
-            if (currentImageNum >= 60)
-                currentImageNum = 0;
-        }
-
-        this.numFrame++;
-
-        return currentImageNum;
+        return Math.floor((120 * progress) % 60);
     }
 
     // Method to move the character (used in ActionBlock.js)
@@ -510,16 +504,16 @@ class Game extends Component<IProps, IState> {
         });
 
         return (
-            <View>
-                {!this.state.isStartAnimation ?
-                    (<View style={{backgroundColor: "", height:"100%", width:"100%"}}>
-                        <LottieView
-                            source={require('../assets/lotties/loading.json')}
-                            autoPlay
-                            loop={true}
-                        />
-                    </View>) :
-                    (
+            // <View>
+            //     {!this.state.isStartAnimation ?
+            //         (<View style={{backgroundColor: "", height:"100%", width:"100%"}}>
+            //             <LottieView
+            //                 source={require('../assets/lotties/loading.json')}
+            //                 autoPlay
+            //                 loop={true}
+            //             />
+            //         </View>) :
+            //         (
                         <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                             {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
@@ -529,10 +523,10 @@ class Game extends Component<IProps, IState> {
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                         </View>)
-                }
-                <StatusBar translucent backgroundColor="transparent"/>
-            </View>
-        )
+        //         }
+        //         <StatusBar translucent backgroundColor="transparent"/>
+        //     </View>
+        // )
     }
 }
 
