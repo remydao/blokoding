@@ -1,6 +1,6 @@
 import { Characters, Actions, Instructions, SecondaryInstructions, Items, Conditions, Environments } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
-import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "../blocks/ActionBlock";
+import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock, UseBlock } from "../blocks/ActionBlock";
 import { ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBlock";
 import { DataBlock } from "../blocks/DataBlock";
@@ -141,6 +141,11 @@ const parseAction = (action: any, cardList: TcardList) => {
             return new JumpBlock(parseStructureCard(cardList));
         case Actions.Grab:
             return new GrabBlock(parseStructureCard(cardList));
+        case Actions.Use:
+            const itemBlock = parseItem(cardList);
+            if (!itemBlock)
+            throw "L'action utiliser doit être suivie d'un objet"
+            return new UseBlock(itemBlock, parseStructureCard(cardList));
         case Actions.Speak:
             return new SpeakBlock(parseStructureCard(cardList));
         default:
@@ -149,7 +154,7 @@ const parseAction = (action: any, cardList: TcardList) => {
 }
 
 const parseInstruction = (instruction: any, cardList: TcardList) => {
-    let predicateBlock: DataBlock | ConditionBlock;
+    let predicateBlock: DataBlock | ConditionBlock | null;
     let nextIfBlock : IfBlock | null = null;
 
     switch (instruction) {

@@ -14,6 +14,7 @@ const Actions = {
     Move: 'avancer',
     Jump: 'sauter',
     Grab: 'ramasser',
+    Use: 'utiliser',
     Speak: 'parler'
 }
 

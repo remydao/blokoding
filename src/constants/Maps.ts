@@ -57,8 +57,8 @@ const Maps = {
     },
     foret2: {
         theme: Themes.Forest,
-        map: [Cells.Empty, Cells.Empty, Cells.Flower, Cells.Puddle, Cells.Flower, Cells.Win]
-    },
+        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Door, Cells.Empty, Cells.Win]
+    }
 }
 
 export default Maps

@@ -29,7 +29,7 @@ const characterImages = {
     },
     MrMustache: {
         imageName: Characters.MrMustache,
-        uri: require("../assets/characters/MrMustache/mrmustache_walk1.png"),
+        uri: require("../assets/characters/MrMustache/mrmustache_walk2.png"),
     },
     Kevin: {
         imageName: Characters.Kevin,

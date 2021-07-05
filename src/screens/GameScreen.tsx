@@ -3,7 +3,7 @@ import BackgroundGame from "../components/BackgroundGame";
 import { View, StatusBar, Image} from 'react-native';
 import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
-import { MoveBlock, JumpBlock, GrabBlock } from '../scripts/blocks/ActionBlock';
+import { MoveBlock, JumpBlock, GrabBlock, UseBlock } from '../scripts/blocks/ActionBlock';
 import { Characters, Environments, Items } from '../constants/BlockType';
 import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
@@ -78,9 +78,6 @@ class Game extends Component<IProps, IState> {
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            //this.actions = new CharacterBlock(new MoveBlock(null), Characters.Bart);
-            //this.actions = new CharacterBlock(new WhileBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null), Characters.Kevin);
-
             this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
@@ -89,6 +86,8 @@ class Game extends Component<IProps, IState> {
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                     new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
             //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
+            //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -134,6 +133,9 @@ class Game extends Component<IProps, IState> {
                 case Cells.Bush:
                     this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer");
                     break;
+                case Cells.Door:
+                    this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ourvrir");
+                    break;
                 default:
                     break;
             }
@@ -155,6 +157,9 @@ class Game extends Component<IProps, IState> {
                     break;
                 case Cells.Bush:
                     this.fireEndScreen("loose", "Perdu, utilise la machette quand tu es devant le buisson pour le couper");
+                    break;
+                case Cells.Door:
+                    this.fireEndScreen("loose", "Perdu, utilise la clé quand tu es devant la porte pour l'ouvrir");
                     break;
                 default:
                     break;
@@ -312,7 +317,6 @@ class Game extends Component<IProps, IState> {
         this.moveDistance = 0;
 
         var self = this;
-        console.log("begin Y : " + this.state.playerPosY);
 
         return await new Promise<void>(resolve => {
             // Fix memory leak when quitting
@@ -352,7 +356,6 @@ class Game extends Component<IProps, IState> {
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
                     self.characterPos += numCells;
-                    console.log("end Y : " + self.state.playerPosY);
                     resolve();
                 }
                 else {
@@ -362,7 +365,7 @@ class Game extends Component<IProps, IState> {
         });
     }
 
-    grab() {
+    async grab() {
         var currCell = this.state.map[this.characterPos];
 
         if (currCell == Cells.Empty || !isItem(currCell.content.imageName)) {
@@ -376,14 +379,43 @@ class Game extends Component<IProps, IState> {
             return false;
 
         this.setState((prevState) => {
-            let inventory = Object.assign({}, prevState.inventory);  
+            let inventory = prevState.inventory;  
             inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
-            let newMap = prevState.map;
-            newMap[this.characterPos] = Cells.Empty
-            return {...prevState, inventory, newMap };                                 
+            let map = prevState.map;
+            map[this.characterPos] = Cells.Empty
+            return {inventory, map };                                 
         });
 
         return true;
+    }
+
+    async use(item: string) {
+        const usables = {[Items.Key]: Environments.Door, [Items.Machete]: Environments.Bush, [Items.Trash]: Environments.Bin};
+        if (Object.keys(usables).filter(usableItem => usableItem === item).length === 0) {
+            this.fireEndScreen("loose", "Tu ne peux pas utiliser une " + item);
+            return false;
+        }
+
+        // Fix memory leak when quitting
+        if (!this.mounted)
+            return false;
+
+        if (!this.possess(item))
+            this.fireEndScreen("loose", "Tu dois posséder un " + item + " pour pouvoir l'utiliser");
+        else if(!this.isInFront(usables[item]))
+            this.fireEndScreen("loose", "Tu dois être en face d'un " + usables[item] + " pour pouvoir utiliser ton " + item);
+        else {
+            this.setState((prevState) => {
+                let inventory = prevState.inventory;
+                let map = prevState.map;
+                inventory[item] -= 1;
+                map[this.characterPos + 1] = Cells.Empty;
+                return {inventory, map}
+            })
+            return true;
+        }
+
+        return false;
     }
 
     // Function for jump translation
@@ -454,7 +486,7 @@ class Game extends Component<IProps, IState> {
 
     // return true if character possess an entity(data block)
     possess(entity: string) {
-        return this.state.inventory[entity] != undefined;
+        return this.state.inventory[entity] && this.state.inventory[entity] > 0;
     }
 
     backToSelectLevels = () : void => {
