@@ -3,7 +3,6 @@ import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from '
 import {default as UUID} from "uuid"; 
 import EnigmaButton from '../components/EnigmaButton';
 import Colors from '../constants/Colors';
-import EnigmaLevelScreen from './EnigmaLevelScreen';
 
 const DiscoverColors = [
   Colors.dark_pink,
