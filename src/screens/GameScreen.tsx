@@ -456,7 +456,7 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify loose
     onLose = async () => {
-        if (this.props.route.params === 'tutorial') {
+        if (this.props.route.params.levelType === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             isDoneList[this.props.route.params.levelNumber] = false;
             await storeIsDoneList(isDoneList);
@@ -466,7 +466,7 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify win
     onWin = async () => {
-        if (this.props.route.params === 'tutorial') {
+        if (this.props.route.params.levelType  === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             isDoneList[this.props.route.params.levelNumber] = true;
             await storeIsDoneList(isDoneList);
