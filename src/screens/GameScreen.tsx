@@ -177,11 +177,11 @@ class Game extends Component<IProps, IState> {
     checkRemovedFromMap() : boolean {
         if (this.winCondition.removedFromMap) {
             for (let i = 0; i < this.winCondition.removedFromMap.length; i++) {
-                const itemName = this.winCondition.removedFromMap[i];
+                const entity = this.winCondition.removedFromMap[i];
                 
                 for (let j = 0; j < this.state.map.length; j++) {
-                    if (this.state.map[j].content && this.state.map[j].content.imageName == itemName) {
-                        this.fireEndScreen("loose", "Perdu, il reste des " + itemName + " sur le terrain");
+                    if (this.state.map[j].content && this.state.map[j].content.imageName == entity) {
+                        this.fireEndScreen("loose", "Perdu, il reste des " + entity + " sur le terrain");
                         return false;
                     }
                 }

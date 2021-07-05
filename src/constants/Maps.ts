@@ -1,4 +1,4 @@
-import { Items } from "./BlockType";
+import { Environments, Items } from "./BlockType";
 import Cells from "./Cells";
 import Themes from "./Themes";
 
@@ -44,7 +44,7 @@ const Maps = {
 
     // ENIGMA
 
-    enigma1:{
+    enigma1: {
         theme: Themes.Forest,
         map: [Cells.Empty, Cells.Flower, Cells.Win],
         winCondition: {
@@ -56,6 +56,58 @@ const Maps = {
             ]
         }
     },
+    enigma2: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Flower, Cells.Empty, Cells.Flower, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Flower
+            ],
+            isInInventory: [
+                {item: Items.Flower, quantity: 2}
+            ]
+        }
+    },
+    enigma3: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Empty, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win],
+    },
+    enigma4: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Puddle, Cells.Flower, Cells.Flower, Cells.Empty, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Flower
+            ],
+            isInInventory: [
+                {item: Items.Flower, quantity: 2}
+            ]
+        }
+    },
+    enigma5: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Bush, Cells.Empty, Cells.Win],
+    },
+    enigma6: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Machete, Cells.Empty, Cells.Bush, Cells.Bush, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Environments.Bush
+            ],
+        }
+    },
+    enigma7: {
+        theme: Themes.Forest,
+        map: [Cells.Empty, Cells.Machete, Cells.Empty, Cells.Bush, Cells.Empty, Cells.Puddle, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Environments.Bush
+            ],
+        }
+    },
+    
+
 
     // RANDOM
 
