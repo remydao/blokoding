@@ -42,8 +42,8 @@ export default class Overlay extends Component<IProps> {
     render(){
         return (
             <View style= {[styles.overlay_container]}>
-                <Text style={[styles.textStyle, {color: 'lightgreen', zIndex: 10, top: -EngineConstants.MAX_HEIGHT / 10}]}>{this.props.text}</Text>
-                {this.props.hasWon &&
+                <Text style={[styles.textStyle, {color: this.props.color, zIndex: 10, top: -EngineConstants.MAX_HEIGHT / 10}]}>{this.props.text}</Text>
+                {this.props.hasWon ? (
                     <View style={styles.anim_container}>
                         <LottieView
                             style={styles.anim}
@@ -57,7 +57,16 @@ export default class Overlay extends Component<IProps> {
                             autoPlay
                             loop={false}
                         />
-                    </View>
+                    </View>) :
+                    (
+                    <View style={styles.anim_container}>
+                        <LottieView
+                            style={{height:300, width: 300, position: 'absolute', top: -EngineConstants.MAX_HEIGHT / 20}}
+                            source={require('../assets/lotties/raining-clouds.json')}
+                            autoPlay
+                            loop={true}
+                        />
+                    </View>)
                 }
                 <View style={[styles.overlay]}>
                 </View>
