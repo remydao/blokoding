@@ -113,7 +113,7 @@ class Camera extends Component<IProps, IState> {
             this.isTakingPicture = false;
         } // Start Mode
         else {
-          navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret1});
+          navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2});
           this.isTakingPicture = false;
         }
       } catch (e) { // Error thrown by the parser
