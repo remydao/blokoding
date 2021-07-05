@@ -111,7 +111,9 @@ class Camera extends Component<IProps, IState> {
             navigation.navigate('Game',
                 { actions: actions, cameraMode: CameraMode.DISCOVER, 
                   mapInfo: this.props.route.params.map,
-                  levelNumber: this.props.route.params.levelNumber });
+                  levelNumber: this.props.route.params.levelNumber,
+                  levelType: this.props.route.params.levelType,
+                });
             this.isTakingPicture = false;
         } // Start Mode
         else {

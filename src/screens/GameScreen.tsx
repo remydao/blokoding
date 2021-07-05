@@ -456,17 +456,21 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify loose
     onLose = async () => {
-        const isDoneList : boolean[] = await getIsDoneList()
-        isDoneList[this.props.route.params.levelNumber] = false;
-        await storeIsDoneList(isDoneList);
+        if (this.props.route.params === 'tutorial') {
+            const isDoneList : boolean[] = await getIsDoneList()
+            isDoneList[this.props.route.params.levelNumber] = false;
+            await storeIsDoneList(isDoneList);
+        }
         console.log('You lost');
     }
 
     // Function to notify win
     onWin = async () => {
-        const isDoneList : boolean[] = await getIsDoneList()
-        isDoneList[this.props.route.params.levelNumber] = true;
-        await storeIsDoneList(isDoneList);
+        if (this.props.route.params === 'tutorial') {
+            const isDoneList : boolean[] = await getIsDoneList()
+            isDoneList[this.props.route.params.levelNumber] = true;
+            await storeIsDoneList(isDoneList);
+        }
         console.log('You won');
     }
 
