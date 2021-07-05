@@ -18,11 +18,27 @@ const Maps = {
     },
     level4:{
         theme: Themes.Workshop,
-        map: [Cells.Flower, Cells.Win] 
+        map: [Cells.Flower, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Flower
+            ],
+            isInInventory: [
+                {item: Items.Flower, quantity: 1}
+            ]
+        }
     },
     level5:{
         theme: Themes.Workshop,
-        map: [Cells.Empty, Cells.Flower, Cells.Flower, Cells.Flower, Cells.Flower, Cells.Win] 
+        map: [Cells.Empty, Cells.Flower, Cells.Flower, Cells.Flower, Cells.Flower, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Flower
+            ],
+            isInInventory: [
+                {item: Items.Flower, quantity: 4}
+            ]
+        } 
     },
 
 
