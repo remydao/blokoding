@@ -20,6 +20,7 @@ import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevel
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { characterImages, getCharacterImages } from '../constants/CharacterImages';
 import LottieView from 'lottie-react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface IProps {
     navigation: any,
@@ -477,18 +478,17 @@ class Game extends Component<IProps, IState> {
         });
 
         return (
-            <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+            <View>
                 {!this.state.isStartAnimation ?
-                    (<View style={{backgroundColor: "#009688", height:"100%", width:"100%"}}>
+                    (<View style={{backgroundColor: "", height:"100%", width:"100%"}}>
                         <LottieView
                             source={require('../assets/lotties/loading.json')}
                             autoPlay
                             loop={true}
                         />
-                        <Image source={require('../assets/characters/Cyclops/1x/Cyclops.png')} style={{marginTop:90}}/>
                     </View>) :
                     (
-                        <View>
+                        <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                             {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
@@ -498,7 +498,6 @@ class Game extends Component<IProps, IState> {
                             <Inventory inventory={this.state.inventory} />
                         </View>)
                 }
-
                 <StatusBar translucent backgroundColor="transparent"/>
             </View>
         )
