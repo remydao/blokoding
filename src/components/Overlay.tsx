@@ -35,7 +35,7 @@ export default class Overlay extends Component<IProps> {
     render(){
         return (
             <View style= {[styles.overlay_container]}>
-                <Text style={[styles.textStyle, {color: this.props.color}]}>{this.props.text}</Text>
+                <Text style={[styles.textStyle, {color: this.props.color, zIndex: 10}]}>{this.props.text}</Text>
                 {this.props.hasWon &&
                     <View style={styles.anim_container}>
                         <LottieView
@@ -62,6 +62,7 @@ export default class Overlay extends Component<IProps> {
 
 const styles = StyleSheet.create({
     anim_container: {
+        zIndex: 11,
         justifyContent: 'center',
         alignItems: 'center',
         position:'absolute'
