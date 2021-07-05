@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image, Animated} from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import { CameraMode } from '../constants/CameraMode';
 import LottieView from 'lottie-react-native';
@@ -30,12 +30,19 @@ interface IProps {
 export default class Overlay extends Component<IProps> {
     constructor(props: IProps) {
         super(props);
+        this.state = {
+            opacity: new Animated.Value(0)
+        }
     }
 
+    fadeInText = () => {
+    }
+    //<Text style={[styles.textStyle, {color: this.props.color, zIndex: 10}]}>{this.props.text}</Text>
+    
     render(){
         return (
             <View style= {[styles.overlay_container]}>
-                <Text style={[styles.textStyle, {color: this.props.color, zIndex: 10}]}>{this.props.text}</Text>
+                <Text style={[styles.textStyle, {color: 'lightgreen', zIndex: 10, top: -EngineConstants.MAX_HEIGHT / 10}]}>{this.props.text}</Text>
                 {this.props.hasWon &&
                     <View style={styles.anim_container}>
                         <LottieView
@@ -44,12 +51,18 @@ export default class Overlay extends Component<IProps> {
                             autoPlay
                             loop={true}
                         />
+                        <LottieView
+                            style={{height:400, width: 400, position: 'absolute'}}
+                            source={require('../assets/lotties/winner.json')}
+                            autoPlay
+                            loop={false}
+                        />
                     </View>
                 }
                 <View style={[styles.overlay]}>
                 </View>
                 {(this.props.cameraMode == CameraMode.DISCOVER) &&
-                    <View style={styles.button}>
+                    <View style={{...styles.button, top: EngineConstants.MAX_HEIGHT / 8}}>
                         {this.props.hasWon ? 
                         <EndButton onPress={this.props.backToSelectLevels} text="Retour à l'écran de sélection des niveaux" /> :
                         <EndButton onPress={this.props.backToLevelFailed} text="Essaie encore !"/>}
@@ -65,7 +78,7 @@ const styles = StyleSheet.create({
         zIndex: 11,
         justifyContent: 'center',
         alignItems: 'center',
-        position:'absolute'
+        position:'absolute',
     },
     anim: {
         height: 200,
@@ -84,14 +97,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     overlay_container: {
-        flex: 1,
         position: 'absolute',
-        left: 0,
-        top: 0,
         width: EngineConstants.MAX_WIDTH,
         height: EngineConstants.MAX_HEIGHT,
         zIndex: 4,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     textStyle: {
         textAlign: 'center',
@@ -102,8 +113,7 @@ const styles = StyleSheet.create({
     },
     button:{
         top: 10,
-        elevation: 10,
-        backgroundColor: "#009688",
+        backgroundColor: "lightgreen",
         borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 12,
@@ -111,9 +121,9 @@ const styles = StyleSheet.create({
     },
     buttonText:{
         fontSize: 18,
-        color: "#fff",
-        fontWeight: "bold",
+        color: "#000",
         alignSelf: "center",
-        textAlign:'center'
+        textAlign:'center',
+        fontFamily:"Pangolin-Regular",
     }
 })

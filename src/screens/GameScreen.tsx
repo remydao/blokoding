@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { characterImages, getCharacterImages } from '../constants/CharacterImages';
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import MyColors from '../constants/Colors';
 
 interface IProps {
     navigation: any,
@@ -103,12 +104,14 @@ class Game extends Component<IProps, IState> {
 
     async componentDidMount() {
         this.mounted = true;
-        await setTimeout(() => {
+        await new Promise<void>(resolve => {setTimeout(() => {
             this.setState({isStartAnimation: !this.state.isStartAnimation})
-        }, 2400)
+            resolve()
+        }, 2400)})
 
         let start = Date.now();
         await this.actions.execute(this);
+
         let end = Date.now();
         console.log(end - start);
 
@@ -453,9 +456,9 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify loose
     onLose = async () => {
-        if (this.props.route.params === 'tutorial') {
+        if (this.props.route.params.levelType === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
-            isDoneList[this.props.route.params.levelNumber] = false;
+            //isDoneList[this.props.route.params.levelNumber] = true;
             await storeIsDoneList(isDoneList);
         }
         console.log('You lost');
@@ -463,7 +466,7 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify win
     onWin = async () => {
-        if (this.props.route.params === 'tutorial') {
+        if (this.props.route.params.levelType  === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             isDoneList[this.props.route.params.levelNumber] = true;
             await storeIsDoneList(isDoneList);
@@ -507,17 +510,19 @@ class Game extends Component<IProps, IState> {
         });
 
         return (
-            // <View>
-            //     {!this.state.isStartAnimation ?
-            //         (<View style={{backgroundColor: "", height:"100%", width:"100%"}}>
-            //             <LottieView
-            //                 source={require('../assets/lotties/loading.json')}
-            //                 autoPlay
-            //                 loop={true}
-            //             />
-            //         </View>) :
-            //         (
-                        <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+            <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+                <View>
+                {!this.state.isStartAnimation ?
+                    (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
+                        <LottieView
+                            source={require('../assets/lotties/loading.json')}
+                            autoPlay
+                            loop={true}
+                        />
+                    </View>) :
+                    (
+                        <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+
                             {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
@@ -526,10 +531,11 @@ class Game extends Component<IProps, IState> {
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                         </View>)
-        //         }
-        //         <StatusBar translucent backgroundColor="transparent"/>
-        //     </View>
-        // )
+                 }
+                 <StatusBar translucent backgroundColor="transparent"/>
+                </View>
+             </View>
+        )
     }
 }
 
