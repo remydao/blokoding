@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Image} from 'react-native';
 import BackgroundGame from "../components/BackgroundGame";
+import { View, StatusBar, Image} from 'react-native';
 import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
 import { MoveBlock, JumpBlock, GrabBlock } from '../scripts/blocks/ActionBlock';
@@ -19,6 +19,7 @@ import { isItem } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { characterImages, getCharacterImages } from '../constants/CharacterImages';
+import LottieView from 'lottie-react-native';
 
 interface IProps {
     navigation: any,
@@ -35,6 +36,7 @@ interface IState {
     hasWon: boolean,
     inventory: any,
     imageNum: number,
+    isStartAnimation: boolean
 }
 
 class Game extends Component<IProps, IState> {
@@ -69,6 +71,7 @@ class Game extends Component<IProps, IState> {
             hasWon: false,
             inventory: {},
             imageNum: 0,
+            isStartAnimation: false
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
@@ -100,6 +103,9 @@ class Game extends Component<IProps, IState> {
 
     async componentDidMount() {
         this.mounted = true;
+        await setTimeout(() => {
+            this.setState({isStartAnimation: !this.state.isStartAnimation})
+        }, 2400)
 
         await this.actions.execute(this);
 
@@ -468,13 +474,27 @@ class Game extends Component<IProps, IState> {
 
         return (
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                { this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
-                { this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/> }
-                <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
-                <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                <Character position={[0, this.state.playerPosY]} numImagesPerLine={10} image={this.images} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={258} />
-                { arr }
-                <Inventory inventory={this.state.inventory} />
+                {!this.state.isStartAnimation ?
+                    (<View style={{backgroundColor: "#009688", height:"100%", width:"100%"}}>
+                        <LottieView
+                            source={require('../assets/lotties/loading.json')}
+                            autoPlay
+                            loop={true}
+                        />
+                        <Image source={require('../assets/characters/Cyclops/1x/Cyclops.png')} style={{marginTop:90}}/>
+                    </View>) :
+                    (
+                        <View>
+                            {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                            {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                            <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
+                            <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
+                            <Character position={[0, this.state.playerPosY]} numImagesPerLine={10} image={this.images} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={258} />
+                            { arr }
+                            <Inventory inventory={this.state.inventory} />
+                        </View>)
+                }
+
                 <StatusBar translucent backgroundColor="transparent"/>
             </View>
         )
