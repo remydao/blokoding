@@ -32,7 +32,7 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
       //numberOfLevels
       for (let i = 0; i < 30; i++)
       {
-          const levelTitle = "Niveau " + (i + 1)
+          const levelTitle = "Enigme " + (i + 1)
           btns.push({id:UUID.v4(), value:levelTitle})
       }
       setButtons(btns);
@@ -43,7 +43,10 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
     }, [])
 
     const onPress = (index: number) => {
-      navigation.navigate('EnigmaLevelScreen')
+      navigation.navigate('LevelScreen', {
+        levelNumber: index,
+        levelType: 'enigma'
+      })
     }
 
     const selectBgColor = (index: number) => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
-import {levelsTexts} from '../constants/LevelsDetails';
+import {tutorialInfo} from '../constants/TutorialDetails';
+import {enigmaInfo} from '../constants/EnigmaDetails';
 import Colors from '../constants/Colors';
 import TextAnimator from '../components/TextAnimator';
 import EngineConstants from '../constants/EngineConstants';
@@ -20,6 +21,7 @@ class LevelScreen extends React.Component<IProps, IState> {
 
     private readonly levelNumber: number;
     private readonly levelInfo;
+    private readonly levelType: string;
     private readonly title: string;
     private readonly tutorial: Array<string>;
     private readonly congratulations: string;
@@ -29,7 +31,9 @@ class LevelScreen extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.levelNumber = this.props.route.params.levelNumber;
-        this.levelInfo = levelsTexts[this.levelNumber];
+        // string 'tutorial' or 'enigma'
+        this.levelType = this.props.route.params.levelType;
+        this.levelInfo = (this.levelType === 'tutorial') ? tutorialInfo[this.levelNumber] : enigmaInfo[this.levelNumber];
         this.title = this.levelInfo.title;
         this.tutorial = this.levelInfo.tutorial;
         this.congratulations = this.levelInfo.congratulations;
@@ -59,7 +63,8 @@ class LevelScreen extends React.Component<IProps, IState> {
         {
             this.props.navigation.navigate('Take Picture', {
                 map: this.map,
-                levelNumber: this.levelNumber
+                levelNumber: this.levelNumber,
+                levelType: this.levelType,
             })
         }
     }

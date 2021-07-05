@@ -43,7 +43,8 @@ const Discover = ({navigation, route}: IProps) => {
 
     const onPress = (index: number) => {
       navigation.navigate('LevelScreen', {
-        levelNumber: index
+        levelNumber: index,
+        levelType: 'tutorial'
       })
     }
 

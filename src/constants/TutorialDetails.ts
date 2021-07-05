@@ -1,6 +1,6 @@
 import Maps from "./Maps";
 
-const levelsTexts = [
+const tutorialInfo = [
     {
         title: "Faire apparaître un personnage",
         tutorial: ["Avant de ramasser les objets de Mr. Mustache, apprenons déjà comment le faire entrer dans son atelier. Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage.", "Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite. Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi. Ensuite, clique sur le bouton ci-dessous et prend la carte en photo."],
@@ -36,6 +36,6 @@ const levelsTexts = [
     },
 ]
 
-const numberOfLevels = levelsTexts.length;
+const numberOfLevels = tutorialInfo.length;
 
-export {levelsTexts, numberOfLevels};
+export {tutorialInfo, numberOfLevels};
