@@ -6,7 +6,7 @@ import App from '../App';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import jestConfig from '../jest.config';
-import { checkVisionResp } from '../src/scripts/corrector/corrector';
+import { checkVisionResp, dropProblematicTokens } from '../src/scripts/corrector/corrector';
 import { Actions, Characters, Instructions } from '../src/constants/BlockType';
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
@@ -39,4 +39,14 @@ it('Corrector fin with instructions', () => {
     const res = checkVisionResp(ocr, Object.values(Instructions));
 
     expect(res).toBe(null);
+})
+
+
+it('Corrector problematic tokens', () => {
+    const ocr = ["x", "Bart"];
+
+    const res = dropProblematicTokens(ocr);
+
+    expect(res.length).toBe(1);
+    expect(res[0]).toStrictEqual('Bart');
 })
