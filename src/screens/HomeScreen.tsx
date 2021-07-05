@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import FlatButton from '../components/FlatButton';
 import Maps from '../constants/Maps';
 import { CameraMode } from '../constants/CameraMode';
+import EngineConstants from '../constants/EngineConstants'
 
 interface IProps {
   navigation: any,
@@ -17,6 +18,7 @@ const Home = ({ navigation }: IProps) => {
           <Image
             source={require("../assets/icon.png")}
             resizeMode="stretch"
+            style={{width: EngineConstants.MAX_HEIGHT / 8, height: EngineConstants.MAX_HEIGHT / 8}}
           />
         </View>
         <View style={styles.button}>
