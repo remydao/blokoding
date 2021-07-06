@@ -136,9 +136,9 @@ class Game extends Component<IProps, IState> {
                 case Cells.Win:
                     this.fireEndScreen("won");
                     break;
-                case Cells.Bush:
+                /*case Cells.Bush:
                     this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer");
-                    break;
+                    break;*/
                 case Cells.Door:
                     this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ourvrir");
                     break;
