@@ -30,6 +30,7 @@ const characterImages = {
     MrMustache: {
         imageName: Characters.MrMustache,
         uri: "../assets/characters/MrMustache/mrmustache_walk1.png",
+        uriLoaded: require("../assets/characters/MrMustache/mrmustache_walk1.png")
     },
     Kevin: {
         imageName: Characters.Kevin,
@@ -87,5 +88,12 @@ const getCharacterImages = (character: string | JSX.Element) => {
 }
 
 
+const getCharacterImagesLoaded = (character: string | JSX.Element) => {
+    var tmp =  Object.entries(characterImages).filter(characImg => characImg[1].imageName === character)[0][1].uriLoaded;
+    console.log(tmp);
+    return tmp;
+}
 
-export { characterImages, getCharacterImages };
+
+
+export { characterImages, getCharacterImages, getCharacterImagesLoaded };

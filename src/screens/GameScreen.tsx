@@ -18,7 +18,7 @@ import Cells from '../constants/Cells';
 import { isItem } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { characterImages, getCharacterImages } from '../constants/CharacterImages';
+import { characterImages, getCharacterImages, getCharacterImagesLoaded } from '../constants/CharacterImages';
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
@@ -56,9 +56,8 @@ class Game extends Component<IProps, IState> {
     private mounted: boolean = false;
     private winCondition: any;
     private initialPlayerPosY : number = EngineConstants.MAX_HEIGHT * 0.15;
-    private images: any;
-    private numFramesPerImage: number;
-    private numFrame: number;
+    private images: string;
+    private imagesLoaded: number;
 
     constructor(props: IProps) {
         super(props);
@@ -96,8 +95,7 @@ class Game extends Component<IProps, IState> {
         console.log(this.actions.character);
 
         this.images = getCharacterImages(this.actions.character);
-        this.numFramesPerImage = 1;
-        this.numFrame = 0;
+        this.imagesLoaded = getCharacterImagesLoaded(this.actions.character);
     }
 
 
@@ -519,7 +517,7 @@ class Game extends Component<IProps, IState> {
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character position={[0, this.state.playerPosY]} numImagesPerLine={10} image={this.images} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={258} />
+                            <Character position={[0, this.state.playerPosY]} numImagesPerLine={10} imageUri={this.images} imageUriLoaded={this.imagesLoaded} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={258} />
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                         </View>)
