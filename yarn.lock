@@ -6303,6 +6303,11 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
+rn-sprite-sheet@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/rn-sprite-sheet/-/rn-sprite-sheet-1.1.12.tgz#fb6013860863cf92373699ee2aec782929393485"
+  integrity sha512-Cl8asom4asoSRwCqs2wz3sKXk6b6s32yDIF28xx/EFhTi4H+y45YZyMB/WHpZ1YSc28sWRFiHW0z1Han8jYT4w==
+
 rn-text-detector@^0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/rn-text-detector/-/rn-text-detector-0.0.8.tgz#8e858f437d3e212645740feb885a6b701468b58e"

@@ -5,62 +5,53 @@ import {getCharacterImages} from "../constants/CharacterImages";
 import { Characters } from "../constants/BlockType"
 import AutoHeightImage from 'react-native-auto-height-image';
 import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import SpriteSheet from 'rn-sprite-sheet';
+
 
 interface IProps {
     position: Array<number>
     image: number
-    imageNum: number
-    maxImages: number
-    numImagesPerLine: number
-    srcWidth: number
-    srcHeight: number
 }
 
 export default class Character extends Component<IProps> {
 
-    private ratio: number;
     private width: number;
-    private height: number;
+    private sprite: any;
+    private play: any;
 
     constructor(props: IProps) {
         super(props);
 
-        const srcImage = Image.resolveAssetSource(this.props.image)
-        this.ratio = (srcImage.height / 6) / (srcImage.width / 10);
-
-        this.width = EngineConstants.CELL_SIZE * 2;
-        this.height = this.width * this.ratio;
-
-        console.log(this.width);
+        this.width = EngineConstants.CELL_SIZE * 1.5;
     }
 
-    getTop() {
-        let top = Math.floor(this.props.imageNum / this.props.numImagesPerLine) * this.height;
-
-        // console.log("top: " + top);
-
-        return top;
+    componentDidMount() {
+        this.sprite.play({
+            type: "jump",
+            fps: 60,
+            loop: true,
+            resetAfterFinish: true,
+        })
     }
 
-    getLeft() {
-        var tmp = (this.props.imageNum % this.props.numImagesPerLine) * this.width;
-        // console.log("left: " + tmp)
-        return tmp;
+    componentWillUnmount() {
+        this.sprite.stop();
     }
 
     render() {
         const x = this.props.position[0] + EngineConstants.CELL_SIZE - this.width / 2;
         const y = this.props.position[1];
-        
-
-        let top = this.getTop();
-        let left = this.getLeft();
 
         return (
             <View style={[styles.container, { bottom: y, left: x }]}>
-                <View style={{ overflow: 'hidden', width: this.width, height: this.height}}>
-                    <Image source={this.props.image} style={{ marginTop: -top, marginLeft: -left, width: this.width * 10, height: this.height * 6}}  />
-                </View>
+                <SpriteSheet
+                    ref={ref => (this.sprite = ref)}
+                    source={this.props.image}
+                    columns={17}
+                    rows={8}
+                    animations={{jump: Array.from({ length: 120}, (v, i) => i)}}
+                    width={this.width}
+                />
             </View>
         )
     }
