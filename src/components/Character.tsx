@@ -22,7 +22,7 @@ export default class Character extends Component<IProps> {
     constructor(props: IProps) {
         super(props);
 
-        this.width = EngineConstants.CELL_SIZE * 1.5;
+        this.width = EngineConstants.CELL_SIZE * 2;
     }
 
     componentDidMount() {
@@ -47,9 +47,9 @@ export default class Character extends Component<IProps> {
                 <SpriteSheet
                     ref={ref => (this.sprite = ref)}
                     source={this.props.image}
-                    columns={17}
-                    rows={8}
-                    animations={{jump: Array.from({ length: 120}, (v, i) => i)}}
+                    columns={10}
+                    rows={6}
+                    animations={{jump: Array.from({ length: 60 }, (v, i) => i)}}
                     width={this.width}
                 />
             </View>
