@@ -38,7 +38,8 @@ interface IState {
     hasWon: boolean,
     inventory: any,
     imageNum: number,
-    isStartAnimation: boolean
+    isStartAnimation: boolean,
+    animName: string
 }
 
 class Game extends Component<IProps, IState> {
@@ -58,8 +59,6 @@ class Game extends Component<IProps, IState> {
     private winCondition: any;
     private initialPlayerPosY : number = EngineConstants.MAX_HEIGHT * 0.15;
     private images: any;
-    private numFramesPerImage: number;
-    private numFrame: number;
 
     constructor(props: IProps) {
         super(props);
@@ -73,7 +72,8 @@ class Game extends Component<IProps, IState> {
             hasWon: false,
             inventory: {},
             imageNum: 0,
-            isStartAnimation: false
+            isStartAnimation: false,
+            animName: "",
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
@@ -97,8 +97,6 @@ class Game extends Component<IProps, IState> {
         console.log(this.actions.character);
 
         this.images = getCharacterImages(this.actions.character);
-        this.numFramesPerImage = 1;
-        this.numFrame = 0;
     }
 
 
@@ -298,6 +296,7 @@ class Game extends Component<IProps, IState> {
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     imageNum: currentImageNum,
+                    animName: "move"
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE) {
@@ -352,6 +351,7 @@ class Game extends Component<IProps, IState> {
                     itemsPos: newItemPos,
                     playerPosY: playerPosY,
                     imageNum: currentImageNum,
+                    animName: "jump"
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
@@ -527,7 +527,7 @@ class Game extends Component<IProps, IState> {
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character position={[0, this.state.playerPosY]} image={this.images} />
+                            <Character position={[0, this.state.playerPosY]} image={this.images} anim={this.state.animName}/>
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                         </View>/*)
