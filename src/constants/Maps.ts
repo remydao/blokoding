@@ -86,7 +86,7 @@ const Maps = {
     },
     enigma5: {
         theme: Themes.Forest,
-        map: [Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Bush, Cells.Empty, Cells.Win],
+        map: [Cells.Empty, Cells.Empty, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Bush, Cells.Empty, Cells.Win],
     },
     enigma6: {
         theme: Themes.Forest,

@@ -30,6 +30,7 @@ const enigmaInfo = [
         tutorial: ["Plusieurs flaques d’eau et buissons sont sur le chemin de ton personnage. Fais avancer ton personnage jusqu’à l’arrivée tout en sautant par-dessus les flaques d’eau et buissons."],
         congratulations:"Bravo, tu as réussi !",
         map: Maps.enigma5,
+        soluce: [{text: 'MrMustache'}, {text: 'Repeter'}, {text: '8'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'buisson'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}]
     },
     {
         title: "Enigme 6",
