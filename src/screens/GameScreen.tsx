@@ -79,15 +79,15 @@ class Game extends Component<IProps, IState> {
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);*/
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);
             /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                     new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
             //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
-            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
         } else {
             this.actions = props.route.params.actions;
@@ -104,10 +104,10 @@ class Game extends Component<IProps, IState> {
 
     async componentDidMount() {
         this.mounted = true;
-        await new Promise<void>(resolve => {setTimeout(() => {
-            this.setState({isStartAnimation: !this.state.isStartAnimation})
-            resolve()
-        }, 2400)})
+        // await new Promise<void>(resolve => {setTimeout(() => {
+        //     this.setState({isStartAnimation: !this.state.isStartAnimation})
+        //     resolve()
+        // }, 2400)})
 
         let start = Date.now();
         await this.actions.execute(this);
@@ -510,17 +510,17 @@ class Game extends Component<IProps, IState> {
         });
 
         return (
-            <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                <View>
-                {!this.state.isStartAnimation ?
-                    (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
-                        <LottieView
-                            source={require('../assets/lotties/loading.json')}
-                            autoPlay
-                            loop={true}
-                        />
-                    </View>) :
-                    (
+            // <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+            //     <View>
+            //     {!this.state.isStartAnimation ?
+            //         (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
+            //             <LottieView
+            //                 source={require('../assets/lotties/loading.json')}
+            //                 autoPlay
+            //                 loop={true}
+            //             />
+            //         </View>) :
+            //         (
                         <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
 
                             {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="lightgreen" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
@@ -531,11 +531,11 @@ class Game extends Component<IProps, IState> {
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                         </View>)
-                 }
-                 <StatusBar translucent backgroundColor="transparent"/>
-                </View>
-             </View>
-        )
+        //          }
+        //          <StatusBar translucent backgroundColor="transparent"/>
+        //         </View>
+        //      </View>
+        // )
     }
 }
 

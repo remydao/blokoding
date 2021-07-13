@@ -125,7 +125,7 @@ const Maps = {
     },
     foret2: {
         theme: Themes.Forest,
-        map: [Cells.Empty, Cells.Key, Cells.Empty, Cells.Empty, Cells.Empty, Cells.Win]
+        map: [Cells.Empty, Cells.Machete, Cells.Empty, Cells.Bush, Cells.Empty, Cells.Win]
     }
 }
 
