@@ -11,7 +11,7 @@ import SpriteSheet from 'rn-sprite-sheet';
 interface IProps {
     position: Array<number>
     image: any
-    anim: string
+    spriteSheet: SpriteSheet
 }
 
 export default class Character extends Component<IProps> {
@@ -31,44 +31,20 @@ export default class Character extends Component<IProps> {
     }
 
     componentWillUnmount() {
-        this.sprite.stop();
+        // this.sprite.stop();
     }
 
     render() {
         const x = this.props.position[0] + EngineConstants.CELL_SIZE - this.width / 2;
         const y = this.props.position[1];
 
-        if (this.lastAnim !== this.props.anim && this.sprite) {
-            this.sprite.play({
-                type: this.props.anim,
-                fps: 60,
-                loop: true,
-                resetAfterFinish: true,
-            })
-
-            this.lastAnim = this.props.anim;
-        }
-
-        var anims = Object.entries(this.props.image).filter(anim => anim[0] === this.props.anim);
         
-        if (anims.length > 0) {
-            console.log(anims)
-            console.log(anims[0])
-            return (
+        
+        return (
             <View style={[styles.container, { bottom: y, left: x }]}>
-                <SpriteSheet
-                    ref={ref => (this.sprite = ref)}
-                    source={anims[0][1][0]}
-                    columns={9}
-                    rows={7}
-                    animations={{ [this.props.anim]: Array.from({ length: 60 }, (v, i) => i)}}
-                    width={this.width}
-                />
+                { this.props.spriteSheet }
             </View>
-            )
-        }
-        else
-            return null;
+        )
     }
 }
 

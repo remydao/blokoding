@@ -22,6 +22,7 @@ import { characterImages, getCharacterImages } from '../constants/CharacterImage
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
+import SpriteSheet from 'rn-sprite-sheet';
 
 interface IProps {
     navigation: any,
@@ -39,7 +40,7 @@ interface IState {
     inventory: any,
     imageNum: number,
     isStartAnimation: boolean,
-    animName: string
+    spriteSheet: SpriteSheet | null
 }
 
 class Game extends Component<IProps, IState> {
@@ -59,6 +60,9 @@ class Game extends Component<IProps, IState> {
     private winCondition: any;
     private initialPlayerPosY : number = EngineConstants.MAX_HEIGHT * 0.15;
     private images: any;
+    private numFramesPerImage: number;
+    private numFrame: number;
+    private sprite: SpriteSheet;
 
     constructor(props: IProps) {
         super(props);
@@ -73,21 +77,21 @@ class Game extends Component<IProps, IState> {
             inventory: {},
             imageNum: 0,
             isStartAnimation: false,
-            animName: "",
+            spriteSheet: null
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);*/
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);
             /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                     new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
             //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
-            this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
         } else {
             this.actions = props.route.params.actions;
@@ -97,15 +101,17 @@ class Game extends Component<IProps, IState> {
         console.log(this.actions.character);
 
         this.images = getCharacterImages(this.actions.character);
+        this.numFramesPerImage = 1;
+        this.numFrame = 0;
     }
 
 
     async componentDidMount() {
         this.mounted = true;
-        /*await new Promise<void>(resolve => {setTimeout(() => {
-            this.setState({isStartAnimation: !this.state.isStartAnimation})
-            resolve()
-        }, 2400)})*/
+        // await new Promise<void>(resolve => {setTimeout(() => {
+        //     this.setState({isStartAnimation: !this.state.isStartAnimation})
+        //     resolve()
+        // }, 2400)})
 
         let start = Date.now();
         await this.actions.execute(this);
@@ -134,9 +140,9 @@ class Game extends Component<IProps, IState> {
                 case Cells.Win:
                     this.fireEndScreen("won");
                     break;
-                /*case Cells.Bush:
+                case Cells.Bush:
                     this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer");
-                    break;*/
+                    break;
                 case Cells.Door:
                     this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ourvrir");
                     break;
@@ -269,6 +275,23 @@ class Game extends Component<IProps, IState> {
         
         var self = this;
 
+        this.setState({
+            spriteSheet: <SpriteSheet
+                ref={ref => {this.sprite = ref}}
+                source={this.images.move[0]}
+                columns={9}
+                rows={7}
+                animations={{ "move": Array.from({ length: 60 }, (v, i) => i)}}
+                width={EngineConstants.CELL_SIZE * 2}/>
+        });
+
+        this.sprite.play({
+            type: "move",
+            fps: 60,
+            loop: true,
+            resetAfterFinish: false,
+        });
+
         return await new Promise<void>(resolve => {                
             movePos();
 
@@ -296,11 +319,11 @@ class Game extends Component<IProps, IState> {
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     imageNum: currentImageNum,
-                    animName: "move"
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE) {
                     self.characterPos++;
+                    self.sprite.reset();
                     resolve();
                 }
                 else {
@@ -316,6 +339,23 @@ class Game extends Component<IProps, IState> {
         this.moveDistance = 0;
 
         var self = this;
+
+        this.setState({
+            spriteSheet: <SpriteSheet
+                ref={ref => {this.sprite = ref}}
+                source={this.images.jump[0]}
+                columns={10}
+                rows={24}
+                animations={{ "jump": Array.from({ length: 240 }, (v, i) => i)}}
+                width={EngineConstants.CELL_SIZE * 2}/>
+        });
+
+        this.sprite.play({
+            type: "jump",
+            fps: 60,
+            loop: true,
+            resetAfterFinish: false,
+        });
 
         return await new Promise<void>(resolve => {
             // Fix memory leak when quitting
@@ -351,11 +391,11 @@ class Game extends Component<IProps, IState> {
                     itemsPos: newItemPos,
                     playerPosY: playerPosY,
                     imageNum: currentImageNum,
-                    animName: "jump"
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
                     self.characterPos += numCells;
+                    self.sprite.reset();
                     resolve();
                 }
                 else {
@@ -510,31 +550,31 @@ class Game extends Component<IProps, IState> {
         });
 
         return (
-          /*  <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-                <View>
-                {!this.state.isStartAnimation ?
-                    (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
-                        <LottieView
-                            source={require('../assets/lotties/loading.json')}
-                            autoPlay
-                            loop={true}
-                        />
-                    </View>) :
-                    (*/
+            // <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+            //     <View>
+            //     {!this.state.isStartAnimation ?
+            //         (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
+            //             <LottieView
+            //                 source={require('../assets/lotties/loading.json')}
+            //                 autoPlay
+            //                 loop={true}
+            //             />
+            //         </View>) :
+            //         (
                         <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
 
-                            {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="lightgreen" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
-                            {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                            {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                            {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character position={[0, this.state.playerPosY]} image={this.images} anim={this.state.animName}/>
+                            <Character position={[0, this.state.playerPosY]} image={this.images} spriteSheet={this.state.spriteSheet} />
                             { arr }
                             <Inventory inventory={this.state.inventory} />
-                        </View>/*)
-                 }
-                 <StatusBar translucent backgroundColor="transparent"/>
-                </View>
-             </View>*/
+                        </View>//)
+            //      }
+            //      <StatusBar translucent backgroundColor="transparent"/>
+            //     </View>
+            //  </View>
         )
     }
 }

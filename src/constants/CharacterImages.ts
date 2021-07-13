@@ -31,7 +31,7 @@ const characterImages = {
         imageName: Characters.MrMustache,
         uri: {
             move: [require("../assets/characters/MrMustache/mrmustache_walk3.png")],
-            jump: [require("../assets/characters/MrMustache/mrmustache_jump.png")]
+            jump: [require("../assets/characters/MrMustache/mrmustache_jump1.png")]
         }
 
     },
