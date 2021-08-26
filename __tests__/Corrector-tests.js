@@ -43,10 +43,10 @@ it('Corrector fin with instructions', () => {
 
 
 it('Corrector problematic tokens', () => {
-    const ocr = ["x", "Bart"];
+    const ocr = [{text: "x"}, {text: "Bart"}];
 
     const res = dropProblematicTokens(ocr);
 
     expect(res.length).toBe(1);
-    expect(res[0]).toStrictEqual('Bart');
+    expect(res[0].text).toStrictEqual('Bart');
 })
