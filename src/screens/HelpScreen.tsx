@@ -1,9 +1,6 @@
 import React from 'react';
 import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
-import Card from '../components/Card';
 import Colors from '../constants/Colors';
-import {characterImages} from "../constants/CharacterImages";
-import { Characters } from '../constants/BlockType';
 
 interface IProps {
   navigation: any
@@ -12,10 +9,15 @@ interface IProps {
 const Help = ({ navigation }: IProps) => {
   return (
     <View style={styles.container}>
-      <View>
-      </View>
-      <Image style={styles.image} source={characterImages.MrMustache.uri}></Image>
+      <Text style={styles.textTitle}>{"\n"}Principe général</Text>
+      <Text>Blokoding fonctionne de la manière suivante : vous prenez une photographie des cartes que vous ordonnez de manière à faire un programme. L'application se charge de déchiffer les cartes et de créer le programme et le lancer.</Text>
       
+      <Text style={styles.textTitle}>{"\n"}Mode Découverte</Text>
+      <Text>Le mode découverte est un tutoriel. Il permet de se familiariser avec les principes de Blokoding. Il est fortement recommandé de suivre ce mode pour bien comprendre le jeu.</Text>
+      
+      <Text style={styles.textTitle}>{"\n"}Mode Enigme</Text>
+      <Text></Text>
+
       <StatusBar backgroundColor={Colors.dark_purple}/>
     </View>
   );
@@ -23,12 +25,12 @@ const Help = ({ navigation }: IProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    padding: 20,
     flex: 1,
-    alignItems: 'center',
     backgroundColor: Colors.turquoise 
   },
-  image: {
-    top: 150
+  textTitle: {
+    fontWeight: 'bold'
   }
 
 })

@@ -79,7 +79,7 @@ class UseBlock extends StructureBlock {
         if (!engine.isMounted())
             return;
 
-        const item = await this.itemBlock.execute();
+        const item = this.itemBlock.execute();
         if (await engine.use(item)) {
             if (this.nextBlock) {
                 await this.nextBlock.execute(engine);
