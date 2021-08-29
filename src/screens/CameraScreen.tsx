@@ -111,8 +111,9 @@ class Camera extends Component<IProps, IState> {
         
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {
-            navigation.navigate('Game',
-                { actions: actions, cameraMode: CameraMode.DISCOVER, 
+            navigation.navigate('Loading',
+                { actions: actions,
+                  cameraMode: CameraMode.DISCOVER, 
                   mapInfo: this.props.route.params.map,
                   levelNumber: this.props.route.params.levelNumber,
                   levelType: this.props.route.params.levelType,
@@ -120,7 +121,7 @@ class Camera extends Component<IProps, IState> {
             this.isTakingPicture = false;
         } // Start Mode
         else {
-          navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2});
+          navigation.navigate('Loading', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2});
           this.isTakingPicture = false;
         }
       } catch (e) { // Error thrown by the parser

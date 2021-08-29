@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
+import {Text, View, StatusBar, StyleSheet} from 'react-native';
 import Colors from '../constants/Colors';
 
 interface IProps {

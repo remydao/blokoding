@@ -9,6 +9,7 @@ import Colors from "./src/constants/Colors";
 import EnigmaScreen from './src/screens/EnigmaScreen';
 
 import * as Sentry from '@sentry/react-native';
+import Loading from './src/screens/LoadingScreen';
 
 Sentry.init({ 
   dsn: 'https://61430177b69e43478da38120cdd6a069@o792555.ingest.sentry.io/5801070', 
@@ -34,6 +35,7 @@ function App() {
         <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
         <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>
         <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="Loading" component={Loading} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

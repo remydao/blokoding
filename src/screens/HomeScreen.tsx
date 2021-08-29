@@ -37,7 +37,7 @@ const Home = ({ navigation }: IProps) => {
           <FlatButton text="Aide" color={Colors.turquoise} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Help')}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
+          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Loading', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
