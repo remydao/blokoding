@@ -22,6 +22,7 @@ import { characterImages, getCharacterImages } from '../constants/CharacterImage
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
+import BlockSchema from '../components/BlockSchema';
 
 interface IProps {
     navigation: any,
@@ -79,16 +80,16 @@ class Game extends Component<IProps, IState> {
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+            /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);*/
             /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                     new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
             //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
             // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
-            //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(null)))))), Characters.MrMustache);
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -530,6 +531,7 @@ class Game extends Component<IProps, IState> {
                             <Character position={[0, this.state.playerPosY]} numImagesPerLine={10} image={this.images} imageNum={this.state.imageNum} maxImages={60} srcWidth={218} srcHeight={258} />
                             { arr }
                             <Inventory inventory={this.state.inventory} />
+                            <BlockSchema actions={this.actions} /> 
                         </View>)
         //          }
         //          <StatusBar translucent backgroundColor="transparent"/>
