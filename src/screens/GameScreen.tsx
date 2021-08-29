@@ -22,7 +22,11 @@ import { characterImages, getCharacterImages } from '../constants/CharacterImage
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
+<<<<<<< HEAD
 import SpriteSheet from 'rn-sprite-sheet';
+=======
+import BlockSchema from '../components/BlockSchema';
+>>>>>>> 2f5e97c45a61ce71ee8d50e9d4f1795919008440
 
 interface IProps {
     navigation: any,
@@ -91,8 +95,13 @@ class Game extends Component<IProps, IState> {
                                     new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                     new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
             //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
+<<<<<<< HEAD
             //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
             //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+=======
+            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(null)))))), Characters.MrMustache);
+>>>>>>> 2f5e97c45a61ce71ee8d50e9d4f1795919008440
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
@@ -570,12 +579,22 @@ class Game extends Component<IProps, IState> {
                             <Character position={[0, this.state.playerPosY]} image={this.images} spriteSheet={this.state.spriteSheet} />
                             { arr }
                             <Inventory inventory={this.state.inventory} />
+<<<<<<< HEAD
                         </View>//)
             //      }
             //      <StatusBar translucent backgroundColor="transparent"/>
             //     </View>
             //  </View>
         )
+=======
+                            <BlockSchema actions={this.actions} /> 
+                        </View>)
+        //          }
+        //          <StatusBar translucent backgroundColor="transparent"/>
+        //         </View>
+        //      </View>
+        // )
+>>>>>>> 2f5e97c45a61ce71ee8d50e9d4f1795919008440
     }
 }
 

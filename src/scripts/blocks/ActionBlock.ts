@@ -11,7 +11,6 @@ class MoveBlock extends StructureBlock {
         if (!engine.isMounted())
             return;
 
-        console.log("move");
         await engine.move();
         await engine.checkState();
 
@@ -80,7 +79,7 @@ class UseBlock extends StructureBlock {
         if (!engine.isMounted())
             return;
 
-        const item = this.itemBlock.execute();
+        const item = await this.itemBlock.execute();
         if (await engine.use(item)) {
             if (this.nextBlock) {
                 await this.nextBlock.execute(engine);
@@ -101,7 +100,7 @@ class SpeakBlock extends StructureBlock {
 
         console.log("speak");
         if (this.nextBlock) {
-            this.nextBlock.execute();
+            await this.nextBlock.execute();
         }
     }
 }

@@ -59,10 +59,10 @@ const checkVisionResp = (str: string, allCards: string[]) => {
 
 
 const dropProblematicTokens = (allCards: []) => {
-    const pbTokens = ['x', 't', 'y'];
+    const pbTokens = ['x', 't', 'y', 'T', 'Y', 'X'];
 
     const filtered = allCards.filter(function(value, index, arr) {
-        return !pbTokens.includes(allCards[index]);
+        return !pbTokens.includes(allCards[index].text);
     })
 
     return filtered;

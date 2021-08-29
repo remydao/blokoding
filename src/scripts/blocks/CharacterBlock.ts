@@ -4,7 +4,7 @@ import { CodeBlock, StructureBlock } from "./MainBlocks";
 
 class CharacterBlock extends StructureBlock {
     private character;
-    constructor(nextBlock: CodeBlock | null, character: string) {
+    constructor(nextBlock: StructureBlock | null, character: string) {
         super(nextBlock);
         this.character = character;
     }
