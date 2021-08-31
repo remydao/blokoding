@@ -40,7 +40,11 @@ interface IState {
     inventory: any,
     imageNum: number,
     isStartAnimation: boolean,
-    spriteSheet: SpriteSheet | null
+    spriteSheet: SpriteSheet | null,
+    image: any,
+    columns: number,
+    rows: number,
+    numSpritesInSpriteSheet: number,
 }
 
 class Game extends Component<IProps, IState> {
@@ -62,10 +66,31 @@ class Game extends Component<IProps, IState> {
     private images: any;
     private numFramesPerImage: number;
     private numFrame: number;
-    private sprite: SpriteSheet;
+
 
     constructor(props: IProps) {
         super(props);
+
+        if (props.route.params.cameraMode == CameraMode.TEST) {
+            /*  this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+                                      new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
+                                      new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
+                                      new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);*/
+  
+              this.actions = new CharacterBlock(new JumpBlock(new MoveBlock(null)), Characters.MrMustache);
+              /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+                                      new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
+                                      new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
+              //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
+              //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+              //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+        } else {
+            this.actions = props.route.params.actions;
+            console.log(this.actions);
+        }
+
+        this.images = getCharacterImages(this.actions.character);
+
         this.state = {
             bg0Pos: 0,
             bg1Pos: EngineConstants.MAX_WIDTH,
@@ -77,30 +102,20 @@ class Game extends Component<IProps, IState> {
             inventory: {},
             imageNum: 0,
             isStartAnimation: false,
-            spriteSheet: null
+            spriteSheet: null,
+            image: this.images.move[0],
+            columns: 9,
+            rows: 7,
+            numSpritesInSpriteSheet: 60,
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
 
-        if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
-                                    new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
-                                    new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);
-            /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
-                                    new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
-            //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
-            //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
-            //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
-        } else {
-            this.actions = props.route.params.actions;
-            console.log(this.actions);
-        }
+        
 
         console.log(this.actions.character);
 
-        this.images = getCharacterImages(this.actions.character);
+        
         this.numFramesPerImage = 1;
         this.numFrame = 0;
     }
@@ -275,22 +290,6 @@ class Game extends Component<IProps, IState> {
         
         var self = this;
 
-        this.setState({
-            spriteSheet: <SpriteSheet
-                ref={ref => {this.sprite = ref}}
-                source={this.images.move[0]}
-                columns={9}
-                rows={7}
-                animations={{ "move": Array.from({ length: 60 }, (v, i) => i)}}
-                width={EngineConstants.CELL_SIZE * 2}/>
-        });
-
-        this.sprite.play({
-            type: "move",
-            fps: 60,
-            loop: true,
-            resetAfterFinish: false,
-        });
 
         return await new Promise<void>(resolve => {                
             movePos();
@@ -312,18 +311,22 @@ class Game extends Component<IProps, IState> {
                 if (!self.mounted)
                     resolve();
 
-                let currentImageNum = self.getNewImage()
+                // let currentImageNum = self.getNewImage()
 
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
-                    imageNum: currentImageNum,
+                    image: self.images.move[0],
+                    columns: 9,
+                    rows: 7,
+                    numSpritesInSpriteSheet: 60,
+                   // imageNum: // currentImageNum,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE) {
                     self.characterPos++;
-                    self.sprite.reset();
+                    // self.moveSprite.reset();
                     resolve();
                 }
                 else {
@@ -340,22 +343,7 @@ class Game extends Component<IProps, IState> {
 
         var self = this;
 
-        this.setState({
-            spriteSheet: <SpriteSheet
-                ref={ref => {this.sprite = ref}}
-                source={this.images.jump[0]}
-                columns={10}
-                rows={24}
-                animations={{ "jump": Array.from({ length: 240 }, (v, i) => i)}}
-                width={EngineConstants.CELL_SIZE * 2}/>
-        });
-
-        this.sprite.play({
-            type: "jump",
-            fps: 60,
-            loop: true,
-            resetAfterFinish: false,
-        });
+        // 10 - 24 - 240
 
         return await new Promise<void>(resolve => {
             // Fix memory leak when quitting
@@ -382,7 +370,7 @@ class Game extends Component<IProps, IState> {
                 if (!self.mounted)
                     resolve();
 
-                let currentImageNum = self.getNewImage()
+                // let currentImageNum = self.getNewImage()
 
 
                 self.setState({
@@ -390,12 +378,16 @@ class Game extends Component<IProps, IState> {
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     playerPosY: playerPosY,
-                    imageNum: currentImageNum,
+                    image: self.images.jump[0],
+                    columns: 10,
+                    rows: 24,
+                    numSpritesInSpriteSheet: 240,
+                    // imageNum: currentImageNum,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
                     self.characterPos += numCells;
-                    self.sprite.reset();
+                    // self.jumpSprite.reset();
                     resolve();
                 }
                 else {
@@ -567,7 +559,7 @@ class Game extends Component<IProps, IState> {
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character position={[0, this.state.playerPosY]} image={this.images} spriteSheet={this.state.spriteSheet} />
+                            <Character key={this.state.columns} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet}/>
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                         </View>//)
