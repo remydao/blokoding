@@ -31,9 +31,8 @@ class InstructionBlock extends StructureBlock {
         super();
         let child = new.target.name;
         if (child === ForBlock.name) {
-            addBlockSchemaRow(BlockType.Instruction, BlockType.Item);
+            addBlockSchemaRow(BlockType.Instruction, BlockType.Number);
         } else {
-            console.log(child);
             addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Item);         
         }
     }

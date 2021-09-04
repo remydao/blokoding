@@ -5,7 +5,8 @@ enum BlockType {
     SecondaryInstruction,
     Condition,
     Item, 
-    Environment
+    Environment,
+    Number
 }
 
 const Characters = {

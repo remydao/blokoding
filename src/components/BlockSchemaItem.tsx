@@ -15,7 +15,7 @@ interface IState {
 
 const blockColors = {
     [BlockType.Character]: {
-        inactive: '#F5ADAB',
+        inactive: '#FC5958',
         active: '#FC5958'
     },
     [BlockType.Action]: {
@@ -41,6 +41,10 @@ const blockColors = {
     [BlockType.Environment]: {
         inactive: '#39E083',
         active: Colors.dark_turquoise
+    },
+    [BlockType.Number]: {
+        inactive: '#F5ADAB',
+        active: '#FC5958'
     }
 };
 
