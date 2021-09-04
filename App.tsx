@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import CustomHeader from './src/components/CustomHeader';
-import {Home, Camera, Help, Options, Discover, Game, LevelScreen} from './src/screens/Screens';
+import {Camera, Help, Options, Discover, Game, LevelScreen, HomeScreen} from './src/screens/Screens';
 import Colors from "./src/constants/Colors";
 import EnigmaScreen from './src/screens/EnigmaScreen';
 
@@ -26,8 +26,8 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center'}}>
-        <Stack.Screen name="Home" component={Home} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
+      <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center'}}>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
         <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
         <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <CustomHeader title="Aide" backgroundColor={Colors.dark_purple}/>}}/>
         <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.dark_purple}/>}}/>

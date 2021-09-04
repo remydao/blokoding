@@ -49,6 +49,12 @@ class Camera extends Component<IProps, IState> {
       this.setState({isLoaded: true})
     }
 
+    componentWillUnmount(){
+      if (this.props.route.params.music !== null && this.props.route.params.music !== undefined) {
+        this.props.route.params.music.play();
+      }
+    }
+
     render() {
       const {modalVisible} = this.state;
       return (
