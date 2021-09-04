@@ -1,20 +1,24 @@
+import { BlockType } from "../../constants/BlockType";
+import { addBlockSchemaRow } from "../parsing/Parser";
+import { DataBlock } from "./DataBlock";
 import { CodeBlock, ConditionBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
-    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
-        super(predicateBlock, execBlock, nextBlock);
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
         var n = this.predicateBlock.execute();
         let i = 0;
-
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
+            engine.setActiveBlockSchemaItem(this.index);
             // If GameEngine is unmounted
             if (!engine.isMounted())
                 return;
 
             if (this.execBlock) {
+
                 await this.execBlock.execute(engine);
             }
             
@@ -28,13 +32,13 @@ class ForBlock extends InstructionBlock {
 
 
 class IfBlock extends InstructionBlock {
-    private nextIfBlock;
-    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextIfBlock: IfBlock, nextBlock: StructureBlock) {
-        super(predicateBlock, execBlock, nextBlock);
-        this.nextIfBlock = nextIfBlock;
+    public nextIfBlock: IfBlock;
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
 
         // If GameEngine is unmounted
         if (!engine.isMounted())
@@ -52,12 +56,14 @@ class IfBlock extends InstructionBlock {
 }
 
 class WhileBlock extends InstructionBlock {
-    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock) {
-        super(predicateBlock, execBlock, nextBlock);
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && this.predicateBlock.execute(engine)) {
+            engine.setActiveBlockSchemaItem(this.index);
+
             // If GameEngine is unmounted
             if (!engine.isMounted())
                 return;

@@ -9,7 +9,7 @@ class DataBlock extends CodeBlock {
         this.value = value;
     }
 
-    async execute() {
+    execute() : string | number {
         return this.value;
     }
 }

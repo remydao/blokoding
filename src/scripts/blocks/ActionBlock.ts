@@ -1,12 +1,14 @@
 import { DataBlock } from "./DataBlock";
-import { StructureBlock } from "./MainBlocks";
+import { ActionBlock, StructureBlock } from "./MainBlocks";
 
-class MoveBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
-        super(nextBlock);
+class MoveBlock extends ActionBlock {
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+        
         // If GameEngine is unmounted
         if (!engine.isMounted())
             return;
@@ -20,17 +22,18 @@ class MoveBlock extends StructureBlock {
     }
 }
 
-class JumpBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
-        super(nextBlock);
+class JumpBlock extends ActionBlock {
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
         // If GameEngine is unmounted
         if (!engine.isMounted())
             return;
 
-        console.log("jump");
         await engine.preCheckState();
 
         if (engine.getStateHasWon()) {
@@ -47,12 +50,14 @@ class JumpBlock extends StructureBlock {
     }
 }
 
-class GrabBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
-        super(nextBlock);
+class GrabBlock extends ActionBlock {
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
         // If GameEngine is unmounted
         if (!engine.isMounted())
             return;
@@ -68,14 +73,15 @@ class GrabBlock extends StructureBlock {
     }
 }
 
-class UseBlock extends StructureBlock {
-    private itemBlock;
-    constructor(itemBlock: DataBlock, nextBlock: StructureBlock | null) {
-        super(nextBlock);
-        this.itemBlock = itemBlock;
+class UseBlock extends ActionBlock {
+    public itemBlock: DataBlock;
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
         if (!engine.isMounted())
             return;
 
@@ -88,9 +94,9 @@ class UseBlock extends StructureBlock {
     }
 }
 
-class SpeakBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
-        super(nextBlock);
+class SpeakBlock extends ActionBlock {
+    constructor() {
+        super();
     }
 
     async execute(engine: any) {

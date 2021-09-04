@@ -3,11 +3,13 @@ import { ConditionBlock } from "./MainBlocks";
 
 
 class IsInFrontBlock extends ConditionBlock {
-    constructor(entityBlock: DataBlock) {
-        super(entityBlock);
+    constructor() {
+        super();
     }
 
     execute(engine: any) : Boolean {
+        engine.setActiveBlockSchemaItem(this.index);
+
         let entity = this.entityBlock.execute();
 
         return engine.isInFront(entity);
@@ -15,11 +17,13 @@ class IsInFrontBlock extends ConditionBlock {
 }
 
 class IsOnBlock extends ConditionBlock {
-    constructor(entityBlock: DataBlock) {
-        super(entityBlock);
+    constructor() {
+        super();
     }
 
     execute(engine: any) : Boolean {
+        engine.setActiveBlockSchemaItem(this.index);
+
         let entity = this.entityBlock.execute();
 
         return engine.isOn(entity);
@@ -27,11 +31,13 @@ class IsOnBlock extends ConditionBlock {
 }
 
 class PossessBlock extends ConditionBlock {
-    constructor(entityBlock: DataBlock) {
-        super(entityBlock);
+    constructor() {
+        super();
     }
 
     execute(engine: any) : Boolean {
+        engine.setActiveBlockSchemaItem(this.index);
+
         let entity = this.entityBlock.execute();
 
         return engine.possess(entity);
