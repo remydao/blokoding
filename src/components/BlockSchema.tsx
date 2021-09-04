@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import { View, StyleSheet, ImagePropTypes } from 'react-native';
 import EngineConstants from '../constants/EngineConstants';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
+import BlockSchemaItem from './BlockSchemaItem';
+import BlockSchemaRow from './BlockSchemaRow';
 
 
 interface IProps {
-    actions: CharacterBlock
+    blockList: JSX.Element[]
 }
 
 interface IState {
@@ -19,18 +21,9 @@ export default class BlockSchema extends Component<IProps, IState> {
     }
 
     render() {
-
-        const blockList = [];
-        let actions = this.props.actions;
-        while (actions) {
-            console.log("test");
-            blockList.push((<View style={styles.block} />));
-            actions = actions.nextBlock;
-        }
-
         return (
             <View style={styles.container}>
-                { blockList }
+                { this.props.blockList }
             </View>
         )
     }
