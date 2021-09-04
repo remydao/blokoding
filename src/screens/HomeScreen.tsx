@@ -109,11 +109,7 @@ class HomeScreen extends Component<IProps, IState> {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => {
-            this.props.navigation.navigate('Loading', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})
-            this.sound.stop();
-            loadSound("buttonclick.mp3", false);
-          }}/>
+          <FlatButton text="Test" color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => this.props.navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
