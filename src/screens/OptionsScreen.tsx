@@ -17,10 +17,10 @@ const Options = ({}) => {
   return (
     <View style={styles.container}>
       <View style={styles.picker}>
-        <Picker
+        <Picker itemStyle={{height: 50}}
           selectedValue={languageContext.language}
           onValueChange={handleLanguageChange}
-          dropdownIconColor="black">
+          dropdownIconColor="#eee">
           <Picker.Item label="English" value="en"/>
           <Picker.Item label="Français" value="fr"/>
         </Picker>
@@ -29,25 +29,25 @@ const Options = ({}) => {
       <StatusBar backgroundColor={Colors.dark_purple}/>
     </View>
   );
-  };
+};
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: Colors.turquoise 
-    },
-    picker: {
-      marginTop: 50,
-      height: 50,
-      width: 150,
-      borderRadius: 10,
-      backgroundColor: Colors.dark_purple
-    },
-    image: {
-      top: 150
-    }
-  })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: Colors.turquoise 
+  },
+  picker: {
+    marginTop: 50,
+    width: 150,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: Colors.dark_purple
+  },
+  image: {
+    top: 150
+  }
+})
 
 
 export default Options;

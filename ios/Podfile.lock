@@ -384,6 +384,11 @@ PODS:
   - RNSentry (2.4.3):
     - React-Core
     - Sentry (= 6.1.4)
+  - RNSound (0.11.1):
+    - React-Core
+    - RNSound/Core (= 0.11.1)
+  - RNSound/Core (0.11.1):
+    - React-Core
   - RNTextDetector (0.0.8):
     - GoogleMLKit/TextRecognition
     - React
@@ -438,6 +443,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
+  - RNSound (from `../node_modules/react-native-sound`)
   - RNTextDetector (from `../node_modules/rn-text-detector/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -542,6 +548,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   RNTextDetector:
     :path: "../node_modules/rn-text-detector/ios"
   RNVectorIcons:
@@ -604,6 +612,7 @@ SPEC CHECKSUMS:
   RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSentry: 6f8f9ee7e4c939dcd35e5633b94d0e3782888e46
+  RNSound: 27e8268bdb0a1f191f219a33267f7e0445e8d62f
   RNTextDetector: 97972c3544614d9791daae6e5b1af5cfcbb30413
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Sentry: 9d055e2de30a77685e86b219acf02e59b82091fc
