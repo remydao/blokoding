@@ -557,12 +557,13 @@ class Game extends Component<IProps, IState> {
     }
     
     render() {
-        //set block schema
-        var blockNumber = 0;
-        this.blockSchemaRowList = this.props.route.params.blockSchemaTypeList.map((typeRow: BlockType[], index: number) => ( <BlockSchemaRow key={index} itemList={typeRow.map(type => {
-            blockNumber++;
-            return ( <BlockSchemaItem key={blockNumber} blockType={type} active={this.state.blockSchemaStatus[blockNumber]} /> );
-        })} /> ));
+        if (this.props.route.params.cameraMode !== CameraMode.TEST) {//set block schema
+            var blockNumber = 0;
+            this.blockSchemaRowList = this.props.route.params.blockSchemaTypeList.map((typeRow: BlockType[], index: number) => ( <BlockSchemaRow key={index} itemList={typeRow.map(type => {
+                blockNumber++;
+                return ( <BlockSchemaItem key={blockNumber} blockType={type} active={this.state.blockSchemaStatus[blockNumber]} /> );
+            })} /> ));
+        }
         
         let arr = this.state.map.map((item: any, index: number) => {
             if (item != Cells.Empty) {

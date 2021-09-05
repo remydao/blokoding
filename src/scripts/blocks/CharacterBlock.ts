@@ -6,8 +6,8 @@ import { CodeBlock, StructureBlock } from "./MainBlocks";
 
 class CharacterBlock extends StructureBlock {
     private character;
-    constructor(character: string) {
-        super();
+    constructor(nextBlock: StructureBlock | null = null, character: string) {
+        super(nextBlock);
         this.character = character;
         addBlockSchemaRow(BlockType.Character);
     }

@@ -3,8 +3,8 @@ import { ConditionBlock } from "./MainBlocks";
 
 
 class IsInFrontBlock extends ConditionBlock {
-    constructor() {
-        super();
+    constructor(entityBlock: DataBlock) {
+        super(entityBlock);
     }
 
     execute(engine: any) : Boolean {
@@ -17,8 +17,8 @@ class IsInFrontBlock extends ConditionBlock {
 }
 
 class IsOnBlock extends ConditionBlock {
-    constructor() {
-        super();
+    constructor(entityBlock: DataBlock) {
+        super(entityBlock);
     }
 
     execute(engine: any) : Boolean {
@@ -31,8 +31,8 @@ class IsOnBlock extends ConditionBlock {
 }
 
 class PossessBlock extends ConditionBlock {
-    constructor() {
-        super();
+    constructor(entityBlock: DataBlock) {
+        super(entityBlock);
     }
 
     execute(engine: any) : Boolean {

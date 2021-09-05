@@ -2,8 +2,8 @@ import { DataBlock } from "./DataBlock";
 import { ActionBlock, StructureBlock } from "./MainBlocks";
 
 class MoveBlock extends ActionBlock {
-    constructor() {
-        super();
+    constructor(nextBlock: StructureBlock | null) {
+        super(nextBlock);
     }
 
     async execute(engine: any) {
@@ -23,8 +23,8 @@ class MoveBlock extends ActionBlock {
 }
 
 class JumpBlock extends ActionBlock {
-    constructor() {
-        super();
+    constructor(nextBlock: StructureBlock | null) {
+        super(nextBlock);
     }
 
     async execute(engine: any) {
@@ -51,8 +51,8 @@ class JumpBlock extends ActionBlock {
 }
 
 class GrabBlock extends ActionBlock {
-    constructor() {
-        super();
+    constructor(nextBlock: StructureBlock | null) {
+        super(nextBlock);
     }
 
     async execute(engine: any) {
@@ -74,9 +74,10 @@ class GrabBlock extends ActionBlock {
 }
 
 class UseBlock extends ActionBlock {
-    public itemBlock: DataBlock;
-    constructor() {
-        super();
+    public itemBlock;
+    constructor(itemBlock: DataBlock | null = null, nextBlock: StructureBlock | null = null) {
+        super(nextBlock);
+        this.itemBlock = itemBlock;
     }
 
     async execute(engine: any) {
@@ -95,8 +96,8 @@ class UseBlock extends ActionBlock {
 }
 
 class SpeakBlock extends ActionBlock {
-    constructor() {
-        super();
+    constructor(nextBlock: StructureBlock | null) {
+        super(nextBlock);
     }
 
     async execute(engine: any) {

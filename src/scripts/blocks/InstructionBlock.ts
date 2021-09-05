@@ -4,8 +4,8 @@ import { DataBlock } from "./DataBlock";
 import { CodeBlock, ConditionBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
-    constructor() {
-        super();
+    constructor(predicateBlock: CodeBlock | null = null, execBlock: StructureBlock | null = null, nextBlock: StructureBlock | null = null) {
+        super(predicateBlock, execBlock, nextBlock);
     }
 
     async execute(engine: any) {
@@ -32,9 +32,10 @@ class ForBlock extends InstructionBlock {
 
 
 class IfBlock extends InstructionBlock {
-    public nextIfBlock: IfBlock;
-    constructor() {
-        super();
+    public nextIfBlock;
+    constructor(predicateBlock: CodeBlock | null = null, execBlock: StructureBlock | null = null, nextIfBlock: IfBlock | null = null, nextBlock: StructureBlock | null = null) {
+        super(predicateBlock, execBlock, nextBlock);
+        this.nextIfBlock = nextIfBlock;
     }
 
     async execute(engine: any) {
@@ -56,8 +57,8 @@ class IfBlock extends InstructionBlock {
 }
 
 class WhileBlock extends InstructionBlock {
-    constructor() {
-        super();
+    constructor(predicateBlock: CodeBlock | null = null, execBlock: StructureBlock | null = null, nextBlock: StructureBlock | null = null) {
+        super(predicateBlock, execBlock, nextBlock);
     }
 
     async execute(engine: any) {
