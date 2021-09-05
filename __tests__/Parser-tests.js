@@ -21,6 +21,7 @@ import { IsInFrontBlock, IsOnBlock } from '../src/scripts/blocks/ConditionBlock'
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
 jest.mock('@sentry/react-native', () => ({ init: () => jest.fn() }));
+jest.mock('react-native-sound', () => 'Sound')
 
 
 it('Character alone', () => {

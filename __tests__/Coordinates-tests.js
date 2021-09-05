@@ -10,6 +10,7 @@ import { modifyCoordinates } from '../src/scripts/corrector/coordinates';
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
 jest.mock('@sentry/react-native', () => ({ init: () => jest.fn() }));
+jest.mock('react-native-sound', () => 'Sound')
 
 it('Coordinates simple', () => {
     var ocr = [{ "bounding": { "left": 1508, "top": 864}, "text": "Avancer" }, { "bounding": { "left": 848, "top": 961 }, "text": "Bart" }];
