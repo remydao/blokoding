@@ -29,7 +29,6 @@ const HomeScreen = ({ navigation }: IProps) => {
       soundRef.current?.release();
     } 
     if(currentAppState == "active") {
-      console.log("actiiiiive")
       if (soundRef.current?.isPlaying())
         return;
       
@@ -50,7 +49,7 @@ const HomeScreen = ({ navigation }: IProps) => {
       soundRef.current = loadSound("homescreen_sound.mp3", true);
     }
     AppState.addEventListener('change', (state) => _handleAppStateChange(state));
-    return () => AppState.removeEventListener('change', (state) => {console.log("JE ME CASSE"); _handleAppStateChange(state)});
+    return () => AppState.removeEventListener('change', (state) => {_handleAppStateChange(state)});
   }, [])
 
   useFocusEffect(
