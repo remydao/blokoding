@@ -7,7 +7,7 @@ import Maps from '../constants/Maps';
 import { CameraMode } from '../constants/CameraMode';
 import EngineConstants from '../constants/EngineConstants';
 import {useLanguage} from '../datas/GetLanguage';
-import LanguageContext from '../context/ContextLanguage';
+import { useFocusEffect } from '@react-navigation/native';
 
 import {loadSound} from '../scripts/sound/sound'
 import Sound from 'react-native-sound';
@@ -18,24 +18,23 @@ interface IProps {
 
 const HomeScreen = ({ navigation }: IProps) => {
 
-  let sound: Sound;
-
+  const soundRef = React.useRef<Sound>()
   const language = useLanguage();
 
 
   const _handleAppStateChange = (currentAppState: any) => {
     if(currentAppState == "background") {
       console.log("Stop sound");
-      sound.stop();
-      sound.release();
+      soundRef.current?.stop();
+      soundRef.current?.release();
     } 
     if(currentAppState == "active") {
-    
-      if (sound.isPlaying())
+      console.log("actiiiiive")
+      if (soundRef.current?.isPlaying())
         return;
       
       console.log("Play sound");
-      sound.play((success: any) => {
+      soundRef.current?.play((success: any) => {
         if (success) {
           console.log('successfully finished playing');
         } else {
@@ -46,13 +45,22 @@ const HomeScreen = ({ navigation }: IProps) => {
   }
 
   React.useEffect(() => {
-    if (sound == undefined) {
+    if (soundRef.current == undefined) {
       console.log("loadSound: 50");
-      sound = loadSound("homescreen_sound.mp3", true);
+      soundRef.current = loadSound("homescreen_sound.mp3", true);
     }
     AppState.addEventListener('change', (state) => _handleAppStateChange(state));
-    return () => AppState.removeEventListener('change', (state) => _handleAppStateChange(state));
+    return () => AppState.removeEventListener('change', (state) => {console.log("JE ME CASSE"); _handleAppStateChange(state)});
   }, [])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (soundRef.current == undefined) {
+        soundRef.current = loadSound("homescreen_sound.mp3", true);
+      }
+      soundRef.current.play()
+  }, []))
+
 
     return (
       <View style={styles.container}>
@@ -66,35 +74,35 @@ const HomeScreen = ({ navigation }: IProps) => {
         <View style={styles.button}>
           <FlatButton text={language.discover} color={Colors.red} pressColor={Colors.dark_red} onPress={() => {
             navigation.navigate('Découverte');
-            sound.stop();
+            soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.start} color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => {
-            navigation.navigate('Take Picture', {music: sound});
-            sound.stop();
+            navigation.navigate('Take Picture', {music: soundRef.current});
+            soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.enigma} color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => {
             navigation.navigate('EnigmaScreen');
-            sound.stop();
+            soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.options} color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => {
             navigation.navigate('Options');
-            sound.stop();
+            soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.help} color={Colors.turquoise} pressColor={Colors.dark_orange } onPress={() => {
             navigation.navigate('Help');
-            sound.stop();
+            soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
         </View>
