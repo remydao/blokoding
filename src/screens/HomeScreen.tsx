@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Image, Button, StatusBar} from 'react-native';
+import React, { Component } from 'react';
+import {View, Image, StatusBar, AppState} from 'react-native';
 import Colors from '../constants/Colors';
 import { StyleSheet } from 'react-native';
 import FlatButton from '../components/FlatButton';
@@ -9,46 +9,103 @@ import EngineConstants from '../constants/EngineConstants';
 import {useLanguage} from '../datas/GetLanguage';
 import LanguageContext from '../context/ContextLanguage';
 
+import {loadSound} from '../scripts/sound/sound'
+import Sound from 'react-native-sound';
 
 interface IProps {
   navigation: any,
 }
 
-const Home = ({ navigation }: IProps) => {
+const HomeScreen = ({ navigation }: IProps) => {
+
+  let sound: Sound;
 
   const language = useLanguage();
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image
-          source={require("../assets/icon.png")}
-          resizeMode="stretch"
-          style={{width: EngineConstants.MAX_HEIGHT / 8, height: EngineConstants.MAX_HEIGHT / 8}}
-        />
+
+  const _handleAppStateChange = (currentAppState: any) => {
+    if(currentAppState == "background") {
+      console.log("Stop sound");
+      sound.stop();
+      sound.release();
+    } 
+    if(currentAppState == "active") {
+    
+      if (sound.isPlaying())
+        return;
+      
+      console.log("Play sound");
+      sound.play((success: any) => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
+    }
+  }
+
+  React.useEffect(() => {
+    if (sound == undefined) {
+      console.log("loadSound: 50");
+      sound = loadSound("homescreen_sound.mp3", true);
+    }
+    AppState.addEventListener('change', (state) => _handleAppStateChange(state));
+    return () => AppState.removeEventListener('change', (state) => _handleAppStateChange(state));
+  }, [])
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../assets/icon.png")}
+            resizeMode="stretch"
+            style={{width: EngineConstants.MAX_HEIGHT / 8, height: EngineConstants.MAX_HEIGHT / 8}}
+          />
+        </View>
+        <View style={styles.button}>
+          <FlatButton text={language.discover} color={Colors.red} pressColor={Colors.dark_red} onPress={() => {
+            navigation.navigate('Découverte');
+            sound.stop();
+            loadSound("buttonclick.mp3", false);
+          }}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text={language.start} color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => {
+            navigation.navigate('Take Picture', {music: sound});
+            sound.stop();
+            loadSound("buttonclick.mp3", false);
+          }}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text={language.enigma} color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => {
+            navigation.navigate('EnigmaScreen');
+            sound.stop();
+            loadSound("buttonclick.mp3", false);
+          }}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text={language.options} color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => {
+            navigation.navigate('Options');
+            sound.stop();
+            loadSound("buttonclick.mp3", false);
+          }}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text={language.help} color={Colors.turquoise} pressColor={Colors.dark_orange } onPress={() => {
+            navigation.navigate('Help');
+            sound.stop();
+            loadSound("buttonclick.mp3", false);
+          }}/>
+        </View>
+        <View style={styles.button}>
+          <FlatButton text={language.test} color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
+        </View>
+        <StatusBar backgroundColor={Colors.azure}/>
       </View>
-      <View style={styles.button}>
-        <FlatButton text={language.discover} color={Colors.red} pressColor={Colors.dark_red} onPress={() => navigation.navigate('Découverte')}/>
-      </View>
-      <View style={styles.button}>
-        <FlatButton text={language.start}color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => navigation.navigate('Take Picture')}/>
-      </View>
-      <View style={styles.button}>
-        <FlatButton text={language.enigma} color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => navigation.navigate('EnigmaScreen')}/>
-      </View>
-      <View style={styles.button}>
-        <FlatButton text={language.options} color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Options')}/>
-      </View>
-      <View style={styles.button}>
-        <FlatButton text={language.help} color={Colors.turquoise} pressColor={Colors.dark_orange } onPress={() => navigation.navigate('Help')}/>
-      </View>
-      <View style={styles.button}>
-        <FlatButton text={language.test}color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Loading', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
-      </View>
-      <StatusBar backgroundColor={Colors.azure}/>
-    </View>
-  );
-};
+    );
+}
+
 
 const styles = StyleSheet.create({
   container:{
@@ -69,4 +126,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home;
+export default HomeScreen;

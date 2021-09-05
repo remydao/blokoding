@@ -49,6 +49,12 @@ class Camera extends Component<IProps, IState> {
       this.setState({isLoaded: true})
     }
 
+    componentWillUnmount(){
+      if (this.props.route.params.music !== null && this.props.route.params.music !== undefined) {
+        this.props.route.params.music.play();
+      }
+    }
+
     render() {
       const {modalVisible} = this.state;
       return (
@@ -111,7 +117,7 @@ class Camera extends Component<IProps, IState> {
         
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {
-            navigation.navigate('Loading',
+            navigation.navigate('Game',
                 { actions: actions,
                   cameraMode: CameraMode.DISCOVER, 
                   mapInfo: this.props.route.params.map,
@@ -121,7 +127,7 @@ class Camera extends Component<IProps, IState> {
             this.isTakingPicture = false;
         } // Start Mode
         else {
-          navigation.navigate('Loading', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2});
+          navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2});
           this.isTakingPicture = false;
         }
       } catch (e) { // Error thrown by the parser

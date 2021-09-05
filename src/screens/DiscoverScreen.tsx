@@ -4,6 +4,7 @@ import {default as UUID} from "uuid";
 import Colors from '../constants/Colors';
 import LevelButton from '../components/LevelButton';
 import { useLanguage } from '../datas/GetLanguage';
+import {loadSound} from '../scripts/sound/sound'
 
 const DiscoverColors = [
   Colors.dark_pink,
@@ -44,6 +45,7 @@ const Discover = ({navigation, route}: IProps) => {
     }, [])
 
     const onPress = (index: number) => {
+      loadSound("buttonclick.mp3", false);
       navigation.navigate('LevelScreen', {
         levelNumber: index,
         levelType: 'tutorial'

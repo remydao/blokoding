@@ -5,6 +5,8 @@ import EnigmaButton from '../components/EnigmaButton';
 import Colors from '../constants/Colors';
 import { useLanguage } from '../datas/GetLanguage';
 
+import {loadSound} from '../scripts/sound/sound'
+
 const DiscoverColors = [
   Colors.dark_pink,
   Colors.turquoise,
@@ -44,6 +46,7 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
     }, [])
 
     const onPress = (index: number) => {
+      loadSound("buttonclick.mp3", false);
       navigation.navigate('LevelScreen', {
         levelNumber: index,
         levelType: 'enigma'
