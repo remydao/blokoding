@@ -1,0 +1,23 @@
+{
+    "en": {
+        "discover": "Discover",
+        "start": "Start",
+        "enigma": "Enigma",
+        "options": "Options",
+        "help": "Help",
+        "test": "Test",
+
+        "level": "Level"
+    },
+
+    "fr": {
+        "discover": "Decouverte",
+        "start": "Commencer",
+        "enigma": "Enigme",
+        "options": "Options",
+        "help": "Aide",
+        "test": "Test",
+
+        "level": "Niveau"
+    }
+}

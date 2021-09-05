@@ -3,22 +3,32 @@ import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
+import LanguageContext from '../context/ContextLanguage';
 
 
 const Options = ({}) => {
-    return (
-      <View style={styles.container}>
-        <View style={styles.picker}>
-          <Picker
-            dropdownIconColor="black">
-            <Picker.Item label="Français" value="fr"/>
-            <Picker.Item label="English" value="en"/>
-          </Picker>
-        </View>
-        <Image style={styles.image} source={characterImages.Harry.uri}></Image>
-        <StatusBar backgroundColor={Colors.dark_purple}/>
+
+  const languageContext = React.useContext(LanguageContext);
+
+  const handleLanguageChange = (itemValue: string, itemIndex: number) => {
+    languageContext.changeLanguage(itemValue)
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.picker}>
+        <Picker
+          selectedValue={languageContext.language}
+          onValueChange={handleLanguageChange}
+          dropdownIconColor="black">
+          <Picker.Item label="English" value="en"/>
+          <Picker.Item label="Français" value="fr"/>
+        </Picker>
       </View>
-    );
+      <Image style={styles.image} source={characterImages.Harry.uri}></Image>
+      <StatusBar backgroundColor={Colors.dark_purple}/>
+    </View>
+  );
   };
 
   const styles = StyleSheet.create({

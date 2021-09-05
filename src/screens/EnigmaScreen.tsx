@@ -3,6 +3,7 @@ import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from '
 import {default as UUID} from "uuid"; 
 import EnigmaButton from '../components/EnigmaButton';
 import Colors from '../constants/Colors';
+import { useLanguage } from '../datas/GetLanguage';
 
 const DiscoverColors = [
   Colors.dark_pink,
@@ -25,13 +26,14 @@ interface IState {
 //extends React.Component<IProps, IState>
 const EnigmaScreen = ({navigation, route}: IProps) => {
     const [buttons, setButtons] = useState<IState[]>([]);
+    const language = useLanguage()
 
     const setLevel = () => {
       let btns = [...buttons];
       //numberOfLevels
       for (let i = 0; i < 30; i++)
       {
-          const levelTitle = "Enigme " + (i + 1)
+          const levelTitle = language.enigma + ' ' + (i + 1)
           btns.push({id:UUID.v4(), value:levelTitle})
       }
       setButtons(btns);
