@@ -71,9 +71,6 @@ class Game extends Component<IProps, IState> {
     private winCondition: any;
     private initialPlayerPosY : number = EngineConstants.MAX_HEIGHT * 0.15;
     private images: any;
-    private numFramesPerImage: number;
-    private numFrame: number;
-    private sprite: SpriteSheet;
     private blockSchemaRowList: JSX.Element[] = [];
     private currActiveBlockSchemaItemIndex: number = 1;
 
@@ -136,10 +133,6 @@ class Game extends Component<IProps, IState> {
         } else {
             this.actions = props.route.params.actions;
         }
-
-        this.images = getCharacterImages(this.actions.character);
-        this.numFramesPerImage = 1;
-        this.numFrame = 0;
     }
 
     async componentDidMount() {
@@ -160,23 +153,11 @@ class Game extends Component<IProps, IState> {
                 objectsImagesArray.push(i.uri);
             }); 
 
+            objectsImagesArray.push(this.images.move[0])
+            objectsImagesArray.push(this.images.jump[0])
+
             this.loadImagesArray(objectsImagesArray).then(res => {
-
-                this.setState({ percentLoading: 67 });
-
-                if (this.props.route.params.cameraMode == CameraMode.TEST)
-                {
-                    this.loadImage(characterImages.MrMustache.uri).then(r => {
-                        this.setState({ percentLoading: 100 });
-                    });
-                }
-                else
-                {
-                    console.log(this.props.route.params.actions.character);
-                    this.loadImage(getCharacterImages(this.props.route.params.actions.character)).then(r => {
-                        this.setState({ percentLoading: 100 });
-                    });
-                }
+                this.setState({ percentLoading: 100 });
             })            
         });
 

@@ -23,6 +23,7 @@ export default class Character extends Component<IProps> {
     constructor(props: IProps) {
         super(props);
 
+        console.log(this.props.sourceImage)
         this.width = EngineConstants.CELL_SIZE * 2;
     }
 
