@@ -15,8 +15,8 @@ import {parseInit} from '../src/scripts/parsing/Parser';
 import CharacterBlock from '../src/scripts/blocks/CharacterBlock';
 import { Characters, Environments, Items } from '../src/constants/BlockType';
 import { GrabBlock, JumpBlock, MoveBlock } from '../src/scripts/blocks/ActionBlock';
-import { ForBlock, IfBlock, WhileBlock } from '../src/scripts/blocks/InstructionBlock';
-import { DataBlock } from '../src/scripts/blocks/DataBlock';
+import { ElIfBlock, ElseBlock, ForBlock, IfBlock, WhileBlock } from '../src/scripts/blocks/InstructionBlock';
+import { EnvironmentBlock, ItemBlock, NumberBlock } from '../src/scripts/blocks/DataBlock';
 import { IsInFrontBlock, IsOnBlock } from '../src/scripts/blocks/ConditionBlock';
 
 jest.mock('react-native-permissions', () => jest.requireActual('../node_modules/react-native-permissions/mock').default)
@@ -75,7 +75,7 @@ it('Simple for', () => {
   const forBlock = blocks.nextBlock;
 
   expect(forBlock).toBeInstanceOf(ForBlock);
-  expect(forBlock.predicateBlock).toBeInstanceOf(DataBlock);
+  expect(forBlock.predicateBlock).toBeInstanceOf(NumberBlock);
   expect(forBlock.predicateBlock.value).toBe(10);
   expect(forBlock.execBlock).toBeInstanceOf(MoveBlock);
   expect(forBlock.execBlock.nextBlock).toBe(null);
@@ -92,7 +92,7 @@ it('Simple for corrector', () => {
   const forBlock = blocks.nextBlock;
 
   expect(forBlock).toBeInstanceOf(ForBlock);
-  expect(forBlock.predicateBlock).toBeInstanceOf(DataBlock);
+  expect(forBlock.predicateBlock).toBeInstanceOf(NumberBlock);
   expect(forBlock.predicateBlock.value).toBe(10);
   expect(forBlock.execBlock).toBeInstanceOf(MoveBlock);
   expect(forBlock.execBlock.nextBlock).toBe(null);
@@ -113,7 +113,7 @@ it('Simple While', () => {
   const predicateBlock = whileBlock.predicateBlock;
   
   expect(predicateBlock).toBeInstanceOf(IsInFrontBlock);
-  expect(predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(predicateBlock.entityBlock).toBeInstanceOf(EnvironmentBlock);
   expect(predicateBlock.entityBlock.value).toBe(Environments.Puddle);
   
   const execBlock = whileBlock.execBlock;
@@ -138,7 +138,7 @@ it('Simple While corrector', () => {
   const predicateBlock = whileBlock.predicateBlock;
   
   expect(predicateBlock).toBeInstanceOf(IsInFrontBlock);
-  expect(predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(predicateBlock.entityBlock).toBeInstanceOf(EnvironmentBlock);
   expect(predicateBlock.entityBlock.value).toBe(Environments.Puddle);
   
   const execBlock = whileBlock.execBlock;
@@ -163,7 +163,7 @@ it('Simple If', () => {
   const predicateBlock = ifBlock.predicateBlock;
   
   expect(predicateBlock).toBeInstanceOf(IsInFrontBlock);
-  expect(predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(predicateBlock.entityBlock).toBeInstanceOf(EnvironmentBlock);
   expect(predicateBlock.entityBlock.value).toBe(Environments.Puddle);
   
   const moveBlock = ifBlock.execBlock;
@@ -191,7 +191,7 @@ it('Simple If corrector', () => {
   const predicateBlock = ifBlock.predicateBlock;
   
   expect(predicateBlock).toBeInstanceOf(IsInFrontBlock);
-  expect(predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(predicateBlock.entityBlock).toBeInstanceOf(EnvironmentBlock);
   expect(predicateBlock.entityBlock.value).toBe(Environments.Puddle);
   
   const moveBlock = ifBlock.execBlock;
@@ -215,7 +215,7 @@ it('Simple For and If', () => {
   const forBlock = blocks.nextBlock;
 
   expect(forBlock).toBeInstanceOf(ForBlock);
-  expect(forBlock.predicateBlock).toBeInstanceOf(DataBlock);
+  expect(forBlock.predicateBlock).toBeInstanceOf(NumberBlock);
   expect(forBlock.predicateBlock.value).toBe(10);
 
   const execBlock = forBlock.execBlock;
@@ -224,7 +224,7 @@ it('Simple For and If', () => {
   const ifBlock = execBlock.nextBlock;
   expect(ifBlock).toBeInstanceOf(IfBlock);
   expect(ifBlock.predicateBlock).toBeInstanceOf(IsOnBlock);
-  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(ItemBlock);
   expect(ifBlock.predicateBlock.entityBlock.value).toBe(Items.Key);
 
   expect(ifBlock.execBlock).toBeInstanceOf(GrabBlock);
@@ -243,7 +243,7 @@ it('Simple For and If corrector', () => {
   const forBlock = blocks.nextBlock;
 
   expect(forBlock).toBeInstanceOf(ForBlock);
-  expect(forBlock.predicateBlock).toBeInstanceOf(DataBlock);
+  expect(forBlock.predicateBlock).toBeInstanceOf(NumberBlock);
   expect(forBlock.predicateBlock.value).toBe(10);
 
   const execBlock = forBlock.execBlock;
@@ -252,7 +252,7 @@ it('Simple For and If corrector', () => {
   const ifBlock = execBlock.nextBlock;
   expect(ifBlock).toBeInstanceOf(IfBlock);
   expect(ifBlock.predicateBlock).toBeInstanceOf(IsOnBlock);
-  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(ItemBlock);
   expect(ifBlock.predicateBlock.entityBlock.value).toBe(Items.Key);
 
   expect(ifBlock.execBlock).toBeInstanceOf(GrabBlock);
@@ -272,20 +272,19 @@ it ("Simple if elif", () => {
   const ifBlock = blocks.nextBlock;
   expect(ifBlock).toBeInstanceOf(IfBlock);
   expect(ifBlock.predicateBlock).toBeInstanceOf(IsInFrontBlock);
-  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(EnvironmentBlock);
   expect(ifBlock.predicateBlock.entityBlock.value).toBe(Environments.Puddle);
 
   expect(ifBlock.execBlock).toBeInstanceOf(JumpBlock);
 
   const nextIfBlock = ifBlock.nextIfBlock;
 
-  expect(nextIfBlock).toBeInstanceOf(IfBlock);
+  expect(nextIfBlock).toBeInstanceOf(ElIfBlock);
   expect(nextIfBlock.predicateBlock).toBeInstanceOf(IsOnBlock);
-  expect(nextIfBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(nextIfBlock.predicateBlock.entityBlock).toBeInstanceOf(ItemBlock);
   expect(nextIfBlock.predicateBlock.entityBlock.value).toBe(Items.Key);
 
   expect(nextIfBlock.execBlock).toBeInstanceOf(GrabBlock);
-  expect(nextIfBlock.nextBlock).toBe(null);
 })
 
 
@@ -300,14 +299,13 @@ it ("Simple if else", () => {
   const ifBlock = blocks.nextBlock;
   expect(ifBlock).toBeInstanceOf(IfBlock);
   expect(ifBlock.predicateBlock).toBeInstanceOf(IsInFrontBlock);
-  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(DataBlock);
+  expect(ifBlock.predicateBlock.entityBlock).toBeInstanceOf(EnvironmentBlock);
   expect(ifBlock.predicateBlock.entityBlock.value).toBe(Environments.Puddle);
 
   expect(ifBlock.execBlock).toBeInstanceOf(JumpBlock);
 
   const elseBlock = ifBlock.nextIfBlock;
 
-  expect(elseBlock).toBeInstanceOf(IfBlock);
+  expect(elseBlock).toBeInstanceOf(ElseBlock);
   expect(elseBlock.execBlock).toBeInstanceOf(GrabBlock);
-  expect(elseBlock.nextBlock).toBe(null);
 })
