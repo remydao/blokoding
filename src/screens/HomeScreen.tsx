@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }: IProps) => {
   React.useEffect(() => {
     if (soundRef.current == undefined) {
       console.log("loadSound: 50");
-      soundRef.current = loadSound("homescreen_sound.mp3", true);
+      soundRef.current = loadSound("homescreen_sound.mp3", true, 1);
     }
     AppState.addEventListener('change', (state) => _handleAppStateChange(state));
     return () => AppState.removeEventListener('change', (state) => {_handleAppStateChange(state)});
@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }: IProps) => {
   useFocusEffect(
     React.useCallback(() => {
       if (soundRef.current == undefined) {
-        soundRef.current = loadSound("homescreen_sound.mp3", true);
+        soundRef.current = loadSound("homescreen_sound.mp3", true, 1);
       }
       soundRef.current.play()
   }, []))

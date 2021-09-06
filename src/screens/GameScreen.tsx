@@ -22,6 +22,8 @@ import { characterImages, getCharacterImages } from '../constants/CharacterImage
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
+import { EnvironmentImages } from '../constants/EnvironmentImages';
+import {loadSound} from '../scripts/sound/sound'
 import SpriteSheet from 'rn-sprite-sheet';
 import BlockSchema from '../components/BlockSchema';
 import BlockSchemaItem from '../components/BlockSchemaItem';
@@ -382,6 +384,7 @@ class Game extends Component<IProps, IState> {
     // General function to jump the character (used in ActionBlock.js)
     // num_cell is the number of cell the animation last
     async jump(numCells : number = 2) {
+        loadSound("jump.mp3", false, 1);
         this.moveDistance = 0;
 
         var self = this;
