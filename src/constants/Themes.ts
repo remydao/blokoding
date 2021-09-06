@@ -13,5 +13,16 @@ export default {
         background1: require("../assets/backgrounds/forest_background1.png"),
         background2: require("../assets/backgrounds/forest_background2.png")
     },
-    City: {}
+    City: {
+        background1: require("../assets/backgrounds/city_background1.png"),
+        background2: require("../assets/backgrounds/city_background2.png")
+    },
+    Beach: {
+        background1: require("../assets/backgrounds/beach_background1.png"),
+        background2: require("../assets/backgrounds/beach_background2.png")
+    },
+    ForestFall: {
+        background1: require("../assets/backgrounds/forest_fall_background1.png"),
+        background2: require("../assets/backgrounds/forest_fall_background2.png")
+    }
 }

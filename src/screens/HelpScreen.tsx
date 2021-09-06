@@ -7,15 +7,15 @@ interface IProps {
 
 const Help = ({ navigation }: IProps) => {
   return (
-    <ScrollView style={{flex:1}}>
+    <ScrollView style={{flex: 1, backgroundColor: Colors.turquoise}}>
       <View style={styles.container}>
-        <Text style={styles.textTitle}><Image style={{width:30, height:30}}source={require('../assets/sun.png')}/> Principe général</Text>
+        <Text style={styles.textTitle}><Image style={{width:30, height:30}} source={require('../assets/sun.png')}/> Principe général</Text>
         <Text style={styles.text}>Blokoding fonctionne de la manière suivante : vous prenez une photographie des cartes que vous ordonnez de manière à faire un programme. L'application se charge de déchiffer les cartes et de créer le programme et le lancer.</Text>
         
-        <Text style={styles.textTitle}><Image style={{width:30, height:30}}source={require('../assets/sun.png')}/> Mode Découverte</Text>
+        <Text style={styles.textTitle}><Image style={{width:30, height:30}} source={require('../assets/sun.png')}/> Mode Découverte</Text>
         <Text style={styles.text}>Le mode découverte est un tutoriel. Il permet de se familiariser avec les principes de Blokoding. Il est fortement recommandé de suivre ce mode pour bien comprendre le jeu.</Text>
         
-        <Text style={styles.textTitle}><Image style={{width:30, height:30}}source={require('../assets/sun.png')}/> Mode Enigme</Text>
+        <Text style={styles.textTitle}><Image style={{width:30, height:30}} source={require('../assets/sun.png')}/> Mode Enigme</Text>
         <Text style={styles.text}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!</Text>
 
         <StatusBar backgroundColor={Colors.dark_purple}/>
@@ -26,9 +26,8 @@ const Help = ({ navigation }: IProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
-    backgroundColor: Colors.turquoise,
+    padding: 20,
   },
   textTitle: {
     marginBottom: 10,
