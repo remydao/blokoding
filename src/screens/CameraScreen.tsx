@@ -113,7 +113,7 @@ class Camera extends Component<IProps, IState> {
         modifyCoordinates(visionResp);
         visionResp = dropProblematicTokens(visionResp);
         // Change here visionResp to force the detection
-        visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '3'}, {text: 'avancer'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'},{text: 'fin'}, {text: 'fin'}];
+        // visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '3'}, {text: 'avancer'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'},{text: 'fin'}, {text: 'fin'}];
         // visionResp = [{text: 'Mustache'}, {text: 'repeter'}, {text: '10'}]
 
         const result = parseInit(visionResp);
@@ -122,10 +122,12 @@ class Camera extends Component<IProps, IState> {
         if (this.props.route.params && this.props.route.params.map) {
             navigation.navigate('Game',
                 { actions: result[0], 
+                  blockSchemaTypeList: result[1],
                   cameraMode: CameraMode.DISCOVER, 
                   mapInfo: this.props.route.params.map,
                   levelNumber: this.props.route.params.levelNumber,
                   levelType: this.props.route.params.levelType,
+                  nCard: result[2]
                 });
             this.isTakingPicture = false;
         } // Start Mode
