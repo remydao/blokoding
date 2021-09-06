@@ -1,6 +1,6 @@
 import Sound from 'react-native-sound';
 
-    const loadSound = (soundFileName: string, isLooping: boolean) => {
+    const loadSound = (soundFileName: string, isLooping: boolean, volume = 1) => {
 
     // Enable playback in silence mode
     Sound.setCategory('Playback');
@@ -16,7 +16,7 @@ import Sound from 'react-native-sound';
 
         // loaded successfully
         console.log('duration in seconds: ' + soundPlay.getDuration() + 'sound: ' + `${soundFileName}`);
-        soundPlay.setVolume(1);
+        soundPlay.setVolume(volume);
 
         if (isLooping) {
             soundPlay.setNumberOfLoops(-1);
