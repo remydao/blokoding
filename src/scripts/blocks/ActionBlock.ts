@@ -1,17 +1,18 @@
 import { DataBlock } from "./DataBlock";
-import { StructureBlock } from "./MainBlocks";
+import { ActionBlock, StructureBlock } from "./MainBlocks";
 
-class MoveBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
+class MoveBlock extends ActionBlock {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+        
         // If GameEngine is unmounted
         if (!engine.isMounted())
             return;
 
-        console.log("move");
         await engine.move();
         await engine.checkState();
 
@@ -21,17 +22,18 @@ class MoveBlock extends StructureBlock {
     }
 }
 
-class JumpBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
+class JumpBlock extends ActionBlock {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
         // If GameEngine is unmounted
         if (!engine.isMounted())
             return;
 
-        console.log("jump");
         await engine.preCheckState();
 
         if (engine.getStateHasWon()) {
@@ -48,12 +50,14 @@ class JumpBlock extends StructureBlock {
     }
 }
 
-class GrabBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
+class GrabBlock extends ActionBlock {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
         // If GameEngine is unmounted
         if (!engine.isMounted())
             return;
@@ -69,18 +73,20 @@ class GrabBlock extends StructureBlock {
     }
 }
 
-class UseBlock extends StructureBlock {
-    private itemBlock;
-    constructor(itemBlock: DataBlock, nextBlock: StructureBlock | null) {
+class UseBlock extends ActionBlock {
+    public itemBlock;
+    constructor(itemBlock: DataBlock | null = null, nextBlock: StructureBlock | null = null) {
         super(nextBlock);
         this.itemBlock = itemBlock;
     }
 
     async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
         if (!engine.isMounted())
             return;
 
-        const item = this.itemBlock.execute();
+        const item = await this.itemBlock.execute();
         if (await engine.use(item)) {
             if (this.nextBlock) {
                 await this.nextBlock.execute(engine);
@@ -89,8 +95,8 @@ class UseBlock extends StructureBlock {
     }
 }
 
-class SpeakBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
+class SpeakBlock extends ActionBlock {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
@@ -101,7 +107,7 @@ class SpeakBlock extends StructureBlock {
 
         console.log("speak");
         if (this.nextBlock) {
-            this.nextBlock.execute();
+            await this.nextBlock.execute();
         }
     }
 }

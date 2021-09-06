@@ -1,14 +1,24 @@
+import { BlockType } from "../../constants/BlockType";
 import Game from "../../screens/GameScreen";
+import { addBlockSchemaRow } from "../parsing/Parser";
+import { UseBlock } from "./ActionBlock";
 import { DataBlock } from "./DataBlock";
+import { ForBlock } from "./InstructionBlock";
 
 class CodeBlock {
+    static blockCount = 0;
+    protected index;
+    constructor() {
+        CodeBlock.blockCount++;
+        this.index = CodeBlock.blockCount;
+    }
     execute(engine: Game) {
         throw "not implemented";
     }
 }
 
 class StructureBlock extends CodeBlock {
-    protected nextBlock;
+    public nextBlock;
     constructor(nextBlock: StructureBlock | null) {
         super();
         this.nextBlock = nextBlock;
@@ -16,21 +26,40 @@ class StructureBlock extends CodeBlock {
 }
 
 class InstructionBlock extends StructureBlock {
-    protected execBlock;
-    protected predicateBlock;
-    constructor(predicateBlock: CodeBlock, execBlock: StructureBlock, nextBlock: StructureBlock | null) {
+    public predicateBlock;
+    public execBlock;
+    constructor(predicateBlock: CodeBlock | null, execBlock: StructureBlock | null, nextBlock: StructureBlock | null) {
         super(nextBlock);
-        this.execBlock = execBlock;
         this.predicateBlock = predicateBlock;
+        this.execBlock = execBlock;
+        let child = new.target.name;
+        if (child === "ForBlock"/*ForBlock.name*/) {
+            addBlockSchemaRow(BlockType.Instruction, BlockType.Number);
+        } else {
+            addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Item);         
+        }
+    }
+}
+
+class ActionBlock extends StructureBlock {
+    constructor(nextBlock: StructureBlock | null) {
+        super(nextBlock);
+
+        let child = new.target.name;
+        if (child === "UseBlock"/*UseBlock.name*/) {
+            addBlockSchemaRow(BlockType.Action, BlockType.Item);
+        } else {
+            addBlockSchemaRow(BlockType.Action);         
+        }
     }
 }
 
 class ConditionBlock extends CodeBlock {
-    protected entityBlock;
+    public entityBlock;
     constructor(entityBlock: DataBlock) {
         super();
         this.entityBlock = entityBlock;
     }
 }
 
-export { CodeBlock, StructureBlock, InstructionBlock, ConditionBlock };
+export { CodeBlock, StructureBlock, InstructionBlock, ActionBlock, ConditionBlock };

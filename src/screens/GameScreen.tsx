@@ -4,7 +4,7 @@ import { View, StatusBar, Image} from 'react-native';
 import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
 import { MoveBlock, JumpBlock, GrabBlock, UseBlock } from '../scripts/blocks/ActionBlock';
-import { Characters, Environments, Items } from '../constants/BlockType';
+import { BlockType, Characters, Environments, Items } from '../constants/BlockType';
 import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import { DataBlock } from '../scripts/blocks/DataBlock';
@@ -23,6 +23,10 @@ import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
 import SpriteSheet from 'rn-sprite-sheet';
+import BlockSchema from '../components/BlockSchema';
+import BlockSchemaItem from '../components/BlockSchemaItem';
+import BlockSchemaRow from '../components/BlockSchemaRow';
+import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
 
 interface IProps {
     navigation: any,
@@ -45,6 +49,7 @@ interface IState {
     columns: number,
     rows: number,
     numSpritesInSpriteSheet: number,
+    blockSchemaStatus: boolean[]
 }
 
 class Game extends Component<IProps, IState> {
@@ -66,7 +71,9 @@ class Game extends Component<IProps, IState> {
     private images: any;
     private numFramesPerImage: number;
     private numFrame: number;
-
+    private sprite: SpriteSheet;
+    private blockSchemaRowList: JSX.Element[] = [];
+    private currActiveBlockSchemaItemIndex: number = 1;
 
     constructor(props: IProps) {
         super(props);
@@ -107,19 +114,29 @@ class Game extends Component<IProps, IState> {
             columns: 9,
             rows: 7,
             numSpritesInSpriteSheet: 60,
+            blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false)
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
+        if (props.route.params.cameraMode == CameraMode.TEST) {
+            this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+                                    new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
+                                    new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);
+            /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
+                                    new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
+                                    new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
+            //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
+            // this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(null)))))), Characters.MrMustache);
+        } else {
+            this.actions = props.route.params.actions;
+        }
 
-        
-
-        console.log(this.actions.character);
-
-        
+        this.images = getCharacterImages(this.actions.character);
         this.numFramesPerImage = 1;
         this.numFrame = 0;
     }
-
 
     async componentDidMount() {
         this.mounted = true;
@@ -284,6 +301,16 @@ class Game extends Component<IProps, IState> {
         return Math.floor((120 * progress) % 60);
     }
 
+    setActiveBlockSchemaItem(index: number) {
+        this.setState(prevState => {
+            let blockSchemaStatus = prevState.blockSchemaStatus;
+            blockSchemaStatus[this.currActiveBlockSchemaItemIndex] = false;
+            blockSchemaStatus[index] = true;
+            return {blockSchemaStatus};
+        })
+        this.currActiveBlockSchemaItemIndex = index;
+    }
+
     // Method to move the character (used in ActionBlock.js)
     async move() {
         this.moveDistance = 0
@@ -415,7 +442,7 @@ class Game extends Component<IProps, IState> {
             inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
             let map = prevState.map;
             map[this.characterPos] = Cells.Empty
-            return {inventory, map };                                 
+            return {inventory, map};                                 
         });
 
         return true;
@@ -535,6 +562,14 @@ class Game extends Component<IProps, IState> {
     }
     
     render() {
+        if (this.props.route.params.cameraMode !== CameraMode.TEST) {//set block schema
+            var blockNumber = 0;
+            this.blockSchemaRowList = this.props.route.params.blockSchemaTypeList.map((typeRow: BlockType[], index: number) => ( <BlockSchemaRow key={index} itemList={typeRow.map(type => {
+                blockNumber++;
+                return ( <BlockSchemaItem key={blockNumber} blockType={type} active={this.state.blockSchemaStatus[blockNumber]} /> );
+            })} /> ));
+        }
+        
         let arr = this.state.map.map((item: any, index: number) => {
             if (item != Cells.Empty) {
                 return <MapItem key={index} item={item} position={[this.state.itemsPos[index], this.initialPlayerPosY ]} />                            
@@ -562,12 +597,13 @@ class Game extends Component<IProps, IState> {
                             <Character key={this.state.columns} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet}/>
                             { arr }
                             <Inventory inventory={this.state.inventory} />
-                        </View>//)
-            //      }
-            //      <StatusBar translucent backgroundColor="transparent"/>
-            //     </View>
-            //  </View>
-        )
+                            <BlockSchema blockList={ this.blockSchemaRowList } /> 
+                        </View>)
+        //          }
+        //          <StatusBar translucent backgroundColor="transparent"/>
+        //         </View>
+        //      </View>
+        // )
     }
 }
 
