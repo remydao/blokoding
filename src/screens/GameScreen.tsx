@@ -15,7 +15,7 @@ import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/Condi
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
-import { isItem } from '../constants/ItemImages';
+import { isItem, ItemImages } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { characterImages, getCharacterImages } from '../constants/CharacterImages';
@@ -27,6 +27,7 @@ import BlockSchema from '../components/BlockSchema';
 import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
 import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
+import { EnvironmentImages } from '../constants/EnvironmentImages';
 
 interface IProps {
     navigation: any,
@@ -143,7 +144,7 @@ class Game extends Component<IProps, IState> {
     async componentDidMount() {
         this.mounted = true;
 
-        this.setState({percentLoading: 100});
+        this.setState({percentLoading: 0});
 
         this.loadImagesKeyValue(this.props.route.params.mapInfo.theme).then(results => {
 
@@ -592,6 +593,35 @@ class Game extends Component<IProps, IState> {
     backToLevelFailed = () : void => {
         this.props.navigation.pop();
         this.props.navigation.pop();
+    }
+
+    // Convert image refs into image objects with Image.resolveAssetSource
+    async loadImagesKeyValue(images: any) {
+        return Promise.all(Object.keys(images).map((i) => {
+            let img = {
+                ...Image.resolveAssetSource(images[i]),
+                cache: 'force-cache'
+            };
+            return Image.prefetch(img.uri);
+        }));
+    }
+
+    async loadImagesArray(images: any[]) { 
+        return Promise.all(images.map(element => {
+            let img = {
+                ...Image.resolveAssetSource(element),
+                cache: 'force-cache'
+            };
+            return Image.prefetch(img.uri);
+        }));  
+    }
+
+    async loadImage(image: any) {
+        let img = {
+            ...Image.resolveAssetSource(image),
+            cache: 'force-cache'
+        }
+        return Image.prefetch(img.uri);
     }
     
     render() {
