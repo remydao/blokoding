@@ -86,7 +86,7 @@ const HomeScreen = ({ navigation }: IProps) => {
         </View>
         <View style={styles.button}>
           <FlatButton text={language.enigma} color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => {
-            navigation.navigate('EnigmaScreen');
+            navigation.navigate('UniverseScreen');
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>

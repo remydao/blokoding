@@ -10,6 +10,7 @@ import EnigmaScreen from './src/screens/EnigmaScreen';
 import LanguageContext from './src/context/ContextLanguage';
 
 import * as Sentry from '@sentry/react-native';
+import UniverseScreen from './src/screens/UniverseScreen';
 
 Sentry.init({ 
   dsn: 'https://61430177b69e43478da38120cdd6a069@o792555.ingest.sentry.io/5801070', 
@@ -41,6 +42,7 @@ function App() {
         <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center'}}>
           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
           <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
+          <Stack.Screen name="UniverseScreen" component={UniverseScreen} options={{headerShown: false}}/>
           <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <CustomHeader title="Aide" backgroundColor={Colors.dark_purple}/>}}/>
           <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.dark_purple}/>}}/>
           <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>

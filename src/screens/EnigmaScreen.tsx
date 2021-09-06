@@ -4,6 +4,7 @@ import {default as UUID} from "uuid";
 import EnigmaButton from '../components/EnigmaButton';
 import Colors from '../constants/Colors';
 import { useLanguage } from '../datas/GetLanguage';
+import {enigmaInfo} from '../constants/EnigmaDetails'
 
 import {loadSound} from '../scripts/sound/sound'
 
@@ -30,10 +31,13 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
     const [buttons, setButtons] = useState<IState[]>([]);
     const language = useLanguage()
 
+    const theme = route.params.theme;
+
     const setLevel = () => {
       let btns = [...buttons];
+      const numberOfLevels = enigmaInfo[theme].length;
       //numberOfLevels
-      for (let i = 0; i < 30; i++)
+      for (let i = 0; i < numberOfLevels; i++)
       {
           const levelTitle = language.enigma + ' ' + (i + 1)
           btns.push({id:UUID.v4(), value:levelTitle})
@@ -48,8 +52,9 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
     const onPress = (index: number) => {
       loadSound("buttonclick.mp3", false);
       navigation.navigate('LevelScreen', {
+        theme: route.params.theme,
         levelNumber: index,
-        levelType: 'enigma'
+        levelType: 'enigma',
       })
     }
 

@@ -33,7 +33,7 @@ class LevelScreen extends React.Component<IProps, IState> {
         this.levelNumber = this.props.route.params.levelNumber;
         // string 'tutorial' or 'enigma'
         this.levelType = this.props.route.params.levelType;
-        this.levelInfo = (this.levelType === 'tutorial') ? tutorialInfo[this.levelNumber] : enigmaInfo[this.levelNumber];
+        this.levelInfo = (this.levelType === 'tutorial') ? tutorialInfo[this.levelNumber] : enigmaInfo[this.props.route.params.theme][this.levelNumber];
         this.title = this.levelInfo.title;
         this.tutorial = this.levelInfo.tutorial;
         this.congratulations = this.levelInfo.congratulations;
