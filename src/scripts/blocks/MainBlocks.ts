@@ -21,7 +21,7 @@ class StructureBlock extends CodeBlock {
     public nextBlock;
     constructor(nextBlock: StructureBlock | null) {
         super();
-        this.nextBlock = nextBlock
+        this.nextBlock = nextBlock;
     }
 }
 
@@ -33,7 +33,7 @@ class InstructionBlock extends StructureBlock {
         this.predicateBlock = predicateBlock;
         this.execBlock = execBlock;
         let child = new.target.name;
-        if (child === ForBlock.name) {
+        if (child === "ForBlock"/*ForBlock.name*/) {
             addBlockSchemaRow(BlockType.Instruction, BlockType.Number);
         } else {
             addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Item);         
@@ -46,7 +46,7 @@ class ActionBlock extends StructureBlock {
         super(nextBlock);
 
         let child = new.target.name;
-        if (child === UseBlock.name) {
+        if (child === "UseBlock"/*UseBlock.name*/) {
             addBlockSchemaRow(BlockType.Action, BlockType.Item);
         } else {
             addBlockSchemaRow(BlockType.Action);         

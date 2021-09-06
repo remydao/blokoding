@@ -5,7 +5,7 @@ import { WhileBlock } from "./InstructionBlock";
 import { CodeBlock, StructureBlock } from "./MainBlocks";
 
 class CharacterBlock extends StructureBlock {
-    private character;
+    public character;
     constructor(nextBlock: StructureBlock | null = null, character: string) {
         super(nextBlock);
         this.character = character;

@@ -129,7 +129,7 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
     let characterBlock : CharacterBlock;
 
     if (res.length > 0) {
-        characterBlock = new CharacterBlock(res[0][1]);
+        characterBlock = new CharacterBlock(null, res[0][1]);
         characterBlock.nextBlock = parseStructureCard(cardList);
         return characterBlock;
     } else {
@@ -137,7 +137,7 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
         {
             let modifiedCharacter = checkVisionResp(character, Object.values(Characters));
             if (modifiedCharacter !== null) {
-                characterBlock = new CharacterBlock(modifiedCharacter);
+                characterBlock = new CharacterBlock(null, modifiedCharacter);
         characterBlock.nextBlock = parseStructureCard(cardList);
         return characterBlock;
             }
@@ -231,7 +231,9 @@ const parseSecondaryInstruction = (cardList : TcardList): IfBlock | null => {
             if (!(predicateBlock = parseCondition(cardList)))
                 throw "L'instruction Ou si doit être suivie d'une condition " + cardIndexToString();
             secondaryInstructionBlock.predicateBlock = predicateBlock;
+            break;
         case SecondaryInstructions.Else:
+            secondaryInstructionBlock = new IfBlock();
             break;
         default:
             setFirstElm(cardList, instruction);
@@ -239,8 +241,8 @@ const parseSecondaryInstruction = (cardList : TcardList): IfBlock | null => {
     }
 
     secondaryInstructionBlock.execBlock = parseStructureCard(cardList);
-
     secondaryInstructionBlock.nextIfBlock = parseSecondaryInstruction(cardList);
+
 
     return secondaryInstructionBlock;
 }

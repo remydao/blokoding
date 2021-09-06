@@ -2,7 +2,7 @@ import { DataBlock } from "./DataBlock";
 import { ActionBlock, StructureBlock } from "./MainBlocks";
 
 class MoveBlock extends ActionBlock {
-    constructor(nextBlock: StructureBlock | null) {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
@@ -23,7 +23,7 @@ class MoveBlock extends ActionBlock {
 }
 
 class JumpBlock extends ActionBlock {
-    constructor(nextBlock: StructureBlock | null) {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
@@ -51,7 +51,7 @@ class JumpBlock extends ActionBlock {
 }
 
 class GrabBlock extends ActionBlock {
-    constructor(nextBlock: StructureBlock | null) {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
@@ -96,7 +96,7 @@ class UseBlock extends ActionBlock {
 }
 
 class SpeakBlock extends ActionBlock {
-    constructor(nextBlock: StructureBlock | null) {
+    constructor(nextBlock: StructureBlock | null = null) {
         super(nextBlock);
     }
 
