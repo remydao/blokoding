@@ -6,8 +6,10 @@ import FlatButton from '../components/FlatButton';
 import Maps from '../constants/Maps';
 import { CameraMode } from '../constants/CameraMode';
 import EngineConstants from '../constants/EngineConstants';
-import {useLanguage} from '../datas/GetLanguage';
+import {useLanguage} from '../datas/contextHooks';
 import { useFocusEffect } from '@react-navigation/native';
+import SoundContext from '../context/SoundContext';
+
 
 import {loadSound} from '../scripts/sound/sound'
 import Sound from 'react-native-sound';
@@ -18,7 +20,8 @@ interface IProps {
 
 const HomeScreen = ({ navigation }: IProps) => {
 
-  const soundRef = React.useRef<Sound>()
+  const soundRef = React.useRef<Sound>();
+  const contextSound = React.useContext(SoundContext);
   const language = useLanguage();
 
 
@@ -46,7 +49,7 @@ const HomeScreen = ({ navigation }: IProps) => {
   React.useEffect(() => {
     if (soundRef.current == undefined) {
       console.log("loadSound: 50");
-      soundRef.current = loadSound("homescreen_sound.mp3", true, 1);
+      soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.mainSound);
     }
     AppState.addEventListener('change', (state) => _handleAppStateChange(state));
     return () => AppState.removeEventListener('change', (state) => {_handleAppStateChange(state)});
@@ -55,10 +58,15 @@ const HomeScreen = ({ navigation }: IProps) => {
   useFocusEffect(
     React.useCallback(() => {
       if (soundRef.current == undefined) {
-        soundRef.current = loadSound("homescreen_sound.mp3", true, 1);
+        soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.mainSound);
       }
+      console.log("getvolume" , soundRef.current.getVolume());
       soundRef.current.play()
   }, []))
+
+  React.useEffect(() => {
+    soundRef.current?.setVolume(contextSound.mainSound);
+  }, [contextSound.mainSound])
 
 
     return (
