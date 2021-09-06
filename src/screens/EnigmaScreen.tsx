@@ -3,7 +3,7 @@ import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from '
 import {default as UUID} from "uuid"; 
 import EnigmaButton from '../components/EnigmaButton';
 import Colors from '../constants/Colors';
-import { useLanguage } from '../datas/GetLanguage';
+import { useLanguage } from '../datas/contextHooks';
 import {enigmaInfo} from '../constants/EnigmaDetails'
 
 import {loadSound} from '../scripts/sound/sound'
