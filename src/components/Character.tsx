@@ -20,10 +20,10 @@ export default class Character extends Component<IProps> {
 
     private width: number;
     private spriteSheet: SpriteSheet;
-   
     constructor(props: IProps) {
         super(props);
 
+        console.log(this.props.sourceImage)
         this.width = EngineConstants.CELL_SIZE * 2;
     }
 
@@ -37,7 +37,7 @@ export default class Character extends Component<IProps> {
     }
 
     componentWillUnmount() {
-         this.spriteSheet.stop();
+        this.spriteSheet.stop();
     }
 
     render() {

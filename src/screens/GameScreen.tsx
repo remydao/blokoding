@@ -15,18 +15,20 @@ import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/Condi
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
-import { isItem } from '../constants/ItemImages';
+import { isItem, ItemImages } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { characterImages, getCharacterImages } from '../constants/CharacterImages';
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
+import {loadSound} from '../scripts/sound/sound'
 import SpriteSheet from 'rn-sprite-sheet';
 import BlockSchema from '../components/BlockSchema';
 import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
 import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
+import { EnvironmentImages } from '../constants/EnvironmentImages';
 
 interface IProps {
     navigation: any,
@@ -49,7 +51,8 @@ interface IState {
     columns: number,
     rows: number,
     numSpritesInSpriteSheet: number,
-    blockSchemaStatus: boolean[]
+    blockSchemaStatus: boolean[],
+    percentLoading: number,
 }
 
 class Game extends Component<IProps, IState> {
@@ -69,9 +72,6 @@ class Game extends Component<IProps, IState> {
     private winCondition: any;
     private initialPlayerPosY : number = EngineConstants.MAX_HEIGHT * 0.15;
     private images: any;
-    private numFramesPerImage: number;
-    private numFrame: number;
-    private sprite: SpriteSheet;
     private blockSchemaRowList: JSX.Element[] = [];
     private currActiveBlockSchemaItemIndex: number = 1;
 
@@ -114,7 +114,8 @@ class Game extends Component<IProps, IState> {
             columns: 9,
             rows: 7,
             numSpritesInSpriteSheet: 60,
-            blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false)
+            blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false),
+            percentLoading: 0,
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
@@ -133,18 +134,33 @@ class Game extends Component<IProps, IState> {
         } else {
             this.actions = props.route.params.actions;
         }
-
-        this.images = getCharacterImages(this.actions.character);
-        this.numFramesPerImage = 1;
-        this.numFrame = 0;
     }
 
     async componentDidMount() {
         this.mounted = true;
-        // await new Promise<void>(resolve => {setTimeout(() => {
-        //     this.setState({isStartAnimation: !this.state.isStartAnimation})
-        //     resolve()
-        // }, 2400)})
+
+        this.setState({percentLoading: 0});
+
+        this.loadImagesKeyValue(this.props.route.params.mapInfo.theme).then(results => {
+
+            this.setState({ percentLoading: 33 });
+
+            let objectsImagesArray: any[] = [];
+            Object.values(ItemImages).map(i => {
+                objectsImagesArray.push(i.uri);
+            });
+
+            Object.values(EnvironmentImages).map(i => {
+                objectsImagesArray.push(i.uri);
+            }); 
+
+            objectsImagesArray.push(this.images.move[0])
+            objectsImagesArray.push(this.images.jump[0])
+
+            this.loadImagesArray(objectsImagesArray).then(res => {
+                this.setState({ percentLoading: 100 });
+            })            
+        });
 
         let start = Date.now();
         await this.actions.execute(this);
@@ -367,6 +383,7 @@ class Game extends Component<IProps, IState> {
     // General function to jump the character (used in ActionBlock.js)
     // num_cell is the number of cell the animation last
     async jump(numCells : number = 2) {
+        loadSound("jump.mp3", false, 1);
         this.moveDistance = 0;
 
         var self = this;
@@ -561,6 +578,35 @@ class Game extends Component<IProps, IState> {
         this.props.navigation.pop();
         this.props.navigation.pop();
     }
+
+    // Convert image refs into image objects with Image.resolveAssetSource
+    async loadImagesKeyValue(images: any) {
+        return Promise.all(Object.keys(images).map((i) => {
+            let img = {
+                ...Image.resolveAssetSource(images[i]),
+                cache: 'force-cache'
+            };
+            return Image.prefetch(img.uri);
+        }));
+    }
+
+    async loadImagesArray(images: any[]) { 
+        return Promise.all(images.map(element => {
+            let img = {
+                ...Image.resolveAssetSource(element),
+                cache: 'force-cache'
+            };
+            return Image.prefetch(img.uri);
+        }));  
+    }
+
+    async loadImage(image: any) {
+        let img = {
+            ...Image.resolveAssetSource(image),
+            cache: 'force-cache'
+        }
+        return Image.prefetch(img.uri);
+    }
     
     render() {
         if (this.props.route.params.cameraMode !== CameraMode.TEST) {//set block schema
@@ -578,33 +624,33 @@ class Game extends Component<IProps, IState> {
         });
 
         return (
-            // <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
-            //     <View>
-            //     {!this.state.isStartAnimation ?
-            //         (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
-            //             <LottieView
-            //                 source={require('../assets/lotties/loading.json')}
-            //                 autoPlay
-            //                 loop={true}
-            //             />
-            //         </View>) :
-            //         (
+            <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+                <View>
+                {
+                    this.state.percentLoading < 100 ?
+                    (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
+                        <LottieView
+                            source={require('../assets/lotties/loading.json')}
+                            autoPlay
+                            loop={true}
+                        />
+                    </View>) :
+                    (
                         <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
 
-                            {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="green" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
-                            {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color="red" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                            {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="lightgreen" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                            {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
                             <Character key={this.state.columns} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet}/>
                             { arr }
                             <Inventory inventory={this.state.inventory} />
-                            <BlockSchema blockList={ this.blockSchemaRowList } /> 
                         </View>)
-        //          }
-        //          <StatusBar translucent backgroundColor="transparent"/>
-        //         </View>
-        //      </View>
-        // )
+                }
+                <StatusBar translucent backgroundColor="transparent"/>
+                </View>
+            </View>
+        )
     }
 }
 
