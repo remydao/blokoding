@@ -5,62 +5,54 @@ import {getCharacterImages} from "../constants/CharacterImages";
 import { Characters } from "../constants/BlockType"
 import AutoHeightImage from 'react-native-auto-height-image';
 import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import SpriteSheet from 'rn-sprite-sheet';
+
 
 interface IProps {
     position: Array<number>
-    image: number
-    imageNum: number
-    maxImages: number
-    numImagesPerLine: number
-    srcWidth: number
-    srcHeight: number
+    sourceImage: any
+    columns: number
+    rows: number
+    numSpritesInSpriteSheet: number
 }
 
 export default class Character extends Component<IProps> {
 
-    private ratio: number;
     private width: number;
-    private height: number;
-
+    private spriteSheet: SpriteSheet;
+   
     constructor(props: IProps) {
         super(props);
 
-        const srcImage = Image.resolveAssetSource(this.props.image)
-        this.ratio = (srcImage.height / 6) / (srcImage.width / 10);
-
         this.width = EngineConstants.CELL_SIZE * 2;
-        this.height = this.width * this.ratio;
-
-        console.log(this.width);
     }
 
-    getTop() {
-        let top = Math.floor(this.props.imageNum / this.props.numImagesPerLine) * this.height;
-
-        // console.log("top: " + top);
-
-        return top;
+    componentDidMount() {
+        this.spriteSheet.play({
+            type: "anim",
+            fps: 60,
+            loop: true,
+            resetAfterFinish: false,
+        });
     }
 
-    getLeft() {
-        var tmp = (this.props.imageNum % this.props.numImagesPerLine) * this.width;
-        // console.log("left: " + tmp)
-        return tmp;
+    componentWillUnmount() {
+         this.spriteSheet.stop();
     }
 
     render() {
         const x = this.props.position[0] + EngineConstants.CELL_SIZE - this.width / 2;
         const y = this.props.position[1];
-        
-
-        let top = this.getTop();
-        let left = this.getLeft();
 
         return (
             <View style={[styles.container, { bottom: y, left: x }]}>
-                <View style={{ overflow: 'hidden', width: this.width, height: this.height}}>
-                    <Image source={this.props.image} style={{ marginTop: -top, marginLeft: -left, width: this.width * 10, height: this.height * 6}}  />
-                </View>
+                <SpriteSheet
+                    ref={ref => {this.spriteSheet = ref}}
+                    source={this.props.sourceImage}
+                    columns={this.props.columns}
+                    rows={this.props.rows}
+                    animations={{ "anim": Array.from({ length: this.props.numSpritesInSpriteSheet }, (v, i) => i)}}
+                    width={EngineConstants.CELL_SIZE * 2}/>
             </View>
         )
     }

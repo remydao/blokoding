@@ -8,6 +8,8 @@ class IsInFrontBlock extends ConditionBlock {
     }
 
     execute(engine: any) : Boolean {
+        engine.setActiveBlockSchemaItem(this.index);
+
         let entity = this.entityBlock.execute();
 
         return engine.isInFront(entity);
@@ -20,6 +22,8 @@ class IsOnBlock extends ConditionBlock {
     }
 
     execute(engine: any) : Boolean {
+        engine.setActiveBlockSchemaItem(this.index);
+
         let entity = this.entityBlock.execute();
 
         return engine.isOn(entity);
@@ -32,6 +36,8 @@ class PossessBlock extends ConditionBlock {
     }
 
     execute(engine: any) : Boolean {
+        engine.setActiveBlockSchemaItem(this.index);
+
         let entity = this.entityBlock.execute();
 
         return engine.possess(entity);

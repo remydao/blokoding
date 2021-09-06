@@ -1,3 +1,14 @@
+enum BlockType {
+    Character,
+    Action,
+    Instruction,
+    SecondaryInstruction,
+    Condition,
+    Item, 
+    Environment,
+    Number
+}
+
 const Characters = {
     Bart: 'bart',
     Kevin: 'kevin',
@@ -6,7 +17,7 @@ const Characters = {
     Charlie: 'charlie',
     Cyclops: 'cyclops',
     Nosy: 'nosy',
-    MrMustache: 'Mustache',
+    MrMustache: 'mustache',
     MsBrocoli: 'ms. brocoli'
 }
 
@@ -30,6 +41,12 @@ const SecondaryInstructions = {
     End: 'fin'
 }
 
+const Conditions = {
+    IsInFront: "etre devant",
+    IsOn: "etre sur",
+    Possess: "posseder"
+}
+
 const Items = {
     Key: 'cle',
     Plush: 'peluche',
@@ -47,10 +64,4 @@ const Environments = {
     Flag: 'drapeau',
 }
 
-const Conditions = {
-    IsInFront: "etre devant",
-    IsOn: "etre sur",
-    Possess: "posseder"
-}
-
-export { Characters, Actions, Instructions, SecondaryInstructions, Items, Environments, Conditions };
+export { BlockType, Characters, Actions, Instructions, SecondaryInstructions, Items, Environments, Conditions };

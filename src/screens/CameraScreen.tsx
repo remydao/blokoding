@@ -10,6 +10,8 @@ import { CameraMode } from '../constants/CameraMode';
 import { modifyCoordinates } from '../scripts/corrector/coordinates';
 import { dropProblematicTokens } from '../scripts/corrector/corrector';
 
+import { BlockType } from '../constants/BlockType';
+
 interface IProps {
   navigation: any,
   route: any,
@@ -111,14 +113,15 @@ class Camera extends Component<IProps, IState> {
         modifyCoordinates(visionResp);
         visionResp = dropProblematicTokens(visionResp);
         // Change here visionResp to force the detection
-        //visionResp = [{text: 'MrMustache'}, {text: 'Repeter'}, {text: '8'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'buisson'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
+        visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '3'}, {text: 'avancer'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'},{text: 'fin'}, {text: 'fin'}];
+        // visionResp = [{text: 'Mustache'}, {text: 'repeter'}, {text: '10'}]
 
-        const actions = parseInit(visionResp);
-        
+        const result = parseInit(visionResp);
+
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {
             navigation.navigate('Game',
-                { actions: actions,
+                { actions: result[0], 
                   cameraMode: CameraMode.DISCOVER, 
                   mapInfo: this.props.route.params.map,
                   levelNumber: this.props.route.params.levelNumber,
@@ -127,7 +130,7 @@ class Camera extends Component<IProps, IState> {
             this.isTakingPicture = false;
         } // Start Mode
         else {
-          navigation.navigate('Game', {actions: actions, cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2});
+          navigation.navigate('Game', {actions: result[0], blockSchemaTypeList: result[1], cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2, nCard: result[2]});
           this.isTakingPicture = false;
         }
       } catch (e) { // Error thrown by the parser
@@ -135,7 +138,7 @@ class Camera extends Component<IProps, IState> {
         this.setModalVisible(!this.state.modalVisible);
         this.isTakingPicture = false;
       }
-    };
+    };  
 }
   
   const styles = StyleSheet.create({

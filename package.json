@@ -38,6 +38,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-vector-icons": "^8.1.0",
+    "rn-sprite-sheet": "^1.1.12",
     "rn-text-detector": "^0.0.8"
   },
   "devDependencies": {
