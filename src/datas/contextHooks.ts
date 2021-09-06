@@ -1,6 +1,6 @@
 import Translation from './translation.json';
 import React from 'react';
-import LanguageContext from '../context/ContextLanguage';
+import LanguageContext from '../context/LanguageContext';
 
 function useLanguage(){
   const contextLanguage = React.useContext(LanguageContext);

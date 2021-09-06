@@ -3,7 +3,7 @@ import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from '
 import {default as UUID} from "uuid"; 
 import Colors from '../constants/Colors';
 import LevelButton from '../components/LevelButton';
-import { useLanguage } from '../datas/GetLanguage';
+import { useLanguage } from '../datas/contextHooks';
 import {loadSound} from '../scripts/sound/sound'
 
 const DiscoverColors = [

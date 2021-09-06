@@ -3,15 +3,23 @@ import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
-import LanguageContext from '../context/ContextLanguage';
+import LanguageContext from '../context/LanguageContext';
+import SoundContext from '../context/SoundContext';
+import Slider from '@react-native-community/slider';
 
 
 const Options = ({}) => {
 
   const languageContext = React.useContext(LanguageContext);
+  const soundContext = React.useContext(SoundContext)
 
   const handleLanguageChange = (itemValue: string, itemIndex: number) => {
     languageContext.changeLanguage(itemValue)
+  }
+
+  const handleMainSoundChange = (value: number) => {
+    soundContext.changeMainSound(value)
+    console.log(soundContext)
   }
 
   return (
@@ -24,6 +32,12 @@ const Options = ({}) => {
           <Picker.Item label="English" value="en"/>
           <Picker.Item label="Français" value="fr"/>
         </Picker>
+      </View>
+      <View style={styles.soundWrapper}>
+        <Text style={styles.soundText}>Volume</Text>
+        <Slider style={{width: 200, height: 40}} step={0.1}
+          value={soundContext.mainSound}
+          onValueChange={handleMainSoundChange}/>
       </View>
       <Image style={styles.image} source={characterImages.Harry.uri}></Image>
       <StatusBar backgroundColor={Colors.dark_purple}/>
@@ -46,6 +60,18 @@ const styles = StyleSheet.create({
   },
   image: {
     top: 150
+  },
+  soundWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: 30,
+  },
+  soundText: {
+    fontFamily: 'Pangolin-Regular',
+    fontSize: 20,
+    backgroundColor: 'orange',
+    padding: 5,
+    borderRadius: 5
   }
 })
 

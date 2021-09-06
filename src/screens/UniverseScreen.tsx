@@ -40,7 +40,7 @@ const UniverseScreen = ({ navigation }: IProps) => {
     }
 
   return ( 
-    <ScrollView style={{flex:1, backgroundColor: Colors.turquoise}}>
+    <ScrollView style={{flex:1, backgroundColor: 'black'}}>
       <View style={styles.container}>
         <UniverseButton textButton="Foret" image={Backgrounds.ForestFall.background1} onPress={() => navigateTo(Themes.FOREST)}/>
         <UniverseButton textButton="Plage" image={Backgrounds.Beach.background2} onPress={() => navigateTo(Themes.BEACH)}/>
