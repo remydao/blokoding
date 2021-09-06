@@ -1,10 +1,10 @@
 import { Characters, Actions, Instructions, SecondaryInstructions, Items, Conditions, Environments, BlockType } from "../../constants/BlockType";
 import CharacterBlock from "../blocks/CharacterBlock";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock, UseBlock } from "../blocks/ActionBlock";
-import { ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
+import { ElIfBlock, ElseBlock, ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBlock";
-import { DataBlock } from "../blocks/DataBlock";
-import { ActionBlock, CodeBlock, ConditionBlock, StructureBlock } from "../blocks/MainBlocks";
+import { EnvironmentBlock, ItemBlock, NumberBlock } from "../blocks/DataBlock";
+import { CodeBlock, ConditionBlock, StructureBlock } from "../blocks/MainBlocks";
 import { checkVisionResp } from "../corrector/corrector";
 
 var loopDepth = 0;
@@ -129,7 +129,8 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
     let characterBlock : CharacterBlock;
 
     if (res.length > 0) {
-        characterBlock = new CharacterBlock(null, res[0][1]);
+        characterBlock = new CharacterBlock(res[0][1]);
+        addBlockSchemaRow(BlockType.Character);
         characterBlock.nextBlock = parseStructureCard(cardList);
         return characterBlock;
     } else {
@@ -137,9 +138,10 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
         {
             let modifiedCharacter = checkVisionResp(character, Object.values(Characters));
             if (modifiedCharacter !== null) {
-                characterBlock = new CharacterBlock(null, modifiedCharacter);
-        characterBlock.nextBlock = parseStructureCard(cardList);
-        return characterBlock;
+                characterBlock = new CharacterBlock(modifiedCharacter);
+                addBlockSchemaRow(BlockType.Character);
+                characterBlock.nextBlock = parseStructureCard(cardList);
+                return characterBlock;
             }
         }
 
@@ -148,7 +150,7 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
 }
 
 const parseAction = (action: any, cardList: TcardList) => {
-    let actionBlock : ActionBlock;
+    let actionBlock;
     switch (action) {
         case Actions.Move:
             actionBlock = new MoveBlock();
@@ -171,7 +173,15 @@ const parseAction = (action: any, cardList: TcardList) => {
         default:
             return null;
     }
+
+    if (actionBlock.constructor.name === UseBlock.name) {
+        addBlockSchemaRow(BlockType.Action, BlockType.Item);
+    } else {
+        addBlockSchemaRow(BlockType.Action);         
+    }
+
     actionBlock.nextBlock = parseStructureCard(cardList);
+
     return actionBlock;
 }
 
@@ -202,6 +212,15 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
         default:
             return null;
     }
+
+    if (instructionBlock.constructor.name === ForBlock.name)
+        addBlockSchemaRow(BlockType.Instruction, BlockType.Number);
+    else if (predicateBlock.entityBlock.constructor.name === ItemBlock.name)
+        addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Item);
+    else
+        addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Environment);
+
+
     instructionBlock.predicateBlock = predicateBlock;
 
     loopDepth++;
@@ -219,30 +238,37 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
 }
 
 const parseSecondaryInstruction = (cardList : TcardList): IfBlock | null => {
-    let predicateBlock: DataBlock | ConditionBlock | null = null;
-    let nextIfBlock : IfBlock | null = null;
-    let secondaryInstructionBlock: IfBlock;
+    let predicateBlock: ConditionBlock;
+    let secondaryInstructionBlock: ElIfBlock | ElseBlock;
 
     let instruction = getFirstElm(cardList);
 
     switch (instruction) {
         case SecondaryInstructions.Elif:
-            secondaryInstructionBlock = new IfBlock();
+            secondaryInstructionBlock = new ElIfBlock();
             if (!(predicateBlock = parseCondition(cardList)))
                 throw "L'instruction Ou si doit être suivie d'une condition " + cardIndexToString();
             secondaryInstructionBlock.predicateBlock = predicateBlock;
             break;
         case SecondaryInstructions.Else:
-            secondaryInstructionBlock = new IfBlock();
+            secondaryInstructionBlock = new ElseBlock();
             break;
         default:
             setFirstElm(cardList, instruction);
             return null;
     }
 
-    secondaryInstructionBlock.execBlock = parseStructureCard(cardList);
-    secondaryInstructionBlock.nextIfBlock = parseSecondaryInstruction(cardList);
+    if (secondaryInstructionBlock.constructor.name === ElseBlock.name)
+        addBlockSchemaRow(BlockType.Instruction);
+    else if (predicateBlock.entityBlock.constructor.name === ItemBlock.name)
+        addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Item);
+    else
+        addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Environment);
 
+    secondaryInstructionBlock.execBlock = parseStructureCard(cardList);
+    
+    if (secondaryInstructionBlock.constructor.name === ElIfBlock.name)
+        secondaryInstructionBlock.nextIfBlock = parseSecondaryInstruction(cardList);
 
     return secondaryInstructionBlock;
 }
@@ -257,7 +283,7 @@ const parseNumber = (cardList: TcardList): DataBlock | null => {
     if (isNaN(n)) 
         return null;
     
-    return new DataBlock(n);
+    return new NumberBlock(n);
 }
 
 const parseCondition = (cardList: TcardList): ConditionBlock | null => {
@@ -307,12 +333,12 @@ const parseItem = (cardList: TcardList): DataBlock | null => {
     let res = Object.entries(Items).filter(it => it[1] == item);
 
     if (res.length > 0) {
-        return new DataBlock(res[0][1]);
+        return new ItemBlock(res[0][1]);
     } else {
         if (typeof item !== 'undefined') {
             let modifiedItem = checkVisionResp(item, Object.values(Items));
             if (modifiedItem !== null) {
-                return new DataBlock(modifiedItem);
+                return new ItemBlock(modifiedItem);
             }
         }
         return null;
@@ -324,16 +350,16 @@ const parseEnvironnement = (cardList: TcardList): DataBlock | null => {
     let res = Object.entries(Environments).filter(e => e[1] == env);
 
     if (res.length > 0) {
-        return new DataBlock(res[0][1]);
+        return new EnvironmentBlock(res[0][1]);
     } else {
         if (typeof env !== 'undefined') {
             let modifiedEnv = checkVisionResp(env, Object.values(Environments));
             if (modifiedEnv!== null) {
-                return new DataBlock(modifiedEnv);
+                return new EnvironmentBlock(modifiedEnv);
             }
         }
         return null;
     }
 }
 
-export { parseInit, addBlockSchemaRow };
+export { parseInit };

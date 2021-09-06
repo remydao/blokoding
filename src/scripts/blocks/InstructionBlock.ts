@@ -13,7 +13,7 @@ class ForBlock extends InstructionBlock {
         let i = 0;
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
             engine.setActiveBlockSchemaItem(this.index);
-            // If GameEngine is unmounted
+
             if (!engine.isMounted())
                 return;
 
@@ -33,7 +33,7 @@ class ForBlock extends InstructionBlock {
 
 class IfBlock extends InstructionBlock {
     public nextIfBlock;
-    constructor(predicateBlock: CodeBlock | null = null, execBlock: StructureBlock | null = null, nextIfBlock: IfBlock | null = null, nextBlock: StructureBlock | null = null) {
+    constructor(predicateBlock: ConditionBlock | null = null, execBlock: StructureBlock | null = null, nextIfBlock: IfBlock | null = null, nextBlock: StructureBlock | null = null) {
         super(predicateBlock, execBlock, nextBlock);
         this.nextIfBlock = nextIfBlock;
     }
@@ -41,18 +41,61 @@ class IfBlock extends InstructionBlock {
     async execute(engine: any) {
         engine.setActiveBlockSchemaItem(this.index);
 
-        // If GameEngine is unmounted
         if (!engine.isMounted())
-        return;
+            return;
 
-        if ((!this.predicateBlock || this.predicateBlock.execute(engine)) && this.execBlock) {
+        if (this.predicateBlock.execute(engine) && this.execBlock) {
             await this.execBlock.execute(engine);
         }
         else if (this.nextIfBlock) {
             await this.nextIfBlock.execute(engine);
         }
+        
         if (!engine.getStateHasLost() && !engine.getStateHasWon() && this.nextBlock)
             this.nextBlock.execute(engine);
+    }
+}
+
+class ElIfBlock extends CodeBlock {
+    public predicateBlock;
+    public execBlock;
+    public nextIfBlock;
+    constructor(predicateBlock: ConditionBlock | null = null, execBlock: StructureBlock | null = null, nextIfBlock: ElIfBlock | ElseBlock | null = null) {
+        super();
+        this.predicateBlock = predicateBlock;
+        this.execBlock = execBlock;
+        this.nextIfBlock = nextIfBlock;
+    }
+
+    async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
+        if (!engine.isMounted())
+            return;
+
+        if (this.predicateBlock.execute(engine) && this.execBlock) {
+            await this.execBlock.execute(engine);
+        }
+        else if (this.nextIfBlock) {
+            await this.nextIfBlock.execute(engine);
+        }
+    }
+}
+
+class ElseBlock extends CodeBlock {
+    public execBlock;
+    constructor(execBlock: StructureBlock | null = null) {
+        super();
+        this.execBlock = execBlock;
+    }
+
+    async execute(engine: any) {
+        engine.setActiveBlockSchemaItem(this.index);
+
+        if (!engine.isMounted())
+            return;
+
+        await this.execBlock.execute(engine);
     }
 }
 
@@ -65,7 +108,6 @@ class WhileBlock extends InstructionBlock {
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && this.predicateBlock.execute(engine)) {
             engine.setActiveBlockSchemaItem(this.index);
 
-            // If GameEngine is unmounted
             if (!engine.isMounted())
                 return;
                 
@@ -79,4 +121,4 @@ class WhileBlock extends InstructionBlock {
     }
 }
 
-export { ForBlock, IfBlock, WhileBlock };
+export { ForBlock, IfBlock, ElIfBlock, ElseBlock, WhileBlock };

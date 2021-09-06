@@ -1,8 +1,6 @@
 import { BlockType } from "../../constants/BlockType";
 import Game from "../../screens/GameScreen";
-import { addBlockSchemaRow } from "../parsing/Parser";
 import { UseBlock } from "./ActionBlock";
-import { DataBlock } from "./DataBlock";
 import { ForBlock } from "./InstructionBlock";
 
 class CodeBlock {
@@ -32,25 +30,6 @@ class InstructionBlock extends StructureBlock {
         super(nextBlock);
         this.predicateBlock = predicateBlock;
         this.execBlock = execBlock;
-        let child = new.target.name;
-        if (child === "ForBlock"/*ForBlock.name*/) {
-            addBlockSchemaRow(BlockType.Instruction, BlockType.Number);
-        } else {
-            addBlockSchemaRow(BlockType.Instruction, BlockType.Condition, BlockType.Item);         
-        }
-    }
-}
-
-class ActionBlock extends StructureBlock {
-    constructor(nextBlock: StructureBlock | null) {
-        super(nextBlock);
-
-        let child = new.target.name;
-        if (child === "UseBlock"/*UseBlock.name*/) {
-            addBlockSchemaRow(BlockType.Action, BlockType.Item);
-        } else {
-            addBlockSchemaRow(BlockType.Action);         
-        }
     }
 }
 
@@ -62,4 +41,4 @@ class ConditionBlock extends CodeBlock {
     }
 }
 
-export { CodeBlock, StructureBlock, InstructionBlock, ActionBlock, ConditionBlock };
+export { CodeBlock, StructureBlock, InstructionBlock, ConditionBlock };

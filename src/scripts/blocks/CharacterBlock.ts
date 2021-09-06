@@ -1,15 +1,13 @@
 import { BlockType } from "../../constants/BlockType";
-import { addBlockSchemaRow } from "../parsing/Parser";
 import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock } from "./ActionBlock";
 import { WhileBlock } from "./InstructionBlock";
 import { CodeBlock, StructureBlock } from "./MainBlocks";
 
 class CharacterBlock extends StructureBlock {
     public character;
-    constructor(nextBlock: StructureBlock | null = null, character: string) {
+    constructor(character: string, nextBlock: StructureBlock | null = null, ) {
         super(nextBlock);
         this.character = character;
-        addBlockSchemaRow(BlockType.Character);
     }
 
     async execute(engine: any) {
