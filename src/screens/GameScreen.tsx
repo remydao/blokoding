@@ -22,7 +22,6 @@ import { characterImages, getCharacterImages } from '../constants/CharacterImage
 import LottieView from 'lottie-react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
-import { EnvironmentImages } from '../constants/EnvironmentImages';
 import {loadSound} from '../scripts/sound/sound'
 import SpriteSheet from 'rn-sprite-sheet';
 import BlockSchema from '../components/BlockSchema';
