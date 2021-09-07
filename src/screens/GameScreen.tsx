@@ -84,7 +84,7 @@ class Game extends Component<IProps, IState> {
                                       new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                       new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);*/
   
-              this.actions = new CharacterBlock(new JumpBlock(new MoveBlock(null)), Characters.MrMustache);
+              this.actions = new CharacterBlock(Characters.MrMustache, new JumpBlock(new MoveBlock(null)));
               /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
                                       new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
                                       new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
