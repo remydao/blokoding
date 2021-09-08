@@ -112,7 +112,7 @@ const Maps = {
     // RANDOM
 
     foret1: {
-        theme: Themes.Forest,
+        theme: Themes.ForestFall,
         map: [Cells.Empty, Cells.Flower, Cells.Empty, Cells.Flower, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win],
         winCondition: {
             removedFromMap: [
@@ -124,7 +124,7 @@ const Maps = {
         }
     },
     foret2: {
-        theme: Themes.Forest,
+        theme: Themes.ForestFall,
         map: [Cells.Empty, Cells.Flower, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win]
     }
 }
