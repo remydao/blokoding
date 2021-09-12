@@ -1,6 +1,3 @@
-import { BlockType } from "../../constants/BlockType";
-import { addBlockSchemaRow } from "../parsing/Parser";
-import { DataBlock } from "./DataBlock";
 import { CodeBlock, ConditionBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {

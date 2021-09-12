@@ -1,7 +1,4 @@
-import { BlockType } from "../../constants/BlockType";
 import Game from "../../screens/GameScreen";
-import { UseBlock } from "./ActionBlock";
-import { ForBlock } from "./InstructionBlock";
 
 class CodeBlock {
     static blockCount = 0;
@@ -35,10 +32,22 @@ class InstructionBlock extends StructureBlock {
 
 class ConditionBlock extends CodeBlock {
     public entityBlock;
-    constructor(entityBlock: DataBlock) {
+    constructor(entityBlock: DataBlock | null) {
         super();
         this.entityBlock = entityBlock;
     }
 }
 
-export { CodeBlock, StructureBlock, InstructionBlock, ConditionBlock };
+class DataBlock extends CodeBlock {
+    private value;
+    constructor(value: string | number) {
+        super();
+        this.value = value;
+    }
+
+    execute() : string | number {
+        return this.value;
+    }
+}
+
+export { CodeBlock, StructureBlock, InstructionBlock, ConditionBlock, DataBlock };

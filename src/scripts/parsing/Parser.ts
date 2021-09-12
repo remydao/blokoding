@@ -4,7 +4,7 @@ import { MoveBlock, JumpBlock, GrabBlock, SpeakBlock, UseBlock } from "../blocks
 import { ElIfBlock, ElseBlock, ForBlock, IfBlock, WhileBlock } from "../blocks/InstructionBlock";
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBlock";
 import { EnvironmentBlock, ItemBlock, NumberBlock } from "../blocks/DataBlock";
-import { CodeBlock, ConditionBlock, StructureBlock } from "../blocks/MainBlocks";
+import { CodeBlock, ConditionBlock, StructureBlock, DataBlock, InstructionBlock } from "../blocks/MainBlocks";
 import { checkVisionResp } from "../corrector/corrector";
 
 var loopDepth = 0;
@@ -186,8 +186,8 @@ const parseAction = (action: any, cardList: TcardList) => {
 }
 
 const parseInstruction = (instruction: any, cardList: TcardList) => {
-    let instructionBlock : ForBlock | IfBlock | WhileBlock;
-    let predicateBlock: DataBlock | ConditionBlock | null;
+    let instructionBlock;
+    let predicateBlock;
     let nextIfBlock : IfBlock | null = null;
 
     switch (instruction) {
@@ -201,8 +201,6 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
             isInIf++;    
             if (!(predicateBlock = parseCondition(cardList)))
                 throw "L'instruction Si doit être suivie d'une condition " + cardIndexToString();
-            break;
-        case SecondaryInstructions.Else:
             break;
         case Instructions.While:
             instructionBlock = new WhileBlock();
@@ -237,9 +235,9 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
     return instructionBlock;
 }
 
-const parseSecondaryInstruction = (cardList : TcardList): IfBlock | null => {
-    let predicateBlock: ConditionBlock;
-    let secondaryInstructionBlock: ElIfBlock | ElseBlock;
+const parseSecondaryInstruction = (cardList : TcardList): ElIfBlock | ElseBlock | null => {
+    let predicateBlock;
+    let secondaryInstructionBlock;
 
     let instruction = getFirstElm(cardList);
 
@@ -273,7 +271,7 @@ const parseSecondaryInstruction = (cardList : TcardList): IfBlock | null => {
     return secondaryInstructionBlock;
 }
 
-const parseNumber = (cardList: TcardList): DataBlock | null => {
+const parseNumber = (cardList: TcardList): NumberBlock | null => {
     let number = getFirstElm(cardList);
     if (!number)
         return null;
@@ -328,7 +326,7 @@ const parseCondition = (cardList: TcardList): ConditionBlock | null => {
     return conditionBlock;
 }
 
-const parseItem = (cardList: TcardList): DataBlock | null => {
+const parseItem = (cardList: TcardList): ItemBlock | null => {
     let item = getFirstElm(cardList);
     let res = Object.entries(Items).filter(it => it[1] == item);
 
@@ -345,7 +343,7 @@ const parseItem = (cardList: TcardList): DataBlock | null => {
     }
 }
 
-const parseEnvironnement = (cardList: TcardList): DataBlock | null => {
+const parseEnvironnement = (cardList: TcardList): EnvironmentBlock | null => {
     let env = getFirstElm(cardList);
     let res = Object.entries(Environments).filter(e => e[1] == env);
 

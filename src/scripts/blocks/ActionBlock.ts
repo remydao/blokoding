@@ -1,4 +1,4 @@
-import { DataBlock } from "./DataBlock";
+import { ItemBlock } from "./DataBlock";
 import { StructureBlock } from "./MainBlocks";
 
 class MoveBlock extends StructureBlock {
@@ -75,7 +75,7 @@ class GrabBlock extends StructureBlock {
 
 class UseBlock extends StructureBlock {
     public itemBlock;
-    constructor(itemBlock: DataBlock | null = null, nextBlock: StructureBlock | null = null) {
+    constructor(itemBlock: ItemBlock | null = null, nextBlock: StructureBlock | null = null) {
         super(nextBlock);
         this.itemBlock = itemBlock;
     }

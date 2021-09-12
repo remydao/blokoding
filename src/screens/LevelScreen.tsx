@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
 import {tutorialInfo} from '../constants/TutorialDetails';
 import {enigmaInfo} from '../constants/EnigmaDetails';
@@ -17,7 +17,7 @@ interface IState {
     textAnimator: JSX.Element
 }
 
-class LevelScreen extends React.Component<IProps, IState> {
+class LevelScreen extends Component<IProps, IState> {
 
     private readonly levelNumber: number;
     private readonly levelInfo;

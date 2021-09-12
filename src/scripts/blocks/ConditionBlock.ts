@@ -1,9 +1,9 @@
-import { DataBlock } from "./DataBlock";
+import { EnvironmentBlock, ItemBlock } from "./DataBlock";
 import { ConditionBlock } from "./MainBlocks";
 
 
 class IsInFrontBlock extends ConditionBlock {
-    constructor(entityBlock: DataBlock) {
+    constructor(entityBlock: EnvironmentBlock | null = null) {
         super(entityBlock);
     }
 
@@ -17,7 +17,7 @@ class IsInFrontBlock extends ConditionBlock {
 }
 
 class IsOnBlock extends ConditionBlock {
-    constructor(entityBlock: DataBlock) {
+    constructor(entityBlock: ItemBlock | null = null) {
         super(entityBlock);
     }
 
@@ -31,7 +31,7 @@ class IsOnBlock extends ConditionBlock {
 }
 
 class PossessBlock extends ConditionBlock {
-    constructor(entityBlock: DataBlock) {
+    constructor(entityBlock: ItemBlock | null = null) {
         super(entityBlock);
     }
 

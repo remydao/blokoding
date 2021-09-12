@@ -25,7 +25,7 @@ const levenshteinDistance = (str1: string, str2: string) => {
         }
     }
     return track[str2.length][str1.length];
-  };
+};
 
 const deviationMatching = (first: string, second: string, num: number) => {
     let count = 0;
@@ -41,7 +41,7 @@ const deviationMatching = (first: string, second: string, num: number) => {
         };
     };
     return true;
-  };
+};
 
 const checkVisionResp = (str: string, allCards: string[]) => {
 
@@ -57,8 +57,11 @@ const checkVisionResp = (str: string, allCards: string[]) => {
     return null;
 }
 
+interface CardType {
+    text: string
+}
 
-const dropProblematicTokens = (allCards: []) => {
+const dropProblematicTokens = (allCards: [CardType]) => {
     const pbTokens = ['x', 't', 'y', 'T', 'Y', 'X'];
 
     const filtered = allCards.filter(function(value, index, arr) {

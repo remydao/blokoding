@@ -1,40 +1,22 @@
-import { CodeBlock } from './MainBlocks'
+import { DataBlock } from './MainBlocks'
 
 
 
-class NumberBlock extends CodeBlock {
-    private value;
+class NumberBlock extends DataBlock {
     constructor(value: number) {
-        super();
-        this.value = value;
-    }
-
-    execute() : number {
-        return this.value;
+        super(value);
     }
 }
 
-class ItemBlock extends CodeBlock {
-    private value;
+class ItemBlock extends DataBlock {
     constructor(value: string) {
-        super();
-        this.value = value;
-    }
-
-    execute() : string {
-        return this.value;
+        super(value);
     }
 }
 
-class EnvironmentBlock extends CodeBlock {
-    private value;
+class EnvironmentBlock extends DataBlock {
     constructor(value: string) {
-        super();
-        this.value = value;
-    }
-
-    execute() : string {
-        return this.value;
+        super(value);
     }
 }
 

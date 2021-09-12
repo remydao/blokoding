@@ -7,27 +7,22 @@ import { MoveBlock, JumpBlock, GrabBlock, UseBlock } from '../scripts/blocks/Act
 import { BlockType, Characters, Environments, Items } from '../constants/BlockType';
 import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
-import { DataBlock } from '../scripts/blocks/DataBlock';
 import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
-import { ConditionBlock, StructureBlock } from '../scripts/blocks/MainBlocks';
 import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/ConditionBlock';
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
 import { isItem, ItemImages } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { characterImages, getCharacterImages } from '../constants/CharacterImages';
+import { getCharacterImages } from '../constants/CharacterImages';
 import LottieView from 'lottie-react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MyColors from '../constants/Colors';
 import {loadSound} from '../scripts/sound/sound'
 import SpriteSheet from 'rn-sprite-sheet';
 import BlockSchema from '../components/BlockSchema';
 import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
-import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
 import { EnvironmentImages } from '../constants/EnvironmentImages';
 
 interface IProps {
@@ -79,18 +74,7 @@ class Game extends Component<IProps, IState> {
         super(props);
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            /*  this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
-                                      new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), 
-                                      new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                      new IfBlock(null, new MoveBlock(null), null, null), null), null), null), Characters.MrMustache);*/
-  
-              this.actions = new CharacterBlock(new JumpBlock(new MoveBlock(null)), Characters.MrMustache);
-              /*this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), 
-                                      new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), 
-                                      new IfBlock(null, new MoveBlock(null), null, null), null), null), Characters.Kevin);*/
-              //this.actions = new CharacterBlock(new ForBlock(new DataBlock(50), new IfBlock(new IsOnBlock(new DataBlock(Items.Flower)), new GrabBlock(null), new IfBlock(new IsInFrontBlock(new DataBlock(Environments.Puddle)), new JumpBlock(null), null, null), null), new MoveBlock(null)), Characters.Kevin);
-              //this.actions = new CharacterBlock(new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Trash), new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
-              //this.actions = new CharacterBlock(new MoveBlock(new MoveBlock(new UseBlock(new DataBlock(Items.Key), new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))), Characters.MrMustache)
+            this.actions = new CharacterBlock(Characters.MrMustache, new JumpBlock(new MoveBlock(null)));
         } else {
             this.actions = props.route.params.actions;
             console.log(this.actions);
