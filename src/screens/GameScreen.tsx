@@ -104,7 +104,7 @@ class Game extends Component<IProps, IState> {
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(new MoveBlock(null)))))));
+            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null)))))));
         } else {
             this.actions = props.route.params.actions;
         }
@@ -402,7 +402,8 @@ class Game extends Component<IProps, IState> {
 
                 // Get current sprite sheet
                 var imageUUID = self.state.animUUID;
-                var imageNum = (self.moveDistance / EngineConstants.CELL_SIZE) * 2;
+                var imageNum = Math.floor((self.moveDistance / EngineConstants.CELL_SIZE) * 2);
+                console.log("imageNum: " + imageNum);
                 if (imageNum >= 4)
                     imageNum = 0;
 
