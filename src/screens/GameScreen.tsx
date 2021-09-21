@@ -5,11 +5,9 @@ import Character from "../components/Character";
 import EngineConstants from '../constants/EngineConstants';
 import { MoveBlock, JumpBlock, GrabBlock, UseBlock } from '../scripts/blocks/ActionBlock';
 import { BlockType, Characters, Environments, Items } from '../constants/BlockType';
-import { ForBlock, IfBlock, WhileBlock } from '../scripts/blocks/InstructionBlock';
 import CharacterBlock from '../scripts/blocks/CharacterBlock';
 import MapItem from '../components/MapItem'
 import Inventory from '../components/Inventory';
-import { IsInFrontBlock, IsOnBlock, PossessBlock } from '../scripts/blocks/ConditionBlock';
 import Overlay from '../components/Overlay';
 import { CameraMode } from '../constants/CameraMode';
 import Cells from '../constants/Cells';
@@ -24,6 +22,7 @@ import BlockSchema from '../components/BlockSchema';
 import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
 import { EnvironmentImages } from '../constants/EnvironmentImages';
+import uuid from 'react-native-uuid';
 
 interface IProps {
     navigation: any,
@@ -39,7 +38,6 @@ interface IState {
     hasLost: boolean,
     hasWon: boolean,
     inventory: any,
-    imageNum: number,
     isStartAnimation: boolean,
     spriteSheet: SpriteSheet | null,
     image: any,
@@ -48,6 +46,7 @@ interface IState {
     numSpritesInSpriteSheet: number,
     blockSchemaStatus: boolean[],
     percentLoading: number,
+    animUUID: any,
 }
 
 class Game extends Component<IProps, IState> {
@@ -91,7 +90,6 @@ class Game extends Component<IProps, IState> {
             hasLost: false,
             hasWon: false,
             inventory: {},
-            imageNum: 0,
             isStartAnimation: false,
             spriteSheet: null,
             image: this.images.move[0],
@@ -100,6 +98,7 @@ class Game extends Component<IProps, IState> {
             numSpritesInSpriteSheet: 60,
             blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false),
             percentLoading: 0,
+            animUUID: uuid.v4(),
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
@@ -309,8 +308,13 @@ class Game extends Component<IProps, IState> {
         
         var self = this;
 
+        return await new Promise<void>(resolve => {
+            // Fix memory leak when quitting
+            if (!self.mounted)
+                resolve();
 
-        return await new Promise<void>(resolve => {                
+            var lastImage = -1;
+
             movePos();
 
             function movePos() {
@@ -330,8 +334,15 @@ class Game extends Component<IProps, IState> {
                 if (!self.mounted)
                     resolve();
 
-                // let currentImageNum = self.getNewImage()
-
+                var imageUUID = self.state.animUUID;
+                
+                // If sprite sheet changed
+                if (lastImage !== 0)
+                {
+                    imageUUID = uuid.v4();
+                    lastImage = 0;
+                }
+    
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
@@ -340,12 +351,11 @@ class Game extends Component<IProps, IState> {
                     columns: 9,
                     rows: 7,
                     numSpritesInSpriteSheet: 60,
-                   // imageNum: // currentImageNum,
+                    animUUID: imageUUID,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE) {
                     self.characterPos++;
-                    // self.moveSprite.reset();
                     resolve();
                 }
                 else {
@@ -363,12 +373,12 @@ class Game extends Component<IProps, IState> {
 
         var self = this;
 
-        // 10 - 24 - 240
-
         return await new Promise<void>(resolve => {
             // Fix memory leak when quitting
             if (!self.mounted)
                 resolve();
+
+            var lastImage = -1;
 
             jumpPos();
 
@@ -390,24 +400,33 @@ class Game extends Component<IProps, IState> {
                 if (!self.mounted)
                     resolve();
 
-                // let currentImageNum = self.getNewImage()
+                // Get current sprite sheet
+                var imageUUID = self.state.animUUID;
+                var imageNum = (self.moveDistance / EngineConstants.CELL_SIZE) * 2;
+                if (imageNum >= 4)
+                    imageNum = 0;
 
-
+                // If sprite sheet changed
+                if (imageNum !== lastImage)
+                {
+                    imageUUID = uuid.v4();
+                    lastImage = imageNum;
+                }
+                    
                 self.setState({
                     bg0Pos: newBgPos[0],
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     playerPosY: playerPosY,
-                    image: self.images.jump[0],
-                    columns: 10,
-                    rows: 24,
-                    numSpritesInSpriteSheet: 240,
-                    // imageNum: currentImageNum,
+                    image: self.images.jump[imageNum],
+                    columns: 7,
+                    rows: 9,
+                    numSpritesInSpriteSheet: 60,
+                    animUUID: imageUUID,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
                     self.characterPos += numCells;
-                    // self.jumpSprite.reset();
                     resolve();
                 }
                 else {
@@ -617,7 +636,7 @@ class Game extends Component<IProps, IState> {
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character key={this.state.columns} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet}/>
+                            <Character key={this.state.animUUID} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet}/>
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                             <BlockSchema blockList={this.blockSchemaRowList} />
