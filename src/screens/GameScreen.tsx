@@ -104,7 +104,7 @@ class Game extends Component<IProps, IState> {
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null)))))));
+            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
         } else {
             this.actions = props.route.params.actions;
         }
@@ -450,6 +450,8 @@ class Game extends Component<IProps, IState> {
         if (!this.mounted)
             return false;
 
+        loadSound("grab.mp3", false, 1);
+
         this.setState((prevState) => {
             let inventory = prevState.inventory;  
             inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
@@ -462,7 +464,17 @@ class Game extends Component<IProps, IState> {
     }
 
     async use(item: string) {
-        const usables = {[Items.Key]: Environments.Door, [Items.Machete]: Environments.Bush, [Items.Trash]: Environments.Bin};
+        const usables = {
+            [Items.Key]: Environments.Door,
+            [Items.Machete]: Environments.Bush,
+            [Items.Trash]: Environments.Bin
+        };
+        const sounds = {
+            [Items.Key]: "open_door.mp3",
+            [Items.Machete]: "cut_bush.mp3",
+            [Items.Trash]: "throw_bin.mp3"
+        };
+
         if (Object.keys(usables).filter(usableItem => usableItem === item).length === 0) {
             this.fireEndScreen("loose", "Tu ne peux pas utiliser une " + item);
             return false;
@@ -480,6 +492,7 @@ class Game extends Component<IProps, IState> {
             this.setState((prevState) => {
                 let inventory = prevState.inventory;
                 let map = prevState.map;
+                loadSound(sounds[item], false, 1);
                 inventory[item] -= 1;
                 map[this.characterPos + 1] = Cells.Empty;
                 return {inventory, map}
@@ -528,6 +541,7 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify loose
     onLose = async () => {
+        loadSound("game_over.mp3", false, 1);
         if (this.props.route.params.levelType === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             //isDoneList[this.props.route.params.levelNumber] = true;
@@ -538,6 +552,7 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify win
     onWin = async () => {
+        loadSound("game_win.mp3", false, 1);
         if (this.props.route.params.levelType  === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             isDoneList[this.props.route.params.levelNumber] = true;
