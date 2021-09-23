@@ -541,7 +541,7 @@ class Game extends Component<IProps, IState> {
 
     // Function to notify loose
     onLose = async () => {
-        loadSound("game_over.mp3", false, 1);
+        loadSound("game_over2.mp3", false, 1);
         if (this.props.route.params.levelType === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             //isDoneList[this.props.route.params.levelNumber] = true;
