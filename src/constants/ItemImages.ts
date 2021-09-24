@@ -22,6 +22,10 @@ const ItemImages = {
         imageName: Items.Trash,
         uri: require('../assets/items/trash.png')
     },
+    Grass: {
+        imageName: Items.Grass,
+        uri: require('../assets/items/grass.png')
+    }
 }
 
 const getItemUri = (item: string) => {

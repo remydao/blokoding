@@ -23,7 +23,11 @@ import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
 import { EnvironmentImages } from '../constants/EnvironmentImages';
 import uuid from 'react-native-uuid';
+<<<<<<< HEAD
 import { sleep } from '../scripts/utils';
+=======
+import * as Progress from 'react-native-progress';
+>>>>>>> db01c0bd75459e88508c9854e5e72d5155450c2b
 
 interface IProps {
     navigation: any,
@@ -117,7 +121,7 @@ class Game extends Component<IProps, IState> {
 
         this.loadImagesKeyValue(this.props.route.params.mapInfo.theme).then(results => {
 
-            this.setState({ percentLoading: 33 });
+            this.setState({ percentLoading: 50 });
 
             let objectsImagesArray: any[] = [];
             Object.values(ItemImages).map(i => {
@@ -655,12 +659,8 @@ class Game extends Component<IProps, IState> {
                 <View>
                 {
                     this.state.percentLoading < 100 ?
-                    (<View style={{backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
-                        <LottieView
-                            source={require('../assets/lotties/loading.json')}
-                            autoPlay
-                            loop={true}
-                        />
+                    (<View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
+                        <Progress.Circle indeterminate={true} size={200}/>
                     </View>) :
                     (
                         <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
