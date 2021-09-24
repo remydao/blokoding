@@ -24,23 +24,24 @@ const HomeScreen = ({ navigation }: IProps) => {
   const contextSound = React.useContext(SoundContext);
   const language = useLanguage();
 
-
   const _handleAppStateChange = (currentAppState: any) => {
     if(currentAppState == "background") {
-      console.log("Stop sound");
+      console.log("HOMESCREEN: Stop sound because appState backgroundStop sound");
       soundRef.current?.stop();
       soundRef.current?.release();
     } 
     if(currentAppState == "active") {
-      if (soundRef.current?.isPlaying())
+      if (soundRef.current?.isPlaying()){
+        console.log("HOMESCREEN: sound is active, so return")
         return;
+      }
       
-      console.log("Play sound");
+      console.log("HOMESCREEN: play sound because appState is active");
       soundRef.current?.play((success: any) => {
         if (success) {
-          console.log('successfully finished playing');
+          console.log('HOMESCREEN: successfully finished playing');
         } else {
-          console.log('playback failed due to audio decoding errors');
+          console.log('HOMESCREEN: playback failed due to audio decoding errors');
         }
       });
     }
