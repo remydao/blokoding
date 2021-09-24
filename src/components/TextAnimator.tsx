@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Animated} from 'react-native';
+import Colors from '../constants/Colors';
+import {useLanguage} from '../datas/contextHooks';
+import Translation from '../datas/translation.json';
+import LanguageContext from '../context/LanguageContext';
+
+
 
 interface IProps {
     content: String
@@ -20,6 +26,7 @@ export default class TextAnimator extends Component<IProps, IState> {
             animatedValues: []
         }
     }
+    
 
     // Est appelé au lancement pour set les animations 
     animated(toValue = 1) {
@@ -48,6 +55,48 @@ export default class TextAnimator extends Component<IProps, IState> {
             animatedValues: this.state.animatedValues
         })
         this.animated();
+
+    }
+
+    getColor(word : string, language: any){
+
+        const languageObj = Translation[language.language];
+        console.log(`${languageObj.character}s`);
+        switch(word.toLowerCase()){
+            case languageObj.character:
+            case `${languageObj.character}s`:
+                return Colors.character
+            case languageObj.action:
+            case `${languageObj.action}s`:
+                return Colors.action
+            case languageObj.instruction:
+            case `${languageObj.instruction}s`:
+                return Colors.instruction
+            case languageObj.condition:
+            case `${languageObj.condition}s`:
+                return Colors.condition
+            case languageObj.item:
+            case `${languageObj.item}s`:
+                return Colors.item
+            case languageObj.environnement:
+            case `${languageObj.environnement}s`:
+                return Colors.environnement
+            case languageObj.number:
+            case `${languageObj.number}s`:
+                return Colors.number
+        }
+    }
+    
+    colorWord(word : string){
+        let styleColor = "black";
+        
+        return (
+            <LanguageContext.Consumer>
+                {language =>
+                    <Text style={{color: this.getColor(word, language)}}>{word}</Text>
+                }
+            </LanguageContext.Consumer>
+                )
     }
 
     render() {
@@ -58,7 +107,7 @@ export default class TextAnimator extends Component<IProps, IState> {
                         <Animated.Text 
                         key={'word' + index} 
                         style={{...styles.textStyle, opacity: this.state.animatedValues[index]}}>
-                            {word}
+                            {this.colorWord(word)}
                             { index < this.textArray.length - 1 ? ' ' : ''}
                         </Animated.Text>
                     )
@@ -76,6 +125,6 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontFamily:'Pangolin-Regular',
-        fontSize: 16
+        fontSize: 20
     }
 })

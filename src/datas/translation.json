@@ -7,7 +7,14 @@
         "help": "Help",
         "test": "Test",
 
-        "level": "Level"
+        "level": "Level",
+        "character": "character",
+        "action": "action",
+        "instruction":"instruction",
+        "condition": "condition",
+        "item": "item",
+        "environnement": "environnement",
+        "number":"number"
     },
 
     "fr": {
@@ -18,6 +25,14 @@
         "help": "Aide",
         "test": "Test",
 
-        "level": "Niveau"
+        "level": "Niveau",
+        "character": "personnage",
+        "action": "action",
+        "instruction":"instruction",
+        "condition": "condition",
+        "item": "objet",
+        "environnement": "environnement",
+        "number":"nombre"
+
     }
 }

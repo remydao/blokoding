@@ -8,7 +8,7 @@ import EngineConstants from '../constants/EngineConstants';
 import CustomHeader from '../components/CustomHeader';
 import AwesomeButton from "react-native-really-awesome-button";
 import Carousel from 'react-native-snap-carousel';
-import {ItemImages} from '../constants/ItemImages'
+
 interface IProps {
     navigation: any,
     route: any,
@@ -127,25 +127,21 @@ class LevelScreen extends Component<IProps, IState> {
                     /> */}
                     <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
                     <View style={styles.animatedText}>
-                        {this.state.textAnimator}
+                        <Text style={styles.animatedTextStyle}>{this.state.textAnimator}</Text>
                     </View>
-                    {/* <View>
-                        <Text style={styles.title}>{title}</Text>
-                        <Text style={styles.tutorial}>{tutorial}</Text>
-                    </View>
-                    <Text>{congratulations}</Text> */}
+
                     <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
 
 
                     <View style={styles.carousel}>
-                            <MyCarousel content={this.content}/>
-                        </View>
+                        <MyCarousel content={this.content}/>
+                    </View>
                     <View style={styles.openCamera}>
                         <AwesomeButton onPress={this.onPressNextButton} textColor="#2e84b2" {...styles.button}>
                             <Text>{this.state.buttonText}</Text>
                             {this.state.buttonText !== "\nSuivant\n" &&
                             <Image style={{position:'absolute', right: -EngineConstants.MAX_WIDTH / 8}} height={30} width={30} source={require('../assets/smartphone.png')}/>}
-                            </AwesomeButton>
+                        </AwesomeButton>
                     </View>
                     <StatusBar translucent backgroundColor="transparent"/>
                 </SafeAreaView>
@@ -164,8 +160,8 @@ const styles = StyleSheet.create({
         height: EngineConstants.MAX_HEIGHT/ 8,
     },
     textStyle: {
-        fontSize: 30,
-        fontFamily: 'Pangolin-Regular'
+        fontFamily: 'Pangolin-Regular',
+        fontSize: 30
     },
     bigContainer: {
         flex:1,
@@ -178,7 +174,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#cbcef8',
     },
-
     popupImage: {
         position:'absolute',
         width: EngineConstants.MAX_WIDTH,
@@ -191,6 +186,10 @@ const styles = StyleSheet.create({
         left : EngineConstants.MAX_WIDTH / 40,
         paddingBottom: EngineConstants.MAX_HEIGHT / 7,
         paddingHorizontal: EngineConstants.MAX_WIDTH / 20,
+    },
+    animatedTextStyle:{
+        fontFamily: "Pangolin-Regular",
+        fontSize: 30
     },
     openCamera: {
         position:'absolute',
