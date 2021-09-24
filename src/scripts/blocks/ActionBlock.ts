@@ -7,7 +7,7 @@ class MoveBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
+        engine.setActiveBlockSchemaItem(this.index, false);
         
         // If GameEngine is unmounted
         if (!engine.isMounted())
@@ -28,7 +28,7 @@ class JumpBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
+        engine.setActiveBlockSchemaItem(this.index, false);
 
         // If GameEngine is unmounted
         if (!engine.isMounted())
@@ -56,7 +56,7 @@ class GrabBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
+        engine.setActiveBlockSchemaItem(this.index, false);
 
         // If GameEngine is unmounted
         if (!engine.isMounted())
@@ -64,7 +64,7 @@ class GrabBlock extends StructureBlock {
 
         console.log("grab");
 
-        if (await engine.grab()) // If grab success
+        if (engine.grab()) // If grab success
         {
             if (this.nextBlock) {
                 await this.nextBlock.execute(engine);
@@ -81,7 +81,7 @@ class UseBlock extends StructureBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
+        engine.setActiveBlockSchemaItem(this.index, false);
 
         if (!engine.isMounted())
             return;

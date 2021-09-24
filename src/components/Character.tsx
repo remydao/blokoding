@@ -31,7 +31,7 @@ export default class Character extends Component<IProps> {
         this.spriteSheet.play({
             type: "anim",
             fps: 60,
-            loop: true,
+            loop: false,
             resetAfterFinish: false,
         });
     }
