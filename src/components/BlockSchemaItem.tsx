@@ -32,7 +32,7 @@ export default class BlockSchemaItem extends Component<IProps, IState> {
 
     render() {
         // const colorData = blockColors[this.props.blockType];
-        return (<View style={[styles.item, {backgroundColor: blockColors[this.props.blockType], opacity: this.props.active ? 1 : .4}]} />)
+        return (<View style={[styles.item, {backgroundColor: blockColors[this.props.blockType], opacity: this.props.active ? 1 : .5}]} />)
     }
 }
 

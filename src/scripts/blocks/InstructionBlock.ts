@@ -1,3 +1,4 @@
+import { sleep } from "../utils";
 import { CodeBlock, ConditionBlock, InstructionBlock, StructureBlock } from "./MainBlocks";
 
 class ForBlock extends InstructionBlock {
@@ -9,10 +10,10 @@ class ForBlock extends InstructionBlock {
         var n = this.predicateBlock.execute();
         let i = 0;
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
-            engine.setActiveBlockSchemaItem(this.index);
-
             if (!engine.isMounted())
                 return;
+
+            await engine.setActiveBlockSchemaItem(this.index);
 
             if (this.execBlock) {
 
@@ -36,12 +37,12 @@ class IfBlock extends InstructionBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
-
         if (!engine.isMounted())
             return;
 
-        if (this.predicateBlock.execute(engine) && this.execBlock) {
+        await engine.setActiveBlockSchemaItem(this.index);
+
+        if (await this.predicateBlock.execute(engine) && this.execBlock) {
             await this.execBlock.execute(engine);
         }
         else if (this.nextIfBlock) {
@@ -65,12 +66,12 @@ class ElIfBlock extends CodeBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
-
         if (!engine.isMounted())
             return;
 
-        if (this.predicateBlock.execute(engine) && this.execBlock) {
+        await engine.setActiveBlockSchemaItem(this.index);
+
+        if (await this.predicateBlock.execute(engine) && this.execBlock) {
             await this.execBlock.execute(engine);
         }
         else if (this.nextIfBlock) {
@@ -87,10 +88,10 @@ class ElseBlock extends CodeBlock {
     }
 
     async execute(engine: any) {
-        engine.setActiveBlockSchemaItem(this.index);
-
         if (!engine.isMounted())
             return;
+
+        await engine.setActiveBlockSchemaItem(this.index);
 
         await this.execBlock.execute(engine);
     }
