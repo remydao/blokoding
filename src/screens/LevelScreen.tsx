@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image} from 'react-native';
+import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image, Text} from 'react-native';
 import {tutorialInfo} from '../constants/TutorialDetails';
 import {enigmaInfo} from '../constants/EnigmaDetails';
 import Colors from '../constants/Colors';
 import TextAnimator from '../components/TextAnimator';
 import EngineConstants from '../constants/EngineConstants';
 import CustomHeader from '../components/CustomHeader';
-
+import AwesomeButton from "react-native-really-awesome-button";
+import Carousel from 'react-native-snap-carousel';
+import {ItemImages} from '../constants/ItemImages'
 interface IProps {
     navigation: any,
     route: any,
@@ -15,6 +17,48 @@ interface IProps {
 interface IState {
     buttonText: string,
     textAnimator: JSX.Element
+}
+
+
+const itemWidth = EngineConstants.MAX_WIDTH / 7;
+const itemHeight = EngineConstants.MAX_HEIGHT / 15;
+class MyCarousel extends Component {
+
+    constructor(props : any){
+        super(props);
+        this._carousel = {}
+        console.log(this.props.content)
+    }
+
+    _renderItem = ({item, index} : any) => {
+        return (
+            <View style={{width: itemWidth, height: itemHeight, marginLeft: 25, marginRight: 25}}>
+
+                <Image source={item.uri} style={{ flex: 1, width: null, height: null, resizeMode: 'contain'}}></Image>
+            </View>
+        );
+    }
+
+    render () {
+        return (
+            <View >
+                <Carousel
+                ref={(c) => { this._carousel = c; }}
+                data={this.props.content}
+                renderItem={this._renderItem}
+                sliderWidth={EngineConstants.MAX_WIDTH / 1.2}
+                sliderHeight={itemHeight}
+                itemWidth={itemWidth + 50}
+                containerCustomStyle={{backgroundColor: 'rgba(169, 211, 233, 1)', opacity:1, borderRadius:30, paddingVertical: 10}}
+                contentContainerCustomStyle={{opacity: 1}}
+                />
+                <Text style={{textAlign: 'center', marginTop: 10}}>⬆︎</Text>
+
+            </View>
+
+            
+        );
+    }
 }
 
 class LevelScreen extends Component<IProps, IState> {
@@ -26,6 +70,7 @@ class LevelScreen extends Component<IProps, IState> {
     private readonly tutorial: Array<string>;
     private readonly congratulations: string;
     private readonly map: object;
+    private content: object;
     private index: number;
 
     constructor(props: IProps) {
@@ -37,10 +82,11 @@ class LevelScreen extends Component<IProps, IState> {
         this.title = this.levelInfo.title;
         this.tutorial = this.levelInfo.tutorial;
         this.congratulations = this.levelInfo.congratulations;
-        this.map = this.levelInfo.map
+        this.map = this.levelInfo.map;
+        this.content = this.map.map.map((element : any) => element.content ? element.content : null)
         this.index = 0;
         this.state = {
-            buttonText: this.tutorial.length === 1 ? "\nOuvrir la caméra\n" : "\nSuivant\n",
+            buttonText: this.tutorial.length === 1 ? "\nC\'est parti !\n" : "\nSuivant\n",
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[0]}></TextAnimator>,
         }
     }
@@ -52,7 +98,7 @@ class LevelScreen extends Component<IProps, IState> {
             if (this.index === this.tutorial.length - 1)
             {
                 this.setState({
-                    buttonText: "\nOuvrir la caméra\n"
+                    buttonText: "\nC\'est parti !\n"
                 });
             }
             this.setState({
@@ -68,14 +114,13 @@ class LevelScreen extends Component<IProps, IState> {
             })
         }
     }
-
     
     render(){
         return (
-            <SafeAreaView style={styles.bigContainer}>
+            <View style={styles.bigContainer}>
 
                 <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}/>
-
+                
                 <SafeAreaView style={styles.container}>
                     {/* <Header 
                         centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
@@ -89,19 +134,22 @@ class LevelScreen extends Component<IProps, IState> {
                         <Text style={styles.tutorial}>{tutorial}</Text>
                     </View>
                     <Text>{congratulations}</Text> */}
-        
                     <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
 
-                    <View style={styles.openCamera}>   
-                        <Button
-                                onPress={this.onPressNextButton.bind(this)}
-                                title={this.state.buttonText}
-                                color={Colors.dark_turquoise}
-                        />
+
+                    <View style={styles.carousel}>
+                            <MyCarousel content={this.content}/>
+                        </View>
+                    <View style={styles.openCamera}>
+                        <AwesomeButton onPress={this.onPressNextButton} textColor="#2e84b2" {...styles.button}>
+                            <Text>{this.state.buttonText}</Text>
+                            {this.state.buttonText !== "\nSuivant\n" &&
+                            <Image style={{position:'absolute', right: -EngineConstants.MAX_WIDTH / 8}} height={30} width={30} source={require('../assets/smartphone.png')}/>}
+                            </AwesomeButton>
                     </View>
                     <StatusBar translucent backgroundColor="transparent"/>
                 </SafeAreaView>
-            </SafeAreaView>
+            </View>
 
         )
     }
@@ -120,12 +168,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Pangolin-Regular'
     },
     bigContainer: {
-        flex: 1,
+        flex:1,
         alignItems: 'center'
     },
     container: {
+        flex: 1,
         width: '100%',
-        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#cbcef8',
@@ -146,16 +194,29 @@ const styles = StyleSheet.create({
     },
     openCamera: {
         position:'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 4,
+        bottom: EngineConstants.MAX_HEIGHT / 4.5,
         left: EngineConstants.MAX_WIDTH / 2.5,
         borderRadius: 10,
         width: EngineConstants.MAX_WIDTH / 2,
-        overflow: 'hidden', // for borderRadius
+    },
+    carousel: {
+        position: 'absolute',
+        bottom: EngineConstants.MAX_HEIGHT / 10,
     },
     image: {
         position: 'absolute',
         bottom: EngineConstants.MAX_HEIGHT / 7,
         left: -EngineConstants.MAX_WIDTH / 30,
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 20,
+        width:"100%",
+        backgroundColor:"#a9d3e9",
+        justifyContent: 'center',
+        textAlignVertical:'center',
+        textAlign: 'center',
     }
 })
 
