@@ -18,6 +18,9 @@ module.exports = {
         + "|react-native-auto-height-image"
         + "|@react-native-async-storage"
         + "|rn-sprite-sheet"
+        + "|react-native-progress"
+        + "|react-native-really-awesome-button"
+        + "|react-native-snap-carousel"
       + ")/)",
     ],
     setupFiles: ["./node_modules/react-native-gesture-handler/jestSetup.js"],
