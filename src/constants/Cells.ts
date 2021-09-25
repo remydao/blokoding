@@ -3,7 +3,7 @@ import { ItemImages } from "./ItemImages";
 
 const Cells = {
     Empty: {
-        content: null
+        content: ItemImages.Grass
     },
     Key: {
         content: ItemImages.Key

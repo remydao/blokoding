@@ -23,6 +23,7 @@ import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
 import { EnvironmentImages } from '../constants/EnvironmentImages';
 import uuid from 'react-native-uuid';
+import { sleep } from '../scripts/utils';
 import * as Progress from 'react-native-progress';
 
 interface IProps {
@@ -40,7 +41,6 @@ interface IState {
     hasWon: boolean,
     inventory: any,
     isStartAnimation: boolean,
-    spriteSheet: SpriteSheet | null,
     image: any,
     columns: number,
     rows: number,
@@ -69,6 +69,7 @@ class Game extends Component<IProps, IState> {
     private images: any;
     private blockSchemaRowList: JSX.Element[] = [];
     private currActiveBlockSchemaItemIndex: number = 1;
+    public sleepValue: number = 0;
 
     constructor(props: IProps) {
         super(props);
@@ -92,11 +93,10 @@ class Game extends Component<IProps, IState> {
             hasWon: false,
             inventory: {},
             isStartAnimation: false,
-            spriteSheet: null,
-            image: this.images.move[0],
-            columns: 9,
-            rows: 7,
-            numSpritesInSpriteSheet: 60,
+            image: this.images.idle,
+            columns: 1,
+            rows: 1,
+            numSpritesInSpriteSheet: 1,
             blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false),
             percentLoading: 0,
             animUUID: uuid.v4(),
@@ -271,6 +271,8 @@ class Game extends Component<IProps, IState> {
     setFramerateDelay() {   
         this.frameCount++;
 
+        // console.log("lastTicks :" + this.lastTicks);
+
         var currentTicks = Date.now();
         this.timePassed = currentTicks - this.lastTicks;
         this.lastTicks = currentTicks;
@@ -284,7 +286,14 @@ class Game extends Component<IProps, IState> {
             this.frameDelay = 0;
         }
 
-        this.speed = (EngineConstants.CELL_SIZE * (this.timePassed + this.frameDelay)) / 2000;
+        // console.log("currentTicks :" + currentTicks);
+        // console.log("timepassed :" + this.timePassed);
+        // console.log("targetTicks :" + targetTicks);
+        // console.log("framedelay :" + this.frameDelay);
+        // console.log("sleepValue :" + this.sleepValue);
+
+        this.speed = (EngineConstants.CELL_SIZE * (this.timePassed + this.frameDelay - 1.45 * this.sleepValue)) / 2000;
+        this.sleepValue = 0;
     }
 
     getNewImage() {
@@ -293,7 +302,7 @@ class Game extends Component<IProps, IState> {
         return Math.floor((120 * progress) % 60);
     }
 
-    setActiveBlockSchemaItem(index: number) {
+    async setActiveBlockSchemaItem(index: number, mustSleep: boolean = true) {
         this.setState(prevState => {
             let blockSchemaStatus = prevState.blockSchemaStatus;
             blockSchemaStatus[this.currActiveBlockSchemaItemIndex] = false;
@@ -301,6 +310,11 @@ class Game extends Component<IProps, IState> {
             return {blockSchemaStatus};
         })
         this.currActiveBlockSchemaItemIndex = index;
+        
+        // if (mustSleep) {
+        //     await sleep(300);
+        //     this.sleepValue += 300;
+        // }
     }
 
     // Method to move the character (used in ActionBlock.js)
@@ -336,12 +350,15 @@ class Game extends Component<IProps, IState> {
                     resolve();
 
                 var imageUUID = self.state.animUUID;
-                
+                var imageNum = Math.floor((self.moveDistance / EngineConstants.CELL_SIZE) * 2);
+                if (imageNum > 1)
+                    imageNum = 1;
+
                 // If sprite sheet changed
-                if (lastImage !== 0)
+                if (imageNum !== lastImage)
                 {
                     imageUUID = uuid.v4();
-                    lastImage = 0;
+                    lastImage = imageNum;
                 }
     
                 self.setState({
@@ -404,9 +421,9 @@ class Game extends Component<IProps, IState> {
                 // Get current sprite sheet
                 var imageUUID = self.state.animUUID;
                 var imageNum = Math.floor((self.moveDistance / EngineConstants.CELL_SIZE) * 2);
-                console.log("imageNum: " + imageNum);
+                
                 if (imageNum >= 4)
-                    imageNum = 0;
+                    imageNum = 3;
 
                 // If sprite sheet changed
                 if (imageNum !== lastImage)
@@ -438,7 +455,7 @@ class Game extends Component<IProps, IState> {
         });
     }
 
-    async grab() {
+    grab() {
         var currCell = this.state.map[this.characterPos];
 
         if (currCell == Cells.Empty || !isItem(currCell.content.imageName)) {

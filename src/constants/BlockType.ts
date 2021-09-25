@@ -52,7 +52,8 @@ const Items = {
     Plush: 'peluche',
     Flower: 'fleur',
     Machete: 'machette',
-    Trash: 'dechet'
+    Trash: 'dechet',
+    Grass: 'grass'
 }
 
 const Environments = {

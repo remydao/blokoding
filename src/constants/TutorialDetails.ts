@@ -3,7 +3,7 @@ import Maps from "./Maps";
 const tutorialInfo = [
     {
         title: "Faire apparaître un personnage",
-        tutorial: ["Avant de ramasser les objets de Mr. Mustache, apprenons déjà comment le faire entrer dans son atelier. Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage.", "Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite. Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi. Ensuite, clique sur le bouton ci-dessous et prend la carte en photo."],
+        tutorial: ["Avant de ramasser les objets de Mr. Mustache characters , apprenons déjà comment le faire entrer dans son atelier. Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage.", "Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite. Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi. Ensuite, clique sur le bouton ci-dessous et prend la carte en photo."],
         congratulations:"Bravo, tu as réussi à faire entrer Mr. Mustache dans son atelier.",
         map: Maps.level1,
         soluce: [{text: 'MrMustache'}],

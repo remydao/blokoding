@@ -14,8 +14,8 @@
 		5526DAC12653B4820038F7A3 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAD1739D365F457888C63C4C /* Montserrat-Medium.ttf */; };
 		5526DAC22653B4820038F7A3 /* Pangolin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31606041412240E2B777CE9E /* Pangolin-Regular.ttf */; };
 		55A7AE412677803800D92018 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A7AE402677803800D92018 /* libswiftWebKit.tbd */; };
-		5709D9E4E21608437709BA2A /* libPods-blokoding-blokodingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B518DC3E567EFE30385DA0A7 /* libPods-blokoding-blokodingTests.a */; };
-		E134D62EE102070BE0478991 /* libPods-blokoding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2B1F734DBBC938F16945D2 /* libPods-blokoding.a */; };
+		926CD802CCB8448F9656EEF1 /* libPods-blokoding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5EA469B2501641B7939C3F /* libPods-blokoding.a */; };
+		FA6C15DDFCAAE9422B6480F9 /* libPods-blokoding-blokodingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F44D5FE92FF72E78D083782 /* libPods-blokoding-blokodingTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,24 +32,24 @@
 		00E356EE1AD99517003FC87E /* blokodingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = blokodingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* blokodingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = blokodingTests.m; sourceTree = "<group>"; };
+		0C5EA469B2501641B7939C3F /* libPods-blokoding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-blokoding.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DBA89BD790F47278C29CAB9 /* Sarpanch-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sarpanch-Regular.ttf"; path = "../assets/fonts/Sarpanch-Regular.ttf"; sourceTree = "<group>"; };
+		102E2E36B3DDA49D51A09760 /* Pods-blokoding-blokodingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding-blokodingTests.release.xcconfig"; path = "Target Support Files/Pods-blokoding-blokodingTests/Pods-blokoding-blokodingTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* blokoding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = blokoding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = blokoding/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = blokoding/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = blokoding/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = blokoding/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = blokoding/main.m; sourceTree = "<group>"; };
-		193848F097A306ECD6368998 /* Pods-blokoding.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding.debug.xcconfig"; path = "Target Support Files/Pods-blokoding/Pods-blokoding.debug.xcconfig"; sourceTree = "<group>"; };
 		1ED47CDD263C31E000C175E3 /* OpenSSL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = "Pods/OpenSSL-Universal/Frameworks/OpenSSL.xcframework"; sourceTree = "<group>"; };
+		1F44D5FE92FF72E78D083782 /* libPods-blokoding-blokodingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-blokoding-blokodingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26E8C727D6A0D09CBC1E88B7 /* Pods-blokoding-blokodingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding-blokodingTests.debug.xcconfig"; path = "Target Support Files/Pods-blokoding-blokodingTests/Pods-blokoding-blokodingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		31606041412240E2B777CE9E /* Pangolin-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pangolin-Regular.ttf"; path = "../assets/fonts/Pangolin-Regular.ttf"; sourceTree = "<group>"; };
 		4426AF625FEB4985A171BE30 /* AmaticSC-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AmaticSC-Regular.ttf"; path = "../assets/fonts/AmaticSC-Regular.ttf"; sourceTree = "<group>"; };
 		4543BF3023E044CC8AF8357A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		4BD61C378A4FB0B41BC05821 /* Pods-blokoding.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding.release.xcconfig"; path = "Target Support Files/Pods-blokoding/Pods-blokoding.release.xcconfig"; sourceTree = "<group>"; };
-		4D2B1F734DBBC938F16945D2 /* libPods-blokoding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-blokoding.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		500600A250074A98A89290CC /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		51D9975AAFD44173A3813BBE /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		55A7AE402677803800D92018 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
-		65AC80C868A6499498A4D8C0 /* Pods-blokoding-blokodingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding-blokodingTests.debug.xcconfig"; path = "Target Support Files/Pods-blokoding-blokodingTests/Pods-blokoding-blokodingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = blokoding/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84865E107842484895E34D98 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		8A21007818164ED2800EBD6D /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
@@ -57,16 +57,16 @@
 		8DEA0E23CAD0407D9B07AEBF /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		98D414C11D5B4915AB747BB0 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		B06815E9E0F64CC2B5F84570 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		B518DC3E567EFE30385DA0A7 /* libPods-blokoding-blokodingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-blokoding-blokodingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B88449C2294DF2A20B5A78 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		C4ADD9E2075546C5A4608A80 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		C9D4ABE2ED7241A553201AD5 /* Pods-blokoding-blokodingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding-blokodingTests.release.xcconfig"; path = "Target Support Files/Pods-blokoding-blokodingTests/Pods-blokoding-blokodingTests.release.xcconfig"; sourceTree = "<group>"; };
 		D35AC0B466A44179A840D417 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D39C64B5DC2543C494BF908C /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		DAD1739D365F457888C63C4C /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		DC7B59D115DB4012819A24BB /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		E04F208C87004BA2B278B2DC /* MONSTERA.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MONSTERA.ttf; path = ../assets/fonts/MONSTERA.ttf; sourceTree = "<group>"; };
 		E5C34B55EB38482CB3ADF642 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		EB41D302D0837D0167211ED0 /* Pods-blokoding.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding.release.xcconfig"; path = "Target Support Files/Pods-blokoding/Pods-blokoding.release.xcconfig"; sourceTree = "<group>"; };
+		ED1CEFBFEB7E9B1D348EAD12 /* Pods-blokoding.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-blokoding.debug.xcconfig"; path = "Target Support Files/Pods-blokoding/Pods-blokoding.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F0ABE54F156849F6854EAB54 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5709D9E4E21608437709BA2A /* libPods-blokoding-blokodingTests.a in Frameworks */,
+				FA6C15DDFCAAE9422B6480F9 /* libPods-blokoding-blokodingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A7AE412677803800D92018 /* libswiftWebKit.tbd in Frameworks */,
-				E134D62EE102070BE0478991 /* libPods-blokoding.a in Frameworks */,
+				926CD802CCB8448F9656EEF1 /* libPods-blokoding.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,10 +125,10 @@
 		253FA2B4E072C0A3EC2BA59A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				193848F097A306ECD6368998 /* Pods-blokoding.debug.xcconfig */,
-				4BD61C378A4FB0B41BC05821 /* Pods-blokoding.release.xcconfig */,
-				65AC80C868A6499498A4D8C0 /* Pods-blokoding-blokodingTests.debug.xcconfig */,
-				C9D4ABE2ED7241A553201AD5 /* Pods-blokoding-blokodingTests.release.xcconfig */,
+				ED1CEFBFEB7E9B1D348EAD12 /* Pods-blokoding.debug.xcconfig */,
+				EB41D302D0837D0167211ED0 /* Pods-blokoding.release.xcconfig */,
+				26E8C727D6A0D09CBC1E88B7 /* Pods-blokoding-blokodingTests.debug.xcconfig */,
+				102E2E36B3DDA49D51A09760 /* Pods-blokoding-blokodingTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -139,8 +139,8 @@
 				55A7AE402677803800D92018 /* libswiftWebKit.tbd */,
 				1ED47CDD263C31E000C175E3 /* OpenSSL.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				4D2B1F734DBBC938F16945D2 /* libPods-blokoding.a */,
-				B518DC3E567EFE30385DA0A7 /* libPods-blokoding-blokodingTests.a */,
+				0C5EA469B2501641B7939C3F /* libPods-blokoding.a */,
+				1F44D5FE92FF72E78D083782 /* libPods-blokoding-blokodingTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -212,11 +212,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "blokodingTests" */;
 			buildPhases = (
-				F8AC98AA9749047ABD180BBD /* [CP] Check Pods Manifest.lock */,
+				9F7932836581885821B08BD4 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				F7ED0F85ECCDAEF03E036C4E /* [CP] Copy Pods Resources */,
+				6A85E63B43944E6D5487AD1B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -232,14 +232,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "blokoding" */;
 			buildPhases = (
-				6E7F0B381C21E728CB3CC0AD /* [CP] Check Pods Manifest.lock */,
+				0123ED677A77A707DD3F3EF2 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				5526DABF2653B4380038F7A3 /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				C73276ED93271075C1F881DC /* [CP] Copy Pods Resources */,
 				982B767B945E4F11899868F0 /* Upload Debug Symbols to Sentry */,
+				143861ECC0F7A97AD6E5CD87 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -321,7 +321,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nset -e\n\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		6E7F0B381C21E728CB3CC0AD /* [CP] Check Pods Manifest.lock */ = {
+		0123ED677A77A707DD3F3EF2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -343,21 +343,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		982B767B945E4F11899868F0 /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Debug Symbols to Sentry";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
-		};
-		C73276ED93271075C1F881DC /* [CP] Copy Pods Resources */ = {
+		143861ECC0F7A97AD6E5CD87 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -374,7 +360,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-blokoding/Pods-blokoding-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F7ED0F85ECCDAEF03E036C4E /* [CP] Copy Pods Resources */ = {
+		6A85E63B43944E6D5487AD1B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -391,7 +377,21 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-blokoding-blokodingTests/Pods-blokoding-blokodingTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F8AC98AA9749047ABD180BBD /* [CP] Check Pods Manifest.lock */ = {
+		982B767B945E4F11899868F0 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
+		};
+		9F7932836581885821B08BD4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -465,7 +465,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65AC80C868A6499498A4D8C0 /* Pods-blokoding-blokodingTests.debug.xcconfig */;
+			baseConfigurationReference = 26E8C727D6A0D09CBC1E88B7 /* Pods-blokoding-blokodingTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -493,7 +493,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9D4ABE2ED7241A553201AD5 /* Pods-blokoding-blokodingTests.release.xcconfig */;
+			baseConfigurationReference = 102E2E36B3DDA49D51A09760 /* Pods-blokoding-blokodingTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -518,7 +518,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 193848F097A306ECD6368998 /* Pods-blokoding.debug.xcconfig */;
+			baseConfigurationReference = ED1CEFBFEB7E9B1D348EAD12 /* Pods-blokoding.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -553,7 +553,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4BD61C378A4FB0B41BC05821 /* Pods-blokoding.release.xcconfig */;
+			baseConfigurationReference = EB41D302D0837D0167211ED0 /* Pods-blokoding.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
