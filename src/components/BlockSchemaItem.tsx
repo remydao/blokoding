@@ -18,7 +18,7 @@ const blockColors = {
     [BlockType.Action]: '#FFF802',
     [BlockType.Instruction]: '#19DABB',
     [BlockType.SecondaryInstruction]: '#19DABB',
-    [BlockType.Condition]: '#FF9557',
+    [BlockType.Condition]: '#F77A45',
     [BlockType.Item]: '#6C63FF', 
     [BlockType.Environment]: '#39E083',
     [BlockType.Number]: '#F5ADAB',
@@ -31,8 +31,7 @@ export default class BlockSchemaItem extends Component<IProps, IState> {
     }
 
     render() {
-        // const colorData = blockColors[this.props.blockType];
-        return (<View style={[styles.item, {backgroundColor: blockColors[this.props.blockType], opacity: this.props.active ? 1 : .5}]} />)
+        return (<View style={[styles.item, {backgroundColor: blockColors[this.props.blockType], opacity: this.props.active ? 1 : .4}]} />)
     }
 }
 

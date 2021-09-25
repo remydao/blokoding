@@ -7,10 +7,10 @@ class IsInFrontBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    async execute(engine: any) : Boolean {
-        //await engine.setActiveBlockSchemaItem(this.index);
+    async execute(engine: any) : Promise<Boolean> {
+        await engine.setActiveBlockSchemaItem(this.index);
 
-        let entity = this.entityBlock.execute();
+        let entity = await this.entityBlock.execute(engine);
 
         return engine.isInFront(entity);
     }
@@ -21,10 +21,10 @@ class IsOnBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    async execute(engine: any) : Boolean {
-        //await engine.setActiveBlockSchemaItem(this.index);
+    async execute(engine: any) : Promise<Boolean> {
+        await engine.setActiveBlockSchemaItem(this.index);
 
-        let entity = this.entityBlock.execute();
+        let entity = await this.entityBlock.execute(engine);
 
         return engine.isOn(entity);
     }
@@ -35,10 +35,10 @@ class PossessBlock extends ConditionBlock {
         super(entityBlock);
     }
 
-    async execute(engine: any) : Boolean {
+    async execute(engine: any) : Promise<Boolean> {
         await engine.setActiveBlockSchemaItem(this.index);
 
-        let entity = this.entityBlock.execute();
+        let entity = await this.entityBlock.execute(engine);
 
         return engine.possess(entity);
     }

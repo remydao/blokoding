@@ -69,7 +69,6 @@ class Game extends Component<IProps, IState> {
     private images: any;
     private blockSchemaRowList: JSX.Element[] = [];
     private currActiveBlockSchemaItemIndex: number = 1;
-    public sleepValue: number = 0;
 
     constructor(props: IProps) {
         super(props);
@@ -93,9 +92,9 @@ class Game extends Component<IProps, IState> {
             hasWon: false,
             inventory: {},
             isStartAnimation: false,
-            image: this.images.idle,
-            columns: 1,
-            rows: 1,
+            image: this.images.move[0],
+            columns: 9,
+            rows: 7,
             numSpritesInSpriteSheet: 1,
             blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false),
             percentLoading: 0,
@@ -292,8 +291,7 @@ class Game extends Component<IProps, IState> {
         // console.log("framedelay :" + this.frameDelay);
         // console.log("sleepValue :" + this.sleepValue);
 
-        this.speed = (EngineConstants.CELL_SIZE * (this.timePassed + this.frameDelay - 1.45 * this.sleepValue)) / 2000;
-        this.sleepValue = 0;
+        this.speed = (EngineConstants.CELL_SIZE * (this.timePassed + this.frameDelay)) / 2000;
     }
 
     getNewImage() {
@@ -311,14 +309,13 @@ class Game extends Component<IProps, IState> {
         })
         this.currActiveBlockSchemaItemIndex = index;
         
-        // if (mustSleep) {
-        //     await sleep(300);
-        //     this.sleepValue += 300;
-        // }
+        if (mustSleep)
+            await sleep(250);
     }
 
     // Method to move the character (used in ActionBlock.js)
     async move() {
+        this.lastTicks = Date.now();
         this.moveDistance = 0
         
         var self = this;
@@ -387,6 +384,8 @@ class Game extends Component<IProps, IState> {
     // num_cell is the number of cell the animation last
     async jump(numCells : number = 2) {
         loadSound("jump.mp3", false, 1);
+        this.lastTicks = Date.now();
+
         this.moveDistance = 0;
 
         var self = this;
@@ -507,10 +506,10 @@ class Game extends Component<IProps, IState> {
         else if(!this.isInFront(usables[item]))
             this.fireEndScreen("loose", "Tu dois être en face d'un " + usables[item] + " pour pouvoir utiliser ton " + item);
         else {
+            loadSound(sounds[item], false, 1);
             this.setState((prevState) => {
                 let inventory = prevState.inventory;
                 let map = prevState.map;
-                loadSound(sounds[item], false, 1);
                 inventory[item] -= 1;
                 map[this.characterPos + 1] = Cells.Empty;
                 return {inventory, map}

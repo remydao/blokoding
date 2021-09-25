@@ -7,7 +7,7 @@ class ForBlock extends InstructionBlock {
     }
 
     async execute(engine: any) {
-        var n = this.predicateBlock.execute();
+        var n = await this.predicateBlock.execute();
         let i = 0;
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
             if (!engine.isMounted())
@@ -103,7 +103,7 @@ class WhileBlock extends InstructionBlock {
     }
 
     async execute(engine: any) {
-        while (!engine.getStateHasLost() && !engine.getStateHasWon() && this.predicateBlock.execute(engine)) {
+        while (!engine.getStateHasLost() && !engine.getStateHasWon() && await this.predicateBlock.execute(engine)) {
             engine.setActiveBlockSchemaItem(this.index);
 
             if (!engine.isMounted())

@@ -45,7 +45,8 @@ class DataBlock extends CodeBlock {
         this.value = value;
     }
 
-    execute() : string | number {
+    async execute(engine: any) : Promise<string | number> {
+        //await engine.setActiveBlockSchemaItem(this.index);
         return this.value;
     }
 }
