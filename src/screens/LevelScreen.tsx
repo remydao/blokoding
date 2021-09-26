@@ -17,14 +17,16 @@ interface IProps {
 interface IState {
     buttonText: string,
     textAnimator: JSX.Element,
-    displayCarousel: boolean
+    displayCarousel: boolean,
+    imageSource: any
 }
 
 
 const itemWidth = EngineConstants.MAX_WIDTH / 7;
 const itemHeight = EngineConstants.MAX_HEIGHT / 15;
 class MyCarousel extends Component {
-
+    
+    
     constructor(props : any){
         super(props);
         this._carousel = {}
@@ -33,7 +35,6 @@ class MyCarousel extends Component {
     _renderItem = ({item, index} : any) => {
         return (
             <View style={{width: itemWidth, height: itemHeight, marginLeft: 25, marginRight: 25}}>
-
                 <Image source={item.uri} style={{ flex: 1, width: null, height: null, resizeMode: 'contain'}}></Image>
             </View>
         );
@@ -61,6 +62,13 @@ class MyCarousel extends Component {
     }
 }
 
+const CharlieImages = [
+    require(`../assets/characters/Charliev2/1x/Charlie1.png`),
+    require(`../assets/characters/Charliev2/1x/Charlie2.png`),
+    require(`../assets/characters/Charliev2/1x/Charlie3.png`)
+]
+
+
 class LevelScreen extends Component<IProps, IState> {
 
     private readonly levelNumber: number;
@@ -85,11 +93,29 @@ class LevelScreen extends Component<IProps, IState> {
         this.map = this.levelInfo.map;
         this.content = this.map.map.map((element : any) => element.content ? element.content : null)
         this.index = 0;
+        this.interval = null;
         this.state = {
             buttonText: this.tutorial.length === 1 ? "\nC\'est parti !\n" : "\nSuivant\n",
-            textAnimator: <TextAnimator key={this.index} content={this.tutorial[0]}></TextAnimator>,
+            textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>,
             displayCarousel: false,
+            imageSource: null,
         }
+    }
+
+    componentDidMount() {
+        this.launchCharlieAnimation();
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.interval)
+    }
+
+    launchCharlieAnimation(){
+        this.interval = setInterval(() => {
+            let pictureNumber = Math.floor(Math.random() * (2 - 0 + 1) + 0)
+            this.setState({ imageSource: CharlieImages[pictureNumber] })
+        }, 300);
+        setTimeout(() => clearInterval(this.interval), this.tutorial[this.index].length * 20);
     }
 
     onPressNextButton = () => {
@@ -105,6 +131,8 @@ class LevelScreen extends Component<IProps, IState> {
             this.setState({
                 textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>
             })
+            clearInterval(this.interval);
+            this.launchCharlieAnimation();
         }
         else
         {
@@ -128,7 +156,7 @@ class LevelScreen extends Component<IProps, IState> {
                         <Text style={styles.animatedTextStyle}>{this.state.textAnimator}</Text>
                     </View>
 
-                    <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
+                    <Image source={this.state.imageSource} style={styles.image}></Image>
 
                     <TouchableOpacity style={styles.info} onPress={() => this.setState({displayCarousel: !this.state.displayCarousel})}>
                         <Image resizeMode='contain' style={styles.infoImage} source={require('../assets/lightbulb.png')}/>
@@ -147,7 +175,6 @@ class LevelScreen extends Component<IProps, IState> {
                     <StatusBar translucent backgroundColor="transparent"/>
                 </SafeAreaView>
             </View>
-
         )
     }
 }

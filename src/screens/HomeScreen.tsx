@@ -29,13 +29,13 @@ const HomeScreen = ({ navigation }: IProps) => {
       console.log("HOMESCREEN: Stop sound because appState backgroundStop sound");
       soundRef.current?.stop();
       soundRef.current?.release();
-    } 
+    }
     if(currentAppState == "active") {
       if (soundRef.current?.isPlaying()){
         console.log("HOMESCREEN: sound is active, so return")
         return;
       }
-      
+
       console.log("HOMESCREEN: play sound because appState is active");
       soundRef.current?.play((success: any) => {
         if (success) {
