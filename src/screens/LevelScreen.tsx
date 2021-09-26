@@ -53,8 +53,7 @@ class MyCarousel extends Component {
                 containerCustomStyle={{backgroundColor: '#E4965F', opacity:1, borderRadius:30, paddingVertical: 10}}
                 contentContainerCustomStyle={{opacity: 1}}
                 />
-                <Text style={{textAlign: 'center', marginTop: 10}}>●</Text>
-
+                <Image style={{position: 'absolute', height:EngineConstants.MAX_HEIGHT / 25, width: EngineConstants.MAX_WIDTH / 15, top: EngineConstants.MAX_HEIGHT / 11, alignSelf: 'center' }} source={require('../assets/touch.png')}/>
             </View>
 
             
@@ -97,7 +96,7 @@ class LevelScreen extends Component<IProps, IState> {
         this.state = {
             buttonText: this.tutorial.length === 1 ? "\nC\'est parti !\n" : "\nSuivant\n",
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>,
-            displayCarousel: false,
+            displayCarousel: true,
             imageSource: null,
         }
     }
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
     },
     carousel: {
         position: 'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 17,
+        bottom: EngineConstants.MAX_HEIGHT / 13,
     },
     image: {
         position: 'absolute',
