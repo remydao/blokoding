@@ -60,7 +60,7 @@ function App() {
             <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>
             <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
             <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>
-            <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={{headerShown:false}}/>
+            <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={{headerTitle: () => <CustomHeader title="Enigma" backgroundColor="purple"/>}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </SoundContext.Provider>
