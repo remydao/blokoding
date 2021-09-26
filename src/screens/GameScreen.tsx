@@ -25,6 +25,8 @@ import { EnvironmentImages } from '../constants/EnvironmentImages';
 import uuid from 'react-native-uuid';
 import { sleep } from '../scripts/utils';
 import * as Progress from 'react-native-progress';
+import Translation from '../datas/translation.json';
+import LanguageContext from '../context/LanguageContext';
 
 interface IProps {
     navigation: any,
@@ -48,10 +50,12 @@ interface IState {
     blockSchemaStatus: boolean[],
     percentLoading: number,
     animUUID: any,
+    languageObj: Object
 }
 
 class Game extends Component<IProps, IState> {
 
+    static contextType = LanguageContext;
     private moveDistance: number = 0;
     private characterPos: number = 0;
     private frameCount: number = 0;
@@ -99,6 +103,7 @@ class Game extends Component<IProps, IState> {
             blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false),
             percentLoading: 0,
             animUUID: uuid.v4(),
+            languageObj: Translation["en"].gameScreen,
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
@@ -111,6 +116,7 @@ class Game extends Component<IProps, IState> {
     }
 
     async componentDidMount() {
+        this.setState({languageObj: Translation[this.context.language].gameScreen})
         this.mounted = true;
 
         this.setState({percentLoading: 0});
@@ -143,7 +149,7 @@ class Game extends Component<IProps, IState> {
         console.log(end - start);
 
         if (this.state.map[this.characterPos] != Cells.Win && !this.state.hasLost && !this.state.hasWon) {
-            this.fireEndScreen("loose", "Perdu, tu n'as pas atteint la ligne d'arrivée")
+            this.fireEndScreen("loose", this.state.languageObj.lose)
         }
     }
 
@@ -164,10 +170,10 @@ class Game extends Component<IProps, IState> {
                     this.fireEndScreen("won");
                     break;
                 case Cells.Bush:
-                    this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer");
+                    this.fireEndScreen("loose", this.state.languageObj.loseBush);
                     break;
                 case Cells.Door:
-                    this.fireEndScreen("loose", "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ourvrir");
+                    this.fireEndScreen("loose", this.state.languageObj.loseDoor);
                     break;
                 default:
                     break;
@@ -186,16 +192,16 @@ class Game extends Component<IProps, IState> {
                         this.fireEndScreen("won");
                     break;
                 case Cells.Puddle:
-                    this.fireEndScreen("loose", "Perdu, fais attention aux flaques d'eau");
+                    this.fireEndScreen("loose", this.state.languageObj.losePuddle);
                     break;
                 case Cells.Bush:
-                    this.fireEndScreen("loose", "Perdu, utilise la machette quand tu es devant le buisson pour le couper");
+                    this.fireEndScreen("loose", this.state.languageObj.loseBush2);
                     break;
                 case Cells.Door:
-                    this.fireEndScreen("loose", "Perdu, utilise la clé quand tu es devant la porte pour l'ouvrir");
+                    this.fireEndScreen("loose", this.state.languageObj.loseDoor2);
                     break;
                 case Cells.Bin:
-                    this.fireEndScreen("loose", "Perdu, utilise le déchet quand tu es devant la poubelle pour passer");
+                    this.fireEndScreen("loose", this.state.languageObj.loseBin);
                     break;
                 default:
                     break;
@@ -217,7 +223,7 @@ class Game extends Component<IProps, IState> {
                 
                 for (let j = 0; j < this.state.map.length; j++) {
                     if (this.state.map[j].content && this.state.map[j].content.imageName == entity) {
-                        this.fireEndScreen("loose", "Perdu, il reste des " + entity + " sur le terrain");
+                        this.fireEndScreen("loose", this.state.languageObj.removedMap1 + entity + this.state.languageObj.removedMap2);
                         return false;
                     }
                 }
@@ -234,7 +240,7 @@ class Game extends Component<IProps, IState> {
                 
                 let res = inventory.filter(item => item[0] == invItem.item);
                 if (res.length < 1 || res[0][1] != invItem.quantity) {
-                    this.fireEndScreen("loose", "Perdu, tu n'as pas le bon nombre de " + invItem.item + " dans ton inventaire   ");
+                    this.fireEndScreen("loose", this.state.languageObj.checkInventory1 + invItem.item + this.state.languageObj.checkInventory2);
                     return false;
                 }
             }
@@ -243,7 +249,7 @@ class Game extends Component<IProps, IState> {
     }
 
     // Fire the loose screen with a message
-    fireEndScreen(looseOrWon: string, endReason: string = "Bravo, tu as réussi !") {
+    fireEndScreen(looseOrWon: string, endReason: string = this.state.languageObj.win) {
         if (looseOrWon === "loose") {
             this.endReason = endReason;
             this.setState({hasLost: true});

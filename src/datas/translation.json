@@ -14,7 +14,22 @@
         "condition": "condition",
         "item": "item",
         "environnement": "environnement",
-        "number":"number"
+        "number":"number",
+
+        "gameScreen": {
+            "win": "Well done, you did it !",
+            "lose": "Lost, you didn't reach the finish line",
+            "loseBush": "You can't jump over a bush! Use the machete to cut it",
+            "loseDoor": "You can't jump over a door! Use the key to open it",
+            "losePuddle": "Lost, watch out for puddles",
+            "loseBush2": "Lost, use the machete when you are in front of the bush to cut it",
+            "loseDoor2": "Lost, use the key when you are in front of the door to open it",
+            "loseBin": "Lost, use the waste when you are in front of the garbage can to pass",
+            "removedMap1": "Lost, there are still ",
+            "removedMap2": " on the ground",
+            "checkInventory1": "Lost, you don't have the right number of ",
+            "checkInventory2": " in your inventory   "
+        }
     },
 
     "fr": {
@@ -32,7 +47,22 @@
         "condition": "condition",
         "item": "objet",
         "environnement": "environnement",
-        "number":"nombre"
+        "number":"nombre",
+
+        "gameScreen": {
+            "win": "Bravo, tu as réussi !",
+            "lose": "Perdu, tu n'as pas atteint la ligne d'arrivée",
+            "loseBush": "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer",
+            "loseDoor": "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ouvrir",
+            "losePuddle": "Perdu, fais attention aux flaques d'eau",
+            "loseBush2": "Perdu, utilise la machette quand tu es devant le buisson pour le couper",
+            "loseDoor2": "Perdu, utilise la clé quand tu es devant la porte pour l'ouvrir",
+            "loseBin": "Perdu, utilise le déchet quand tu es devant la poubelle pour passer",
+            "removedMap1": "Perdu, il reste des ",
+            "removedMap2": " sur le terrain",
+            "checkInventory1": "Perdu, tu n'as pas le bon nombre de ",
+            "checkInventory2": " dans ton inventaire   "
+        }
 
     }
 }
