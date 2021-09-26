@@ -104,7 +104,7 @@ export default class TextAnimator extends Component<IProps, IState> {
             <View style={styles.containerStyle}>
                 { this.textArray.map((word, index) => {
                     return (
-                        <Animated.Text 
+                        <Animated.Text
                         key={'word' + index} 
                         style={{...styles.textStyle, opacity: this.state.animatedValues[index]}}>
                             {this.colorWord(word)}

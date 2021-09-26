@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image, Text} from 'react-native';
+import {View, StyleSheet, Button, StatusBar, SafeAreaView, Image, Text, TouchableOpacity} from 'react-native';
 import {tutorialInfo} from '../constants/TutorialDetails';
 import {enigmaInfo} from '../constants/EnigmaDetails';
 import Colors from '../constants/Colors';
@@ -16,7 +16,8 @@ interface IProps {
 
 interface IState {
     buttonText: string,
-    textAnimator: JSX.Element
+    textAnimator: JSX.Element,
+    displayCarousel: boolean
 }
 
 
@@ -27,7 +28,6 @@ class MyCarousel extends Component {
     constructor(props : any){
         super(props);
         this._carousel = {}
-        console.log(this.props.content)
     }
 
     _renderItem = ({item, index} : any) => {
@@ -41,7 +41,7 @@ class MyCarousel extends Component {
 
     render () {
         return (
-            <View >
+            <View>
                 <Carousel
                 ref={(c) => { this._carousel = c; }}
                 data={this.props.content}
@@ -49,10 +49,10 @@ class MyCarousel extends Component {
                 sliderWidth={EngineConstants.MAX_WIDTH / 1.2}
                 sliderHeight={itemHeight}
                 itemWidth={itemWidth + 50}
-                containerCustomStyle={{backgroundColor: 'rgba(169, 211, 233, 1)', opacity:1, borderRadius:30, paddingVertical: 10}}
+                containerCustomStyle={{backgroundColor: '#E4965F', opacity:1, borderRadius:30, paddingVertical: 10}}
                 contentContainerCustomStyle={{opacity: 1}}
                 />
-                <Text style={{textAlign: 'center', marginTop: 10}}>⬆︎</Text>
+                <Text style={{textAlign: 'center', marginTop: 10}}>●</Text>
 
             </View>
 
@@ -88,6 +88,7 @@ class LevelScreen extends Component<IProps, IState> {
         this.state = {
             buttonText: this.tutorial.length === 1 ? "\nC\'est parti !\n" : "\nSuivant\n",
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[0]}></TextAnimator>,
+            displayCarousel: false,
         }
     }
 
@@ -122,23 +123,23 @@ class LevelScreen extends Component<IProps, IState> {
                 <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}/>
                 
                 <SafeAreaView style={styles.container}>
-                    {/* <Header 
-                        centerComponent={{ text: `Niveau ${(this.levelNumber + 1)}`, style: styles.header }}
-                    /> */}
-                    <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="contain"/>
+                    <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="stretch"/>
                     <View style={styles.animatedText}>
                         <Text style={styles.animatedTextStyle}>{this.state.textAnimator}</Text>
                     </View>
 
                     <Image source={require('../assets/characters/Charlie/1x/Charlie.png')} style={styles.image}></Image>
 
-
+                    <TouchableOpacity style={styles.info} onPress={() => this.setState({displayCarousel: !this.state.displayCarousel})}>
+                        <Image resizeMode='contain' style={styles.infoImage} source={require('../assets/lightbulb.png')}/>
+                    </TouchableOpacity>
                     <View style={styles.carousel}>
-                        <MyCarousel content={this.content}/>
+                        {this.state.displayCarousel &&
+                        <MyCarousel content={this.content}/>}
                     </View>
                     <View style={styles.openCamera}>
                         <AwesomeButton onPress={this.onPressNextButton} textColor="#2e84b2" {...styles.button}>
-                            <Text>{this.state.buttonText}</Text>
+                            <Text style={styles.buttonText}>{this.state.buttonText}</Text>
                             {this.state.buttonText !== "\nSuivant\n" &&
                             <Image style={{position:'absolute', right: -EngineConstants.MAX_WIDTH / 8}} height={30} width={30} source={require('../assets/smartphone.png')}/>}
                         </AwesomeButton>
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     header: {
         zIndex: 1,
         position: 'absolute',
-        backgroundColor: 'lightblue',
+        backgroundColor: '#E4965F',
         paddingTop: 15,
         height: EngineConstants.MAX_HEIGHT/ 8,
     },
@@ -172,18 +173,19 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#cbcef8',
+        backgroundColor: 'beige',
     },
     popupImage: {
         position:'absolute',
+        top: EngineConstants.MAX_HEIGHT / 7,
         width: EngineConstants.MAX_WIDTH,
-        height: EngineConstants.MAX_HEIGHT,
+        height: EngineConstants.MAX_HEIGHT / 2,
     },
     animatedText: {
         position:'absolute',
         justifyContent:'center',
         alignItems: 'center',
-        left : EngineConstants.MAX_WIDTH / 40,
+        top: EngineConstants.MAX_HEIGHT / 4.5,
         paddingBottom: EngineConstants.MAX_HEIGHT / 7,
         paddingHorizontal: EngineConstants.MAX_WIDTH / 20,
     },
@@ -192,19 +194,27 @@ const styles = StyleSheet.create({
         fontSize: 30
     },
     openCamera: {
+        fontFamily: "Pangolin-Regular",
         position:'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 4.5,
+        bottom: EngineConstants.MAX_HEIGHT / 4,
         left: EngineConstants.MAX_WIDTH / 2.5,
         borderRadius: 10,
         width: EngineConstants.MAX_WIDTH / 2,
     },
+    info: {
+        top: EngineConstants.MAX_HEIGHT / 3.5,
+    },
+    infoImage: {
+        height: EngineConstants.MAX_HEIGHT / 20,
+        width: EngineConstants.MAX_WIDTH / 10
+    },
     carousel: {
         position: 'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 10,
+        bottom: EngineConstants.MAX_HEIGHT / 17,
     },
     image: {
         position: 'absolute',
-        bottom: EngineConstants.MAX_HEIGHT / 7,
+        bottom: EngineConstants.MAX_HEIGHT / 4.5,
         left: -EngineConstants.MAX_WIDTH / 30,
     },
     button: {
@@ -212,10 +222,15 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         width:"100%",
-        backgroundColor:"#a9d3e9",
+        backgroundColor:"#E4965F",
         justifyContent: 'center',
         textAlignVertical:'center',
         textAlign: 'center',
+    },
+    buttonText: {
+        fontFamily: "Pangolin-Regular",
+        fontSize: 18,
+        top: -EngineConstants.MAX_HEIGHT / 100
     }
 })
 
