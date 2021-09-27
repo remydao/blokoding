@@ -46,7 +46,7 @@ class DataBlock extends CodeBlock {
     }
 
     async execute(engine: any) : Promise<string | number> {
-        //await engine.setActiveBlockSchemaItem(this.index);
+        await engine.setActiveBlockSchemaItem(this.index);
         return this.value;
     }
 }

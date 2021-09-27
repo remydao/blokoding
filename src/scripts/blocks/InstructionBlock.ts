@@ -7,7 +7,7 @@ class ForBlock extends InstructionBlock {
     }
 
     async execute(engine: any) {
-        var n = await this.predicateBlock.execute();
+        var n = await this.predicateBlock.execute(engine);
         let i = 0;
         while (!engine.getStateHasLost() && !engine.getStateHasWon() && i < n) {
             if (!engine.isMounted())
