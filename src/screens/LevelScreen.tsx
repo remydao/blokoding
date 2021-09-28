@@ -96,7 +96,7 @@ class LevelScreen extends Component<IProps, IState> {
         this.state = {
             buttonText: this.tutorial.length === 1 ? "\nC\'est parti !\n" : "\nSuivant\n",
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>,
-            displayCarousel: true,
+            displayCarousel: false,
             imageSource: null,
         }
     }
