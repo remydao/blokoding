@@ -4,6 +4,7 @@ import Colors from '../constants/Colors';
 import {useLanguage} from '../datas/contextHooks';
 import Translation from '../datas/translation.json';
 import LanguageContext from '../context/LanguageContext';
+import EngineConstants from '../constants/EngineConstants';
 
 
 
@@ -119,12 +120,13 @@ export default class TextAnimator extends Component<IProps, IState> {
 
 const styles = StyleSheet.create({
     containerStyle: {
+        width: '95%',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        width: '90%',
     },
     textStyle: {
         fontFamily:'Pangolin-Regular',
-        fontSize: 20
+        fontSize: 20,
+        lineHeight: EngineConstants.MAX_HEIGHT / 30
     }
 })

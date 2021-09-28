@@ -149,14 +149,13 @@ class LevelScreen extends Component<IProps, IState> {
 
                 <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}/>
                 
-                <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
                     <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="stretch"/>
                     <View style={styles.animatedText}>
-                        <Text style={styles.animatedTextStyle}>{this.state.textAnimator}</Text>
+                        <View style={styles.animatedTextStyle}>{this.state.textAnimator}</View>
                     </View>
-
                     <Image source={this.state.imageSource} style={styles.image}></Image>
-
+                    
                     <TouchableOpacity style={styles.info} onPress={() => this.setState({displayCarousel: !this.state.displayCarousel})}>
                         <Image resizeMode='contain' style={styles.infoImage} source={require('../assets/lightbulb.png')}/>
                     </TouchableOpacity>
@@ -172,7 +171,7 @@ class LevelScreen extends Component<IProps, IState> {
                         </AwesomeButton>
                     </View>
                     <StatusBar translucent backgroundColor="transparent"/>
-                </SafeAreaView>
+                </View>
             </View>
         )
     }
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
     },
     animatedTextStyle:{
         fontFamily: "Pangolin-Regular",
-        fontSize: 30
+        fontSize: 30,
     },
     openCamera: {
         fontFamily: "Pangolin-Regular",
