@@ -56,11 +56,9 @@ export default class TextAnimator extends Component<IProps, IState> {
             animatedValues: this.state.animatedValues
         })
         this.animated();
-
     }
 
     getColor(word : string, language: any){
-
         const languageObj = Translation[language.language];
         console.log(`${languageObj.character}s`);
         switch(word.toLowerCase()){

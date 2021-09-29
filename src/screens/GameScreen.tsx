@@ -630,7 +630,7 @@ class Game extends Component<IProps, IState> {
                 cache: 'force-cache'
             };
             return Image.prefetch(img.uri);
-        }));  
+        }));
     }
 
     async loadImage(image: any) {

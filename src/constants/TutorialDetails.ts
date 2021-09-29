@@ -3,14 +3,14 @@ import Maps from "./Maps";
 const tutorialInfo = [
     {
         title: "Faire apparaître un personnage",
-        tutorial: ["Avant de ramasser les objets de Mr. Mustache, apprenons déjà comment le faire entrer dans son atelier. Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage.", "Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite. Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi. Ensuite, clique sur le bouton ci-dessous et prend la carte en photo."],
+        tutorial: ["Avant de ramasser les objets de Mr. Mustache, apprenons déjà comment le faire entrer dans son atelier. Dans Blokoding, tous les programmes créés doivent commencer par une carte personnage .", "Le personnage que tu choisiras sera celui qui s’affichera dans la scène et qui effectuera les actions que tu lui indiquera ensuite. Afin d’afficher Mr. Mustache, sélectionne sa carte personnage (rouge) et pose-la devant toi. Ensuite, clique sur le bouton ci-dessous et prend la carte en photo."],
         congratulations:"Bravo, tu as réussi à faire entrer Mr. Mustache dans son atelier.",
         map: Maps.level1,
         soluce: [{text: 'MrMustache'}],
     },
     {
         title: "Faire avancer le personnage",
-        tutorial: ["À présent, voyons comment le faire avancer. Pour faire avancer un personnage, tu dois utiliser la carte action ‘avancer’.", "Les cartes actions permettent de produire un effet sur ton personnage. Je te laisse découvrir les autres ! Pose une carte “avancer” en dessous de Mr. Mustache puis prend la photo !"],
+        tutorial: ["À présent, voyons comment le faire avancer. Pour faire avancer un personnage , tu dois utiliser la carte action ‘avancer’.", "Les cartes actions permettent de produire un effet sur ton personnage . Je te laisse découvrir les autres ! Pose une carte “avancer” en dessous de Mr. Mustache puis prend la photo !"],
         congratulations:"Bravo grâce à toi Mr. Mustache a pu avancer ! Voyons comment faire pour le faire avancer plusieurs fois !",
         map: Maps.level2,
         soluce: [{text: 'MrMustache'}, {text: 'Avancer'}],
