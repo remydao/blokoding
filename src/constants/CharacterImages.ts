@@ -31,12 +31,18 @@ const characterImages = {
         imageName: Characters.MrMustache,
         uri: {
             idle: require("../assets/characters/MrMustache/3x/Mr_Moustache.png"),
-            move: [require("../assets/characters/MrMustache/mrmustache_walk3.png")],
+            move: [
+                require("../assets/characters/MrMustache/walk.png")
+            ],
             jump: [
                 require("../assets/characters/MrMustache/jump1.png"),
                 require("../assets/characters/MrMustache/jump2.png"),
                 require("../assets/characters/MrMustache/jump3.png"),
                 require("../assets/characters/MrMustache/jump4.png")
+            ],
+            crouch: [
+                require("../assets/characters/MrMustache/crouch1.png"),
+                require("../assets/characters/MrMustache/crouch2.png")
             ]
         }
 
