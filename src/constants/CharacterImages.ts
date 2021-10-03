@@ -43,6 +43,10 @@ const characterImages = {
             crouch: [
                 require("../assets/characters/MrMustache/crouch1.png"),
                 require("../assets/characters/MrMustache/crouch2.png")
+            ],
+            cut: [
+                require("../assets/characters/MrMustache/cut1.png"),
+                require("../assets/characters/MrMustache/cut2.png")
             ]
         }
 
