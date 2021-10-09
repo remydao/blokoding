@@ -6,10 +6,12 @@ import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBloc
 import { EnvironmentBlock, ItemBlock, NumberBlock } from "../blocks/DataBlock";
 import { CodeBlock, ConditionBlock, StructureBlock, DataBlock, InstructionBlock } from "../blocks/MainBlocks";
 import { checkVisionResp } from "../corrector/corrector";
+import { useLanguage } from '../../datas/contextHooks';
 
 var loopDepth = 0;
 var cardIndex = 0;
 var isInIf = 0;
+var language: any;
 
 var blockSchemaTypeList: BlockType[][] = []
 
@@ -19,10 +21,11 @@ const addBlockSchemaRow = (...blockSchemaType: BlockType[]) => {
 
 type TcardList = Array<string>
 
-const parseInit = (cardListObj: any[]) => {
+const parseInit = (cardListObj: any[], currLanguage: any) => {
     loopDepth = 0;
     cardIndex = 0;
     isInIf = 0;
+    language = currLanguage;
     blockSchemaTypeList = []
     CodeBlock.blockCount = 0;
 
@@ -47,7 +50,7 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
 
     if (typeof blockName === 'undefined') {
         if (loopDepth > 0) {
-            throw 'Une instruction doit toujours se finir par une carte "Fin" ' + cardIndexToString(); 
+            throw language.parseErrors.endCardMissing + cardIndexToString(); 
         } else {
             return null;
         }
@@ -80,7 +83,7 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             return null;
         }
         else
-            throw 'Une carte fin est mal placée ' + cardIndexToString();
+            throw language.parseErrors.endCardUnexpected + cardIndexToString();
     }
 
     if (blockName == SecondaryInstructions.Elif) {
@@ -89,7 +92,7 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             return null;
         }
         else
-            throw 'Une carte "Ou si" est mal placée ' + cardIndexToString();
+            throw language.parseErrors.orIfUnexpected + cardIndexToString();
     }
 
     if (blockName == SecondaryInstructions.Else) {
@@ -98,28 +101,28 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             return null;
         }
         else
-            throw 'Une carte "Sinon" est mal placée ' + cardIndexToString();
+            throw language.parseErrors.elseUnexpected + cardIndexToString();
     }
 
     res = Object.entries(Conditions).filter(condition => condition[1] == blockName);
     if (res.length > 0) {
-        throw 'La condition ' + res[0][1] + ' est mal placée ' + cardIndexToString();
+        throw language.parseErrors.condition + res[0][1] + language.parseErrors.unexpected + cardIndexToString();
     }
     res = Object.entries(Items).filter(item => item[1] == blockName);
     if (res.length > 0) {
-        throw "L'objet " + res[0][1] + ' est mal placé ' + cardIndexToString();
+        throw language.parseErrors.object + res[0][1] + language.parseErrors.unexpected + cardIndexToString();
     }
     res = Object.entries(Environments).filter(env => env[1] == blockName);
     if (res.length > 0) {
-        throw "L'environnement " + res[0][1] + ' est mal placé ' + cardIndexToString();
+        throw language.parseErrors.environment + res[0][1] + language.parseErrors.unexpected + cardIndexToString();
     }
 
-    throw 'Texte inconnu : "' + blockName + '" ' + cardIndexToString();
+    throw language.parseErrors.unknownText + blockName + '\" ' + cardIndexToString();
 }
 
 
 const cardIndexToString = () => {
-    return '(carte numéro ' + cardIndex + ')';
+    return '(' + language.parseErrors.cardNumber + cardIndex + ')';
 }
 
 
@@ -145,7 +148,7 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
             }
         }
 
-        throw 'Ton programme doit commencer par une carte personnage ' + cardIndexToString();
+        throw language.parseErrors.startCharacter + cardIndexToString();
     }
 }
 
@@ -165,7 +168,7 @@ const parseAction = (action: any, cardList: TcardList) => {
             actionBlock = new UseBlock();
             const itemBlock = parseItem(cardList);
             if (!itemBlock)
-                throw "L'action utiliser doit être suivie d'un objet"
+                throw language.parseErrors.useFollowing + cardIndexToString();
             actionBlock.itemBlock = itemBlock;
             break;
         case Actions.Speak:
@@ -194,18 +197,18 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
         case Instructions.For:
             instructionBlock = new ForBlock();
             if (!(predicateBlock = parseNumber(cardList)))
-                throw "L'instruction Répéter doit être suivie d'un nombre " + cardIndexToString();
+                throw language.parseErrors.forWithNumber + cardIndexToString();
             break;
         case Instructions.If:
             instructionBlock = new IfBlock();
             isInIf++;    
             if (!(predicateBlock = parseCondition(cardList)))
-                throw "L'instruction Si doit être suivie d'une condition " + cardIndexToString();
+                throw language.parseErrors.ifCondition + cardIndexToString();
             break;
         case Instructions.While:
             instructionBlock = new WhileBlock();
             if (!(predicateBlock = parseCondition(cardList)))
-                throw "L'instruction Tant que doit être suivie d'une condition " + cardIndexToString();            
+                throw language.parseErrors.whileCondition + cardIndexToString();            
             break;
         default:
             return null;
@@ -245,7 +248,7 @@ const parseSecondaryInstruction = (cardList : TcardList): ElIfBlock | ElseBlock 
         case SecondaryInstructions.Elif:
             secondaryInstructionBlock = new ElIfBlock();
             if (!(predicateBlock = parseCondition(cardList)))
-                throw "L'instruction Ou si doit être suivie d'une condition " + cardIndexToString();
+                throw language.parseErrors.orIfCondition + cardIndexToString();
             secondaryInstructionBlock.predicateBlock = predicateBlock;
             break;
         case SecondaryInstructions.Else:
@@ -307,17 +310,17 @@ const parseCondition = (cardList: TcardList): ConditionBlock | null => {
         case Conditions.IsInFront:
             conditionBlock = new IsInFrontBlock();
             if (!(entity = parseEnvironnement(cardList)))
-                throw "La condition être devant doit être suivie d'un environnement " + cardIndexToString();
+                throw language.parseErrors.inFrontEnv + cardIndexToString();
             break;
         case Conditions.IsOn:
             conditionBlock = new IsOnBlock();
             if (!(entity = parseItem(cardList)))
-                throw "La condition être sur doit être suivie d'un objet " + cardIndexToString();
+                throw language.parseErrors.onObject + cardIndexToString();
             break;
         case Conditions.Possess:
             conditionBlock = new PossessBlock();
             if (!(entity = parseItem(cardList)))
-                throw "La condition posséder doit être suivie d'un objet " + cardIndexToString();
+                throw language.parseErrors.ownObject + cardIndexToString();
             break;
         default:
             return null;

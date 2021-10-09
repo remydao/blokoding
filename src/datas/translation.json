@@ -29,6 +29,28 @@
             "removedMap2": " on the ground",
             "checkInventory1": "Lost, you don't have the right number of ",
             "checkInventory2": " in your inventory   "
+        },
+
+        "parseErrors": {
+            "endCardMissing": "An instruction should always end with an \"End\" card ",
+            "endCardUnexpected": "An \"End\" card is not placed correctly ",
+            "orIfUnexpected": "An \"Or if\" card is not placed correctly ",
+            "elseUnexpected": "An \"Else\" card is not placed correctly ",
+            "condition": "Condition ",
+            "object": "Object ",
+            "environnement": "Environnement ",
+            "unexpected": " is not placed correctly ",
+            "unknownText": "Unknown text: \"",
+            "cardNumber": "card number ",
+            "startCharacter": "The program must start with a charcater card ",
+            "useFollowing": "\"Use\" action must be followed by an object ",
+            "forWithNumber": "\"For\" instrcution must be followed by a number ",
+            "ifCondition": "\"If\" instruction must be followed by a condition ",
+            "whileCondition": "\"While\" instruction must be followed by a condition ",
+            "orIfCondition": "\"Or if\" instruction must be followed by a condition ",
+            "inFrontEnv": "\"In front of\" condition must be followed by an environment ",
+            "onObject": "\"Is on\" condition must be followed by an object ",
+            "ownObject": "\"Own\" condition must be followed by an object "
         }
     },
 
@@ -62,7 +84,28 @@
             "removedMap2": " sur le terrain",
             "checkInventory1": "Perdu, tu n'as pas le bon nombre de ",
             "checkInventory2": " dans ton inventaire   "
-        }
+        },
 
+        "parseErrors": {
+            "endCardMissing": "Une instruction doit toujours se finir par une carte \"Fin\" ",
+            "endCardUnexpected": "Une carte \"Fin\" est mal placée ",
+            "orIfUnexpected": "Une carte \"Ou si\" est mal placée ",
+            "elseUnexpected": "Une carte \"Sinon\" est mal placée ",
+            "condition": "La condition ",
+            "object": "L'objet ",
+            "environnement": "L'environnement ",
+            "unexpected": " est mal placé(e) ",
+            "unknownText": "Texte inconnu : \"",
+            "cardNumber": "carte numéro ",
+            "startCharacter": "Ton programme doit commencer par une carte personnage ",
+            "useFollowing": "L'action \"Utiliser\" doit être suivie d'un objet ",
+            "forWithNumber": "L'instruction \"Répéter\" doit être suivie d'un nombre ",
+            "ifCondition": "L'instruction \"Si\" doit être suivie d'une condition ",
+            "whileCondition": "L'instruction \"Tant que\" doit être suivie d'une condition ",
+            "orIfCondition": "L'instruction \"Ou si\" doit être suivie d'une condition ",
+            "inFrontEnv": "La condition \"être devant\" doit être suivie d'un environnement ",
+            "onObject": "La condition \"être sur\" doit être suivie d'un objet ",
+            "ownObject": "La condition \"posséder\" doit être suivie d'un objet "
+        }
     }
 }

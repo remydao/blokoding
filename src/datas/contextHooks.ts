@@ -2,7 +2,7 @@ import Translation from './translation.json';
 import React from 'react';
 import LanguageContext from '../context/LanguageContext';
 
-function useLanguage(){
+function useLanguage() {
   const contextLanguage = React.useContext(LanguageContext);
   let language = contextLanguage.language
 
@@ -13,4 +13,4 @@ function useLanguage(){
   return Translation[language];
 }
 
-export {useLanguage};
+export { useLanguage };

@@ -1,16 +1,17 @@
-import React, {Component} from 'react';
-import {StatusBar} from 'react-native';
+import React, { Component } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity, Button, Modal, Pressable } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import RNTextDetector from "rn-text-detector";
-import {Permission, PERMISSION_TYPE} from '../AppPermission'
+import { Permission, PERMISSION_TYPE } from '../AppPermission'
 import Maps from '../constants/Maps';
-import {parseInit} from '../scripts/parsing/Parser';
+import { parseInit } from '../scripts/parsing/Parser';
 import { CameraMode } from '../constants/CameraMode';
 import { modifyCoordinates } from '../scripts/corrector/coordinates';
 import { dropProblematicTokens } from '../scripts/corrector/corrector';
 
 import { BlockType } from '../constants/BlockType';
+import { useLanguage } from '../datas/contextHooks';
 
 interface IProps {
   navigation: any,
@@ -113,10 +114,10 @@ class Camera extends Component<IProps, IState> {
         modifyCoordinates(visionResp);
         visionResp = dropProblematicTokens(visionResp);
         // Change here visionResp to force the detection
-        visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
+        // visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
         // visionResp = [{text: 'Mustache'}, {text: 'repeter'}, {text: '10'}]
-
-        const result = parseInit(visionResp);
+        
+        const result = parseInit(visionResp, this.props.route.params.language);
 
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {
