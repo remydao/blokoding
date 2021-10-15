@@ -51,6 +51,47 @@
             "inFrontEnv": "\"In front of\" condition must be followed by an environment ",
             "onObject": "\"Is on\" condition must be followed by an object ",
             "ownObject": "\"Own\" condition must be followed by an object "
+        },
+
+        "cards": {
+            "Actions": {
+                "Move": "move",
+                "Jump": "jump",
+                "Grab": "grab",
+                "Use": "use",
+                "Speak": "speak"
+            },
+            "Instructions": {
+                "For": "for",
+                "While": "while",
+                "If": "if"
+            },
+            "SecondaryInstructions": {
+                "Elif": "elif",
+                "Else": "else",
+                "End": "end"
+            },
+            "Conditions": {
+                "IsInFront": "in front",
+                "IsOn": "on",
+                "Possess": "possess"
+            },
+            "Items": {
+                "Key": "key",
+                "Plush": "plush",
+                "Flower": "plower",
+                "Machete": "machete",
+                "Trash": "trash",
+                "Grass": "grass"
+            },
+            "Environments": {
+                "Door": "door",
+                "Chair": "chair",
+                "Bush": "bush",
+                "Puddle": "puddle",
+                "Bin": "bin",
+                "Flag": "flag"
+            }
         }
     },
 
@@ -106,6 +147,48 @@
             "inFrontEnv": "La condition \"être devant\" doit être suivie d'un environnement ",
             "onObject": "La condition \"être sur\" doit être suivie d'un objet ",
             "ownObject": "La condition \"posséder\" doit être suivie d'un objet "
+        },
+
+
+        "cards": {
+            "Actions": {
+                "Move": "avancer",
+                "Jump": "sauter",
+                "Grab": "ramasser",
+                "Use": "utiliser",
+                "Speak": "parler"
+            },
+            "Instructions": {
+                "For": "repeter",
+                "While": "tant que",
+                "If": "si"
+            },
+            "SecondaryInstructions": {
+                "Elif": "ou si",
+                "Else": "sinon",
+                "End": "fin"
+            },
+            "Conditions": {
+                "IsInFront": "etre devant",
+                "IsOn": "etre sur",
+                "Possess": "posseder"
+            },
+            "Items": {
+                "Key": "cle",
+                "Plush": "peluche",
+                "Flower": "fleur",
+                "Machete": "machette",
+                "Trash": "dechet",
+                "Grass": "grass"
+            },
+            "Environments": {
+                "Door": "porte",
+                "Chair": "chaise",
+                "Bush": "buisson",
+                "Puddle": "flaque",
+                "Bin": "poubelle",
+                "Flag": "drapeau",
+            }
         }
     }
 }
