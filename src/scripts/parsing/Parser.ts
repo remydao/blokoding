@@ -25,8 +25,10 @@ const parseInit = (cardListObj: any[], currLanguage: any) => {
     loopDepth = 0;
     cardIndex = 0;
     isInIf = 0;
+
     language = currLanguage;
     cards = language.cards;
+    
     blockSchemaTypeList = []
     CodeBlock.blockCount = 0;
 
