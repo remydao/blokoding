@@ -62,7 +62,7 @@ class GrabBlock extends StructureBlock {
         if (!engine.isMounted())
             return;
 
-        if (engine.grab() && this.nextBlock) // If grab success
+        if (await engine.grab() && this.nextBlock) // If grab success
         {
             await this.nextBlock.execute(engine);
         }
@@ -82,7 +82,7 @@ class UseBlock extends StructureBlock {
         if (!engine.isMounted())
             return;
 
-        const item = this.itemBlock.execute();
+        const item = await this.itemBlock.execute(engine);
         if (await engine.use(item)) {
             if (this.nextBlock) {
                 await this.nextBlock.execute(engine);

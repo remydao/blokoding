@@ -182,7 +182,11 @@ const Maps = {
     foret2: {
         theme: Themes.ForestFall,
         map: [Cells.Empty, Cells.Flower, Cells.Empty, Cells.Puddle, Cells.Empty, Cells.Win]
-    }
+    },
+    foret3: {
+        theme: Themes.ForestFall,
+        map: [Cells.Empty, Cells.Machete, Cells.Empty, Cells.Bush, Cells.Empty, Cells.Win]
+    },
 }
 
 export default Maps
