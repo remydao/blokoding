@@ -1,17 +1,19 @@
-import React from 'react';
-import {Text, View, StatusBar, StyleSheet, Image} from 'react-native';
+import React , { useState } from 'react';
+import {Text, View, StatusBar, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Colors from '../constants/Colors';
 import {characterImages} from "../constants/CharacterImages";
 import LanguageContext from '../context/LanguageContext';
 import SoundContext from '../context/SoundContext';
 import Slider from '@react-native-community/slider';
+import EngineConstants from '../constants/EngineConstants';
 
 
 const Options = ({}) => {
 
   const languageContext = React.useContext(LanguageContext);
-  const soundContext = React.useContext(SoundContext)
+  const soundContext = React.useContext(SoundContext);
+  const [soundImg, setImg] = useState(soundContext.mainSound === 0 ? false : true);
 
   const handleLanguageChange = (itemValue: string, itemIndex: number) => {
     languageContext.changeLanguage(itemValue)
@@ -20,6 +22,12 @@ const Options = ({}) => {
   const handleMainSoundChange = (value: number) => {
     soundContext.changeMainSound(value)
     console.log(soundContext)
+  }
+
+  const switchSound = (soundState: boolean) => {
+    setImg(!soundImg);
+    console.log(SoundContext);
+    soundContext.changeMainSound(soundImg ? 0 : 1);
   }
 
   return (
@@ -36,9 +44,21 @@ const Options = ({}) => {
       <View style={styles.soundWrapper}>
         <Text style={styles.soundText}>Volume</Text>
         <Slider style={{width: 200, height: 40}} step={0.1}
+        // ici il set le slider au mainSound du coup c pas bon
           value={soundContext.mainSound}
           onValueChange={handleMainSoundChange}/>
       </View>
+      <TouchableOpacity
+            onPress={() => {
+              switchSound(soundImg)
+            }}>
+          <Image source={ soundImg === true ?                  
+                          require('../assets/volume.png') : 
+                          require('../assets/mute.png')}
+            resizeMode="stretch"
+            style={{width: EngineConstants.MAX_HEIGHT / 8, height: EngineConstants.MAX_HEIGHT / 8}}
+          />
+      </TouchableOpacity>
       <Image style={styles.image} source={characterImages.Harry.uri}></Image>
       <StatusBar backgroundColor={Colors.dark_purple}/>
     </View>
@@ -59,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark_purple
   },
   image: {
-    top: 150
+    top: 50
   },
   soundWrapper: {
     display: 'flex',
