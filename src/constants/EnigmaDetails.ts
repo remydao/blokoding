@@ -47,7 +47,44 @@ const enigmaInfo = {
     },
 ],
 beach: [],
-city: []
+city: [
+    {
+        title: "Enigme 1",
+        tutorial: ["Ramasse la peluche qui se trouve dans la ville pour gagner ce niveau !"],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma8,
+    },
+    {
+        title: "Enigme 2",
+        tutorial: ["Attention, il y a des chaises qui se trouvent sur la carte. Tu dois sauter au dessus pour arriver à la ligne d'arrivé."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma9,
+    },
+    {
+        title: "Enigme 3",
+        tutorial: ["La clé abandonnée te permettra d'ouvrir la porte te donnant accès à la ligne d'arrivée."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma10,
+    },
+    {
+        title: "Enigme 4",
+        tutorial: ["Saute par dessus la chaise et ramasse toute les peluches présentes sur la carte pour remporter ce niveau."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma11,
+    },
+    {
+        title: "Enigme 5",
+        tutorial: ["Tu dois jeter le détritu dans la poubelle. Attention fait bien attention à ramasser le détritu avant d'arriver devant la poubelle."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma12,
+    },
+    {
+        title: "Enigme 6",
+        tutorial: ["Saute par dessus la chaise et jette le détritu présent sur la map dans la poubelle"],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma13,
+    },
+]
 }
 
 //const numberOfLevels = enigmaInfo.length;

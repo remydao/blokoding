@@ -194,6 +194,9 @@ class Game extends Component<IProps, IState> {
                 case Cells.Puddle:
                     this.fireEndScreen("loose", this.state.languageObj.losePuddle);
                     break;
+                case Cells.Chair:
+                    this.fireEndScreen("loose", this.state.languageObj.loseChair);
+                    break;
                 case Cells.Bush:
                     this.fireEndScreen("loose", this.state.languageObj.loseBush2);
                     break;

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated, AppState} from 'react-native';
-import {default as UUID} from "uuid"; 
+import uuid from 'react-native-uuid';
 import EnigmaButton from '../components/EnigmaButton';
 import Colors from '../constants/Colors';
 import { useLanguage } from '../datas/contextHooks';
@@ -81,8 +81,8 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
       //numberOfLevels
       for (let i = 0; i < numberOfLevels; i++)
       {
-          const levelTitle = language.enigma + ' ' + (i + 1)
-          btns.push({id:UUID.v4(), value:levelTitle})
+          const levelTitle = language.enigma + ' ' + (i + 1);
+          btns.push({id:uuid.v4().toString(), value:levelTitle})
       }
       setButtons(btns);
     }

@@ -42,7 +42,7 @@ const Maps = {
     },
 
 
-    // ENIGMA
+    // ENIGMA FOREST
 
     enigma1: {
         theme: Themes.Forest,
@@ -108,6 +108,62 @@ const Maps = {
     },
     
 
+    // ENIGMA CITY
+    enigma8: {
+        theme: Themes.City,
+        map: [Cells.Empty, Cells.Empty, Cells.Plush, Cells.Empty, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Plush
+            ],
+            isInInventory: [
+                {item: Items.Plush, quantity: 1}
+            ]
+        }
+    },
+    enigma9: {
+        theme: Themes.City,
+        map: [Cells.Empty, Cells.Chair, Cells.Empty, Cells.Chair, Cells.Empty, Cells.Win],
+    },
+    enigma10: {
+        theme: Themes.City,
+        map: [Cells.Empty, Cells.Empty, Cells.Key, Cells.Empty, Cells.Door, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Environments.Door
+            ],
+        }
+    },
+    enigma11: {
+        theme: Themes.City,
+        map: [Cells.Empty, Cells.Empty, Cells.Chair, Cells.Empty, Cells.Empty, Cells.Empty, Cells.Plush, Cells.Plush, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Plush
+            ],
+            isInInventory: [
+                {item: Items.Plush, quantity: 2}
+            ]
+        }
+    },
+    enigma12: {
+        theme: Themes.City,
+        map: [Cells.Empty, Cells.Empty, Cells.Trash, Cells.Empty, Cells.Bin, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Environments.Bin
+            ],
+        }
+    },
+    enigma13: {
+        theme: Themes.City,
+        map: [Cells.Empty, Cells.Empty, Cells.Chair, Cells.Trash, Cells.Empty,  Cells.Empty, Cells.Bin, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Environments.Bin
+            ],
+        }
+    },
 
     // RANDOM
 
