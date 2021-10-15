@@ -113,7 +113,7 @@ const HomeScreen = ({ navigation }: IProps) => {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text={language.test} color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret2})}/>
+          <FlatButton text={language.test} color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret3})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
