@@ -6,12 +6,12 @@ import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBloc
 import { EnvironmentBlock, ItemBlock, NumberBlock } from "../blocks/DataBlock";
 import { CodeBlock, ConditionBlock, StructureBlock, DataBlock, InstructionBlock } from "../blocks/MainBlocks";
 import { checkVisionResp } from "../corrector/corrector";
-import { useLanguage } from '../../datas/contextHooks';
 
 var loopDepth = 0;
 var cardIndex = 0;
 var isInIf = 0;
 var language: any;
+var cards: any;
 
 var blockSchemaTypeList: BlockType[][] = []
 
@@ -25,7 +25,10 @@ const parseInit = (cardListObj: any[], currLanguage: any) => {
     loopDepth = 0;
     cardIndex = 0;
     isInIf = 0;
+
     language = currLanguage;
+    cards = language.cards;
+    
     blockSchemaTypeList = []
     CodeBlock.blockCount = 0;
 
@@ -56,28 +59,28 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
         }
     }
     
-    let res = Object.entries(Actions).filter(action => action[1] == blockName);
+    let res = Object.entries(cards.Actions).filter(action => action[1] == blockName);
     
     if (res.length > 0) {
         return parseAction(res[0][1], cardList);
     } else {
-        let modifiedBlock = checkVisionResp(blockName, Object.values(Actions));
+        let modifiedBlock = checkVisionResp(blockName, Object.values(cards.Actions));
         if (modifiedBlock !== null) {
             return parseAction(modifiedBlock, cardList);
         }
     }
     
-    res = Object.entries(Instructions).filter(instruction => instruction[1] == blockName);
+    res = Object.entries(cards.Instructions).filter(instruction => instruction[1] == blockName);
     if (res.length > 0) {
         return parseInstruction(res[0][1], cardList);
     } else {
-        let modifiedBlock = checkVisionResp(blockName, Object.values(Instructions));
+        let modifiedBlock = checkVisionResp(blockName, Object.values(cards.Instructions));
         if (modifiedBlock !== null) {
             return parseInstruction(modifiedBlock, cardList);
         }
     }
 
-    if (blockName == SecondaryInstructions.End) {
+    if (blockName == cards.SecondaryInstructions.End) {
         if (loopDepth > 0) {
             addBlockSchemaRow(BlockType.Instruction);
             return null;
@@ -86,7 +89,7 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             throw language.parseErrors.endCardUnexpected + cardIndexToString();
     }
 
-    if (blockName == SecondaryInstructions.Elif) {
+    if (blockName == cards.SecondaryInstructions.Elif) {
         if (isInIf > 0) {
             setFirstElm(cardList, blockName);
             return null;
@@ -95,7 +98,7 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             throw language.parseErrors.orIfUnexpected + cardIndexToString();
     }
 
-    if (blockName == SecondaryInstructions.Else) {
+    if (blockName == cards.SecondaryInstructions.Else) {
         if (isInIf > 0) {
             setFirstElm(cardList, blockName);
             return null;
@@ -104,15 +107,15 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
             throw language.parseErrors.elseUnexpected + cardIndexToString();
     }
 
-    res = Object.entries(Conditions).filter(condition => condition[1] == blockName);
+    res = Object.entries(cards.Conditions).filter(condition => condition[1] == blockName);
     if (res.length > 0) {
         throw language.parseErrors.condition + res[0][1] + language.parseErrors.unexpected + cardIndexToString();
     }
-    res = Object.entries(Items).filter(item => item[1] == blockName);
+    res = Object.entries(cards.Items).filter(item => item[1] == blockName);
     if (res.length > 0) {
         throw language.parseErrors.object + res[0][1] + language.parseErrors.unexpected + cardIndexToString();
     }
-    res = Object.entries(Environments).filter(env => env[1] == blockName);
+    res = Object.entries(cards.Environments).filter(env => env[1] == blockName);
     if (res.length > 0) {
         throw language.parseErrors.environment + res[0][1] + language.parseErrors.unexpected + cardIndexToString();
     }
@@ -155,23 +158,23 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
 const parseAction = (action: any, cardList: TcardList) => {
     let actionBlock;
     switch (action) {
-        case Actions.Move:
+        case cards.Actions.Move:
             actionBlock = new MoveBlock();
             break;
-        case Actions.Jump:
+        case cards.Actions.Jump:
             actionBlock = new JumpBlock();
             break;
-        case Actions.Grab:
+        case cards.Actions.Grab:
             actionBlock = new GrabBlock();
             break;
-        case Actions.Use:
+        case cards.Actions.Use:
             actionBlock = new UseBlock();
             const itemBlock = parseItem(cardList);
             if (!itemBlock)
                 throw language.parseErrors.useFollowing + cardIndexToString();
             actionBlock.itemBlock = itemBlock;
             break;
-        case Actions.Speak:
+        case cards.Actions.Speak:
             actionBlock = new SpeakBlock();
         default:
             return null;
@@ -194,18 +197,18 @@ const parseInstruction = (instruction: any, cardList: TcardList) => {
     let nextIfBlock : IfBlock | null = null;
 
     switch (instruction) {
-        case Instructions.For:
+        case cards.Instructions.For:
             instructionBlock = new ForBlock();
             if (!(predicateBlock = parseNumber(cardList)))
                 throw language.parseErrors.forWithNumber + cardIndexToString();
             break;
-        case Instructions.If:
+        case cards.Instructions.If:
             instructionBlock = new IfBlock();
             isInIf++;    
             if (!(predicateBlock = parseCondition(cardList)))
                 throw language.parseErrors.ifCondition + cardIndexToString();
             break;
-        case Instructions.While:
+        case cards.Instructions.While:
             instructionBlock = new WhileBlock();
             if (!(predicateBlock = parseCondition(cardList)))
                 throw language.parseErrors.whileCondition + cardIndexToString();            
@@ -245,13 +248,13 @@ const parseSecondaryInstruction = (cardList : TcardList): ElIfBlock | ElseBlock 
     let instruction = getFirstElm(cardList);
 
     switch (instruction) {
-        case SecondaryInstructions.Elif:
+        case cards.SecondaryInstructions.Elif:
             secondaryInstructionBlock = new ElIfBlock();
             if (!(predicateBlock = parseCondition(cardList)))
                 throw language.parseErrors.orIfCondition + cardIndexToString();
             secondaryInstructionBlock.predicateBlock = predicateBlock;
             break;
-        case SecondaryInstructions.Else:
+        case cards.SecondaryInstructions.Else:
             secondaryInstructionBlock = new ElseBlock();
             break;
         default:
@@ -289,12 +292,12 @@ const parseNumber = (cardList: TcardList): NumberBlock | null => {
 
 const parseCondition = (cardList: TcardList): ConditionBlock | null => {
     let conditionFirstCard = getFirstElm(cardList);
-    let res = Object.entries(Conditions).filter(cond => cond[1] == conditionFirstCard);
+    let res = Object.entries(cards.Conditions).filter(cond => cond[1] == conditionFirstCard);
 
     let finalCondition;
 
     if (res.length === 0 && typeof conditionFirstCard !== 'undefined') {
-        var modifiedCondition = checkVisionResp(conditionFirstCard, Object.values(Conditions))
+        var modifiedCondition = checkVisionResp(conditionFirstCard, Object.values(cards.Conditions))
         if (modifiedCondition !== null) {
             finalCondition = modifiedCondition;
         } else {
@@ -307,17 +310,17 @@ const parseCondition = (cardList: TcardList): ConditionBlock | null => {
     let entity: DataBlock | null
     let conditionBlock: ConditionBlock;
     switch (finalCondition) {
-        case Conditions.IsInFront:
+        case cards.Conditions.IsInFront:
             conditionBlock = new IsInFrontBlock();
             if (!(entity = parseEnvironnement(cardList)))
                 throw language.parseErrors.inFrontEnv + cardIndexToString();
             break;
-        case Conditions.IsOn:
+        case cards.Conditions.IsOn:
             conditionBlock = new IsOnBlock();
             if (!(entity = parseItem(cardList)))
                 throw language.parseErrors.onObject + cardIndexToString();
             break;
-        case Conditions.Possess:
+        case cards.Conditions.Possess:
             conditionBlock = new PossessBlock();
             if (!(entity = parseItem(cardList)))
                 throw language.parseErrors.ownObject + cardIndexToString();
@@ -331,13 +334,13 @@ const parseCondition = (cardList: TcardList): ConditionBlock | null => {
 
 const parseItem = (cardList: TcardList): ItemBlock | null => {
     let item = getFirstElm(cardList);
-    let res = Object.entries(Items).filter(it => it[1] == item);
+    let res = Object.entries(cards.Items).filter(it => it[1] == item);
 
     if (res.length > 0) {
         return new ItemBlock(res[0][1]);
     } else {
         if (typeof item !== 'undefined') {
-            let modifiedItem = checkVisionResp(item, Object.values(Items));
+            let modifiedItem = checkVisionResp(item, Object.values(cards.Items));
             if (modifiedItem !== null) {
                 return new ItemBlock(modifiedItem);
             }
@@ -348,13 +351,13 @@ const parseItem = (cardList: TcardList): ItemBlock | null => {
 
 const parseEnvironnement = (cardList: TcardList): EnvironmentBlock | null => {
     let env = getFirstElm(cardList);
-    let res = Object.entries(Environments).filter(e => e[1] == env);
+    let res = Object.entries(cards.Environments).filter(e => e[1] == env);
 
     if (res.length > 0) {
         return new EnvironmentBlock(res[0][1]);
     } else {
         if (typeof env !== 'undefined') {
-            let modifiedEnv = checkVisionResp(env, Object.values(Environments));
+            let modifiedEnv = checkVisionResp(env, Object.values(cards.Environments));
             if (modifiedEnv!== null) {
                 return new EnvironmentBlock(modifiedEnv);
             }
