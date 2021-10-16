@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Animated} from 'react-native';
 import Colors from '../constants/Colors';
-import {useLanguage} from '../datas/contextHooks';
 import Translation from '../datas/translation.json';
 import LanguageContext from '../context/LanguageContext';
 import EngineConstants from '../constants/EngineConstants';
-
 
 
 interface IProps {
@@ -60,7 +58,6 @@ export default class TextAnimator extends Component<IProps, IState> {
 
     getColor(word : string, language: any){
         const languageObj = Translation[language.language];
-        console.log(`${languageObj.character}s`);
         switch(word.toLowerCase()){
             case languageObj.character:
             case `${languageObj.character}s`:
@@ -87,7 +84,6 @@ export default class TextAnimator extends Component<IProps, IState> {
     }
     
     colorWord(word : string){
-        let styleColor = "black";
         
         return (
             <LanguageContext.Consumer>
@@ -95,7 +91,7 @@ export default class TextAnimator extends Component<IProps, IState> {
                     <Text style={{color: this.getColor(word, language)}}>{word}</Text>
                 }
             </LanguageContext.Consumer>
-                )
+            )
     }
 
     render() {

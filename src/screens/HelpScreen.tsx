@@ -1,23 +1,32 @@
 import React from 'react';
-import {Text, View, StatusBar, StyleSheet, Image, ScrollView} from 'react-native';
+import {Text, View, StatusBar, StyleSheet, Image, ScrollView, Button} from 'react-native';
 import Colors from '../constants/Colors';
+import AwesomeButton from "react-native-really-awesome-button";
+import EngineConstants from '../constants/EngineConstants';
+import { useLanguage } from '../datas/contextHooks';
+
 interface IProps {
   navigation: any
 }
 
 const Help = ({ navigation }: IProps) => {
-  return (
-    <ScrollView style={{flex: 1, backgroundColor: Colors.turquoise}}>
-      <View style={styles.container}>
-        <Text style={styles.textTitle}><Image style={{width:30, height:30}} source={require('../assets/sun.png')}/> Principe général</Text>
-        <Text style={styles.text}>Blokoding fonctionne de la manière suivante : vous prenez une photographie des cartes que vous ordonnez de manière à faire un programme. L'application se charge de déchiffer les cartes et de créer le programme et le lancer.</Text>
-        
-        <Text style={styles.textTitle}><Image style={{width:30, height:30}} source={require('../assets/sun.png')}/> Mode Découverte</Text>
-        <Text style={styles.text}>Le mode découverte est un tutoriel. Il permet de se familiariser avec les principes de Blokoding. Il est fortement recommandé de suivre ce mode pour bien comprendre le jeu.</Text>
-        
-        <Text style={styles.textTitle}><Image style={{width:30, height:30}} source={require('../assets/sun.png')}/> Mode Enigme</Text>
-        <Text style={styles.text}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!</Text>
 
+  const language = useLanguage().helpScreen;
+
+  return (
+    <ScrollView style={{flex: 1, backgroundColor: 'rgba(101, 106, 234, 0.5)'}}>
+      <View style={styles.container}>
+        <Text style={styles.textTitle}><Image style={styles.sunStyle} source={require('../assets/sun.png')}/>{language.generalPrinciple}</Text>
+        <Text style={styles.text}>{language.generalPrincipleRule}</Text>
+        
+        <Text style={styles.textTitle}><Image style={styles.sunStyle} source={require('../assets/sun.png')}/>{language.DiscoverMode}</Text>
+        <Text style={styles.text}>{language.DiscoverModePrinciple}</Text>
+        
+        <Text style={styles.textTitle}><Image style={styles.sunStyle} source={require('../assets/sun.png')}/>{language.EnigmaMode}</Text>
+        <Text style={{...styles.text, marginBottom: EngineConstants.MAX_HEIGHT / 50}}>{language.EnigmaModePrinciple}</Text>  
+        <AwesomeButton onPress={() => navigation.navigate("HelpCards")} textColor="#2e84b2" {...styles.button}>
+            <Text style={styles.buttonText}>{language.Cards}</Text>
+        </AwesomeButton>
         <StatusBar backgroundColor={Colors.dark_purple}/>
       </View>
     </ScrollView>
@@ -37,12 +46,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Pangolin-Regular',
     fontSize: 30,
   },
+  sunStyle: {
+    width: EngineConstants.MAX_HEIGHT / 25,
+    height: EngineConstants.MAX_HEIGHT / 25
+  },
   text: {
     fontFamily: 'Pangolin-Regular',
     fontSize: 16,
-    backgroundColor: '#FFFAFA',
-    padding: 20,
+    backgroundColor: 'rgba(101, 106, 234, 1)',
+    padding: EngineConstants.MAX_HEIGHT / 50,
     borderRadius: 50
+  },
+  button: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 20,
+    width: "100%" as unknown as number,
+    backgroundColor:"'rgba(101, 106, 234, 1)",
+    justifyContent: 'center',
+    textAlignVertical:'center',
+    textAlign: 'center',
+  },
+  
+  buttonText: {
+    fontSize: 18,
+    fontFamily: "Pangolin-Regular",
   }
 
 })

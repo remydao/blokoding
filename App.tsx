@@ -4,11 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import CustomHeader from './src/components/CustomHeader';
-import {Camera, Help, Options, Discover, Game, LevelScreen, HomeScreen} from './src/screens/Screens';
+import {Camera, Help, Options, Discover, Game, LevelScreen, HomeScreen, HelpCardScreen} from './src/screens/Screens';
 import Colors from "./src/constants/Colors";
 import EnigmaScreen from './src/screens/EnigmaScreen';
 import LanguageContext from './src/context/LanguageContext';
 import SoundContext from './src/context/SoundContext';
+
 
 import * as Sentry from '@sentry/react-native';
 import UniverseScreen from './src/screens/UniverseScreen';
@@ -61,6 +62,7 @@ function App() {
             <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
             <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>
             <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={{headerTitle: () => <CustomHeader title="Enigma" backgroundColor="purple"/>}}/>
+            <Stack.Screen name="HelpCards" component={HelpCardScreen} options={{headerTitle: () => <CustomHeader title="Cartes" backgroundColor={Colors.dark_purple}/>}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </SoundContext.Provider>

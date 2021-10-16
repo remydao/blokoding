@@ -18,14 +18,13 @@ interface IState {
     buttonText: string,
     textAnimator: JSX.Element,
     displayCarousel: boolean,
-    imageSource: any
+    imageSource: any,
 }
 
 
 const itemWidth = EngineConstants.MAX_WIDTH / 7;
 const itemHeight = EngineConstants.MAX_HEIGHT / 15;
 class MyCarousel extends Component {
-    
     
     constructor(props : any){
         super(props);
@@ -79,6 +78,7 @@ class LevelScreen extends Component<IProps, IState> {
     private readonly map: object;
     private content: object;
     private index: number;
+    private interval: any;
 
     constructor(props: IProps) {
         super(props);

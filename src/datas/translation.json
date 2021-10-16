@@ -51,6 +51,15 @@
             "inFrontEnv": "\"In front of\" condition must be followed by an environment ",
             "onObject": "\"Is on\" condition must be followed by an object ",
             "ownObject": "\"Own\" condition must be followed by an object "
+        },
+        "helpScreen": {
+            "generalPrinciple":  "General Principle",
+            "generalPrincipleRule": "Blokoding works as follows: you take a photograph of the cards and order them to make a program. The application takes care of deciphering the cards and creating the program and running it.",
+            "DiscoverMode": " Discover Mode",
+            "DiscoverModePrinciple": "The discovery mode is a tutorial. It allows you to familiarise yourself with the principles of Blokoding. It is strongly recommended to follow this mode to fully understand the game.",
+            "EnigmaMode": " Enigma Mode",
+            "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
+            "Cards": "Card Lists"
         }
     },
 
@@ -106,6 +115,16 @@
             "inFrontEnv": "La condition \"être devant\" doit être suivie d'un environnement ",
             "onObject": "La condition \"être sur\" doit être suivie d'un objet ",
             "ownObject": "La condition \"posséder\" doit être suivie d'un objet "
+        },
+
+        "helpScreen": {
+            "generalPrinciple":  "Principe général",
+            "generalPrincipleRule": "Blokoding fonctionne de la manière suivante : vous prenez une photographie des cartes que vous ordonnez de manière à faire un programme. L'application se charge de déchiffer les cartes et de créer le programme et le lancer.",
+            "DiscoverMode": " Mode Découverte",
+            "DiscoverModePrinciple": "Le mode découverte est un tutoriel. Il permet de se familiariser avec les principes de Blokoding. Il est fortement recommandé de suivre ce mode pour bien comprendre le jeu.",
+            "EnigmaMode": " Mode Enigme",
+            "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
+            "Cards": "Liste des cartes"
         }
     }
 }
