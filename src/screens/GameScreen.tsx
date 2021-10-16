@@ -14,10 +14,8 @@ import Cells from '../constants/Cells';
 import { isItem, ItemImages } from '../constants/ItemImages';
 import { getIsDoneList, storeIsDoneList } from '../scripts/storage/DiscoverLevels';
 import { getCharacterImages } from '../constants/CharacterImages';
-import LottieView from 'lottie-react-native';
 import MyColors from '../constants/Colors';
 import {loadSound} from '../scripts/sound/sound'
-import SpriteSheet from 'rn-sprite-sheet';
 import BlockSchema from '../components/BlockSchema';
 import BlockSchemaItem from '../components/BlockSchemaItem';
 import BlockSchemaRow from '../components/BlockSchemaRow';
@@ -27,6 +25,7 @@ import { sleep } from '../scripts/utils';
 import * as Progress from 'react-native-progress';
 import Translation from '../datas/translation.json';
 import LanguageContext from '../context/LanguageContext';
+import { ItemBlock } from "../scripts/blocks/DataBlock";
 
 interface IProps {
     navigation: any,
@@ -50,7 +49,9 @@ interface IState {
     blockSchemaStatus: boolean[],
     percentLoading: number,
     animUUID: any,
-    languageObj: Object
+    languageObj: Object,
+    spriteWidth: number,
+    spriteHeight: number,
 }
 
 class Game extends Component<IProps, IState> {
@@ -104,12 +105,14 @@ class Game extends Component<IProps, IState> {
             percentLoading: 0,
             animUUID: uuid.v4(),
             languageObj: Translation["en"].gameScreen,
+            spriteWidth: 240,
+            spriteHeight: 256
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new JumpBlock(new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
+            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
         } else {
             this.actions = props.route.params.actions;
         }
@@ -193,6 +196,9 @@ class Game extends Component<IProps, IState> {
                     break;
                 case Cells.Puddle:
                     this.fireEndScreen("loose", this.state.languageObj.losePuddle);
+                    break;
+                case Cells.Chair:
+                    this.fireEndScreen("loose", this.state.languageObj.loseChair);
                     break;
                 case Cells.Bush:
                     this.fireEndScreen("loose", this.state.languageObj.loseBush2);
@@ -323,7 +329,7 @@ class Game extends Component<IProps, IState> {
     async move() {
         this.lastTicks = Date.now();
         this.moveDistance = 0
-        
+
         var self = this;
 
         return await new Promise<void>(resolve => {
@@ -369,10 +375,11 @@ class Game extends Component<IProps, IState> {
                     bg1Pos: newBgPos[1],
                     itemsPos: newItemPos,
                     image: self.images.move[0],
-                    columns: 9,
-                    rows: 7,
+                    columns: 8,
+                    rows: 8,
                     numSpritesInSpriteSheet: 60,
                     animUUID: imageUUID,
+                    spriteWidth: 256,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE) {
@@ -447,6 +454,7 @@ class Game extends Component<IProps, IState> {
                     rows: 9,
                     numSpritesInSpriteSheet: 60,
                     animUUID: imageUUID,
+                    spriteWidth: 256,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
@@ -460,7 +468,7 @@ class Game extends Component<IProps, IState> {
         });
     }
 
-    grab() {
+    async grab() {
         var currCell = this.state.map[this.characterPos];
 
         if (currCell == Cells.Empty || !isItem(currCell.content.imageName)) {
@@ -473,14 +481,51 @@ class Game extends Component<IProps, IState> {
         if (!this.mounted)
             return false;
 
-        loadSound("grab.mp3", false, 1);
 
-        this.setState((prevState) => {
-            let inventory = prevState.inventory;  
-            inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
-            let map = prevState.map;
-            map[this.characterPos] = Cells.Empty
-            return {inventory, map};                                 
+        var self = this;
+
+        await new Promise<void>(resolve => {
+            // Fix memory leak when quitting
+            if (!self.mounted)
+                resolve();
+
+            var imageNum = 0;
+
+            doGrab();
+
+            function doGrab() {
+                if (imageNum == 1) {
+                    loadSound("grab.mp3", false, 1);
+
+                    self.setState((prevState) => {
+                        let inventory = prevState.inventory;  
+                        inventory[currCell.content.imageName] = inventory[currCell.content.imageName] ? inventory[currCell.content.imageName] + 1 : 1;                                  
+                        let map = prevState.map;
+                        map[self.characterPos] = Cells.Empty
+                        return {inventory, map};                                 
+                    });
+                }
+
+                self.setState({
+                    image: self.images.crouch[imageNum],
+                    columns: 8,
+                    rows: 8,
+                    numSpritesInSpriteSheet: 60,
+                    animUUID: uuid.v4(),
+                    spriteWidth: 240,
+                })
+
+                // Fix memory leak when quitting
+                if (!self.mounted)
+                    resolve();
+
+                imageNum++;
+
+                if (imageNum < 2)
+                    setTimeout(doGrab, 16.667 * 60);
+                else
+                    setTimeout(resolve, 16.667 * 60);    
+            }
         });
 
         return true;
@@ -499,6 +544,7 @@ class Game extends Component<IProps, IState> {
         };
 
         if (Object.keys(usables).filter(usableItem => usableItem === item).length === 0) {
+            console.log(item);
             this.fireEndScreen("loose", "Tu ne peux pas utiliser une " + item);
             return false;
         }
@@ -512,14 +558,56 @@ class Game extends Component<IProps, IState> {
         else if(!this.isInFront(usables[item]))
             this.fireEndScreen("loose", "Tu dois être en face d'un " + usables[item] + " pour pouvoir utiliser ton " + item);
         else {
-            loadSound(sounds[item], false, 1);
-            this.setState((prevState) => {
-                let inventory = prevState.inventory;
-                let map = prevState.map;
-                inventory[item] -= 1;
-                map[this.characterPos + 1] = Cells.Empty;
-                return {inventory, map}
-            })
+            if (item == Items.Machete)
+            {
+                this.lastTicks = Date.now();
+
+                var self = this;
+
+                await new Promise<void>(resolve => {
+                    // Fix memory leak when quitting
+                    if (!self.mounted)
+                        resolve();
+        
+                    var imageNum = 0;
+        
+                    useMachete();
+        
+                    function useMachete() {
+                        if (imageNum == 1) {
+                            loadSound(sounds[item], false, 1);
+                            self.setState((prevState) => {
+                                let inventory = prevState.inventory;
+                                let map = prevState.map;
+                                inventory[item] -= 1;
+                                map[self.characterPos + 1] = Cells.Empty;
+                                return {inventory, map}
+                            })
+                        }
+
+                        self.setState({
+                            image: self.images.cut[imageNum],
+                            columns: 5,
+                            rows: 6,
+                            numSpritesInSpriteSheet: 30,
+                            animUUID: uuid.v4(),
+                            spriteWidth: 400,
+                        })
+        
+                        // Fix memory leak when quitting
+                        if (!self.mounted)
+                            resolve();
+
+                        imageNum++;
+    
+                        if (imageNum < 2)
+                            setTimeout(useMachete, 16.667 * 30);
+                        else
+                            setTimeout(resolve, 16.667 * 30);    
+                    }
+                });
+            }
+
             return true;
         }
 
@@ -671,7 +759,7 @@ class Game extends Component<IProps, IState> {
                             {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
                             <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character key={this.state.animUUID} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet}/>
+                            <Character key={this.state.animUUID} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet} dstWidth={this.state.spriteWidth}/>
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                             <BlockSchema blockList={this.blockSchemaRowList} />

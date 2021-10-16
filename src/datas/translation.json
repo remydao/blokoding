@@ -22,6 +22,7 @@
             "loseBush": "You can't jump over a bush! Use the machete to cut it",
             "loseDoor": "You can't jump over a door! Use the key to open it",
             "losePuddle": "Lost, watch out for puddles",
+            "loseChair": "Lost, you need to jump over the chair",
             "loseBush2": "Lost, use the machete when you are in front of the bush to cut it",
             "loseDoor2": "Lost, use the key when you are in front of the door to open it",
             "loseBin": "Lost, use the waste when you are in front of the garbage can to pass",
@@ -60,6 +61,46 @@
             "EnigmaMode": " Enigma Mode",
             "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
             "Cards": "Card Lists"
+        },
+        "cards": {
+            "Actions": {
+                "Move": "move",
+                "Jump": "jump",
+                "Grab": "grab",
+                "Use": "use",
+                "Speak": "speak"
+            },
+            "Instructions": {
+                "For": "for",
+                "While": "while",
+                "If": "if"
+            },
+            "SecondaryInstructions": {
+                "Elif": "elif",
+                "Else": "else",
+                "End": "end"
+            },
+            "Conditions": {
+                "IsInFront": "in front",
+                "IsOn": "on",
+                "Possess": "possess"
+            },
+            "Items": {
+                "Key": "key",
+                "Plush": "plush",
+                "Flower": "plower",
+                "Machete": "machete",
+                "Trash": "trash",
+                "Grass": "grass"
+            },
+            "Environments": {
+                "Door": "door",
+                "Chair": "chair",
+                "Bush": "bush",
+                "Puddle": "puddle",
+                "Bin": "bin",
+                "Flag": "flag"
+            }
         }
     },
 
@@ -86,6 +127,7 @@
             "loseBush": "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer",
             "loseDoor": "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ouvrir",
             "losePuddle": "Perdu, fais attention aux flaques d'eau",
+            "loseChair": "Perdu, tu dois sauter au dessus de la chaise",
             "loseBush2": "Perdu, utilise la machette quand tu es devant le buisson pour le couper",
             "loseDoor2": "Perdu, utilise la clé quand tu es devant la porte pour l'ouvrir",
             "loseBin": "Perdu, utilise le déchet quand tu es devant la poubelle pour passer",
@@ -116,7 +158,6 @@
             "onObject": "La condition \"être sur\" doit être suivie d'un objet ",
             "ownObject": "La condition \"posséder\" doit être suivie d'un objet "
         },
-
         "helpScreen": {
             "generalPrinciple":  "Principe général",
             "generalPrincipleRule": "Blokoding fonctionne de la manière suivante : vous prenez une photographie des cartes que vous ordonnez de manière à faire un programme. L'application se charge de déchiffer les cartes et de créer le programme et le lancer.",
@@ -125,6 +166,46 @@
             "EnigmaMode": " Mode Enigme",
             "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
             "Cards": "Liste des cartes"
+        },
+        "cards": {
+            "Actions": {
+                "Move": "avancer",
+                "Jump": "sauter",
+                "Grab": "ramasser",
+                "Use": "utiliser",
+                "Speak": "parler"
+            },
+            "Instructions": {
+                "For": "repeter",
+                "While": "tant que",
+                "If": "si"
+            },
+            "SecondaryInstructions": {
+                "Elif": "ou si",
+                "Else": "sinon",
+                "End": "fin"
+            },
+            "Conditions": {
+                "IsInFront": "etre devant",
+                "IsOn": "etre sur",
+                "Possess": "posseder"
+            },
+            "Items": {
+                "Key": "cle",
+                "Plush": "peluche",
+                "Flower": "fleur",
+                "Machete": "machette",
+                "Trash": "dechet",
+                "Grass": "grass"
+            },
+            "Environments": {
+                "Door": "porte",
+                "Chair": "chaise",
+                "Bush": "buisson",
+                "Puddle": "flaque",
+                "Bin": "poubelle",
+                "Flag": "drapeau"
+            }
         }
     }
 }
