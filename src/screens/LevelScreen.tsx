@@ -19,6 +19,7 @@ interface IState {
     textAnimator: JSX.Element,
     displayCarousel: boolean,
     imageSource: any,
+    pictureNumber: number
 }
 
 
@@ -61,7 +62,6 @@ class MyCarousel extends Component {
 }
 
 const CharlieImages = [
-    require(`../assets/characters/Charliev2/1x/Charlie1.png`),
     require(`../assets/characters/Charliev2/1x/Charlie2.png`),
     require(`../assets/characters/Charliev2/1x/Charlie3.png`)
 ]
@@ -98,6 +98,7 @@ class LevelScreen extends Component<IProps, IState> {
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>,
             displayCarousel: false,
             imageSource: null,
+            pictureNumber: 0,
         }
     }
 
@@ -111,8 +112,7 @@ class LevelScreen extends Component<IProps, IState> {
 
     launchCharlieAnimation(){
         this.interval = setInterval(() => {
-            let pictureNumber = Math.floor(Math.random() * (2 - 0 + 1) + 0)
-            this.setState({ imageSource: CharlieImages[pictureNumber] })
+            this.setState({ imageSource: CharlieImages[this.state.pictureNumber], pictureNumber: this.state.pictureNumber === 0 ? 1 : 0 })
         }, 300);
         setTimeout(() => clearInterval(this.interval), this.tutorial[this.index].length * 20);
     }
