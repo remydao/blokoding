@@ -29,7 +29,7 @@ import { ItemBlock } from "../scripts/blocks/DataBlock";
 
 interface IProps {
     navigation: any,
-    route: any,
+    route: any
 }
 
 interface IState {
@@ -79,10 +79,9 @@ class Game extends Component<IProps, IState> {
         super(props);
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new JumpBlock(new MoveBlock(null)));
+            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
         } else {
             this.actions = props.route.params.actions;
-            console.log(this.actions);
         }
 
         this.images = getCharacterImages(this.actions.character);
@@ -98,8 +97,8 @@ class Game extends Component<IProps, IState> {
             inventory: {},
             isStartAnimation: false,
             image: this.images.move[0],
-            columns: 9,
-            rows: 7,
+            columns: 8,
+            rows: 8,
             numSpritesInSpriteSheet: 1,
             blockSchemaStatus: Array.from({length: props.route.params.nCard}, i => i = false),
             percentLoading: 0,
@@ -110,12 +109,6 @@ class Game extends Component<IProps, IState> {
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
-
-        if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
-        } else {
-            this.actions = props.route.params.actions;
-        }
     }
 
     async componentDidMount() {
@@ -282,8 +275,6 @@ class Game extends Component<IProps, IState> {
     setFramerateDelay() {   
         this.frameCount++;
 
-        // console.log("lastTicks :" + this.lastTicks);
-
         var currentTicks = Date.now();
         this.timePassed = currentTicks - this.lastTicks;
         this.lastTicks = currentTicks;
@@ -297,12 +288,6 @@ class Game extends Component<IProps, IState> {
             this.frameDelay = 0;
         }
 
-        // console.log("currentTicks :" + currentTicks);
-        // console.log("timepassed :" + this.timePassed);
-        // console.log("targetTicks :" + targetTicks);
-        // console.log("framedelay :" + this.frameDelay);
-        // console.log("sleepValue :" + this.sleepValue);
-
         this.speed = (EngineConstants.CELL_SIZE * (this.timePassed + this.frameDelay)) / 2000;
     }
 
@@ -313,16 +298,17 @@ class Game extends Component<IProps, IState> {
     }
 
     async setActiveBlockSchemaItem(index: number, mustSleep: boolean = true) {
-        this.setState(prevState => {
-            let blockSchemaStatus = prevState.blockSchemaStatus;
-            blockSchemaStatus[this.currActiveBlockSchemaItemIndex] = false;
-            blockSchemaStatus[index] = true;
-            return {blockSchemaStatus};
-        })
-        this.currActiveBlockSchemaItemIndex = index;
-        
-        if (mustSleep)
-            await sleep(250);
+        if (this.props.route.params.blockSchemaDisplay) {
+            this.setState(prevState => {
+                let blockSchemaStatus = prevState.blockSchemaStatus;
+                blockSchemaStatus[this.currActiveBlockSchemaItemIndex] = false;
+                blockSchemaStatus[index] = true;
+                return {blockSchemaStatus};
+            })
+            this.currActiveBlockSchemaItemIndex = index;
+            if (mustSleep)
+                await sleep(250);
+        }
     }
 
     // Method to move the character (used in ActionBlock.js)
@@ -730,7 +716,7 @@ class Game extends Component<IProps, IState> {
     }
     
     render() {
-        if (this.props.route.params.cameraMode !== CameraMode.TEST) {//set block schema
+        if (this.props.route.params.cameraMode !== CameraMode.TEST && this.props.route.params.blockSchemaDisplay) {//set block schema
             var blockNumber = 0;
             this.blockSchemaRowList = this.props.route.params.blockSchemaTypeList.map((typeRow: BlockType[], index: number) => ( <BlockSchemaRow key={index} itemList={typeRow.map(type => {
                 blockNumber++;

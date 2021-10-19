@@ -7,12 +7,15 @@ import LanguageContext from '../context/LanguageContext';
 import SoundContext from '../context/SoundContext';
 import Slider from '@react-native-community/slider';
 import EngineConstants from '../constants/EngineConstants';
+import BlockSchemaContext from '../context/BlockSchemaContext';
+import { Switch } from 'react-native-gesture-handler';
 
 
 const Options = ({}) => {
 
   const languageContext = React.useContext(LanguageContext);
   const soundContext = React.useContext(SoundContext);
+  const [blockSchemaDisplay, setBlockSchemaDisplay] = React.useContext(BlockSchemaContext); 
   const [soundImg, setImg] = useState(soundContext.mainSound === 0 ? false : true);
 
   const handleLanguageChange = (itemValue: string, itemIndex: number) => {
@@ -22,6 +25,10 @@ const Options = ({}) => {
   const handleMainSoundChange = (value: number) => {
     soundContext.changeMainSound(value)
     console.log(soundContext)
+  }
+
+  const handleBlockSchemaDisplayChange = (value: boolean) => {
+    setBlockSchemaDisplay(value);
   }
 
   const switchSound = (soundState: boolean) => {
@@ -59,6 +66,10 @@ const Options = ({}) => {
             style={{width: EngineConstants.MAX_HEIGHT / 8, height: EngineConstants.MAX_HEIGHT / 8}}
           />
       </TouchableOpacity>
+      <View style={{display: 'flex', flexDirection: 'row'}}>
+        <Switch value={blockSchemaDisplay} trackColor={{false: '#FC5958', true: '#39E083'}} onValueChange={handleBlockSchemaDisplayChange} style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} />
+        <Text>afficher le schema des blocs</Text>
+      </View>
       <Image style={styles.image} source={characterImages.Harry.uri}></Image>
       <StatusBar backgroundColor={Colors.dark_purple}/>
     </View>
@@ -68,6 +79,7 @@ const Options = ({}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: Colors.turquoise 
   },

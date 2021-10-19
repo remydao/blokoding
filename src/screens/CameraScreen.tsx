@@ -12,6 +12,7 @@ import { dropProblematicTokens } from '../scripts/corrector/corrector';
 
 import { BlockType } from '../constants/BlockType';
 import { useLanguage } from '../datas/contextHooks';
+import BlockSchemaContext from '../context/BlockSchemaContext';
 
 interface IProps {
   navigation: any,
@@ -27,6 +28,7 @@ interface IState {
 const circle = "      ";
 
 class Camera extends Component<IProps, IState> {
+    static contextType = BlockSchemaContext;
     private camera: any;
     private isTakingPicture: boolean;
 
@@ -114,10 +116,9 @@ class Camera extends Component<IProps, IState> {
         modifyCoordinates(visionResp);
         visionResp = dropProblematicTokens(visionResp);
         // Change here visionResp to force the detection
-        // visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
+        visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
         // visionResp = [{text: 'Mustache'}, {text: 'repeter'}, {text: '10'}]
-        
-        const result = parseInit(visionResp, this.props.route.params.language);
+        const result = parseInit(visionResp, this.props.route.params.language, );
 
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {
@@ -128,12 +129,20 @@ class Camera extends Component<IProps, IState> {
                   mapInfo: this.props.route.params.map,
                   levelNumber: this.props.route.params.levelNumber,
                   levelType: this.props.route.params.levelType,
-                  nCard: result[2]
+                  nCard: result[2],
+                  blockSchemaDisplay: this.context[0]
                 });
             this.isTakingPicture = false;
         } // Start Mode
         else {
-          navigation.navigate('Game', {actions: result[0], blockSchemaTypeList: result[1], cameraMode: CameraMode.TUTORIAL, mapInfo: Maps.foret2, nCard: result[2]});
+          navigation.navigate('Game', 
+            { actions: result[0], 
+              blockSchemaTypeList: result[1], 
+              cameraMode: CameraMode.TUTORIAL, 
+              mapInfo: Maps.foret2, 
+              nCard: result[2],
+              blockSchemaDisplay: this.context[0]
+            });
           this.isTakingPicture = false;
         }
       } catch (e) { // Error thrown by the parser
