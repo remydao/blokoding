@@ -51,7 +51,6 @@ interface IState {
     animUUID: any,
     languageObj: Object,
     spriteWidth: number,
-    spriteHeight: number,
 }
 
 class Game extends Component<IProps, IState> {
@@ -79,7 +78,7 @@ class Game extends Component<IProps, IState> {
         super(props);
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
+            this.actions = new CharacterBlock(Characters.MrMustache, new JumpBlock(new JumpBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
         } else {
             this.actions = props.route.params.actions;
         }
@@ -105,7 +104,6 @@ class Game extends Component<IProps, IState> {
             animUUID: uuid.v4(),
             languageObj: Translation["en"].gameScreen,
             spriteWidth: 240,
-            spriteHeight: 256
         };
 
         this.winCondition = props.route.params.mapInfo.winCondition;
@@ -440,7 +438,7 @@ class Game extends Component<IProps, IState> {
                     rows: 9,
                     numSpritesInSpriteSheet: 60,
                     animUUID: imageUUID,
-                    spriteWidth: 256,
+                    spriteWidth: 300,
                 })
 
                 if (self.moveDistance >= EngineConstants.CELL_SIZE * numCells) {
