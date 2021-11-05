@@ -139,6 +139,7 @@ class LevelScreen extends Component<IProps, IState> {
                 map: this.map,
                 levelNumber: this.levelNumber,
                 levelType: this.levelType,
+                language: this.props.route.params.language
             })
         }
     }

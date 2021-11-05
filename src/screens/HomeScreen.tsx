@@ -80,7 +80,7 @@ const HomeScreen = ({ navigation }: IProps) => {
         </View>
         <View style={styles.button}>
           <FlatButton text={language.discover} color={Colors.red} pressColor={Colors.dark_red} onPress={() => {
-            navigation.navigate('Découverte');
+            navigation.navigate('Découverte', {language: language});
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
@@ -94,7 +94,7 @@ const HomeScreen = ({ navigation }: IProps) => {
         </View>
         <View style={styles.button}>
           <FlatButton text={language.enigma} color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => {
-            navigation.navigate('UniverseScreen');
+            navigation.navigate('UniverseScreen', {language: language});
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
@@ -114,7 +114,7 @@ const HomeScreen = ({ navigation }: IProps) => {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text={language.test} color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret1})}/>
+          <FlatButton text={language.test} color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret3})}/>
         </View>
         <StatusBar backgroundColor={Colors.azure}/>
       </View>

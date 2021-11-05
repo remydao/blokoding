@@ -17,10 +17,11 @@ function ActionCards() {
             <View>
                 {Cards.map((card, index) => {
                     console.log(card)
-                    return (<View style={{...styles.imageContent, backgroundColor:bgColors[index]}} key={index}>
-                        <View style={{marginLeft: 100}}></View>
-                        {card.map((c, i) => {
-                        return <Image source={c} key={i} style={styles.images}/>
+                    return (
+                        <View style={{...styles.imageContent, backgroundColor:bgColors[index]}} key={index}>
+                            <View style={{marginLeft: 100}}></View>
+                            {card.map((c, i) => {
+                            return <Image source={c} key={i} style={styles.images}/>
                     })}</View>)
                 })}
             </View>

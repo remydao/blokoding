@@ -66,7 +66,7 @@ const dropProblematicTokens = (allCards: [CardType]) => {
 
     const filtered = allCards.filter(function(value, index, arr) {
         return !pbTokens.includes(allCards[index].text);
-    })
+    }).map(cardName => {return {text: cardName.text.replace('é', 'e').replace('Ê', 'E')}});
 
     return filtered;
 }
