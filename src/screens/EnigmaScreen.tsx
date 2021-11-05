@@ -97,6 +97,7 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
         theme: route.params.theme,
         levelNumber: index,
         levelType: 'enigma',
+        language: route.params.language
       })
     }
 

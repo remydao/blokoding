@@ -220,7 +220,7 @@ class Game extends Component<IProps, IState> {
                 
                 for (let j = 0; j < this.state.map.length; j++) {
                     if (this.state.map[j].content && this.state.map[j].content.imageName == entity) {
-                        this.fireEndScreen("loose", this.state.languageObj.removedMap1 + entity + this.state.languageObj.removedMap2);
+                        this.fireEndScreen("loose", this.state.languageObj.removedMap1 + entity + 's' + this.state.languageObj.removedMap2);
                         return false;
                     }
                 }
@@ -237,7 +237,7 @@ class Game extends Component<IProps, IState> {
                 
                 let res = inventory.filter(item => item[0] == invItem.item);
                 if (res.length < 1 || res[0][1] != invItem.quantity) {
-                    this.fireEndScreen("loose", this.state.languageObj.checkInventory1 + invItem.item + this.state.languageObj.checkInventory2);
+                    this.fireEndScreen("loose", this.state.languageObj.checkInventory1 + invItem.item  + 's' + this.state.languageObj.checkInventory2);
                     return false;
                 }
             }

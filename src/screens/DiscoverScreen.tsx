@@ -48,7 +48,8 @@ const Discover = ({navigation, route}: IProps) => {
       loadSound("buttonclick.mp3", false);
       navigation.navigate('LevelScreen', {
         levelNumber: index,
-        levelType: 'tutorial'
+        levelType: 'tutorial',
+        language: route.params.language
       })
     }
 

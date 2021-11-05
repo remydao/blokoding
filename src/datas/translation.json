@@ -115,16 +115,16 @@
         "level": "Niveau",
         "character": "personnage",
         "action": "action",
-        "instruction":"instruction",
+        "instruction": "instruction",
         "condition": "condition",
         "item": "objet",
         "environnement": "environnement",
-        "number":"nombre",
+        "number": "nombre",
 
         "gameScreen": {
             "win": "Bravo, tu as réussi !",
             "lose": "Perdu, tu n'as pas atteint la ligne d'arrivée",
-            "loseBush": "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le tuer",
+            "loseBush": "Tu ne peux pas sauter par dessus un buisson ! Utilise la machette pour le couper",
             "loseDoor": "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ouvrir",
             "losePuddle": "Perdu, fais attention aux flaques d'eau",
             "loseChair": "Perdu, tu dois sauter au dessus de la chaise",
@@ -138,8 +138,8 @@
         },
 
         "parseErrors": {
-            "endCardMissing": "Une instruction doit toujours se finir par une carte \"Fin\" ",
-            "endCardUnexpected": "Une carte \"Fin\" est mal placée ",
+            "endCardMissing": "Une instruction doit toujours se finir par une carte \"Fin instruction\" ",
+            "endCardUnexpected": "Une carte \"Fin instruction\" est mal placée ",
             "orIfUnexpected": "Une carte \"Ou si\" est mal placée ",
             "elseUnexpected": "Une carte \"Sinon\" est mal placée ",
             "condition": "La condition ",
