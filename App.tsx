@@ -61,7 +61,7 @@ function App() {
               <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
               <Stack.Screen name="UniverseScreen" component={UniverseScreen} options={{headerShown: false}}/>
               <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <CustomHeader title="Aide" backgroundColor={Colors.dark_purple}/>}}/>
-              <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.dark_purple}/>}}/>
+              <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.dark_orange}/>}}/>
               <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>
               <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
               <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>

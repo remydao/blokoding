@@ -24,7 +24,6 @@ const Options = ({}) => {
 
   const handleMainSoundChange = (value: number) => {
     soundContext.changeMainSound(value)
-    console.log(soundContext)
   }
 
   const handleBlockSchemaDisplayChange = (value: boolean) => {
@@ -33,7 +32,6 @@ const Options = ({}) => {
 
   const switchSound = (soundState: boolean) => {
     setImg(!soundImg);
-    console.log(SoundContext);
     soundContext.changeMainSound(soundImg ? 0 : 1);
   }
 
@@ -50,28 +48,38 @@ const Options = ({}) => {
       </View>
       <View style={styles.soundWrapper}>
         <Text style={styles.soundText}>Volume</Text>
-        <Slider style={{width: 200, height: 40}} step={0.1}
-        // ici il set le slider au mainSound du coup c pas bon
-          value={soundContext.mainSound}
-          onValueChange={handleMainSoundChange}/>
+
+        <View style={styles.soundOptions}>
+          <Slider style={{width: 200, height: 40, margin: 10}} step={0.1}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#FFFFFF"
+            thumbTintColor={Colors.dark_orange}
+            value={soundContext.mainSound}
+            onValueChange={handleMainSoundChange}/>
+            <TouchableOpacity
+              onPress={() => {
+                switchSound(soundImg)
+              }}>
+              <View style={{display:'flex', alignItems:'center'}}>
+
+                <Image source={ soundImg === true ?
+                                require('../assets/volume.png') : 
+                                require('../assets/mute.png')}
+                  resizeMode="stretch"
+                  style={{width: EngineConstants.MAX_HEIGHT / 12, height: EngineConstants.MAX_HEIGHT / 12}}
+                />
+                <Text style={{paddingTop: 10, fontWeight: '900'}}>{soundImg ? "ON" : "OFF"}</Text>
+              </View>
+            </TouchableOpacity>
+        </View>
       </View>
-      <TouchableOpacity
-            onPress={() => {
-              switchSound(soundImg)
-            }}>
-          <Image source={ soundImg === true ?                  
-                          require('../assets/volume.png') : 
-                          require('../assets/mute.png')}
-            resizeMode="stretch"
-            style={{width: EngineConstants.MAX_HEIGHT / 8, height: EngineConstants.MAX_HEIGHT / 8}}
-          />
-      </TouchableOpacity>
-      <View style={{display: 'flex', flexDirection: 'row'}}>
-        <Switch value={blockSchemaDisplay} trackColor={{false: '#FC5958', true: '#39E083'}} onValueChange={handleBlockSchemaDisplayChange} style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} />
-        <Text>afficher le schema des blocs</Text>
+      
+      <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <Switch value={blockSchemaDisplay} trackColor={{false: '#FC5958', true: Colors.dark_orange}} onValueChange={handleBlockSchemaDisplayChange} style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} />
+        <Text style={{marginLeft: 20, fontFamily: 'Pangolin-Regular', fontSize: 18}}>Afficher le schema des blocs</Text>
       </View>
       <Image style={styles.image} source={characterImages.Harry.uri}></Image>
-      <StatusBar backgroundColor={Colors.dark_purple}/>
+      <StatusBar backgroundColor={Colors.dark_orange}/>
     </View>
   );
 };
@@ -79,31 +87,34 @@ const Options = ({}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: Colors.turquoise 
+    backgroundColor: 'rgba(244, 149, 87, 0.3)'
   },
   picker: {
     marginTop: 50,
     width: 150,
     height: 50,
     borderRadius: 10,
-    backgroundColor: Colors.dark_purple
+    backgroundColor: Colors.dark_orange
   },
   image: {
-    top: 50
   },
   soundWrapper: {
     display: 'flex',
     alignItems: 'center',
-    margin: 30,
   },
   soundText: {
     fontFamily: 'Pangolin-Regular',
     fontSize: 20,
-    backgroundColor: 'orange',
-    padding: 5,
-    borderRadius: 5
+    backgroundColor: Colors.dark_orange,
+    padding: 10,
+    borderRadius: 10
+  },
+  soundOptions: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })
 
