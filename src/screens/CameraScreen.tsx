@@ -116,9 +116,9 @@ class Camera extends Component<IProps, IState> {
         modifyCoordinates(visionResp);
         visionResp = dropProblematicTokens(visionResp);
         // Change here visionResp to force the detection
-        visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
+        // visionResp = [{text: 'Mustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Si'}, {text: 'etre devant'}, {text: 'flaque'}, {text: 'sauter'}, {text: 'ou si'}, {text: 'etre sur'}, {text: 'fleur'}, {text: 'ramasser'}, {text: 'sinon'}, {text: 'avancer'}, {text: 'fin'}, {text: 'fin'}];
         // visionResp = [{text: 'Mustache'}, {text: 'repeter'}, {text: '10'}]
-        const result = parseInit(visionResp, this.props.route.params.language, );
+        const result = parseInit(visionResp, this.props.route.params.language);
 
         // Discover Mode
         if (this.props.route.params && this.props.route.params.map) {

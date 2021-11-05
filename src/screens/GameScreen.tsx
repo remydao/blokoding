@@ -78,7 +78,7 @@ class Game extends Component<IProps, IState> {
         super(props);
 
         if (props.route.params.cameraMode == CameraMode.TEST) {
-            this.actions = new CharacterBlock(Characters.MrMustache, new JumpBlock(new JumpBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
+            this.actions = new CharacterBlock(Characters.MrMustache, new MoveBlock(new GrabBlock(new MoveBlock(new UseBlock(new ItemBlock(Items.Machete), new MoveBlock(new MoveBlock(new MoveBlock(null))))))));
         } else {
             this.actions = props.route.params.actions;
         }
@@ -732,11 +732,11 @@ class Game extends Component<IProps, IState> {
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                 <View>
                 {
-                    this.state.percentLoading < 100 ?
+                    /*this.state.percentLoading < 100 ?
                     (<View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
                         <Progress.Circle indeterminate={true} size={200}/>
                     </View>) :
-                    (
+                    (*/
                         <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
 
                             {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="lightgreen" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
@@ -747,7 +747,8 @@ class Game extends Component<IProps, IState> {
                             { arr }
                             <Inventory inventory={this.state.inventory} />
                             <BlockSchema blockList={this.blockSchemaRowList} />
-                        </View>)
+                        </View>
+                        //)
                 }
                 <StatusBar translucent backgroundColor="transparent"/>
                 </View>

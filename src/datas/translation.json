@@ -183,7 +183,7 @@
             "SecondaryInstructions": {
                 "Elif": "ou si",
                 "Else": "sinon",
-                "End": "fin"
+                "End": "fin instruction"
             },
             "Conditions": {
                 "IsInFront": "etre devant",
