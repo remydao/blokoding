@@ -61,7 +61,7 @@ beach: [
     },
     {
         title: "Enigme 3",
-        tutorial: ["Maintenant que tu as éviter les crabes il faut que tu saute par dessus les chateaux de sable que les enfants ont construit ! Attention si tu marches sur un chateau de sable les enfants ne seront pas contents..."],
+        tutorial: ["Maintenant que tu as évité les crabes il faut que tu saute par dessus les chateaux de sable que les enfants ont construit ! Attention si tu marches sur un chateau de sable les enfants ne seront pas contents..."],
         congratulations:"Bravo, tu as réussi !",
         map: Maps.enigma16,
     },
