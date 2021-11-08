@@ -38,7 +38,7 @@ const Instructions = {
 const SecondaryInstructions = {
     Elif: 'ou si',
     Else: 'sinon',
-    End: 'fin'
+    End: 'fin instruction'
 }
 
 const Conditions = {

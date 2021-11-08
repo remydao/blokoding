@@ -62,11 +62,17 @@ interface CardType {
 }
 
 const dropProblematicTokens = (allCards: [CardType]) => {
-    const pbTokens = ['x', 't', 'y', 'T', 'Y', 'X'];
 
-    const filtered = allCards.filter(function(value, index, arr) {
-        return !pbTokens.includes(allCards[index].text);
-    }).map(cardName => {return {text: cardName.text.replace('é', 'e').replace('Ê', 'E')}});
+    var filtered = allCards
+        .map(card => card.text.trim().toLowerCase()); // remove heading and trailing whitespace and put everything to lower case
+        console.log(filtered);
+        filtered = filtered.filter(card => !(card.length === 1 && !/\d/.test(card))) // remove token if is single char and not a number
+        .filter(card => !(card.length > 1 && /^\d+$/.test(card))) // remove token if is multiple char and only numbers
+        .filter(card => !(card.length > 1 && /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(card))) // remove token if is multiple char and made of letters and numbers
+        .filter(card => !(card.includes('lt') || card.includes('lj'))) // remove token if contains 'lt' or 'lj' substring
+        .filter(card => !(card.split('e').length - 1 == card.length)) // remove token if only made of 'e's
+        .filter(card => !(card.length === 2 && card !== 'si' && card !== 'if'))
+        .map(card => card.replace('é', 'e').replace('Ê', 'E')); // finally remove all accents
 
     return filtered;
 }
