@@ -3,6 +3,7 @@ import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from '
 import uuid from 'react-native-uuid';
 import Colors from '../constants/Colors';
 import LevelButton from '../components/LevelButton';
+import {tutorialInfo} from '../constants/TutorialDetails'
 import { useLanguage } from '../datas/contextHooks';
 import {loadSound} from '../scripts/sound/sound'
 
@@ -32,7 +33,8 @@ const Discover = ({navigation, route}: IProps) => {
     const setLevel = () => {
       let btns = [...buttons];
       //numberOfLevels
-      for (let i = 0; i < 30; i++)
+      let numberOfLevels = tutorialInfo.length;
+      for (let i = 0; i < numberOfLevels; i++)
       {
           const levelTitle = language.level + ' ' + (i + 1)
           btns.push({id:uuid.v4(), value:levelTitle})
