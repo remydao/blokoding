@@ -25,6 +25,14 @@ const EnvironmentImages = {
     Flag: {
         imageName: Environments.Flag,
         uri: require('../assets/environments/flag.png')
+    },
+    Crab: {
+        imageName: Environments.Crab,
+        uri: require('../assets/environments/crab.png')
+    },
+    Castle: {
+        imageName: Environments.Castle,
+        uri: require('../assets/environments/castle.png')
     }
 }
 

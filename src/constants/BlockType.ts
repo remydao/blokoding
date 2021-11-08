@@ -53,7 +53,8 @@ const Items = {
     Flower: 'fleur',
     Machete: 'machette',
     Trash: 'dechet',
-    Grass: 'grass'
+    Grass: 'grass',
+    Shovel: 'pelle'
 }
 
 const Environments = {
@@ -62,6 +63,8 @@ const Environments = {
     Bush: 'buisson',
     Puddle: 'flaque',
     Bin: 'poubelle',
+    Crab: 'crabe',
+    Castle: 'chateau',
     Flag: 'drapeau',
 }
 

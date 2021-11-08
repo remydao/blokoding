@@ -46,7 +46,38 @@ const enigmaInfo = {
         map: Maps.enigma7,
     },
 ],
-beach: [],
+beach: [
+    {
+        title: "Enigme 1",
+        tutorial: ["Bienvenue dans l'univers plage ! Pour ta première mission tu devras simplement sauter au dessus du crabe qui te bloque le passage ! "],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma14,
+    },
+    {
+        title: "Enigme 2",
+        tutorial: ["Attention, M. Mustache nous a prévenu que les crabes avaient envahi la plage ! Il doit y en avoir beaucoup pour qu'il s'inquiète à ce point. Tu dois tout faire pour les éviter."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma15,
+    },
+    {
+        title: "Enigme 3",
+        tutorial: ["Maintenant que tu as éviter les crabes il faut que tu saute par dessus les chateaux de sable que les enfants ont construit ! Attention si tu marches sur un chateau de sable les enfants ne seront pas contents..."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma16,
+    },
+    {
+        title: "Enigme 4",
+        tutorial: ["Les enfants ont oublié leurs pelles sur la plage ! Ton but est de toutes les ramasser avant que la mer ne les emporte ! Les tortues te remercieront de leur avoir sauvé la vie."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma17,
+    },
+    {
+        title: "Enigme 5",
+        tutorial: ["Un enfant a cassé ton chateau de sable ! Ton but est de te venger. Récupère la pelle qui se trouve au sol et utilise là pour casser son chateau de sable."],
+        congratulations:"Bravo, tu as réussi !",
+        map: Maps.enigma18,
+    }
+],
 city: [
     {
         title: "Enigme 1",
