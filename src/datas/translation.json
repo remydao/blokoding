@@ -24,6 +24,8 @@
             "losePuddle": "Lost, watch out for puddles",
             "loseChair": "Lost, you need to jump over the chair",
             "loseBush2": "Lost, use the machete when you are in front of the bush to cut it",
+            "loseCastle": "Lost, beware to not step on a sandcastle !",
+            "loseCrab": "Lost, be careful, the crab can pinch you very hard...",
             "loseDoor2": "Lost, use the key when you are in front of the door to open it",
             "loseBin": "Lost, use the waste when you are in front of the garbage can to pass",
             "removedMap1": "Lost, there are still ",
@@ -61,6 +63,10 @@
             "EnigmaMode": " Enigma Mode",
             "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
             "Cards": "Card Lists"
+        },
+        "levelScreen": {
+            "letsGo": "\nLet's go!\n",
+            "next": "\nNext\n"
         },
         "cards": {
             "Actions": {
@@ -128,6 +134,8 @@
             "loseDoor": "Tu ne peux pas sauter par dessus une porte ! Utilise la clé pour l'ouvrir",
             "losePuddle": "Perdu, fais attention aux flaques d'eau",
             "loseChair": "Perdu, tu dois sauter au dessus de la chaise",
+            "loseCastle": "Perdu, attention tu ne dois pas marcher sur un chateau de sable.",
+            "loseCrab": "Perdu, attention au crabe, il peut te pincer très fort...",
             "loseBush2": "Perdu, utilise la machette quand tu es devant le buisson pour le couper",
             "loseDoor2": "Perdu, utilise la clé quand tu es devant la porte pour l'ouvrir",
             "loseBin": "Perdu, utilise le déchet quand tu es devant la poubelle pour passer",
@@ -166,6 +174,10 @@
             "EnigmaMode": " Mode Enigme",
             "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
             "Cards": "Liste des cartes"
+        },
+        "levelScreen": {
+            "letsGo": "\nC'est parti !\n",
+            "next": "\nSuivant\n"
         },
         "cards": {
             "Actions": {

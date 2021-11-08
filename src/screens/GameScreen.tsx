@@ -194,6 +194,12 @@ class Game extends Component<IProps, IState> {
                 case Cells.Bush:
                     this.fireEndScreen("loose", this.state.languageObj.loseBush2);
                     break;
+                case Cells.Castle:
+                    this.fireEndScreen("loose", this.state.languageObj.loseCastle);
+                    break;
+                case Cells.Crab:
+                    this.fireEndScreen("loose", this.state.languageObj.loseCrab);
+                    break;
                 case Cells.Door:
                     this.fireEndScreen("loose", this.state.languageObj.loseDoor2);
                     break;
@@ -519,12 +525,14 @@ class Game extends Component<IProps, IState> {
         const usables = {
             [Items.Key]: Environments.Door,
             [Items.Machete]: Environments.Bush,
-            [Items.Trash]: Environments.Bin
+            [Items.Trash]: Environments.Bin,
+            [Items.Shovel]: Environments.Castle
         };
         const sounds = {
             [Items.Key]: "open_door.mp3",
             [Items.Machete]: "cut_bush.mp3",
-            [Items.Trash]: "throw_bin.mp3"
+            [Items.Trash]: "throw_bin.mp3",
+            [Items.Shovel]: "cut_bush.mp3"
         };
 
         if (Object.keys(usables).filter(usableItem => usableItem === item).length === 0) {
@@ -672,11 +680,17 @@ class Game extends Component<IProps, IState> {
     }
 
     backToSelectLevels = () : void => {
-        this.props.navigation.pop();
-        this.props.navigation.pop();
-        this.props.navigation.pop();
-        this.props.navigation.pop();
-        this.props.navigation.navigate('Découverte');
+        if (this.props.route.params.levelType === 'tutorial') {
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.navigate('Découverte');
+        } else {
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+        }
     }
 
     backToLevelFailed = () : void => {

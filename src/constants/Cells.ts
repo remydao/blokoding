@@ -1,3 +1,4 @@
+import { Environments } from "./BlockType";
 import { EnvironmentImages } from "./EnvironmentImages";
 import { ItemImages } from "./ItemImages";
 
@@ -20,6 +21,9 @@ const Cells = {
     Trash: {
         content: ItemImages.Trash
     },
+    Shovel: {
+        content: ItemImages.Shovel
+    },
     Door: {
         content: EnvironmentImages.Door
     },
@@ -34,6 +38,12 @@ const Cells = {
     },
     Bin: {
         content: EnvironmentImages.Bin
+    },
+    Crab: {
+        content: EnvironmentImages.Crab
+    },
+    Castle: {
+        content: EnvironmentImages.Castle
     },
     Win: {
         content: EnvironmentImages.Flag

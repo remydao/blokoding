@@ -165,6 +165,40 @@ const Maps = {
         }
     },
 
+
+    // ENIGMA BEACH
+    enigma14: {
+        theme: Themes.Beach,
+        map: [Cells.Empty, Cells.Empty, Cells.Crab, Cells.Empty,  Cells.Empty, Cells.Win],
+    },
+    enigma15: {
+        theme: Themes.Beach,
+        map: [Cells.Empty, Cells.Empty, Cells.Crab, Cells.Empty, Cells.Empty, Cells.Crab, Cells.Empty, Cells.Empty, Cells.Win],
+    },
+    enigma16: {
+        theme: Themes.Beach,
+        map: [Cells.Empty, Cells.Empty, Cells.Castle, Cells.Empty, Cells.Empty, Cells.Castle, Cells.Win],
+    },
+    enigma17: {
+        theme: Themes.Beach,
+        map: [Cells.Empty, Cells.Empty, Cells.Shovel, Cells.Shovel, Cells.Empty, Cells.Shovel, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Items.Shovel
+            ],
+        }
+    },
+    enigma18: {
+        theme: Themes.Beach,
+        map: [Cells.Empty, Cells.Empty, Cells.Shovel, Cells.Empty, Cells.Castle, Cells.Empty, Cells.Win],
+        winCondition: {
+            removedFromMap: [
+                Environments.Castle
+            ],
+        }
+    },
+
+
     // RANDOM
 
     foret1: {
