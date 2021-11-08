@@ -55,8 +55,8 @@ class Camera extends Component<IProps, IState> {
     }
 
     componentWillUnmount(){
-      if (this.props.route.params.music !== null && this.props.route.params.music !== undefined) {
-        this.props.route.params.music.play();
+      if (this.props.route.params.music.current !== null && this.props.route.params.music.current !== undefined) {
+        this.props.route.params.music.current.play();
       }
     }
 
