@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const Help = ({ navigation }: IProps) => {
-
   const language = useLanguage().helpScreen;
 
   return (

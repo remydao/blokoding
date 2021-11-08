@@ -1,15 +1,17 @@
 import React from 'react'
-import { Platform } from 'react-native'
+import { Platform, Pressable } from 'react-native'
 import {View, Text, StyleSheet, Image, StatusBar } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Colors from '../constants/Colors'
+import EngineConstants from '../constants/EngineConstants';
 
 interface IProps {
     isLogo? : boolean,
     style?: any,
     textStyle?: any,
     title: String,
-    backgroundColor?: string
+    backgroundColor?: string,
+    goBack?: any
 }
 
 const CustomHeader = (props : IProps) => {
@@ -18,6 +20,9 @@ const CustomHeader = (props : IProps) => {
 
     return (
         <View style={{...styles(props).header, ...props.style}}>
+            {props.goBack ? <Pressable onPress={() => props.goBack()} style={{position:'absolute', left: 10}}>
+                <Image  style={{ width: 25, height: 25 }} source={require("../assets/back.png")}/>
+            </Pressable> : null}
             {
                 Platform.OS === 'ios' ?
                 (<View style={styles(props).statusBarIOS}></View>)
@@ -45,7 +50,7 @@ const styles = (props: IProps) => StyleSheet.create({
         position: 'absolute',
         top: -STATUSBAR_HEIGHT,
         height: STATUSBAR_HEIGHT,
-        width:1500,
+        width: EngineConstants.MAX_WIDTH,
         backgroundColor: props.backgroundColor || Colors.azure,
     },
     backBtn:{
@@ -53,7 +58,8 @@ const styles = (props: IProps) => StyleSheet.create({
         left: 10,
     },
     header:{
-        width:1500,
+        alignSelf: 'stretch',
+        width: EngineConstants.MAX_WIDTH,
         height: 57,
         flexDirection:'row',
         backgroundColor: props.backgroundColor || Colors.azure,

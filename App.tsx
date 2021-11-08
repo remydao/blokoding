@@ -55,18 +55,18 @@ function App() {
     <BlockSchemaContext.Provider value={blockSchemaDisplay}>
       <LanguageContext.Provider value={languageInfos}>
         <SoundContext.Provider value={soundInfos}>
-          <NavigationContainer>
+          <NavigationContainer >
             <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center'}}>
               <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
               <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
               <Stack.Screen name="UniverseScreen" component={UniverseScreen} options={{headerShown: false}}/>
-              <Stack.Screen name="Help" component={Help} options={{headerTitle: () => <CustomHeader title="Aide" backgroundColor={Colors.dark_purple}/>}}/>
-              <Stack.Screen name="Options" component={Options} options={{headerTitle: () => <CustomHeader title="Options" backgroundColor={Colors.dark_orange}/>}}/>
+              <Stack.Screen name="Help" component={Help} options={ ({navigation}) => ({headerTitle: () => <CustomHeader title="Aide" goBack={() => navigation.pop()} backgroundColor={Colors.dark_purple}/>})}/>
+              <Stack.Screen name="Options" component={Options} options={({navigation}) => ({headerTitle: () => <CustomHeader title="Options" goBack={() => navigation.pop()} backgroundColor={Colors.dark_orange}/>})}/>
               <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>
               <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
               <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>
-              <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={{headerTitle: () => <CustomHeader title="Enigma" backgroundColor="purple"/>}}/>
-              <Stack.Screen name="HelpCards" component={HelpCardScreen} options={{headerTitle: () => <CustomHeader title="Cartes" backgroundColor={Colors.dark_purple}/>}}/>
+              <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={({navigation}) => ({headerTitle: () => <CustomHeader goBack={() => navigation.pop()} title="Enigma" backgroundColor="purple"/>})}/>
+              <Stack.Screen name="HelpCards" component={HelpCardScreen} options={({navigation}) => ({headerTitle: () => <CustomHeader title="Cartes" goBack={() => navigation.pop()}  backgroundColor={Colors.dark_purple}/>})}/>
             </Stack.Navigator>
           </NavigationContainer>
         </SoundContext.Provider>
