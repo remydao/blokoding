@@ -51,7 +51,7 @@ const Discover = ({navigation, route}: IProps) => {
       navigation.navigate('LevelScreen', {
         levelNumber: index,
         levelType: 'tutorial',
-        language: route.params.language
+        language: language
       })
     }
 

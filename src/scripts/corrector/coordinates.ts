@@ -1,10 +1,6 @@
-
-
 const MAX_VERTICAL_ERROR = 100;
 
 const modifyCoordinates = (visionResp: any[]) => {
-
-    console.log(visionResp);
 
     for (let i = 0; i < visionResp.length - 1; i++) {
         if (visionResp[i + 1].bounding.left < visionResp[i].bounding.left 
@@ -16,6 +12,5 @@ const modifyCoordinates = (visionResp: any[]) => {
         }
     }
 }
-
 
 export { modifyCoordinates };

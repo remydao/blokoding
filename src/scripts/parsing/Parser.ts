@@ -6,6 +6,7 @@ import { IsInFrontBlock, IsOnBlock, PossessBlock } from "../blocks/ConditionBloc
 import { EnvironmentBlock, ItemBlock, NumberBlock } from "../blocks/DataBlock";
 import { CodeBlock, ConditionBlock, StructureBlock, DataBlock, InstructionBlock } from "../blocks/MainBlocks";
 import { checkVisionResp } from "../corrector/corrector";
+import EngineConstants from "../../constants/EngineConstants";
 
 var loopDepth = 0;
 var cardIndex = 0;
@@ -21,7 +22,7 @@ const addBlockSchemaRow = (...blockSchemaType: BlockType[]) => {
 
 type TcardList = Array<string>
 
-const parseInit = (cardListObj: any[], currLanguage: any) => {
+const parseInit = (cardList: any[], currLanguage: any) => {
     loopDepth = 0;
     cardIndex = 0;
     isInIf = 0;
@@ -31,8 +32,6 @@ const parseInit = (cardListObj: any[], currLanguage: any) => {
     
     blockSchemaTypeList = []
     CodeBlock.blockCount = 0;
-
-    let cardList: TcardList = cardListObj.map((item: { text: string; }) => item.text.trim().toLowerCase());
 
     console.log(cardList);
     return [parseCharacter(cardList), blockSchemaTypeList, cardIndex];
@@ -80,31 +79,34 @@ const parseStructureCard = (cardList: TcardList) : never | StructureBlock | null
         }
     }
 
-    if (blockName == cards.SecondaryInstructions.End) {
-        if (loopDepth > 0) {
-            addBlockSchemaRow(BlockType.Instruction);
-            return null;
+    let secondaryInstruction = checkVisionResp(blockName, Object.values(cards.SecondaryInstructions));
+    if (secondaryInstruction !== null) {
+        if (blockName === cards.SecondaryInstructions.End) {
+            if (loopDepth > 0) {
+                addBlockSchemaRow(BlockType.Instruction);
+                return null;
+            }
+            else
+                throw language.parseErrors.endCardUnexpected + cardIndexToString();
         }
-        else
-            throw language.parseErrors.endCardUnexpected + cardIndexToString();
-    }
-
-    if (blockName == cards.SecondaryInstructions.Elif) {
-        if (isInIf > 0) {
-            setFirstElm(cardList, blockName);
-            return null;
+    
+        if (blockName === cards.SecondaryInstructions.Elif) {
+            if (isInIf > 0) {
+                setFirstElm(cardList, blockName);
+                return null;
+            }
+            else
+                throw language.parseErrors.orIfUnexpected + cardIndexToString();
         }
-        else
-            throw language.parseErrors.orIfUnexpected + cardIndexToString();
-    }
-
-    if (blockName == cards.SecondaryInstructions.Else) {
-        if (isInIf > 0) {
-            setFirstElm(cardList, blockName);
-            return null;
+    
+        if (blockName === cards.SecondaryInstructions.Else) {
+            if (isInIf > 0) {
+                setFirstElm(cardList, blockName);
+                return null;
+            }
+            else
+                throw language.parseErrors.elseUnexpected + cardIndexToString();
         }
-        else
-            throw language.parseErrors.elseUnexpected + cardIndexToString();
     }
 
     res = Object.entries(cards.Conditions).filter(condition => condition[1] == blockName);
@@ -142,7 +144,7 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
     } else {
         if (typeof character !== 'undefined')
         {
-            let modifiedCharacter = checkVisionResp(character, Object.values(Characters));
+            let modifiedCharacter = checkVisionResp(character, Object.values(cards.Characters));
             if (modifiedCharacter !== null) {
                 characterBlock = new CharacterBlock(modifiedCharacter);
                 addBlockSchemaRow(BlockType.Character);
