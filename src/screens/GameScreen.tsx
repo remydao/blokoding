@@ -328,6 +328,7 @@ class Game extends Component<IProps, IState> {
                 resolve();
 
             var lastImage = -1;
+            let timeout: any = null;
 
             movePos();
 
@@ -345,8 +346,10 @@ class Game extends Component<IProps, IState> {
                 var newBgPos = self.moveBackground();
 
                 // Fix memory leak when quitting
-                if (!self.mounted)
+                if (!self.mounted){
+                    clearTimeout(timeout);
                     resolve();
+                }
 
                 var imageUUID = self.state.animUUID;
                 var imageNum = Math.floor((self.moveDistance / EngineConstants.CELL_SIZE) * 2);
@@ -377,7 +380,7 @@ class Game extends Component<IProps, IState> {
                     resolve();
                 }
                 else {
-                    setTimeout(movePos, self.frameDelay);
+                    timeout = setTimeout(movePos, self.frameDelay);
                 }      
             }
         });
@@ -399,6 +402,7 @@ class Game extends Component<IProps, IState> {
                 resolve();
 
             var lastImage = -1;
+            let timeout: any = null;
 
             jumpPos();
 
@@ -417,8 +421,10 @@ class Game extends Component<IProps, IState> {
                 var playerPosY = self.moveCharacUpDown();
 
                 // Fix memory leak when quitting
-                if (!self.mounted)
+                if (!self.mounted) {
+                    clearTimeout(timeout);
                     resolve();
+                }
 
                 // Get current sprite sheet
                 var imageUUID = self.state.animUUID;
@@ -452,7 +458,7 @@ class Game extends Component<IProps, IState> {
                     resolve();
                 }
                 else {
-                    setTimeout(jumpPos, self.frameDelay);
+                    timeout = setTimeout(jumpPos, self.frameDelay);
                 }      
             }
         });
@@ -480,6 +486,7 @@ class Game extends Component<IProps, IState> {
                 resolve();
 
             var imageNum = 0;
+            let timeout: any = null;
 
             doGrab();
 
@@ -506,15 +513,17 @@ class Game extends Component<IProps, IState> {
                 })
 
                 // Fix memory leak when quitting
-                if (!self.mounted)
+                if (!self.mounted) {
+                    clearTimeout(timeout);
                     resolve();
+                }
 
                 imageNum++;
 
                 if (imageNum < 2)
-                    setTimeout(doGrab, 16.667 * 60);
+                    timeout = setTimeout(doGrab, 16.667 * 60);
                 else
-                    setTimeout(resolve, 16.667 * 60);    
+                    timeout = setTimeout(resolve, 16.667 * 60);    
             }
         });
 
@@ -562,6 +571,7 @@ class Game extends Component<IProps, IState> {
                         resolve();
         
                     var imageNum = 0;
+                    let timeout: any = null;    
         
                     useMachete();
         
@@ -587,15 +597,17 @@ class Game extends Component<IProps, IState> {
                         })
         
                         // Fix memory leak when quitting
-                        if (!self.mounted)
+                        if (!self.mounted) {
+                            clearTimeout(timeout);
                             resolve();
+                        }
 
                         imageNum++;
     
                         if (imageNum < 2)
-                            setTimeout(useMachete, 16.667 * 30);
+                            timeout = setTimeout(useMachete, 16.667 * 30);
                         else
-                            setTimeout(resolve, 16.667 * 30);    
+                            timeout = setTimeout(resolve, 16.667 * 30);    
                     }
                 });
             }

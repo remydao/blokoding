@@ -37,7 +37,7 @@ const Discover = ({navigation, route}: IProps) => {
       for (let i = 0; i < numberOfLevels; i++)
       {
           const levelTitle = language.level + ' ' + (i + 1)
-          btns.push({id:uuid.v4(), value:levelTitle})
+          btns.push({ id: uuid.v4(), value: levelTitle })
       }
       setButtons(btns);
     }

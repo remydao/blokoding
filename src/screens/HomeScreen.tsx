@@ -87,7 +87,7 @@ const HomeScreen = ({ navigation }: IProps) => {
         </View>
         <View style={styles.button}>
           <FlatButton text={language.start} color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => {
-            navigation.navigate('Take Picture', {music: soundRef.current, language: language});
+            navigation.navigate('Take Picture', {music: soundRef, language: language});
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
@@ -107,15 +107,15 @@ const HomeScreen = ({ navigation }: IProps) => {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text={language.help} color={Colors.turquoise} pressColor={Colors.dark_orange } onPress={() => {
+          <FlatButton text={language.help} color={Colors.pink} pressColor={Colors.dark_pink } onPress={() => {
             navigation.navigate('Help');
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
         </View>
-        <View style={styles.button}>
+        {/* <View style={styles.button}>
           <FlatButton text={language.test} color={Colors.pink} pressColor={Colors.dark_pink} onPress={() => navigation.navigate('Game', {cameraMode: CameraMode.TEST, mapInfo: Maps.foret3})}/>
-        </View>
+        </View> */}
         <StatusBar backgroundColor={Colors.azure}/>
       </View>
     );
