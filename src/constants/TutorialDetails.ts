@@ -17,7 +17,7 @@ const tutorialInfo = [
     },
     {
         title: "Faire avancer le personnage plusieurs fois",
-        tutorial: ["Ici, nous allons faire avancer Mr. Mustache plusieurs fois. Pour cela, rien de plus simple ! Il te suffit de placer plusieurs cartes actions “avancer” les unes en dessous des autres ! ", "Tu peux remarquer un symbole de flèche en bas de tes cartes actions, ce genre d'icônes est présent sur toutes les cartes et te permet de voir le type de carte qui peut être placé ensuite. N’oublie pas de prendre toutes les cartes en photo !"],
+        tutorial: ["Ici, nous allons faire avancer Mr. Mustache plusieurs fois. Pour cela, rien de plus simple ! Il te suffit de placer 3 cartes actions “avancer” les unes en dessous des autres ! ", "Tu peux remarquer un symbole de flèche en bas de tes cartes actions, ce genre d'icônes est présent sur toutes les cartes et te permet de voir le type de carte qui peut être placé ensuite. N’oublie pas de prendre toutes les cartes en photo !"],
         congratulations:"Bravo tu as réussi !",
         map: Maps.level3,
         soluce: [{text: 'MrMustache'}, {text: 'Avancer'}, {text: 'Avancer'}, {text: 'Avancer'}],
@@ -31,7 +31,7 @@ const tutorialInfo = [
     },
     {
         title: "Faire répéter une action plusieurs fois",
-        tutorial: ["Nous avons vu comment aligner plusieurs fois la même carte action. Cependant, si tu dois faire avancer 10 fois ton personnage tu te rends bien compte que tu n’as pas assez de cartes avancer et que même si tu en avais assez ton programme serait très long et compliqué à prendre en photo.", "Cela m’amène à te présenter un nouveau type de cartes : les cartes instructions (cartes turquoise). Nous allons nous intéresser tout d’abord à la carte répéter. Cette carte te permet de répéter une liste d’actions un certain nombre de fois.", "Pour cela place en dessous de la carte répéter les actions que tu veux faire puis place une carte fin d’instruction. Ensuite, place à droite de la carte répéter une carte nombre (rose) représentant le nombre de fois que tu veux répéter la liste d’actions. Pour cet exemple, répète 5 fois l’action avancer puis ramasser."],
+        tutorial: ["Nous avons vu comment aligner plusieurs fois la même carte action. Cependant, si tu dois faire avancer 10 fois ton personnage tu te rends bien compte que tu n’as pas assez de cartes avancer et que même si tu en avais assez ton programme serait très long et compliqué à prendre en photo.", "Cela m’amène à te présenter un nouveau type de cartes : les cartes instructions (cartes turquoise). Nous allons nous intéresser tout d’abord à la carte répéter. Cette carte te permet de répéter une liste d’actions un certain nombre de fois.", "Pour cela place en dessous de la carte répéter les actions que tu veux faire puis place une carte fin d’instruction. Ensuite, place à droite de la carte répéter une carte nombre (rose) représentant le nombre de fois que tu veux répéter la liste d’actions. Pour cet exemple, répète 6 fois l’action avancer puis ramasser."],
         congratulations:"Bravo grâce à toi Mr. Mustache a pu avancer et nettoyer son atelier !",
         map: Maps.level5,
         soluce: [{text: 'MrMustache'}, {text: 'Repeter'}, {text: '5'}, {text: 'Avancer'}, {text: 'Ramasser'}, {text: 'Fin'}]
