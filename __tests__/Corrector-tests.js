@@ -49,5 +49,5 @@ it('Corrector problematic tokens', () => {
     const res = dropProblematicTokens(ocr);
 
     expect(res.length).toBe(1);
-    expect(res[0].text).toStrictEqual('Bart');
+    expect(res[0]).toStrictEqual('bart');
 })

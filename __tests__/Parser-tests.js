@@ -27,9 +27,8 @@ jest.mock('react-native-sound', () => 'Sound')
 
 
 it('Character alone', () => {
-  const ocr = [{text: 'Bart'}];
+  const ocr = ['Bart'];
   const blocks = parseInit(ocr, fr)[0];
-  console.log(blocks);
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
   expect(blocks.character).toBe(Characters.Bart);
@@ -37,7 +36,7 @@ it('Character alone', () => {
 })
 
 it('Simple jump', () => {
-  const ocr = [{text: "Kevin"}, {text: "Sauter"}]
+  const ocr = ["Kevin", "Sauter"]
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -47,28 +46,28 @@ it('Simple jump', () => {
 });
 
 it('Missing character', () => {
-  const ocr = [{text: "Avancer"}]
+  const ocr = ["Avancer"];
   expect(() => {
     parseInit(ocr, fr);
   }).toThrow(); 
 })
 
 it('Missing instruction end', () => {
-  const ocr = [{text: "Charlie"}, {text: "Repeter"}, {text: "10"}, {text: "Sauter"}]
+  const ocr = ["Charlie", "Repeter", "10", "Sauter"];
   expect(() => {
     parseInit(ocr, fr);
   }).toThrow(); 
 })
 
 it('Missing number', () => {
-  const ocr = [{text: "Charlie"}, {text: "Repeter"}, {text: "AvanCER"}, {text: "FIN instruction"}]
+  const ocr = ["Charlie", "Repeter", "Avancer", "fin instruction"];
   expect(() => {
     parseInit(ocr, fr);
   }).toThrow(); 
 })
 
 it('Simple for', () => {
-  const ocr = [{text: "Charlie"}, {text: "Repeter"}, {text: "10"}, {text: "AvanCER"}, {text: "FIN instruction"}]
+  const ocr = ["Charlie", "Repeter", "10", "Avancer", "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -85,7 +84,7 @@ it('Simple for', () => {
 })
 
 it('Simple for corrector', () => {
-  const ocr = [{text: "Charlie"}, {text: "Repeeter"}, {text: "10"}, {text: "AvanCE"}, {text: "FIN instruction"}]
+  const ocr = ["Charlie", "Repeeter", "10", "AvanCE", "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -102,7 +101,7 @@ it('Simple for corrector', () => {
 })
 
 it('Simple While', () => {
-  const ocr = [{text: "cyclops"}, {text: "tant que"}, {text: "etre devant"}, {text: "flaque"}, {text: "avancer"}, {text: "  fin instruction "}]
+  const ocr = ["cyclops", "tant que", "etre devant", "flaque", "avancer", "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -127,7 +126,7 @@ it('Simple While', () => {
 })
 
 it('Simple While corrector', () => {
-  const ocr = [{text: "cyclops"}, {text: "tantque"}, {text: "etre dvant"}, {text: "fllaque"}, {text: "avanceer"}, {text: "  fin instruction"}]
+  const ocr = ["cyclops", "tantque", "etre dvant", "fllaque", "avanceer", "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -152,7 +151,7 @@ it('Simple While corrector', () => {
 })
 
 it('Simple If', () => {
-  const ocr = [{text: "cyclops"}, {text: "Si"}, {text: "etre devant"}, {text: "flaque"}, {text: "avancer"}, {text: 'sauter'}, {text: "  fin instruction "}]
+  const ocr = ["cyclops", "Si", "etre devant", "flaque", "avancer", 'sauter', "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -180,7 +179,7 @@ it('Simple If', () => {
 })
 
 it('Simple If corrector', () => {
-  const ocr = [{text: "cyclops"}, {text: "Sl"}, {text: "etredevant"}, {text: "flaqu"}, {text: "avanccer"}, {text: 'sauer'}, {text: "  fin instruction "}]
+  const ocr = ["cyclops", "Sl", "etredevant", "flaqu", "avanccer", 'sauer', "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -208,7 +207,7 @@ it('Simple If corrector', () => {
 })
 
 it('Simple For and If', () => {
-  const ocr = [{text: "bart"}, {text: "repeter"}, {text: "10"}, {text: "avancer"}, {text: "si"}, {text: 'etre  sur'}, {text: "cle"}, {text: "ramasser"}, {text: "fin instruction "}, {text: "  fin instruction"}]
+  const ocr = ["bart", "repeter", "10", "avancer", "si", 'etre  sur', "cle", "ramasser", "fin instruction", "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -236,7 +235,7 @@ it('Simple For and If', () => {
 })
 
 it('Simple For and If corrector', () => {
-  const ocr = [{text: "bart"}, {text: "repetr"}, {text: "10"}, {text: "avanceer"}, {text: "si"}, {text: 'etre ur'}, {text: "clee"}, {text: "ramassser"}, {text: "fin instruction"}, {text: "  fin instruction"}]
+  const ocr = ["bart", "repetr", "10", "avanceer", "si", 'etre ur', "clee", "ramassser", "fin instruction", "fin instruction"];
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
@@ -264,7 +263,7 @@ it('Simple For and If corrector', () => {
 })
 
 it ("Simple if elif", () => {
-  const ocr = [{text: "Bart"}, {text: "si"}, {text: "etre devant"}, {text: "flaque"}, {text: "sauter"}, {text: "ou si"}, {text: "etre sur"}, {text: "cle"}, {text: "ramasser"}, {text: "fin instruction"}]
+  const ocr = ["Bart", "si", "etre devant", "flaque", "sauter", "ou si", "etre sur", "cle", "ramasser", "fin instruction"];
 
   const blocks = parseInit(ocr, fr)[0];
 
@@ -291,7 +290,7 @@ it ("Simple if elif", () => {
 
 
 it ("Simple if else", () => {
-  const ocr = [{text: "Bart"}, {text: "si"}, {text: "etre devant"}, {text: "flaque"}, {text: "sauter"}, {text: "sinon"}, {text: "ramasser"}, {text: "fin instruction"}]
+  const ocr = ["Bart", "si", "etre devant", "flaque", "sauter", "sinon", "ramasser", "fin instruction"];
 
   const blocks = parseInit(ocr, fr)[0];
 

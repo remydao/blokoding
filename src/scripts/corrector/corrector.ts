@@ -72,7 +72,7 @@ const dropProblematicTokens = (allCards: [CardType]) => {
         .filter(card => !(card.includes('lt') || card.includes('lj'))) // remove token if contains 'lt' or 'lj' substring
         .filter(card => !(card.split('e').length - 1 == card.length)) // remove token if only made of 'e's
         .filter(card => !(card.length === 2 && card !== 'si' && card !== 'if'))
-        .map(card => card.replace('é', 'e').replace('Ê', 'E')); // finally remove all accents
+        .map(card => card.replace('é', 'e').replace('Ê', 'E')); // remove all accents
 
     return filtered;
 }

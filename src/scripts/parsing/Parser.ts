@@ -144,7 +144,7 @@ const parseCharacter = (cardList: TcardList) : CharacterBlock | never => {
     } else {
         if (typeof character !== 'undefined')
         {
-            let modifiedCharacter = checkVisionResp(character, Object.values(cards.Characters));
+            let modifiedCharacter = checkVisionResp(character, Object.values(Characters));
             if (modifiedCharacter !== null) {
                 characterBlock = new CharacterBlock(modifiedCharacter);
                 addBlockSchemaRow(BlockType.Character);
