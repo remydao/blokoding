@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Text, View, StatusBar, StyleSheet, FlatList, Pressable, Animated} from 'react-native';
-import {default as UUID} from "uuid"; 
+import uuid from 'react-native-uuid';
 import Colors from '../constants/Colors';
 import LevelButton from '../components/LevelButton';
 import { useLanguage } from '../datas/contextHooks';
@@ -35,7 +35,7 @@ const Discover = ({navigation, route}: IProps) => {
       for (let i = 0; i < 30; i++)
       {
           const levelTitle = language.level + ' ' + (i + 1)
-          btns.push({id:UUID.v4(), value:levelTitle})
+          btns.push({id:uuid.v4(), value:levelTitle})
       }
       setButtons(btns);
     }

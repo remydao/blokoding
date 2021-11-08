@@ -680,11 +680,17 @@ class Game extends Component<IProps, IState> {
     }
 
     backToSelectLevels = () : void => {
-        this.props.navigation.pop();
-        this.props.navigation.pop();
-        this.props.navigation.pop();
-        this.props.navigation.pop();
-        this.props.navigation.navigate('Découverte');
+        if (this.props.route.params.levelType === 'tutorial') {
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.navigate('Découverte');
+        } else {
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+            this.props.navigation.pop();
+        }
     }
 
     backToLevelFailed = () : void => {
