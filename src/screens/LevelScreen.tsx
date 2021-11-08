@@ -94,7 +94,7 @@ class LevelScreen extends Component<IProps, IState> {
         this.index = 0;
         this.interval = null;
         this.state = {
-            buttonText: this.tutorial.length === 1 ? "\nC\'est parti !\n" : "\nSuivant\n",
+            buttonText: this.tutorial.length === 1 ? this.props.route.params.language.levelScreen.letsGo : this.props.route.params.language.levelScreen.next,
             textAnimator: <TextAnimator key={this.index} content={this.tutorial[this.index]}></TextAnimator>,
             displayCarousel: false,
             imageSource: null,
@@ -124,7 +124,7 @@ class LevelScreen extends Component<IProps, IState> {
             if (this.index === this.tutorial.length - 1)
             {
                 this.setState({
-                    buttonText: "\nC\'est parti !\n"
+                    buttonText: this.props.route.params.language.levelScreen.letsGo
                 });
             }
             this.setState({

@@ -62,6 +62,10 @@
             "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
             "Cards": "Card Lists"
         },
+        "levelScreen": {
+            "letsGo": "\nLet's go!\n",
+            "next": "\nNext\n"
+        },
         "cards": {
             "Actions": {
                 "Move": "move",
@@ -166,6 +170,10 @@
             "EnigmaMode": " Mode Enigme",
             "EnigmaModePrinciple": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam debitis odit rem eos ipsam molestias! Officiis labore distinctio voluptas, deleniti perspiciatis, earum magnam, ab laboriosam dolorum ratione consequuntur alias doloribus!",
             "Cards": "Liste des cartes"
+        },
+        "levelScreen": {
+            "letsGo": "\nC'est parti !\n",
+            "next": "\nSuivant\n"
         },
         "cards": {
             "Actions": {

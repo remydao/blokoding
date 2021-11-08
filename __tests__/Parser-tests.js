@@ -208,7 +208,7 @@ it('Simple If corrector', () => {
 })
 
 it('Simple For and If', () => {
-  const ocr = [{text: "bart"}, {text: "repeter"}, {text: "10"}, {text: "avancer"}, {text: "si"}, {text: 'etre sur'}, {text: "cle"}, {text: "ramasser"}, {text: "fin instruction "}, {text: "  fin instruction"}]
+  const ocr = [{text: "bart"}, {text: "repeter"}, {text: "10"}, {text: "avancer"}, {text: "si"}, {text: 'etre  sur'}, {text: "cle"}, {text: "ramasser"}, {text: "fin instruction "}, {text: "  fin instruction"}]
   const blocks = parseInit(ocr, fr)[0];
 
   expect(blocks).toBeInstanceOf(CharacterBlock);
