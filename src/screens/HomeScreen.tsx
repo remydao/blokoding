@@ -86,7 +86,7 @@ const HomeScreen = ({ navigation }: IProps) => {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text={language.start} color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => {
+          <FlatButton text={language.start} color={'black'} pressColor={Colors.dark_pink} onPress={() => {
             navigation.navigate('Take Picture', {music: soundRef.current, language: language});
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
@@ -107,7 +107,7 @@ const HomeScreen = ({ navigation }: IProps) => {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text={language.help} color={Colors.pink} pressColor={Colors.dark_pink } onPress={() => {
+          <FlatButton text={language.help} color={Colors.purple} pressColor={Colors.dark_purple } onPress={() => {
             navigation.navigate('Help');
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
