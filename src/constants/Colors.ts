@@ -14,7 +14,7 @@ export default {
     azure:'#cbcef8',
 
     character:'#FC5958',
-    action:'#FFF802',
+    action:'#DDDD02',
     instruction:'#19DABB',
     condition:'#FF9557',
     item:'#6C63FF',

@@ -75,7 +75,7 @@ const Options = ({}) => {
       </View>
       
       <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-        <Switch value={blockSchemaDisplay} trackColor={{false: '#FC5958', true: Colors.dark_orange}} onValueChange={handleBlockSchemaDisplayChange} style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} />
+        <Switch value={blockSchemaDisplay} trackColor={{false: '#FC5958', true: Colors.dark_orange}} thumbColor={'#eee'} onValueChange={handleBlockSchemaDisplayChange} style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }]}} />
         <Text style={{marginLeft: 20, fontFamily: 'Pangolin-Regular', fontSize: 18}}>Afficher le schema des blocs</Text>
       </View>
       <Image style={styles.image} source={characterImages.Harry.uri}></Image>

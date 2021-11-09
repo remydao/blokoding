@@ -37,7 +37,7 @@ class MyCarousel extends Component {
             <View style={{width: itemWidth, height: itemHeight, marginLeft: 25, marginRight: 25}}>
                 <Image source={item.uri} style={{ flex: 1, width: null, height: null, resizeMode: 'contain'}}></Image>
             </View>
-        );
+        ); 
     }
 
     render () {
@@ -167,7 +167,7 @@ class LevelScreen extends Component<IProps, IState> {
                     <View style={styles.openCamera}>
                         <AwesomeButton onPress={this.onPressNextButton} textColor="#2e84b2" {...styles.button}>
                             <Text style={styles.buttonText}>{this.state.buttonText}</Text>
-                            {this.state.buttonText !== "\nSuivant\n" &&
+                            {this.state.buttonText !== this.props.route.params.language.levelScreen.next &&
                             <Image style={{position:'absolute', right: -EngineConstants.MAX_WIDTH / 8}} height={30} width={30} source={require('../assets/smartphone.png')}/>}
                         </AwesomeButton>
                     </View>
