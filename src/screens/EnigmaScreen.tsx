@@ -7,6 +7,7 @@ import { useLanguage } from '../datas/contextHooks';
 import {enigmaInfo} from '../constants/EnigmaDetails'
 import {Themes} from '../constants/Themes';
 import Sound from 'react-native-sound';
+import SoundContext from '../context/SoundContext';
 
 import {loadSound} from '../scripts/sound/sound'
 
@@ -32,6 +33,7 @@ interface IState {
 const EnigmaScreen = ({navigation, route}: IProps) => {
     const [buttons, setButtons] = useState<IState[]>([]);
     const language = useLanguage();
+    const soundContext = React.useContext(SoundContext);
 
     const _handleAppStateChange2 = (currentAppState: any) => {
       if(currentAppState == "background") {
@@ -65,7 +67,7 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
 
 
     React.useEffect(() => {
-      soundRef.current = loadSound(sounds[theme], true, 1);
+      soundRef.current = loadSound(sounds[theme], true, soundContext.isMuted ? 0 : 1);
       AppState.addEventListener('change', (state) => _handleAppStateChange2(state));
       return () => {
         AppState.removeEventListener('change', (state) => {_handleAppStateChange2(state)});
@@ -92,7 +94,7 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
     }, [])
 
     const onPress = (index: number) => {
-      loadSound("buttonclick.mp3", false);
+      loadSound("buttonclick.mp3", false, soundContext.isMuted ? 0 : 1);
       navigation.navigate('LevelScreen', {
         theme: route.params.theme,
         levelNumber: index,

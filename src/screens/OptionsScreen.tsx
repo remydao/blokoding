@@ -16,23 +16,23 @@ const Options = ({}) => {
   const languageContext = React.useContext(LanguageContext);
   const soundContext = React.useContext(SoundContext);
   const [blockSchemaDisplay, setBlockSchemaDisplay] = React.useContext(BlockSchemaContext); 
-  const [soundImg, setImg] = useState(soundContext.mainSound === 0 ? false : true);
+  const [muteImg, setImg] = useState(soundContext.isMuted);
 
   const handleLanguageChange = (itemValue: string, itemIndex: number) => {
     languageContext.changeLanguage(itemValue)
   }
 
   const handleMainSoundChange = (value: number) => {
-    soundContext.changeMainSound(value)
+    soundContext.changeMainSound(value, soundContext.isMuted)
   }
 
   const handleBlockSchemaDisplayChange = (value: boolean) => {
     setBlockSchemaDisplay(value);
   }
 
-  const switchSound = (soundState: boolean) => {
-    setImg(!soundImg);
-    soundContext.changeMainSound(soundImg ? 0 : 1);
+  const switchSound = () => {
+    setImg(!muteImg);
+    soundContext.changeMuted(!soundContext.isMuted, soundContext.mainSound);
   }
 
   return (
@@ -58,17 +58,17 @@ const Options = ({}) => {
             onValueChange={handleMainSoundChange}/>
             <TouchableOpacity
               onPress={() => {
-                switchSound(soundImg)
+                switchSound()
               }}>
               <View style={{display:'flex', alignItems:'center'}}>
 
-                <Image source={ soundImg === true ?
-                                require('../assets/volume.png') : 
-                                require('../assets/mute.png')}
+                <Image source={ muteImg ?
+                                require('../assets/mute.png') : 
+                                require('../assets/volume.png')}
                   resizeMode="stretch"
                   style={{width: EngineConstants.MAX_HEIGHT / 12, height: EngineConstants.MAX_HEIGHT / 12}}
                 />
-                <Text style={{paddingTop: 10, fontWeight: '900'}}>{soundImg ? "ON" : "OFF"}</Text>
+                <Text style={{paddingTop: 10, fontWeight: '900'}}>{muteImg ? "OFF" : "ON"}</Text>
               </View>
             </TouchableOpacity>
         </View>

@@ -30,9 +30,14 @@ function App() {
     setLanguageInfos({...languageInfos, language: newLanguage});
   }
 
-  const onChangeMainSound = (value: number) => {
+  const onChangeMainSound = (value: number, mute: boolean) => {
     console.log("je change le son !", value)
-    setSoundInfos({...soundInfos, mainSound: value});
+    setSoundInfos({...soundInfos, mainSound: value, isMuted: mute});
+  }
+
+  const onChangeMuted = (value: boolean, vol: number) => {
+    console.log("Je change de mute pour " + value);
+    setSoundInfos({...soundInfos, mainSound: vol, isMuted: value});
   }
 
   const [languageInfos, setLanguageInfos] = React.useState({
@@ -42,8 +47,10 @@ function App() {
 
   const [soundInfos, setSoundInfos] = React.useState({
     mainSound: 0.5,
-    changeMainSound: onChangeMainSound
-  })
+    changeMainSound: onChangeMainSound,
+    isMuted: false,
+    changeMuted: onChangeMuted
+  });
 
   const blockSchemaDisplay = React.useState(true);
 

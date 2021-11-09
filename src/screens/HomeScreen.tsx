@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation }: IProps) => {
   React.useEffect(() => {
     if (soundRef.current == undefined) {
       console.log("loadSound: 50");
-      soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.mainSound);
+      soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.isMuted ? 0 : contextSound.mainSound);
     }
     AppState.addEventListener('change', (state) => _handleAppStateChange(state));
     return () => AppState.removeEventListener('change', (state) => {_handleAppStateChange(state)});
@@ -58,15 +58,15 @@ const HomeScreen = ({ navigation }: IProps) => {
   useFocusEffect(
     React.useCallback(() => {
       if (soundRef.current == undefined) {
-        soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.mainSound);
+        soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.isMuted ? 0 : contextSound.mainSound);
       }
       console.log("getvolume" , soundRef.current.getVolume());
       soundRef.current.play()
   }, []))
 
   React.useEffect(() => {
-    soundRef.current?.setVolume(contextSound.mainSound);
-  }, [contextSound.mainSound])
+    soundRef.current?.setVolume(contextSound.isMuted ? 0 : contextSound.mainSound);
+  }, [contextSound.isMuted ? 0 : contextSound.mainSound])
 
 
     return (
@@ -82,35 +82,35 @@ const HomeScreen = ({ navigation }: IProps) => {
           <FlatButton text={language.discover} color={Colors.red} pressColor={Colors.dark_red} onPress={() => {
             navigation.navigate('Découverte', {language: language});
             soundRef.current?.stop();
-            loadSound("buttonclick.mp3", false);
+            loadSound("buttonclick.mp3", false, contextSound.isMuted ? 0 : contextSound.mainSound);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.start} color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => {
             navigation.navigate('Take Picture', {music: soundRef.current, language: language});
             soundRef.current?.stop();
-            loadSound("buttonclick.mp3", false);
+            loadSound("buttonclick.mp3", false, contextSound.isMuted ? 0 : contextSound.mainSound);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.enigma} color={Colors.turquoise} pressColor={Colors.dark_turquoise} onPress={() => {
             navigation.navigate('UniverseScreen', {language: language});
             soundRef.current?.stop();
-            loadSound("buttonclick.mp3", false);
+            loadSound("buttonclick.mp3", false, contextSound.isMuted ? 0 : contextSound.mainSound);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.options} color={Colors.orange} pressColor={Colors.dark_orange } onPress={() => {
             navigation.navigate('Options');
             soundRef.current?.stop();
-            loadSound("buttonclick.mp3", false);
+            loadSound("buttonclick.mp3", false, contextSound.isMuted ? 0 : contextSound.mainSound);
           }}/>
         </View>
         <View style={styles.button}>
           <FlatButton text={language.help} color={Colors.pink} pressColor={Colors.dark_pink } onPress={() => {
             navigation.navigate('Help');
             soundRef.current?.stop();
-            loadSound("buttonclick.mp3", false);
+            loadSound("buttonclick.mp3", false, contextSound.isMuted ? 0 : contextSound.mainSound);
           }}/>
         </View>
         {/* <View style={styles.button}>

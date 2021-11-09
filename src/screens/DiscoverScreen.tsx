@@ -6,6 +6,7 @@ import LevelButton from '../components/LevelButton';
 import {tutorialInfo} from '../constants/TutorialDetails'
 import { useLanguage } from '../datas/contextHooks';
 import {loadSound} from '../scripts/sound/sound'
+import SoundContext from '../context/SoundContext';
 
 const DiscoverColors = [
   Colors.dark_pink,
@@ -29,6 +30,7 @@ interface IState {
 const Discover = ({navigation, route}: IProps) => {
     const [buttons, setButtons] = useState<IState[]>([]);
     const language = useLanguage();
+    const soundContext = React.useContext(SoundContext);
 
     const setLevel = () => {
       let btns = [...buttons];
@@ -47,7 +49,8 @@ const Discover = ({navigation, route}: IProps) => {
     }, [])
 
     const onPress = (index: number) => {
-      loadSound("buttonclick.mp3", false);
+      console.log("SOUNDCONTEXT MUTED:" + soundContext.isMuted);
+      loadSound("buttonclick.mp3", false, soundContext.isMuted ? 0 : 1);
       navigation.navigate('LevelScreen', {
         levelNumber: index,
         levelType: 'tutorial',
