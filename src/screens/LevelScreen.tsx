@@ -148,7 +148,7 @@ class LevelScreen extends Component<IProps, IState> {
         return (
             <View style={styles.bigContainer}>
 
-                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false}/>
+                <CustomHeader style={styles.header} textStyle={styles.textStyle} title={`Niveau ${(this.levelNumber + 1)}`} isLogo={false} goBack={() => this.props.navigation.pop()}/>
                 
                 <View style={styles.container}>
                     <Image source={require('../assets/empty_messageBox.png')} style={styles.popupImage} resizeMode="stretch"/>
@@ -171,7 +171,9 @@ class LevelScreen extends Component<IProps, IState> {
                             <Image style={{position:'absolute', right: -EngineConstants.MAX_WIDTH / 8}} height={30} width={30} source={require('../assets/smartphone.png')}/>}
                         </AwesomeButton>
                     </View>
-                    <StatusBar translucent backgroundColor="transparent"/>
+                    {/* <StatusBar translucent backgroundColor="transparent"/> */}
+                <StatusBar backgroundColor={'#E4965F'}/>
+
                 </View>
             </View>
         )
@@ -183,12 +185,12 @@ const styles = StyleSheet.create({
         zIndex: 1,
         position: 'absolute',
         backgroundColor: '#E4965F',
-        paddingTop: 15,
-        height: EngineConstants.MAX_HEIGHT/ 8,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     textStyle: {
         fontFamily: 'Pangolin-Regular',
-        fontSize: 30
+        fontSize: 30,
     },
     bigContainer: {
         flex:1,
