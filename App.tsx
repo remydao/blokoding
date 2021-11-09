@@ -62,7 +62,7 @@ function App() {
               <Stack.Screen name="UniverseScreen" component={UniverseScreen} options={{headerShown: false}}/>
               <Stack.Screen name="Help" component={Help} options={ ({navigation}) => ({headerTitle: () => <CustomHeader title="Aide" goBack={() => navigation.pop()} backgroundColor={Colors.dark_purple}/>})}/>
               <Stack.Screen name="Options" component={Options} options={({navigation}) => ({headerTitle: () => <CustomHeader title="Options" goBack={() => navigation.pop()} backgroundColor={Colors.dark_orange}/>})}/>
-              <Stack.Screen name="Découverte" component={Discover} options={{headerTitle: () => <CustomHeader title="Découverte"/>}}/>
+              <Stack.Screen name="Découverte" component={Discover} options={({navigation}) => ({headerTitle: () => <CustomHeader title="Découverte" goBack={() => navigation.pop()}/>})}/>
               <Stack.Screen name="Game" component={Game} options={{headerShown:false}}/>
               <Stack.Screen name="LevelScreen" component={LevelScreen} options={{headerShown:false}}/>
               <Stack.Screen name="EnigmaScreen" component={EnigmaScreen} options={({navigation}) => ({headerTitle: () => <CustomHeader goBack={() => navigation.pop()} title="Enigma" backgroundColor="purple"/>})}/>
