@@ -22,7 +22,25 @@ Sentry.init({
 
 const Stack = createStackNavigator();
 
-
+const horizontalAnimation: any = {
+  headerShown: true,
+  headerTitleAlign:'center',
+  gestureDirection: 'horizontal',
+  cardStyleInterpolator: ({ current, layouts } : any) => {
+    return {
+      cardStyle: {
+        transform: [
+          {
+            translateX: current.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [layouts.screen.width, 0],
+            }),
+          },
+        ],
+      },
+    };
+  }
+}
 
 function App() {
 
@@ -56,7 +74,7 @@ function App() {
       <LanguageContext.Provider value={languageInfos}>
         <SoundContext.Provider value={soundInfos}>
           <NavigationContainer >
-            <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center', ...TransitionPresets.SlideFromRightIOS}}>
+            <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={horizontalAnimation}>
               <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
               <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
               <Stack.Screen name="UniverseScreen" component={UniverseScreen} options={{headerShown: false}}/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, StatusBar, StyleSheet, Image, ScrollView, Button} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Colors from '../constants/Colors';
 import AwesomeButton from "react-native-really-awesome-button";
 import EngineConstants from '../constants/EngineConstants';
@@ -11,6 +12,12 @@ interface IProps {
 
 const Help = ({ navigation }: IProps) => {
   const language = useLanguage().helpScreen;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBackgroundColor(Colors.dark_purple)
+    }, [])
+  );
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: 'rgba(101, 106, 234, 0.5)'}}>
