@@ -91,7 +91,7 @@ class Camera extends Component<IProps, IState> {
               </View>
             </Modal>
           </View>
-          <StatusBar translucent backgroundColor="transparent"/>
+          <StatusBar translucent backgroundColor="transparent" hidden={true} showHideTransition={'slide'}/>
         </View>
       )
     }
