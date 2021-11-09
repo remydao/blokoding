@@ -64,9 +64,8 @@ interface CardType {
 const dropProblematicTokens = (allCards: [CardType]) => {
 
     var filtered = allCards
-        .map(card => card.text.trim().toLowerCase()); // remove heading and trailing whitespace and put everything to lower case
-        console.log(filtered);
-        filtered = filtered.filter(card => !(card.length === 1 && !/\d/.test(card))) // remove token if is single char and not a number
+        .map(card => card.text.trim().toLowerCase()) // remove heading and trailing whitespace and put everything to lower case
+        .filter(card => !(card.length === 1 && !/\d/.test(card))) // remove token if is single char and not a number
         .filter(card => !(card.length > 1 && /^\d+$/.test(card))) // remove token if is multiple char and only numbers
         .filter(card => !(card.length > 1 && /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(card))) // remove token if is multiple char and made of letters and numbers
         .filter(card => !(card.includes('lt') || card.includes('lj'))) // remove token if contains 'lt' or 'lj' substring

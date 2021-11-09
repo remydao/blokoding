@@ -87,7 +87,7 @@ const HomeScreen = ({ navigation }: IProps) => {
         </View>
         <View style={styles.button}>
           <FlatButton text={language.start} color={Colors.purple} pressColor={Colors.dark_purple} onPress={() => {
-            navigation.navigate('Take Picture', {music: soundRef, language: language});
+            navigation.navigate('Take Picture', {music: soundRef.current, language: language});
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false);
           }}/>
