@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Platform, AppRegistry, TouchableOpacity, Linking} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import CustomHeader from './src/components/CustomHeader';
@@ -56,7 +56,7 @@ function App() {
       <LanguageContext.Provider value={languageInfos}>
         <SoundContext.Provider value={soundInfos}>
           <NavigationContainer >
-            <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center'}}>
+            <Stack.Navigator initialRouteName="HomeScreen" headerMode="screen" screenOptions={{headerShown: true, headerTitleAlign:'center', ...TransitionPresets.SlideFromRightIOS}}>
               <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerTitle: () => <CustomHeader title="Blokoding"/>}}/>
               <Stack.Screen name="Take Picture" component={Camera} options={{headerShown: false}}/>
               <Stack.Screen name="UniverseScreen" component={UniverseScreen} options={{headerShown: false}}/>
