@@ -553,7 +553,7 @@ class Game extends Component<IProps, IState> {
         if (!this.possess(item))
             this.fireEndScreen("loose", this.state.languageObj.dontPossess1 + item + this.state.languageObj.dontPossess2);
         else if(!this.isInFront(usables[item]))
-            this.fireEndScreen("loose", this.state.languageObj.inFrontOf1 + usables[item] + this.state.languageObj.inFrontOf1 + item);
+            this.fireEndScreen("loose", this.state.languageObj.inFrontOf1 + usables[item] + this.state.languageObj.inFrontOf2 + item);
         else {
             if (item == Items.Machete)
             {
