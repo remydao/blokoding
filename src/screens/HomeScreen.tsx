@@ -25,21 +25,16 @@ const HomeScreen = ({ navigation }: IProps) => {
 
   const _handleAppStateChange = (currentAppState: any) => {
     if(currentAppState == "background") {
-      console.log("HOMESCREEN: Stop sound because appState backgroundStop sound");
       soundRef.current?.stop();
       soundRef.current?.release();
     }
     if(currentAppState == "active") {
       if (soundRef.current?.isPlaying()){
-        console.log("HOMESCREEN: sound is active, so return")
         return;
       }
 
-      console.log("HOMESCREEN: play sound because appState is active");
       soundRef.current?.play((success: any) => {
-        if (success) {
-          console.log('HOMESCREEN: successfully finished playing');
-        } else {
+        if (!success) {
           console.log('HOMESCREEN: playback failed due to audio decoding errors');
         }
       });
@@ -48,7 +43,6 @@ const HomeScreen = ({ navigation }: IProps) => {
 
   React.useEffect(() => {
     if (soundRef.current == undefined) {
-      console.log("loadSound: 50");
       soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.isMuted ? 0 : contextSound.mainSound);
     }
     AppState.addEventListener('change', (state) => _handleAppStateChange(state));
@@ -60,7 +54,7 @@ const HomeScreen = ({ navigation }: IProps) => {
       if (soundRef.current == undefined) {
         soundRef.current = loadSound("homescreen_sound.mp3", true, contextSound.isMuted ? 0 : contextSound.mainSound);
       }
-      console.log("getvolume" , soundRef.current.getVolume());
+      
       soundRef.current.play()
   }, []))
 
@@ -86,7 +80,7 @@ const HomeScreen = ({ navigation }: IProps) => {
           }}/>
         </View>
         <View style={styles.button}>
-          <FlatButton text={language.start} color={'black'} pressColor={Colors.dark_pink} onPress={() => {
+          <FlatButton text={language.start} color={'black'} pressColor={'gray'} onPress={() => {
             navigation.navigate('Take Picture', {music: soundRef.current, language: language});
             soundRef.current?.stop();
             loadSound("buttonclick.mp3", false, contextSound.isMuted ? 0 : contextSound.mainSound);

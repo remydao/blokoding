@@ -49,7 +49,6 @@ const Discover = ({navigation, route}: IProps) => {
     }, [])
 
     const onPress = (index: number) => {
-      console.log("SOUNDCONTEXT MUTED:" + soundContext.isMuted);
       loadSound("buttonclick.mp3", false, soundContext.isMuted ? 0 : 1);
       navigation.navigate('LevelScreen', {
         levelNumber: index,
@@ -74,12 +73,9 @@ const Discover = ({navigation, route}: IProps) => {
                   scrollEventThrottle={16}
                   data={buttons}
                   renderItem={({item, index}) => 
-                    (  
-                        //<View style={{backgroundColor: this.selectBgColor(index)}}>
-                        <LevelButton bgColor={selectBgColor(index)} index={index} y={y} text={item.value} onPress={() => onPress(index)} pressColor={'red'}/>
-                        //</View>
-                      
-                      )}
+                    (
+                      <LevelButton bgColor={selectBgColor(index)} index={index} y={y} text={item.value} onPress={() => onPress(index)} pressColor={'red'}/>
+                    )}
                   keyExtractor={item => item.id}
                   {...{onScroll}}
               />

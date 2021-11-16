@@ -36,20 +36,15 @@ const EnigmaScreen = ({navigation, route}: IProps) => {
     const soundContext = React.useContext(SoundContext);
 
     const _handleAppStateChange2 = (currentAppState: any) => {
-      if(currentAppState == "background") {
-        console.log("ENIGMA: Stop sound because appState background");
+      if (currentAppState == "background") {
         soundRef.current?.stop();
-        //soundRef.current?.release();
       }
-      if(currentAppState == "active") {
+      if (currentAppState == "active") {
         if (soundRef.current?.isPlaying())
           return;
-        
-        console.log("ENIGMA: play sound because currentAppState is active");
+
         soundRef.current?.play((success: any) => {
-          if (success) {
-            console.log('ENIGMA: successfully finished playing');
-          } else {
+          if (!success) {
             console.log('ENIGMA: playback failed due to audio decoding errors');
           }
         });

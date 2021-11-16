@@ -15,7 +15,6 @@ const loadSound = (soundFileName: string, isLooping: boolean, volume = 1) => {
         }
 
         // loaded successfully
-        console.log('duration in seconds: ' + soundPlay.getDuration() + 'sound: ' + `${soundFileName}`);
         soundPlay.setVolume(volume);
 
         if (isLooping) {
@@ -23,18 +22,15 @@ const loadSound = (soundFileName: string, isLooping: boolean, volume = 1) => {
         }
 
         soundPlay.play((success) => {
-            if (success) {
-            console.log('successfully finished playing');
-            } else {
-            console.log('playback failed due to audio decoding errors');
-            }
+            if (!success)
+                console.log('playback failed due to audio decoding errors');
         });
     });
 
     return soundPlay;
 }
 
-export {loadSound}
+export { loadSound }
 
 
 

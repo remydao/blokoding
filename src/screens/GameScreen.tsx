@@ -22,7 +22,6 @@ import BlockSchemaRow from '../components/BlockSchemaRow';
 import { EnvironmentImages } from '../constants/EnvironmentImages';
 import uuid from 'react-native-uuid';
 import { sleep } from '../scripts/utils';
-import * as Progress from 'react-native-progress';
 import Translation from '../datas/translation.json';
 import LanguageContext from '../context/LanguageContext';
 import { ItemBlock } from "../scripts/blocks/DataBlock";
@@ -149,7 +148,6 @@ class Game extends Component<IProps, IState> {
 
     async componentWillUnmount() {
         this.mounted = false;
-        console.log("unMounted");
     }
 
     isMounted(): boolean {
@@ -468,8 +466,7 @@ class Game extends Component<IProps, IState> {
         var currCell = this.state.map[this.characterPos];
 
         if (currCell == Cells.Empty || !isItem(currCell.content.imageName)) {
-            this.fireEndScreen("loose", "Perdu, fait attention de ramasser au bon moment !")
-            console.log("grab failed");
+            this.fireEndScreen("loose", this.state.languageObj.loseGrab)
             return false;
         }
             
@@ -545,8 +542,7 @@ class Game extends Component<IProps, IState> {
         };
 
         if (Object.keys(usables).filter(usableItem => usableItem === item).length === 0) {
-            console.log(item);
-            this.fireEndScreen("loose", "Tu ne peux pas utiliser une " + item);
+            this.fireEndScreen("loose", this.state.languageObj.cannotUse + item);
             return false;
         }
 
@@ -555,9 +551,9 @@ class Game extends Component<IProps, IState> {
             return false;
 
         if (!this.possess(item))
-            this.fireEndScreen("loose", "Tu dois posséder un " + item + " pour pouvoir l'utiliser");
+            this.fireEndScreen("loose", this.state.languageObj.dontPossess1 + item + this.state.languageObj.dontPossess);
         else if(!this.isInFront(usables[item]))
-            this.fireEndScreen("loose", "Tu dois être en face d'un " + usables[item] + " pour pouvoir utiliser ton " + item);
+            this.fireEndScreen("loose", this.state.languageObj.inFrontOf1 + usables[item] + this.state.languageObj.inFrontOf1 + item);
         else {
             if (item == Items.Machete)
             {
@@ -662,7 +658,6 @@ class Game extends Component<IProps, IState> {
             //isDoneList[this.props.route.params.levelNumber] = true;
             await storeIsDoneList(isDoneList);
         }
-        console.log('You lost');
     }
 
     // Function to notify win
@@ -673,7 +668,6 @@ class Game extends Component<IProps, IState> {
             isDoneList[this.props.route.params.levelNumber] = true;
             await storeIsDoneList(isDoneList);
         }
-        console.log('You won');
     }
 
     // return true if character is in front of an entity(data block)
@@ -758,23 +752,17 @@ class Game extends Component<IProps, IState> {
             <View style={{width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
                 <View>
                 {
-                    /*this.state.percentLoading < 100 ?
-                    (<View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: MyColors.primary, height:"100%", width:"100%"}}>
-                        <Progress.Circle indeterminate={true} size={200}/>
-                    </View>) :
-                    (*/
-                        <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
+                    <View style={{position: 'relative', width: EngineConstants.MAX_WIDTH, height: EngineConstants.MAX_HEIGHT}}>
 
-                            {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="lightgreen" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
-                            {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
-                            <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
-                            <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
-                            <Character key={this.state.animUUID} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet} dstWidth={this.state.spriteWidth}/>
-                            { arr }
-                            <Inventory inventory={this.state.inventory} />
-                            <BlockSchema blockList={this.blockSchemaRowList} />
-                        </View>
-                        //)
+                        {this.state.hasWon && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={true} text={this.endReason} color="lightgreen" backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                        {this.state.hasLost && <Overlay cameraMode={this.props.route.params.cameraMode} hasWon={false} text={this.endReason} color={MyColors.dark_red} backToSelectLevels={this.backToSelectLevels} backToLevelFailed={this.backToLevelFailed}/>}
+                        <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background1} position={[this.state.bg0Pos, 0]} />
+                        <BackgroundGame imgBackground={this.props.route.params.mapInfo.theme.background2} position={[this.state.bg1Pos, 0]} />
+                        <Character key={this.state.animUUID} position={[0, this.state.playerPosY]} sourceImage={this.state.image} columns={this.state.columns} rows={this.state.rows} numSpritesInSpriteSheet={this.state.numSpritesInSpriteSheet} dstWidth={this.state.spriteWidth}/>
+                        { arr }
+                        <Inventory inventory={this.state.inventory} />
+                        <BlockSchema blockList={this.blockSchemaRowList} />
+                    </View>
                 }
                 <StatusBar translucent backgroundColor="transparent"/>
                 </View>

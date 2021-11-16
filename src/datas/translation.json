@@ -28,10 +28,16 @@
             "loseCrab": "Lost, be careful, the crab can pinch you very hard...",
             "loseDoor2": "Lost, use the key when you are in front of the door to open it",
             "loseBin": "Lost, use the waste when you are in front of the garbage can to pass",
+            "loseGrab": "Lost, be careful to grab at the correct moment.",
             "removedMap1": "Lost, there are still ",
             "removedMap2": " on the ground",
             "checkInventory1": "Lost, you don't have the right number of ",
-            "checkInventory2": " in your inventory   "
+            "checkInventory2": " in your inventory   ",
+            "cannotUse": "You cannot use ",
+            "dontPossess1": "You must get the ",
+            "dontPossess2": " to use it",
+            "inFrontOf1": "You have to be in front of a ",
+            "inFrontOf2": " to use your "
         },
 
         "parseErrors": {
@@ -139,10 +145,16 @@
             "loseBush2": "Perdu, utilise la machette quand tu es devant le buisson pour le couper",
             "loseDoor2": "Perdu, utilise la clé quand tu es devant la porte pour l'ouvrir",
             "loseBin": "Perdu, utilise le déchet quand tu es devant la poubelle pour passer",
+            "loseGrab": "Perdu, fait attention de ramasser au bon moment !",
             "removedMap1": "Perdu, il reste des ",
             "removedMap2": " sur le terrain",
             "checkInventory1": "Perdu, tu n'as pas le bon nombre de ",
-            "checkInventory2": " dans ton inventaire   "
+            "checkInventory2": " dans ton inventaire   ",
+            "cannotUse": "Tu ne peux pas utiliser un(e) ",
+            "dontPossess1": "Tu dois posséder un(e) ",
+            "dontPossess2": " pour pouvoir l'utiliser",
+            "inFrontOf1": "Tu dois être en face d'un(e) ",
+            "inFrontOf2": " pour pouvoir utiliser ton "
         },
 
         "parseErrors": {

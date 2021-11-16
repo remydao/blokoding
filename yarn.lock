@@ -5985,13 +5985,6 @@ react-native-permissions@^3.0.3:
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.0.6.tgz#0cb146cecb8b883c3770f8072196ad1a081b20b8"
   integrity sha512-vnR13M7uqr1ZDsK3Edloo1+m6PdIRQPOontGFIjUqUOSFzF8LIm7pkF9fv+dY1hsCtTGGG6GnyOS8KDJ/uLyjg==
 
-react-native-progress@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-5.0.0.tgz#f5ac6ceaeee27f184c660b00f29419e82a9d0ab0"
-  integrity sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A==
-  dependencies:
-    prop-types "^15.7.2"
-
 react-native-really-awesome-button@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-native-really-awesome-button/-/react-native-really-awesome-button-1.6.0.tgz#71700f960aa6d419058beff177c7b6cf18694ef7"

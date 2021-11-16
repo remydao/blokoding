@@ -49,12 +49,10 @@ function App() {
   }
 
   const onChangeMainSound = (value: number, mute: boolean) => {
-    console.log("je change le son !", value)
     setSoundInfos({...soundInfos, mainSound: value, isMuted: mute});
   }
 
   const onChangeMuted = (value: boolean, vol: number) => {
-    console.log("Je change de mute pour " + value);
     setSoundInfos({...soundInfos, mainSound: vol, isMuted: value});
   }
 
