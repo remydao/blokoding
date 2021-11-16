@@ -551,7 +551,7 @@ class Game extends Component<IProps, IState> {
             return false;
 
         if (!this.possess(item))
-            this.fireEndScreen("loose", this.state.languageObj.dontPossess1 + item + this.state.languageObj.dontPossess);
+            this.fireEndScreen("loose", this.state.languageObj.dontPossess1 + item + this.state.languageObj.dontPossess2);
         else if(!this.isInFront(usables[item]))
             this.fireEndScreen("loose", this.state.languageObj.inFrontOf1 + usables[item] + this.state.languageObj.inFrontOf1 + item);
         else {
