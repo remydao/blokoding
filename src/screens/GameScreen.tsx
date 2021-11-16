@@ -25,6 +25,7 @@ import { sleep } from '../scripts/utils';
 import Translation from '../datas/translation.json';
 import LanguageContext from '../context/LanguageContext';
 import { ItemBlock } from "../scripts/blocks/DataBlock";
+import { getPrefix } from '../datas/names';
 
 interface IProps {
     navigation: any,
@@ -542,7 +543,7 @@ class Game extends Component<IProps, IState> {
         };
 
         if (Object.keys(usables).filter(usableItem => usableItem === item).length === 0) {
-            this.fireEndScreen("loose", this.state.languageObj.cannotUse + item);
+            this.fireEndScreen("loose", this.state.languageObj.cannotUse + getPrefix(item, this.context.language) + " " + item);
             return false;
         }
 
@@ -551,9 +552,9 @@ class Game extends Component<IProps, IState> {
             return false;
 
         if (!this.possess(item))
-            this.fireEndScreen("loose", this.state.languageObj.dontPossess1 + item + this.state.languageObj.dontPossess2);
+            this.fireEndScreen("loose", this.state.languageObj.dontPossess1 + getPrefix(item, this.context.language) + " " + item + this.state.languageObj.dontPossess2);
         else if(!this.isInFront(usables[item]))
-            this.fireEndScreen("loose", this.state.languageObj.inFrontOf1 + usables[item] + this.state.languageObj.inFrontOf2 + item);
+            this.fireEndScreen("loose", this.state.languageObj.inFrontOf1 + getPrefix(usables[item], this.context.language) + " " + usables[item] + this.state.languageObj.inFrontOf2 + item);
         else {
             if (item == Items.Machete)
             {

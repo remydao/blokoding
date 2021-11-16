@@ -34,9 +34,9 @@
             "checkInventory1": "Lost, you don't have the right number of ",
             "checkInventory2": " in your inventory   ",
             "cannotUse": "You cannot use ",
-            "dontPossess1": "You must get the ",
+            "dontPossess1": "You must get ",
             "dontPossess2": " to use it",
-            "inFrontOf1": "You have to be in front of a ",
+            "inFrontOf1": "You have to be in front of ",
             "inFrontOf2": " to use your "
         },
 
@@ -150,10 +150,10 @@
             "removedMap2": " sur le terrain",
             "checkInventory1": "Perdu, tu n'as pas le bon nombre de ",
             "checkInventory2": " dans ton inventaire   ",
-            "cannotUse": "Tu ne peux pas utiliser un(e) ",
-            "dontPossess1": "Tu dois posséder un(e) ",
+            "cannotUse": "Tu ne peux pas utiliser ",
+            "dontPossess1": "Tu dois posséder ",
             "dontPossess2": " pour pouvoir l'utiliser",
-            "inFrontOf1": "Tu dois être en face d'un(e) ",
+            "inFrontOf1": "Tu dois être en face d'",
             "inFrontOf2": " pour pouvoir utiliser ton "
         },
 
