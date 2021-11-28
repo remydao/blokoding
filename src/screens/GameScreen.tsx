@@ -26,6 +26,7 @@ import Translation from '../datas/translation.json';
 import LanguageContext from '../context/LanguageContext';
 import { ItemBlock } from "../scripts/blocks/DataBlock";
 import { getPrefix } from '../datas/names';
+import { SlideFromRightIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 interface IProps {
     navigation: any,
@@ -654,6 +655,17 @@ class Game extends Component<IProps, IState> {
     // Function to notify loose
     onLose = async () => {
         loadSound("game_over.mp3", false, 1);
+
+        this.setState({
+            animUUID: uuid.v4(),
+            image: this.images.loose,
+            columns: 8,
+            rows: 8,
+            numSpritesInSpriteSheet: 60,
+            spriteWidth: 256,
+        })
+
+
         if (this.props.route.params.levelType === 'tutorial') {
             const isDoneList : boolean[] = await getIsDoneList()
             //isDoneList[this.props.route.params.levelNumber] = true;

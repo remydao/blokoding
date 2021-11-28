@@ -47,7 +47,8 @@ const characterImages = {
             cut: [
                 require("../assets/characters/MrMustache/cut1.png"),
                 require("../assets/characters/MrMustache/cut2.png")
-            ]
+            ],
+            loose: require("../assets/characters/MrMustache/loose.png")
         }
 
     },
