@@ -662,7 +662,7 @@ class Game extends Component<IProps, IState> {
             columns: 8,
             rows: 8,
             numSpritesInSpriteSheet: 60,
-            spriteWidth: 256,
+            spriteWidth: 239,
         })
 
 
