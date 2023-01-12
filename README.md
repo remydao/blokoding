@@ -4,9 +4,6 @@ La plateforme qui permet aux enfants de s'initier à l'informatique de façon lu
 
 ## Documentation développeur
 
-Pour savoir qui travaille :
-git ls-files | while read f; do git blame --line-porcelain $f | grep '^author '; done | sort -f | uniq -ic | sort -n
-
 ### Lancement du projet (iOS et Android)
 
 #### NodeJS
